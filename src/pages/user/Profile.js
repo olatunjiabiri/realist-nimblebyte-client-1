@@ -11,8 +11,8 @@ export default function Profile() {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [address, setAddress] = useState("");
@@ -26,8 +26,8 @@ export default function Profile() {
 
   useEffect(() => {
     if (auth.user) {
-      setUsername(auth.user?.username);
-      setName(auth.user?.name);
+      setFirstName(auth.user?.firstName);
+      setLastName(auth.user?.lastName);
       setEmail(auth.user?.email);
       setCompany(auth.user?.company);
       setAddress(auth.user?.address);
@@ -41,18 +41,24 @@ export default function Profile() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.put("/update-profile", {
-        username,
-        name,
-        email,
-        company,
-        address,
-        phone,
-        about,
-        photo,
-      });
-      if (data?.error) {
-        toast.error(data.error);
+
+      const { data } = await axios.post(
+        `https://payorigins-auth.azurewebsites.net/user/updateProfile`,
+        {
+          firstName,
+          lastName,
+          email,
+          company,
+          address,
+          phone,
+          about,
+          photo: photo.Location,
+        }
+      );
+
+      if (!data.success) {
+        toast.error(data.message);
+        setLoading(false);
       } else {
         setAuth({ ...auth, user: data });
 
@@ -64,6 +70,8 @@ export default function Profile() {
       }
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong. Try again.");
+      setLoading(false);
     }
   };
 
@@ -85,19 +93,19 @@ export default function Profile() {
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  placeholder="Update your username"
+                  placeholder="Update your firstname"
                   className="form-control mb-4"
-                  value={username}
+                  value={firstName}
                   onChange={(e) =>
-                    setUsername(slugify(e.target.value.toLowerCase()))
+                    setFirstName(slugify(e.target.value.toLowerCase()))
                   }
                 />
                 <input
                   type="text"
                   placeholder="Enter your name"
                   className="form-control mb-4"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
                 <input
                   type="email"

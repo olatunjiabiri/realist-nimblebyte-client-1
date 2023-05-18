@@ -40,14 +40,17 @@ export default function Dashboard() {
       <h1 className="display-1 bg-primary text-light p-5">Dashboard</h1>
       <Sidebar />
 
-      {seller ? (
+      {!seller ? (
         <div
           className="d-flex justify-content-center align-items-center vh-100"
           style={{ marginTop: "-10%" }}
         >
           <h2>
-            Hey {auth.user?.name ? auth.user?.firstName : auth.user?.email.split("@")[0]},
-            Welcome to Realist App
+            Hey{" "}
+            {auth.user?.firstName
+              ? auth.user?.firstName
+              : auth.user?.email.split("@")[0]}
+            , Welcome to Realist App
           </h2>
         </div>
       ) : (
@@ -86,7 +89,7 @@ export default function Dashboard() {
           )}
         </div>
       )}
-     <pre>{JSON.stringify(auth, null, 4)} </pre> 
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
     </div>
   );
 }

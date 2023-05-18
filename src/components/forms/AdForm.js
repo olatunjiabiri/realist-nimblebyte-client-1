@@ -36,50 +36,43 @@ export default function AdForm({ action, type }) {
   useEffect(() => {
     if (auth.user) {
       setRole(auth.user?.role);
-      
     }
   }, []);
 
+  const sellerRole = async () => {
+    try {
+      setLoading(true);
 
-const  sellerRole = async () => {
+      const { data } = await axios.post(
+        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
+        {
+          userId: auth.user.userId,
+          role: "Seller",
+        }
+      );
+      // console.log('role response data >>>>', data)
+      if (!data.success) {
+        toast.error(data.message);
+        setLoading(false);
+      } else {
+        setAuth({ ...auth, user: data });
 
-  try {
-    setLoading(true);
-
-    const { data } = await axios.post(
-      `https://payorigins-auth.azurewebsites.net/user/AddRole`,
-      {
-        userId: auth.user.userId,
-        role: "Seller"
+        let fromLS = JSON.parse(localStorage.getItem("auth"));
+        fromLS.user = data;
+        localStorage.setItem("auth", JSON.stringify(fromLS));
+        setLoading(false);
+        toast.success("Role Added");
       }
-    );
-// console.log('role response data >>>>', data)
-    if (!data.success) {
-      toast.error(data.message);
+    } catch (err) {
+      console.log(err);
+      toast.error(
+        "Something went wrong. Role cannot be assigned now. Try again."
+      );
       setLoading(false);
-    } else {
-      setAuth({ ...auth, user: data });
-
-      let fromLS = JSON.parse(localStorage.getItem("auth"));
-      fromLS.user = data;
-      localStorage.setItem("auth", JSON.stringify(fromLS));
-      setLoading(false);
-      toast.success("Role Added");
     }
-  } catch (err) {
-    console.log(err);
-    toast.error("Something went wrong. Role cannot be assigned now. Try again.");
-    setLoading(false);
-  }
-
-
-};
-
-
-
+  };
 
   const handleClick = async () => {
-    
     try {
       setAd({ ...ad, loading: true });
       const { data } = await axios.post("/ad", ad);
@@ -88,8 +81,6 @@ const  sellerRole = async () => {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
       } else {
-        
-
         // update user in context
         setAuth({ ...auth, user: data.user });
         // update user in local storage
@@ -100,10 +91,8 @@ const  sellerRole = async () => {
         sellerRole();
 
         toast.success("Ad created successfully");
-         
 
         setAd({ ...ad, loading: false });
-        
 
         // reload page on redirect
         window.location.href = "/dashboard";
@@ -204,7 +193,7 @@ const  sellerRole = async () => {
       </button>
 
       <pre>{JSON.stringify(ad, null, 4)}</pre>
-      <pre>{JSON.stringify(auth, null, 4)} </pre> 
+      <pre>{JSON.stringify(auth, null, 4)} </pre>
     </>
   );
 }
