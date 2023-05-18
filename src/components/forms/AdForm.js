@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_KEY } from "../../config";
 import CurrencyInput from "react-currency-input-field";
@@ -12,6 +12,9 @@ export default function AdForm({ action, type }) {
   // context
   const [auth, setAuth] = useAuth();
   // state
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [ad, setAd] = useState({
     photos: [],
     uploading: false,
@@ -30,7 +33,53 @@ export default function AdForm({ action, type }) {
   // hooks
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (auth.user) {
+      setRole(auth.user?.role);
+      
+    }
+  }, []);
+
+
+const  sellerRole = async () => {
+
+  try {
+    setLoading(true);
+
+    const { data } = await axios.post(
+      `https://payorigins-auth.azurewebsites.net/user/AddRole`,
+      {
+        userId: auth.user.userId,
+        role: "Seller"
+      }
+    );
+// console.log('role response data >>>>', data)
+    if (!data.success) {
+      toast.error(data.message);
+      setLoading(false);
+    } else {
+      setAuth({ ...auth, user: data });
+
+      let fromLS = JSON.parse(localStorage.getItem("auth"));
+      fromLS.user = data;
+      localStorage.setItem("auth", JSON.stringify(fromLS));
+      setLoading(false);
+      toast.success("Role Added");
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error("Something went wrong. Role cannot be assigned now. Try again.");
+    setLoading(false);
+  }
+
+
+};
+
+
+
+
   const handleClick = async () => {
+    
     try {
       setAd({ ...ad, loading: true });
       const { data } = await axios.post("/ad", ad);
@@ -39,7 +88,7 @@ export default function AdForm({ action, type }) {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
       } else {
-        // data {user, ad}
+        
 
         // update user in context
         setAuth({ ...auth, user: data.user });
@@ -48,9 +97,13 @@ export default function AdForm({ action, type }) {
         fromLS.user = data.user;
         localStorage.setItem("auth", JSON.stringify(fromLS));
 
+        sellerRole();
+
         toast.success("Ad created successfully");
+         
+
         setAd({ ...ad, loading: false });
-        // navigate("/dashboard");
+        
 
         // reload page on redirect
         window.location.href = "/dashboard";
@@ -150,7 +203,8 @@ export default function AdForm({ action, type }) {
         {ad.loading ? "Saving..." : "Submit"}
       </button>
 
-      {/* <pre>{JSON.stringify(ad, null, 4)}</pre> */}
+      <pre>{JSON.stringify(ad, null, 4)}</pre>
+      <pre>{JSON.stringify(auth, null, 4)} </pre> 
     </>
   );
 }
