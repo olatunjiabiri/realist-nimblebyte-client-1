@@ -7,8 +7,8 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-# RUN npm i
-RUN npm ci --omit=dev
+RUN npm i
+#RUN npm ci --omit=dev
 RUN npm build
 
 COPY . .
