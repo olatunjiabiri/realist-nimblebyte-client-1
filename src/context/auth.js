@@ -6,8 +6,10 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
+    wishlist: [],
     user: null,
     token: ""
+   
   });
 
   useEffect(() => {

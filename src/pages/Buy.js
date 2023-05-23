@@ -26,7 +26,7 @@ export default function Buy() {
   return (
     <div>
       <SearchForm />
-      <h1 className="display-1 bg-primary text-light p-5">For Sell</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">For Sell</h1> */}
       <div className="container">
         <div className="row">
           {ads?.map((ad) => (
@@ -34,6 +34,7 @@ export default function Buy() {
           ))}
         </div>
       </div>
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
     </div>
   );
 }

@@ -42,9 +42,9 @@ export default function Agent() {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">
+      {/* <h1 className="display-1 bg-primary text-light p-5">
         {agent?.name ?? agent?.username}
-      </h1>
+      </h1> */}
 
       <div className="container">
         <div className="row">

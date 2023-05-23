@@ -104,7 +104,7 @@ export default function AdEdit({ action, type }) {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Ad Edit</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Ad Edit</h1> */}
       <Sidebar />
 
       <div className="container">

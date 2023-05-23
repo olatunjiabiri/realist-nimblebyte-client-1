@@ -20,7 +20,8 @@ export default function AdCreate() {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Ad Create</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Ad Create</h1> */}
+      {/* <div className="d-flex align-items-center" style={{backgroundImage:"url(/banner2.png)", backgroundSize:"auto 100%", backgroundPosition: "left top", height:300, width:"100%"}}></div> */}
       <Sidebar />
 
       <div

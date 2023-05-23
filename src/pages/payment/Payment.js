@@ -14,7 +14,7 @@ function Payment() {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    console.log("publishableKey", STRIPE_PUBLISHABLE_KEY);
+    // console.log("publishableKey", STRIPE_PUBLISHABLE_KEY);
     setStripePromise(loadStripe(STRIPE_PUBLISHABLE_KEY));
   }, []);
 
@@ -48,14 +48,14 @@ function Payment() {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-lg-4 offset-lg-4">
+          {/* <div className="col-lg-4 offset-lg-4"> */}
             <h1> Stripe Payment </h1>
             {clientSecret && stripePromise && (
               <Elements stripe={stripePromise} options={{ clientSecret }}>
                 <CheckoutForm />
               </Elements>
             )}
-          </div>{" "}
+          {/* </div>{" "} */}
         </div>{" "}
       </div>
     </>

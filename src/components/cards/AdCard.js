@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AdFeatures from "../../components/cards/AdFeatures";
 import { formatNumber } from "../../helpers/ad";
 import dayjs from "dayjs";
+import millify from "millify";
 
 export default function AdCard({ ad }) {
   return (
@@ -10,7 +11,7 @@ export default function AdCard({ ad }) {
       <Link to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${ad?.action}`}
-          color={`${ad?.action === "Sell" ? "blue" : "red"}`}
+          color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
         >
           <div className="card hoverable shadow">
             <img
@@ -24,6 +25,7 @@ export default function AdCard({ ad }) {
                 {" "}
                 <span>&#8358;</span>
                 {formatNumber(ad?.price)}
+                {/* {millify(ad?.price)} */}
               </h3>
               <p className="card-text">{ad?.address}</p>
 

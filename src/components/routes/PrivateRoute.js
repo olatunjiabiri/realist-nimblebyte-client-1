@@ -15,14 +15,7 @@ export default function PrivateRoute() {
 
   const getCurrentUser = async () => {
     try {
-      if (auth?.user)
-      // const { data } = await axios.get("/current-user", {
-      //   headers: {
-      //     Authorization: auth?.token,
-      //   },
-      // });
-      // console.log('data>>>', data)
-      setOk(true);
+      if (auth?.user) setOk(true);
     } catch (err) {
       setOk(false);
     }

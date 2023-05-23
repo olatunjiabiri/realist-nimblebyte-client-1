@@ -29,6 +29,7 @@ export default function AdForm({ action, type }) {
     loading: false,
     type,
     action,
+    postedBy: auth.user.userId
   });
   // hooks
   const navigate = useNavigate();
@@ -55,10 +56,10 @@ export default function AdForm({ action, type }) {
         toast.error(data.message);
         setLoading(false);
       } else {
-        setAuth({ ...auth, user: data });
+        setAuth({ ...auth, user: { role: "Seller" } });
 
         let fromLS = JSON.parse(localStorage.getItem("auth"));
-        fromLS.user = data;
+        fromLS.user = { role: "Seller" };
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
         toast.success("Role Added");
@@ -70,25 +71,28 @@ export default function AdForm({ action, type }) {
       );
       setLoading(false);
     }
-  };
+  };   
 
   const handleClick = async () => {
     try {
       setAd({ ...ad, loading: true });
       const { data } = await axios.post("/ad", ad);
-      console.log("ad create response => ", data);
+      //console.log("ad create response => ", data);
       if (data?.error) {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
       } else {
         // update user in context
-        setAuth({ ...auth, user: data.user });
+        // setAuth({ ...auth, user: data.user });
         // update user in local storage
-        const fromLS = JSON.parse(localStorage.getItem("auth"));
-        fromLS.user = data.user;
-        localStorage.setItem("auth", JSON.stringify(fromLS));
+        // const fromLS = JSON.parse(localStorage.getItem("auth"));
+        // fromLS.user = data.user;
+        // localStorage.setItem("auth", JSON.stringify(fromLS));
 
-        sellerRole();
+        if(!auth.user?.role?.includes("Seller")){
+          sellerRole();
+        };
+       
 
         toast.success("Ad created successfully");
 

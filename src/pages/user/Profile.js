@@ -60,10 +60,12 @@ export default function Profile() {
         toast.error(data.message);
         setLoading(false);
       } else {
+
+       const  data1 = {...data, role: "Buyer", userId: auth.user.userId}
         setAuth({ ...auth, user: data });
 
         let fromLS = JSON.parse(localStorage.getItem("auth"));
-        fromLS.user = data;
+        fromLS.user = data1;
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
         toast.success("Profile updated");
@@ -77,7 +79,7 @@ export default function Profile() {
 
   return (
     <>
-      <h1 className="display-1 bg-primary text-light p-5">Profile</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Profile</h1> */}
       <div className="container-fluid">
         <Sidebar />
         <div className="container mt-2">

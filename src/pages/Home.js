@@ -12,6 +12,9 @@ export default function Home() {
   const [adsForRent, setAdsForRent] = useState();
 
   useEffect(() => {
+    if(auth.user === null){
+      auth.token = ""
+    }
     fetchAds();
   }, []);
 
@@ -27,25 +30,29 @@ export default function Home() {
 
   return (
     <div>
+      <div >
       <SearchForm />
-      <h1 className="display-1 bg-primary text-light p-5">For Sell</h1>
+
+      </div>
+      
+      {/* <h1 className="display-1 bg-primary text-light p-5">For Sell</h1> */}
       <div className="container">
         <div className="row">
           {adsForSell?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />
           ))}
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
 
-      <h1 className="display-1 bg-primary text-light p-5">For Rent</h1>
-      <div className="container">
-        <div className="row">
+      {/* <h1 className="display-1 bg-primary text-light p-5">For Rent</h1> */}
+      {/* <div className="container"> */}
+        {/* <div className="row"> */}
           {adsForRent?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />
           ))}
         </div>
       </div>
-      <pre>{JSON.stringify(auth, null, 4)} </pre> 
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
     </div>
   );
 }

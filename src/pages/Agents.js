@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UserCard from "../components/cards/UserCard";
+import SearchForm from "../components/forms/SearchForm";
 
 export default function Agents() {
   // state
@@ -35,7 +36,11 @@ export default function Agents() {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Agents</h1>
+       <div >
+      <SearchForm />
+
+      </div>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Agents</h1> */}
       <div className="container">
         <div className="row">
           {agents?.map((agent) => (

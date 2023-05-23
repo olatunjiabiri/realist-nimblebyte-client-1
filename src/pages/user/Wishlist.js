@@ -17,7 +17,11 @@ export default function Wishlist() {
 
   const fetchAds = async () => {
     try {
-      const { data } = await axios.get(`/wishlist`);
+      // const { data } = await axios.post("/wishlist", { adId: ad._id, userId: auth?.user?.userId});
+      const { data } = await axios.post(`/ad-wishlist`,{
+        wishlist: auth.wishlist
+      });
+      // console.log('data  =>', data)
       setAds(data);
     } catch (err) {
       console.log(err);
@@ -26,7 +30,7 @@ export default function Wishlist() {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Wishlist</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Wishlist</h1> */}
       <Sidebar />
 
       {!ads?.length ? (

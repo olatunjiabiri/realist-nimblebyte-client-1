@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
 
 :root {
-  --light-grey: #f6f9fc;
+  /* --light-grey: #f6f9fc; */
   --dark-terminal-color: #0a2540; 
   --accent-color: #0c0666;
   --accent-color: #2196f3;
@@ -44,10 +44,10 @@ button {
 button:hover {
   filter: contrast(115%);
 }
-button:active {
+/* button:active {
   transform: translateY(0px) scale(0.98);
   filter: brightness(0.9);
-}
+} */
 button:disabled {
   opacity: 0.5;
   cursor: none;

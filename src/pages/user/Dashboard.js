@@ -26,8 +26,9 @@ export default function Dashboard() {
 
   const fetchAds = async () => {
     try {
-      const { data } = await axios.get(`/user-ads/${page}`);
+      const { data } = await axios.get(`/user-ads/${auth.user?.userId}/${page}`);
       // setAds(data.ads);
+      console.log('data', data)
       setAds([...ads, ...data.ads]);
       setTotal(data.total);
     } catch (err) {
@@ -37,7 +38,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Dashboard</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Dashboard</h1> */}
       <Sidebar />
 
       {!seller ? (
@@ -49,7 +50,7 @@ export default function Dashboard() {
             Hey{" "}
             {auth.user?.firstName
               ? auth.user?.firstName
-              : auth.user?.email.split("@")[0]}
+              : auth.user?.email?.split("@")[0]}
             , Welcome to Realist App
           </h2>
         </div>

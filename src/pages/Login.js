@@ -15,6 +15,19 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const fetchUserWishlists = async (user) => {
+    const { userId } = user;
+    // console.log("userId", userId);
+    try {
+      const { data } = await axios.get(`/wishlist/${userId}`);
+
+      // console.log("data=>", data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,23 +39,30 @@ export default function Login() {
           password,
         }
       );
-      
+
       if (!data?.success) {
         toast.error(data.message);
         setLoading(false);
       } else {
         const { token, user } = data.responsePayload;
 
-        setAuth({token, user});
+        const wishlistData = await fetchUserWishlists(user);
+        const { wishlist } = wishlistData;
+        const userWishlist = wishlist[0]?.wishlist;
 
-        localStorage.setItem("auth", JSON.stringify({ token, user }));
+        // console.log("wishlistData =>", userWishlist);
+        setAuth({ token, user, wishlist: userWishlist });
+
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({ token, user, wishlist: userWishlist })
+        );
         toast.success("Login successful");
         setLoading(false);
         location?.state !== null
           ? navigate(location.state)
           : navigate("/dashboard");
       }
-      
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong. Try again.");
@@ -52,7 +72,7 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Login</h1>
+      {/* <h1 className="display-1 bg-primary text-light p-5">Login</h1> */}
 
       <div className="container">
         <div className="row">
@@ -95,6 +115,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
     </div>
   );
 }
