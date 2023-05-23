@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/auth";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -19,13 +19,22 @@ export default function LikeUnlike({ ad }) {
         });
         return;
       }
-      const { data } = await axios.post("/wishlist", { adId: ad._id });
-      //   console.log("handle like => ", data);
-      setAuth({ ...auth, user: data });
+      const { data } = await axios.post("/wishlist", {
+        adId: ad._id,
+        userId: auth?.user?.userId,
+      });
+      // console.log('data ==>', data)
+      const { wishlist } = data;
+
+      console.log("handle like wishlist => ", wishlist);
+      setAuth({ ...auth, wishlist });
+
       const fromLS = JSON.parse(localStorage.getItem("auth"));
-      fromLS.user = data;
+      fromLS.wishlist = wishlist;
       localStorage.setItem("auth", JSON.stringify(fromLS));
+
       toast.success("Added to wishlist");
+      // console.log("handle like auth  2=> ", auth);
     } catch (err) {
       console.log(err);
     }
@@ -39,13 +48,25 @@ export default function LikeUnlike({ ad }) {
         });
         return;
       }
-      const { data } = await axios.delete(`/wishlist/${ad._id}`);
-      //   console.log("handle unlike => ", data);
-      setAuth({ ...auth, user: data });
-      const fromLS = JSON.parse(localStorage.getItem("auth"));
-      fromLS.user = data;
-      localStorage.setItem("auth", JSON.stringify(fromLS));
-      toast.success("Removed from wishlist");
+      const { data } = await axios.delete(
+        `/wishlist/${ad._id}/${auth?.user?.userId}`
+      );
+
+      const { acknowledged, deletedCount } = data;
+
+      if (acknowledged && deletedCount === 1) {
+        const updatedWishlist = auth.wishlist?.filter((d) => {
+          return d !== ad._id;
+        });
+
+        setAuth({ ...auth, wishlist: updatedWishlist });
+
+        const fromLS = JSON.parse(localStorage.getItem("auth"));
+        fromLS.wishlist = updatedWishlist;
+        localStorage.setItem("auth", JSON.stringify(fromLS));
+        // console.log('auth after >>>>', auth)
+        toast.success("Removed from wishlist");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -53,17 +74,16 @@ export default function LikeUnlike({ ad }) {
 
   return (
     <>
-      {auth.user?.wishlist?.includes(ad?._id) ? (
+      {auth.wishlist?.includes(ad?._id) ? (
         <span>
-          {/* <Icon icon="icon-park-solid:like" color="red" width="30" height="30" onClick={handleUnlike} className="h2 mt-3 pointer" /> */}
           <FcLike onClick={handleUnlike} className="h2 mt-3 pointer" />
         </span>
       ) : (
         <span>
-          {/* <Icon icon="icon-park-outline:like" color="red" width="30" height="30" onClick={handleUnlike} className="h2 mt-3 pointer" /> */}
           <FcLikePlaceholder onClick={handleLike} className="h2 mt-3 pointer" />
         </span>
       )}
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
     </>
   );
 }

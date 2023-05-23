@@ -30,9 +30,7 @@ export default function ProfileUpload({
             0,
             async (uri) => {
               try {
-                // console.log("UPLOAD URI => ", uri);
-                // const { data } = await axios.post("/upload-image", {
-                  const { data } = await axios.post("/azure-upload-image", {
+                const { data } = await axios.post("/upload-image", {
                   image: uri,
                 });
                 setPhoto(data);
@@ -57,8 +55,7 @@ export default function ProfileUpload({
     if (!answer) return;
     setUploading(true);
     try {
-      // const { data } = await axios.post("/remove-image", photo);
-      const { data } = await axios.post("/azure-remove-image", photo);
+      const { data } = await axios.post("/remove-image", photo);
       if (data?.ok) {
         setPhoto(null);
         setUploading(false);

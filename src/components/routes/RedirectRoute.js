@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function RedirectRoute() {
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(2);
 
   const navigate = useNavigate();
 

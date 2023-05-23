@@ -22,13 +22,13 @@ export default function AccountActivate() {
         `https://payorigins-auth.azurewebsites.net/user/ConfirmEmail?token=${token}&userId=${userId}`
       );
 
-      // console.log("response activate=>", response);
+      console.log("response activate=>", response);
 
       if (!response?.data?.success) {
         toast.error(response?.data?.message);
         // navigate("/login");
       } else {
-        // console.log(response);
+        console.log(response);
 
         toast.success("Your email has been confirmed. Log in to Realist app.");
         navigate("/login");

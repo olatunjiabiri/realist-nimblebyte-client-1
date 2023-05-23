@@ -4,6 +4,7 @@ import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 import { formatNumber } from "../helpers/ad";
 import { Avatar } from "antd";
 import { Fragment } from "react";
+import millify from "millify";
 
 const Map = (props) => {
   const { ad, related } = props;
@@ -65,6 +66,7 @@ const Map = (props) => {
                     {" "}
                     <span>&#8358;</span>
                     {formatNumber(ad?.price)}
+                    {/* {millify(ad?.price)} */}
                     {ad?.bedrooms !== null ? (
                       <p>{`${ad?.bedrooms} bd ${ad?.bathrooms} ba`}</p>
                     ) : (
@@ -106,6 +108,8 @@ const Map = (props) => {
                       {" "}
                       <span>&#8358;</span>
                       {formatNumber(r?.price)}
+                    {/* {millify(ad?.price)} */}
+                     
                       {r?.bedrooms !== null ? (
                         <p>{`${r?.bedrooms} bd ${r?.bathrooms} ba`}</p>
                       ) : (

@@ -22,10 +22,7 @@ export default function ImageUpload({ ad, setAd }) {
               0,
               async (uri) => {
                 try {
-                  // console.log("UPLOAD URI => ", uri);
-               
-                  // const { data } = await axios.post("/upload-image", {
-                    const { data } = await axios.post("/azure-upload-image", {
+                  const { data } = await axios.post("/upload-image", {
                     image: uri,
                   });
                   setAd((prev) => ({
@@ -33,7 +30,7 @@ export default function ImageUpload({ ad, setAd }) {
                     photos: [data, ...prev.photos],
                     uploading: false,
                   }));
-                  console.log('data=>', data)
+                  // console.log("data=>", data);
                 } catch (err) {
                   console.log(err);
                   setAd({ ...ad, uploading: false });
@@ -55,8 +52,7 @@ export default function ImageUpload({ ad, setAd }) {
     if (!answer) return;
     setAd({ ...ad, uploading: true });
     try {
-      // const { data } = await axios.post("/remove-image", file);
-      const { data } = await axios.post("/azure-remove-image", file);
+      const { data } = await axios.post("/remove-image", file);
       if (data?.ok) {
         setAd((prev) => ({
           ...prev,
@@ -72,7 +68,6 @@ export default function ImageUpload({ ad, setAd }) {
 
   return (
     <>
-    
       <label className="btn btn-secondary mb-4">
         {ad.uploading ? "Processing..." : "Upload photos"}
         <input

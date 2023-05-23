@@ -28,7 +28,6 @@ import Settings from "./pages/user/Settings";
 import AdEdit from "./pages/user/ad/AdEdit";
 import Wishlist from "./pages/user/Wishlist";
 import Enquiries from "./pages/user/Enquiries";
-// import Payment from "./pages/user/Payment";
 import Agents from "./pages/Agents";
 import Agent from "./pages/Agent";
 import Buy from "./pages/Buy";
