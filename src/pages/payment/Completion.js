@@ -1,3 +1,5 @@
+import React from 'react'
+
 function Completion(props) {
     return <h1>Thank you! 🎉</h1>;
   }

@@ -44,11 +44,12 @@
     <script>
       var map;
       function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
+      if(map)  map = new google.maps.Map(document.getElementById("map"), {
           center: { lat:  6.5244, lng: 3.3792 },
           zoom: 11,
         });
       }
+      initMap()
     </script>
 
     <script

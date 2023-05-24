@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import axios from "axios";
 import ImageGallery from "../components/misc/ImageGallery";
 import Logo from "../logo.svg";
@@ -8,7 +8,7 @@ import { formatNumber } from "../helpers/ad";
 import dayjs from "dayjs";
 import LikeUnlike from "../components/misc/LikeUnlike";
 import MapCard from "../components/cards/MapCard";
-import HTMLRenderer from "react-html-renderer";
+// import HTMLRenderer from "react-html-renderer";
 import AdCard from "../components/cards/AdCard";
 import ContactSeller from "../components/forms/ContactSeller";
 
@@ -109,9 +109,9 @@ export default function AdView() {
 
             <h3 className="fw-bold">{ad?.title}</h3>
 
-            <HTMLRenderer
+            {/* <HTMLRenderer
               html={ad?.description?.replaceAll(".", "<br/><br/>")}
-            />
+            /> */}
           </div>
         </div>
       </div>

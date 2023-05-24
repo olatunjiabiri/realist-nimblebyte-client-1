@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 
-import { STRIPE_PUBLISHABLE_KEY } from "../../../src/config";
+import config from "../../Config";
 
 import "./index.css";
 
@@ -15,7 +15,7 @@ function Payment() {
 
   useEffect(() => {
     // console.log("publishableKey", STRIPE_PUBLISHABLE_KEY);
-    setStripePromise(loadStripe(STRIPE_PUBLISHABLE_KEY));
+    setStripePromise(loadStripe(config.STRIPE_PUBLISHABLE_KEY));
   }, []);
 
   useEffect(() => {

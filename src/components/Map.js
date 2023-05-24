@@ -4,7 +4,7 @@ import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 import { formatNumber } from "../helpers/ad";
 import { Avatar } from "antd";
 import { Fragment } from "react";
-import millify from "millify";
+// import millify from "millify";
 
 const Map = (props) => {
   const { ad, related } = props;

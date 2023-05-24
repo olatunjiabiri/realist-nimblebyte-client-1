@@ -1,3 +1,4 @@
+import React from 'react'
 import SearchForm from "../components/forms/SearchForm";
 import { useSearch } from "../context/search";
 import AdCard from "../components//cards/AdCard";
