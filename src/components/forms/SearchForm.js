@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { GOOGLE_PLACES_KEY } from "../../../src/config";
+import config from "../../Config";
 import { sellPrices, rentPrices } from "../../helpers/priceList";
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ export default function SearchForm() {
           <div className="row ">
             <div className="col-lg-12 form-control">
               <GooglePlacesAutocomplete
-                apiKey={GOOGLE_PLACES_KEY}
+                apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
                 selectProps={{
                   defaultInputValue: search?.address,

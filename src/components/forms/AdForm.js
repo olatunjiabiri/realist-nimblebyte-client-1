@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { GOOGLE_PLACES_KEY } from "../../../src/config";
+import  config  from "../../Config";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";
@@ -112,7 +112,7 @@ export default function AdForm({ action, type }) {
       <div className="mb-3 form-control">
         <ImageUpload ad={ad} setAd={setAd} />
         <GooglePlacesAutocomplete
-          apiKey={GOOGLE_PLACES_KEY}
+          apiKey={config.GOOGLE_PLACES_KEY}
           apiOptions="ng"
           selectProps={{
             defaultInputValue: ad?.address,

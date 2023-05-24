@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { GOOGLE_PLACES_KEY } from "../../../config";
+import config from "../../../Config";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import axios from "axios";
@@ -113,8 +113,8 @@ export default function AdEdit({ action, type }) {
           <ImageUpload ad={ad} setAd={setAd} />
           {loaded ? (
             <GooglePlacesAutocomplete
-              apiKey={GOOGLE_PLACES_KEY}
-              apiOptions="au"
+              apiKey={config.GOOGLE_PLACES_KEY}
+              apiOptions="ng"
               selectProps={{
                 defaultInputValue: ad?.address,
                 placeholder: "Search for address..",

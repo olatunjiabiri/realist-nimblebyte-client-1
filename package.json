@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.15.2",
     "@iconify/react": "^4.1.0",
     "@react-google-maps/api": "^2.18.1",
     "@stripe/react-stripe-js": "^2.1.0",
@@ -32,7 +33,7 @@
     "yup": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -54,5 +55,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@webpack-cli/generators": "^3.0.4",
+    "webpack-cli": "^5.1.1"
   }
 }

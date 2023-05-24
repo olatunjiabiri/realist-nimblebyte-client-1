@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+   frontend:
+      build: ./dockerfile
+      container_name: realist-frontend_c
+      ports:
+        - '3000:3000'
+      volumes:
+        - ./realist-frontend:/app
+        - ./app/node_modules
+      stdin_open: true
+      tty: true
