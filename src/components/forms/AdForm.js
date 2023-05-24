@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_KEY } from "../../config";
 import CurrencyInput from "react-currency-input-field";

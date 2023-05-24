@@ -1,3 +1,4 @@
+import React from 'react'
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_KEY } from "../../config";

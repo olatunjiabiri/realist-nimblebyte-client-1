@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AdFeatures from "../../components/cards/AdFeatures";
 import { formatNumber } from "../../helpers/ad";
 import dayjs from "dayjs";
-import millify from "millify";
+// import millify from "millify";
 
 export default function AdCard({ ad }) {
   return (

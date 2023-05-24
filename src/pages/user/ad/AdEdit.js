@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_KEY } from "../../../config";

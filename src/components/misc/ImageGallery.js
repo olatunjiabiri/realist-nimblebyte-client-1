@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useState, useCallback } from "react";
-import Gallery from "react-photo-gallery";
-import Carousel, { Modal, ModalGateway } from "react-images";
-
+// import Gallery from "react-photo-gallery";
+// import Carousel, { Modal, ModalGateway } from "react-images";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 export default function ImageGallery({ photos }) {
   // state
@@ -21,23 +22,21 @@ export default function ImageGallery({ photos }) {
     setIsOpen(false);
   };
 
+  console.log('photos',  photos)
+
   return (
     <>
-      <Gallery photos={photos} onClick={openLightbox} />
-      <ModalGateway>
-        {isOpen ? (
-          <Modal onClose={closeLightbox}>
-            <Carousel
-              currentIndex={current}
-              views={photos.map((x) => ({
-                ...x,
-                srcset: x.srcSet,
-                caption: x.title,
-              }))}
-            />
-          </Modal>
-        ) : null}
-      </ModalGateway>
+    <div className="box"> 
+      <Carousel useKeyboardArrows={true}>
+        {photos.map((x, index) => (
+          <div className="slide">
+           
+            <img alt="sample_file" src={x.src} key={index} />
+          </div>
+        ))}
+      </Carousel>
+      
+      </div>
     </>
   );
 }
