@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import config from "../../../Config";
+import config from "../../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import axios from "axios";

@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import  config  from "../../Config";
+import  config  from "../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";

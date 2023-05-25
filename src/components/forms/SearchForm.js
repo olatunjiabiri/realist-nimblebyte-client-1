@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import config from "../../Config";
+import config from "../../NewConfig";
 import { sellPrices, rentPrices } from "../../helpers/priceList";
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
