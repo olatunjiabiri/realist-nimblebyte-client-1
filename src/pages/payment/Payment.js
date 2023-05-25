@@ -5,7 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 
-import config from "../../Config";
+import config from "../../NewConfig";
 
 import "./index.css";
 
