@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Sidebar from "../../components/nav/Sidebar";
 
 export default function Settings() {
   // state
@@ -30,9 +29,7 @@ export default function Settings() {
 
   return (
     <>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Settings</h1> */}
       <div className="container-fluid">
-        <Sidebar />
         <div className="container mt-2">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">

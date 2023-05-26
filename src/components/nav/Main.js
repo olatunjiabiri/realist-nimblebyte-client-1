@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
@@ -10,15 +10,14 @@ export default function Main() {
   const navigate = useNavigate();
 
   const logout = () => {
-    setAuth({ user: null, token: ""});
+    setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
     navigate("/login");
   };
 
   // const loggedIn =
   //   auth.user !== null && auth.token !== "" && auth.refreshToken !== "";
-  const loggedIn =
-    auth?.user !== null && auth?.token !== "";
+  const loggedIn = auth?.user !== null && auth?.token !== "";
 
   const handlePostAdClick = () => {
     if (loggedIn) {
@@ -63,7 +62,6 @@ export default function Main() {
           <NavLink className="nav-link" to="/login">
             Login/Register
           </NavLink>
-          
         </>
       ) : (
         ""
@@ -76,7 +74,7 @@ export default function Main() {
               className="nav-link dropdown-toggle pointer"
               data-bs-toggle="dropdown"
             >
-              {auth?.name ? auth?.user?.name : auth?.user?.email?.split('@')[0]}
+              {auth?.name ? auth?.user?.name : auth?.user?.email?.split("@")[0]}
             </a>
             <ul className="dropdown-menu">
               <li>
@@ -84,7 +82,17 @@ export default function Main() {
                   Dashboard
                 </NavLink>
               </li>
-              {/* <hr/> */}
+              <li>
+                <NavLink className="nav-link" to="/user/profile">
+                  Update profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="nav-link" to="/user/settings">
+                  Change Password
+                </NavLink>
+              </li>
+              <hr />
               <li>
                 <a onClick={logout} className="nav-link">
                   Logout

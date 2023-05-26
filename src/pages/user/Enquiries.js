@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/nav/Sidebar";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import AdCard from "../../components/cards/AdCard";
@@ -26,9 +25,6 @@ export default function Enquiries() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Enquiries</h1> */}
-      <Sidebar />
-
       {!ads?.length ? (
         <div
           className="d-flex justify-content-center align-items-center vh-100"

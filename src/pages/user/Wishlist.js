@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/nav/Sidebar";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import AdCard from "../../components/cards/AdCard";
@@ -18,8 +17,8 @@ export default function Wishlist() {
   const fetchAds = async () => {
     try {
       // const { data } = await axios.post("/wishlist", { adId: ad._id, userId: auth?.user?.userId});
-      const { data } = await axios.post(`/ad-wishlist`,{
-        wishlist: auth.wishlist
+      const { data } = await axios.post(`/ad-wishlist`, {
+        wishlist: auth.wishlist,
       });
       // console.log('data  =>', data)
       setAds(data);
@@ -30,9 +29,6 @@ export default function Wishlist() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Wishlist</h1> */}
-      <Sidebar />
-
       {!ads?.length ? (
         <div
           className="d-flex justify-content-center align-items-center vh-100"

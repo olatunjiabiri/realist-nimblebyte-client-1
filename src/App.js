@@ -24,7 +24,7 @@ import RentHouse from "./pages/user/ad/RentHouse";
 import RentLand from "./pages/user/ad/RentLand";
 import AdView from "./pages/AdView";
 import Footer from "./components/nav/Footer";
-import Profile from "./pages/user/Profile";
+import UpdateProfile from "./pages/user/UpdateProfile";
 import Settings from "./pages/user/Settings";
 import AdEdit from "./pages/user/ad/AdEdit";
 import Wishlist from "./pages/user/Wishlist";
@@ -82,7 +82,7 @@ function App() {
                 <Route path="ad/create/sell/land" element={<SellLand />} />
                 <Route path="ad/create/rent/house" element={<RentHouse />} />
                 <Route path="ad/create/rent/land" element={<RentLand />} />
-                <Route path="user/profile" element={<Profile />} />
+                <Route path="user/profile" element={<UpdateProfile />} />
                 <Route path="user/settings" element={<Settings />} />
                 <Route path="user/ad/:slug" element={<AdEdit />} />
                 <Route path="user/wishlist" element={<Wishlist />} />
