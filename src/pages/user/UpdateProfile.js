@@ -19,7 +19,7 @@ export default function UpdateProfile() {
   const [phone, setPhone] = useState("");
   const [about, setAbout] = useState("");
   const [reg_number, setReg_number] = useState("");
-  const [userType, setUserType] = useState("Buyer");
+  const [userType, setUserType] = useState("Seller");
 
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
@@ -54,7 +54,7 @@ export default function UpdateProfile() {
       );
       // console.log('role response data >>>>', data)
       if (!data.success) {
-        toast.error(data.message);
+        // toast.error(data.message);
         setLoading(false);
       } else {
         setAuth({ ...auth, user: { role: "Seller" } });
@@ -63,13 +63,13 @@ export default function UpdateProfile() {
         fromLS.user = { role: "Seller" };
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
-        toast.success("Role Added");
+        // toast.success("Role Added");
       }
     } catch (err) {
       console.log(err);
-      toast.error(
-        "Something went wrong. Role cannot be assigned now. Try again."
-      );
+      // toast.error(
+      //   "Something went wrong. Role cannot be assigned now. Try again."
+      // );
       setLoading(false);
     }
   };
@@ -98,10 +98,6 @@ export default function UpdateProfile() {
         toast.error(data.message);
         setLoading(false);
       } else {
-        console.log("auth.user==>", auth.user);
-        console.log("responsePayload==>", data.responsePayload);
-
-        console.log("data=>", data);
         const data1 = { ...auth.user, role: "Buyer", userId: auth.user.userId };
         setAuth({ ...auth, user: data.responsePayload });
 
@@ -116,7 +112,7 @@ export default function UpdateProfile() {
 
         toast.success("Profile updated");
         // reload page on redirect
-        // window.location.href = "/dashboard";
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       console.log(err);
@@ -136,41 +132,23 @@ export default function UpdateProfile() {
         <div className="container mt-2">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
-              {/* <div> */}
-              <h5>Select User Type</h5>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="userType"
-                  value="Seller"
-                  id="seller"
-                  checked={userType === "Seller"}
+              <div className="form-group">
+                {/* <label for="exampleFormControlSelect1">Select User Account Type</label> */}
+                <select
+                  autoFocus
+                  placeholder="Select User Account Type"
                   onChange={onOptionChange}
-                  // style={{ marginRight: 0 }}
-                />
-
-                <label className="form-check-label" htmlFor="Seller">
-                  Seller
-                </label>
+                  className="form-control form-control-lg"
+                >
+                  {/* <option selected> Select User Account Type</option> */}
+                  <option className="form-control-lg mb-5" value={"Buyer"}>
+                    Buyer
+                  </option>
+                  <option className="form-control-lg mb-5" value={"Seller"}>
+                    Seller
+                  </option>
+                </select>
               </div>
-
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="userType"
-                  value="Buyer"
-                  id="buyer"
-                  checked={userType === "Buyer"}
-                  onChange={onOptionChange}
-                />
-
-                <label className="form-check-label" htmlFor="buyer">
-                  Buyer
-                </label>
-              </div>
-              {/* </div> */}
               {userType === "Seller" && (
                 <ProfileUpload
                   photo={photo}
@@ -223,7 +201,7 @@ export default function UpdateProfile() {
                   type="email"
                   className="form-control mb-3"
                   value={email}
-                  disabled={true}
+                  readOnly
                 />
 
                 <input

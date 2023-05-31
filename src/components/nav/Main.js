@@ -15,8 +15,6 @@ export default function Main() {
     navigate("/login");
   };
 
-  // const loggedIn =
-  //   auth.user !== null && auth.token !== "" && auth.refreshToken !== "";
   const loggedIn = auth?.user !== null && auth?.token !== "";
 
   const handlePostAdClick = () => {
@@ -106,6 +104,11 @@ export default function Main() {
                       </NavLink>
                     </li>
                     <li>
+                      <NavLink className="nav-link" to="/ad/create">
+                        Create an Ad
+                      </NavLink>
+                    </li>
+                    <li>
                       <NavLink className="nav-link" to="/user/profile">
                         Update profile
                       </NavLink>
@@ -115,7 +118,9 @@ export default function Main() {
                         Change Password
                       </NavLink>
                     </li>
-                    <hr />
+                    <li>
+                      <hr />
+                    </li>
                     <li>
                       <a onClick={logout} className="nav-link">
                         Logout

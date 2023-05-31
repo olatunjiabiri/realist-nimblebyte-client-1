@@ -1,8 +1,8 @@
 import { NavLink, Link } from "react-router-dom";
-import React from 'react'
+import React from "react";
 export default function Footer() {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row align-items-left text-left p-4 bg-dark text-light mt-4">
         <div className="col-8">
           <h4 className="mt-4">Realist App - Buy Sell or Rent Properties</h4>
