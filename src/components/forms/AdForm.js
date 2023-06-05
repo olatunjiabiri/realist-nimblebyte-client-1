@@ -1,6 +1,6 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import  config  from "../../NewConfig";
+import config from "../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";
@@ -29,7 +29,7 @@ export default function AdForm({ action, type }) {
     loading: false,
     type,
     action,
-    postedBy: auth.user.userId
+    postedBy: auth.user.userId,
   });
   // hooks
   const navigate = useNavigate();
@@ -51,15 +51,21 @@ export default function AdForm({ action, type }) {
           role: "Seller",
         }
       );
-      // console.log('role response data >>>>', data)
+      // console.log("role response data >>>>", data);
       if (!data.success) {
         toast.error(data.message);
         setLoading(false);
       } else {
-        setAuth({ ...auth, user: { role: "Seller" } });
+        auth.user.role.push("Seller");
+
+        setAuth({ ...auth });
+        console.log("auth", auth);
 
         let fromLS = JSON.parse(localStorage.getItem("auth"));
-        fromLS.user = { role: "Seller" };
+        // fromLS.user.role = { role: "Seller" };
+
+        fromLS.user.role.push("Seller");
+
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
         toast.success("Role Added");
@@ -71,7 +77,7 @@ export default function AdForm({ action, type }) {
       );
       setLoading(false);
     }
-  };   
+  };
 
   const handleClick = async () => {
     try {
@@ -89,10 +95,9 @@ export default function AdForm({ action, type }) {
         // fromLS.user = data.user;
         // localStorage.setItem("auth", JSON.stringify(fromLS));
 
-        if(!auth.user?.role?.includes("Seller")){
+        if (!auth.user?.role?.includes("Seller")) {
           sellerRole();
-        };
-       
+        }
 
         toast.success("Ad created successfully");
 

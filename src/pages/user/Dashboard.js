@@ -43,24 +43,25 @@ export default function Dashboard() {
     <div>
       {!seller ? (
         <div
-          className="d-flex justify-content-center align-items-center vh-100"
-          style={{ marginTop: "-10%" }}
+          // className=" container d-flex justify-content-center align-items-center vh-100"
+          className="col-lg-8 offset-lg-2 mt-4 mb-4"
+          // style={{ marginTop: "-10%" }}
         >
-          <h2>
-            Hey{" "}
-            {auth.user?.firstName
-              ? auth.user?.firstName
-              : auth.user?.email?.split("@")[0]}
-            , Welcome to Realist App
-          </h2>
+          {/* <div className="row">
+            <h2>
+              Hey{" "}
+              {auth.user?.firstName
+                ? auth.user?.firstName
+                : auth.user?.email?.split("@")[0]}
+              , Welcome to Realist App
+            </h2>
+          </div> */}
         </div>
       ) : (
         <div className="container">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
-              <p className="text-center">
-                Listed ads - Total {total} ads found
-              </p>
+              <h3>Listed ads - Total {total} ads found</h3>
             </div>
           </div>
 
@@ -93,7 +94,7 @@ export default function Dashboard() {
         </div>
       )}
       <Wishlist />
-      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
     </div>
   );
 }
