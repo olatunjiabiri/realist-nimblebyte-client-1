@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
-
+import "./index.css";
 export default function Main() {
   // context
   const [auth, setAuth] = useAuth();
@@ -27,49 +27,93 @@ export default function Main() {
 
   return (
     <>
-      <div className="row">
-        <div className="col">
-          <nav className="nav d-flex  lead">
-            <NavLink className="nav-link" aria-current="page" to="/search">
+      <div className=" d-flex  lead menu-container">
+        {/* <span className="collapse navbar-collapse" id="navbarNavDropdown"> */}
+        <div className="h-menu">
+          {/* <nav className="navbar navbar-expand-lg navbar-light">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            
+              
+           
+          </nav> */}
+
+          <nav className="nav d-flex lead">
+            <NavLink
+              className="navbar-nav nav-item nav-link"
+              aria-current="page"
+              to="/search"
+            >
               Search
             </NavLink>
 
-            <NavLink className="nav-link" aria-current="page" to="/buy">
+            <NavLink
+              className="navbar-nav nav-item nav-link"
+              aria-current="page"
+              to="/buy"
+            >
               Buy
             </NavLink>
 
-            <NavLink className="nav-link" aria-current="page" to="/rent">
+            <NavLink
+              className="navbar-nav nav-item nav-link"
+              aria-current="page"
+              to="/rent"
+            >
               Rent
             </NavLink>
 
-            <NavLink className="nav-link" aria-current="page" to="/agents">
-              Our Agents
+            <NavLink
+              className="navbar-nav nav-item nav-link"
+              aria-current="page"
+              to="/agents"
+            >
+              Agents
             </NavLink>
           </nav>
         </div>
+        {/* </div> */}
 
-        <div className="col">
+        {/* <div className="col"> */}
+        <div className="d-flex justify-content-center align-items-center h-menu">
           <nav
-            className="nav d-flex justify-content-center align-items-center lead"
-            style={{ marginTop: "-3%" }}
+            className="nav  lead"
+            // style={{ marginTop: "-3%" }}
           >
             <img
               src="./logo.png"
               alt="Korpea"
               to={"/"}
-              height={70}
-              width={100}
+              height={50}
+              width={70}
             />
-            <NavLink className="nav-link" aria-current="page" to="/">
+            <NavLink
+              className="nav-link d-none d-md-block"
+              aria-current="page"
+              to="/"
+            >
               Realist Korpea
             </NavLink>
           </nav>
         </div>
 
-        <div className="col">
-          <nav className="nav d-Fflex  lead float-right">
+        {/* <div className="col"> */}
+        <div className="h-menu float-right">
+          <nav className="nav d-flex  lead ">
             {loggedIn ? (
-              <a className="nav-link pointer" onClick={handlePostAdClick}>
+              <a
+                className="nav-link pointer d-none d-lg-block"
+                onClick={handlePostAdClick}
+              >
                 Post Ad
               </a>
             ) : (
@@ -78,7 +122,7 @@ export default function Main() {
 
             {!loggedIn ? (
               <>
-                <NavLink className="nav-link" to="/login">
+                <NavLink className="navbar-nav nav-item nav-link" to="/login">
                   Login/Register
                 </NavLink>
               </>
@@ -99,22 +143,34 @@ export default function Main() {
                   </a>
                   <ul className="dropdown-menu">
                     <li>
-                      <NavLink className="nav-link" to="/dashboard">
+                      <NavLink
+                        className="navbar-nav nav-item nav-link"
+                        to="/dashboard"
+                      >
                         Dashboard
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink className="nav-link" to="/ad/create">
+                      <NavLink
+                        className="navbar-nav nav-item nav-link"
+                        to="/ad/create"
+                      >
                         Create an Ad
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink className="nav-link" to="/user/profile">
+                      <NavLink
+                        className="navbar-nav nav-item nav-link"
+                        to="/user/profile"
+                      >
                         Update profile
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink className="nav-link" to="/user/settings">
+                      <NavLink
+                        className="navbar-nav nav-item nav-link"
+                        to="/user/settings"
+                      >
                         Change Password
                       </NavLink>
                     </li>
@@ -122,7 +178,10 @@ export default function Main() {
                       <hr />
                     </li>
                     <li>
-                      <a onClick={logout} className="nav-link">
+                      <a
+                        onClick={logout}
+                        className="navbar-nav nav-item nav-link"
+                      >
                         Logout
                       </a>
                     </li>
@@ -134,6 +193,7 @@ export default function Main() {
             )}
           </nav>
         </div>
+        {/* </span> */}
       </div>
     </>
   );
