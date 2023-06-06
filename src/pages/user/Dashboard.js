@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/nav/Sidebar";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import UserAdCard from "../../components/cards/UserAdCard";
+
+import Wishlist from "./Wishlist";
 
 export default function Dashboard() {
   // context
@@ -26,9 +27,11 @@ export default function Dashboard() {
 
   const fetchAds = async () => {
     try {
-      const { data } = await axios.get(`/user-ads/${auth.user?.userId}/${page}`);
+      const { data } = await axios.get(
+        `/user-ads/${auth.user?.userId}/${page}`
+      );
       // setAds(data.ads);
-      console.log('data', data)
+      console.log("data", data);
       setAds([...ads, ...data.ads]);
       setTotal(data.total);
     } catch (err) {
@@ -38,27 +41,27 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Dashboard</h1> */}
-      <Sidebar />
-
       {!seller ? (
         <div
-          className="d-flex justify-content-center align-items-center vh-100"
-          style={{ marginTop: "-10%" }}
+          // className=" container d-flex justify-content-center align-items-center vh-100"
+          className="col-lg-8 offset-lg-2 mt-4 mb-4"
+          // style={{ marginTop: "-10%" }}
         >
-          <h2>
-            Hey{" "}
-            {auth.user?.firstName
-              ? auth.user?.firstName
-              : auth.user?.email?.split("@")[0]}
-            , Welcome to Realist App
-          </h2>
+          {/* <div className="row">
+            <h2>
+              Hey{" "}
+              {auth.user?.firstName
+                ? auth.user?.firstName
+                : auth.user?.email?.split("@")[0]}
+              , Welcome to Realist App
+            </h2>
+          </div> */}
         </div>
       ) : (
         <div className="container">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
-              <p className="text-center">Total {total} ads found</p>
+              <h3>Listed ads - Total {total} ads found</h3>
             </div>
           </div>
 
@@ -90,7 +93,8 @@ export default function Dashboard() {
           )}
         </div>
       )}
-      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
+      <Wishlist />
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
     </div>
   );
 }

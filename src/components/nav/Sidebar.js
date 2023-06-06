@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function Sidebar() {
   return (
     <>
-      <div className="d-flex align-items-center" style={{backgroundImage:"url(/banner2.png)", backgroundSize:"auto 100%", backgroundPosition: "left top", height:300, width:"100%"}}></div>
+      {/* <div className="d-flex align-items-center" style={{backgroundImage:"url(/banner2.png)", backgroundSize:"auto 100%", backgroundPosition: "left top", height:300, width:"100%"}}></div> */}
 
       <ul className="nav nav-tabs">
         <li className="nav-item">

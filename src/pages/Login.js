@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -60,6 +60,9 @@ export default function Login() {
         );
         toast.success("Login successful");
         setLoading(false);
+
+        if (auth.user?.firstName === null) navigate("/user/profile");
+
         location?.state !== null
           ? navigate(location.state)
           : navigate("/dashboard");

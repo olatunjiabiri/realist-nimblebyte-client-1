@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/nav/Sidebar";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import AdCard from "../../components/cards/AdCard";
@@ -18,8 +17,8 @@ export default function Wishlist() {
   const fetchAds = async () => {
     try {
       // const { data } = await axios.post("/wishlist", { adId: ad._id, userId: auth?.user?.userId});
-      const { data } = await axios.post(`/ad-wishlist`,{
-        wishlist: auth.wishlist
+      const { data } = await axios.post(`/ad-wishlist`, {
+        wishlist: auth.wishlist,
       });
       // console.log('data  =>', data)
       setAds(data);
@@ -30,26 +29,28 @@ export default function Wishlist() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Wishlist</h1> */}
-      <Sidebar />
-
       {!ads?.length ? (
         <div
           className="d-flex justify-content-center align-items-center vh-100"
           style={{ marginTop: "-10%" }}
         >
-          <h2>
-            Hey {auth.user?.name ? auth.user?.name : auth.user?.username}, You
-            have not liked any properties yet!
-          </h2>
+          <h3 className="text-left">
+            Hey{" "}
+            {auth.user?.firstName
+              ? auth.user?.firstName
+              : auth.user?.email?.split("@")[0]}
+            {/* , Welcome to Realist App */}
+          </h3>
+          <h3>
+            {/* Hey {auth.user?.firstName ? auth.user?.firstName : auth.user?.email} */}
+            , You have not liked any properties yet!
+          </h3>
         </div>
       ) : (
         <div className="container">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
-              <p className="text-center">
-                You have liked {ads?.length} properties
-              </p>
+              <h3>You have liked {ads?.length} properties</h3>
             </div>
           </div>
 
