@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
@@ -89,13 +89,9 @@ export default function Main() {
             className="nav  lead"
             // style={{ marginTop: "-3%" }}
           >
-            <img
-              src="./logo.png"
-              alt="Korpea"
-              to={"/"}
-              height={50}
-              width={70}
-            />
+            <Link to={"/"}>
+              <img src="./logo.png" alt="Korpea" height={50} width={70} />
+            </Link>
             <NavLink
               className="nav-link d-none d-md-block"
               aria-current="page"
@@ -107,8 +103,8 @@ export default function Main() {
         </div>
 
         {/* <div className="col"> */}
-        <div className="h-menu float-right">
-          <nav className="nav d-flex  lead ">
+        <div className="float-right h-menu">
+          <nav className="nav d-flex lead">
             {loggedIn ? (
               <a
                 className="nav-link pointer d-none d-lg-block"
@@ -131,7 +127,7 @@ export default function Main() {
             )}
 
             {loggedIn ? (
-              <div className="dropdown">
+              <div className="dropdown mr-auto">
                 <li>
                   <a
                     className="nav-link dropdown-toggle pointer"
@@ -141,7 +137,7 @@ export default function Main() {
                       ? auth?.user?.firstname
                       : auth?.user?.email?.split("@")[0]}
                   </a>
-                  <ul className="dropdown-menu">
+                  <ul className="dropdown-menu px-3">
                     <li>
                       <NavLink
                         className="navbar-nav nav-item nav-link"
