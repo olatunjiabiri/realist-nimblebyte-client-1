@@ -29,7 +29,7 @@ export default function Main() {
     <>
       <div className=" d-flex  lead menu-container">
         {/* <span className="collapse navbar-collapse" id="navbarNavDropdown"> */}
-        <div className="h-menu">
+        <div className="d-flex justify-content-center align-items-center h-menu">
           {/* <nav className="navbar navbar-expand-lg navbar-light">
             <button
               className="navbar-toggler"
@@ -49,7 +49,8 @@ export default function Main() {
 
           <nav className="nav d-flex lead">
             <NavLink
-              className="navbar-nav nav-item nav-link"
+              className="nav-item nav-link"
+              //  className="navbar-nav nav-item nav-link"
               aria-current="page"
               to="/search"
             >
@@ -57,7 +58,7 @@ export default function Main() {
             </NavLink>
 
             <NavLink
-              className="navbar-nav nav-item nav-link"
+              className="nav-item nav-link"
               aria-current="page"
               to="/buy"
             >
@@ -65,7 +66,7 @@ export default function Main() {
             </NavLink>
 
             <NavLink
-              className="navbar-nav nav-item nav-link"
+              className="nav-item nav-link"
               aria-current="page"
               to="/rent"
             >
@@ -73,7 +74,7 @@ export default function Main() {
             </NavLink>
 
             <NavLink
-              className="navbar-nav nav-item nav-link"
+              className="nav-item nav-link"
               aria-current="page"
               to="/agents"
             >
@@ -118,7 +119,7 @@ export default function Main() {
 
             {!loggedIn ? (
               <>
-                <NavLink className="navbar-nav nav-item nav-link" to="/login">
+                <NavLink className="nav-item nav-link" to="/login">
                   Login/Register
                 </NavLink>
               </>
