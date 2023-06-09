@@ -3,7 +3,7 @@ import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export default function LikeUnlike({ ad }) {
   // context

@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
+import { BiMenu } from "react-icons/bi";
 export default function Main() {
   // context
   const [auth, setAuth] = useAuth();
@@ -27,26 +28,13 @@ export default function Main() {
 
   return (
     <>
-      <div className=" d-flex  lead menu-container">
+      <div className="d-flex  lead menu-container">
+        <div className="menu-icon">
+          <BiMenu size={30}></BiMenu>
+        </div>
+
         {/* <span className="collapse navbar-collapse" id="navbarNavDropdown"> */}
         <div className="d-flex justify-content-center align-items-center h-menu">
-          {/* <nav className="navbar navbar-expand-lg navbar-light">
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNavDropdown"
-              aria-controls="navbarNavDropdown"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            
-              
-           
-          </nav> */}
-
           <nav className="nav d-flex lead">
             <NavLink
               className="nav-item nav-link"
@@ -85,7 +73,7 @@ export default function Main() {
         {/* </div> */}
 
         {/* <div className="col"> */}
-        <div className="d-flex justify-content-center align-items-center h-menu">
+        <div className="d-flex justify-content-center align-items-center">
           <nav
             className="nav  lead"
             // style={{ marginTop: "-3%" }}
@@ -104,7 +92,7 @@ export default function Main() {
         </div>
 
         {/* <div className="col"> */}
-        <div className="float-right h-menu">
+        <div className="float-right">
           <nav className="nav d-flex lead">
             {loggedIn ? (
               <a

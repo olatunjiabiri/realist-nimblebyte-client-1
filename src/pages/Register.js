@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -30,7 +31,7 @@ export default function Register() {
         toast.error(response.data.message);
         setLoading(false);
       } else {
-        toast.success("Please check your email to complete registration");
+        toast.success("Confirmation link has been sent to your mail");
         setLoading(false);
         navigate("/");
       }

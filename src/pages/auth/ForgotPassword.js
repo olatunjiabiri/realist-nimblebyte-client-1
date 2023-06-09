@@ -1,6 +1,7 @@
-import  React,{ useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -11,14 +12,13 @@ export default function Login() {
   // hooks
   const navigate = useNavigate();
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // console.log(email, password);
       setLoading(true);
 
-      const {data} = await axios.get(
+      const { data } = await axios.get(
         `https://payorigins-auth.azurewebsites.net/user/SendResetPasswordCode?email=${email}`
       );
 
@@ -40,7 +40,9 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="display-3 text-center bg-primary text-light p-5">Forgot password</h1>
+      <h1 className="display-3 text-center bg-primary text-light p-5">
+        Forgot password
+      </h1>
 
       <div className="container">
         <div className="row">

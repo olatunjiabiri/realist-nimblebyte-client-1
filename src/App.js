@@ -1,9 +1,11 @@
-import  React from 'react'
-import  { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/auth";
 import { SearchProvider } from "./context/search";
 import Main from "./components/nav/Main";
-import { Toaster } from "react-hot-toast";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -37,6 +39,7 @@ import Search from "./pages/Search";
 import Payment from "./pages/payment/Payment";
 import Completion from "./pages/payment/Completion";
 import CheckoutForm from "./pages/payment/CheckoutForm";
+// import Header from "./components/nav/Header";
 
 const PageNotFound = () => (
   <div className="text-center p-5">404 PAGE NOT FOUND!</div>
@@ -51,14 +54,24 @@ function App() {
         <AuthProvider>
           <SearchProvider>
             <Main />
-            <Toaster />
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable={false}
+              pauseOnHover
+              theme="light"
+            />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset-password" element={<PasswordReset />} />
-              
-              
+
               <Route
                 path="/auth/account-activate"
                 element={<AccountActivate />}

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useAuth } from "../context/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -29,6 +29,12 @@ export default function Login() {
     }
   };
 
+  // const showToastMessage = () => {
+  //   toast.success("Login successful", {
+  //     position: toast.POSITION.TOP_CENTER,
+  //   });
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -42,7 +48,9 @@ export default function Login() {
       );
 
       if (!data?.success) {
-        toast.error(data.message);
+        // toast.error(data.message);
+        toast.error("Account does not exist, Please register");
+
         setLoading(false);
       } else {
         const { token, user } = data.responsePayload;
@@ -59,6 +67,7 @@ export default function Login() {
           JSON.stringify({ token, user, wishlist: userWishlist })
         );
         toast.success("Login successful");
+        // showToastMessage();
         setLoading(false);
 
         if (auth.user?.firstName === null) navigate("/user/profile");
@@ -76,8 +85,6 @@ export default function Login() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Login</h1> */}
-
       <div className="container">
         <div className="row">
           <div className="col-lg-4 offset-lg-4">

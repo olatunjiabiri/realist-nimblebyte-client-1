@@ -5,7 +5,8 @@ import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useAuth } from "../../context/auth";
 
 export default function AdForm({ action, type }) {

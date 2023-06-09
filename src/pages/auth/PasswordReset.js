@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 import { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useFormik } from "formik";
 
 import { passwordResetSchema } from "../../validations";
 
 export default function PasswordReset() {
-  
   // state
 
   const [values1] = useState({
@@ -134,7 +134,6 @@ export default function PasswordReset() {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-              
               />
               {errors.password && touched.password && (
                 <p className="mt-0 text-danger">
