@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 
 export default function AdCard({ ad }) {
   return (
-    <div className="col-lg-4 p-4 gx-4 gy-4">
+    <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
       <Link to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${ad?.action}`}
