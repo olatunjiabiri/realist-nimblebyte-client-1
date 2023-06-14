@@ -23,31 +23,6 @@ export default function SearchForm() {
 
   const handleSearch = async () => {
     setSearch({ ...search, loading: false });
-    // if (search?.price === "") {
-    //   // setSearch((prev) => ({ ...prev, price: "All price" }));
-    //   setSearch({
-    //     ...search,
-    //     price: "All price",
-    //     loading: false,
-    //   });
-    // }
-
-    // if (search?.action === "") {
-    //   // setSearch((prev) => ({ ...prev, action: "Buy" }));
-    //   setSearch({
-    //     ...search,
-    //     action: "Buy",
-    //     loading: false,
-    //   });
-    // }
-    // if (search?.type === "") {
-    //   // setSearch((prev) => ({ ...prev, type: "House" }));
-    //   setSearch({
-    //     ...search,
-    //     type: "House",
-    //     loading: false,
-    //   });
-    // }
 
     console.log("search options>>>>", search);
 
@@ -55,11 +30,11 @@ export default function SearchForm() {
       const { results, page, price, ...rest } = search;
 
       const query = queryString.stringify(rest);
-      console.log("query===>", query);
+      // console.log("query===>", query);
 
       const { data } = await axios.get(`/search?${query}`);
 
-      console.log("data===>", data);
+      // console.log("data===>", data);
 
       if (search?.page !== "/search") {
         setSearch((prev) => ({ ...prev, results: data, loading: false }));
@@ -73,14 +48,14 @@ export default function SearchForm() {
         }));
       }
     } catch (err) {
-      console.log(err);
+      //  ¿ console.log(err);
       setSearch({ ...search, loading: false });
     }
   };
 
   return (
     <>
-      <div className="searchForm-container">
+      <div className="searchForm-container mt-5 pt-5">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -92,8 +67,8 @@ export default function SearchForm() {
             width: "100%",
           }}
         >
-          <div className="container bg-secondary bg-gradient filter-container">
-            <div className="form-control">
+          <div className="container bg-light filter-container">
+            <div className="form-control my-2">
               <GooglePlacesAutocomplete
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
@@ -112,19 +87,20 @@ export default function SearchForm() {
             <div className="d-flex flex-wrap btn-group justify-content-center filter-options">
               <div className="form-row m-1">
                 <select
-                  className="form-control pl-1"
+                  className="form-select mb-2 pl-1 "
                   aria-label="form-select select-options"
                   // size={3}
-                  disabled={filter}
+                  // disabled={filter}
                   // defaultValue="Purpose"
                   onClick={(e) => {
                     setSearch({
                       ...search,
                       action: e.target.value,
+                      price: "",
                     });
                   }}
                   onChange={(e) => {
-                    setSearch({ ...search, action: e.target.value });
+                    setSearch({ ...search, action: e.target.value, price: "" });
                     setPropertyType(false);
                   }}
                 >
@@ -141,14 +117,14 @@ export default function SearchForm() {
                 </select>
 
                 <select
-                  className="form-control pl-1"
+                  className="form-select mb-2 pl-1"
                   aria-label="form-select select-options"
-                  disabled={filter}
+                  // disabled={filter}
                   onChange={(e) => {
-                    setSearch({ ...search, type: e.target.value });
+                    setSearch({ ...search, type: e.target.value, price: "" });
                   }}
                   onClick={(e) => {
-                    setSearch({ ...search, type: e.target.value });
+                    setSearch({ ...search, type: e.target.value, price: "" });
                   }}
                 >
                   <option selected>Property Type</option>
@@ -166,19 +142,17 @@ export default function SearchForm() {
                 {search.action === "Buy" ? (
                   <>
                     <select
-                      className="form-control pl-1"
+                      className="form-select mb-2 pl-1"
                       aria-label="form-select select-options"
-                      disabled={filter}
-                      onClick={(e) => {
-                        // {
-                        sellPrices.map((item) =>
-                          setSearch({
-                            ...search,
-                            price: item.name,
-                            priceRange: item.array,
-                          })
-                        );
-                        // }
+                      // disabled={filter}
+                      onChange={(e) => {
+                        setSearch({
+                          ...search,
+                          price: e.target.value,
+                          priceRange: sellPrices.find(
+                            (item) => item.name === e.target.value
+                          ).array,
+                        });
                       }}
                     >
                       <option selected>Price</option>
@@ -196,19 +170,17 @@ export default function SearchForm() {
                 ) : (
                   <>
                     <select
-                      className="form-control pl-1"
+                      className="form-select mb-2 pl-1"
                       aria-label="form-select select-options"
-                      disabled={filter}
-                      onClick={(e) => {
-                        // {
-                        rentPrices.map((item) =>
-                          setSearch({
-                            ...search,
-                            price: item.name,
-                            priceRange: item.array,
-                          })
-                        );
-                        // }
+                      // disabled={filter}
+                      onChange={(e) => {
+                        setSearch({
+                          ...search,
+                          price: e.target.value,
+                          priceRange: rentPrices.find(
+                            (item) => item.name === e.target.value
+                          ).array,
+                        });
                       }}
                     >
                       <option selected>Price</option>
@@ -224,143 +196,12 @@ export default function SearchForm() {
                     </select>
                   </>
                 )}
-                <div className="col-md-12 text-center mt-0">
+                <div className="col-md-12 text-center mt-3">
                   <button onClick={handleSearch} className="btn btn-danger">
                     Search
                   </button>
                 </div>
               </div>
-
-              {/* <div className="dropdown m-1"> */}
-              {/* <button
-                  className="btn btn-secondary dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                > */}
-              {/* Purpose */}
-              {/* &nbsp; {search?.action ? search.action : "Purpose"}
-                </button> */}
-
-              {/* <ul className="dropdown-menu">
-                  <>
-                    {action.map((item) => (
-                      <li key={item._id}>
-                        <button
-                          onChange={() => {
-                            setSearch({
-                              ...search,
-                              action: item.name,
-                              // price: "",
-                            });
-                          }}
-                          onClick={() => {
-                            setSearch({
-                              ...search,
-                              action: item.name,
-                              // price: "",
-                            });
-                          }}
-                          className="dropdown-item"
-                        >
-                          {item.name}
-                        </button>
-                      </li>
-                    ))}
-                  </>
-                </ul> */}
-              {/* </div> */}
-
-              {/* <div className="dropdown  m-1">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  &nbsp; {search?.type ? search.type : "Property Type"}
-                </button> */}
-
-              {/* <ul className="dropdown-menu">
-                  <>
-                    {type.map((item) => (
-                      <li key={item._id}>
-                        <button
-                          onChange={(e) =>
-                            setSearch({ ...search, type: e.target.value })
-                          }
-                          onClick={() => {
-                            setSearch({
-                              ...search,
-                              type: item.name,
-                              // price: "",
-                            });
-                          }}
-                          className="dropdown-item"
-                        >
-                          {item.name}
-                        </button>
-                      </li>
-                    ))}
-                  </>
-                </ul>
-              </div> */}
-
-              {/* <div className="dropdown  m-1">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  &nbsp; {search?.price ? search.price : "Price"}
-                </button>
-
-                <ul className="dropdown-menu">
-                  {search.action === "Buy" ? (
-                    <>
-                      {sellPrices.map((item) => (
-                        <li key={item._id}>
-                          <button
-                            onClick={() => {
-                              setSearch({
-                                ...search,
-                                price: item.name,
-                                priceRange: item.array,
-                              });
-                            }}
-                            className="dropdown-item"
-                          >
-                            {item.name}
-                          </button>
-                        </li>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {rentPrices.map((item) => (
-                        <li key={item._id}>
-                          <button
-                            onClick={() => {
-                              setSearch({
-                                ...search,
-                                price: item.name,
-                                priceRange: item.array,
-                              });
-                            }}
-                            className="dropdown-item"
-                          >
-                            {item.name}
-                          </button>
-                        </li>
-                      ))}
-                    </>
-                  )}
-                </ul>
-              </div> */}
-
-              {/* <div className="dropdown  m-1">
-                <button onClick={handleSearch} className="btn btn-danger">
-                  Search
-                </button>
-              </div> */}
             </div>
 
             {/* <pre>{JSON.stringify(search, null, 4)}</pre> */}

@@ -29,12 +29,6 @@ export default function Login() {
     }
   };
 
-  // const showToastMessage = () => {
-  //   toast.success("Login successful", {
-  //     position: toast.POSITION.TOP_CENTER,
-  //   });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -70,22 +64,23 @@ export default function Login() {
         // showToastMessage();
         setLoading(false);
 
-        if (auth.user?.firstName === null) navigate("/user/profile");
+        if (auth.user?.firstName === "") navigate("/user/profile");
 
         location?.state !== null
           ? navigate(location.state)
           : navigate("/dashboard");
       }
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong. Try again.");
+      if (err.response.data.message === "Email Not Confirmed") {
+        toast.error(err.response.data.message + ", Check your mail");
+      } else toast.error("Something went wrong", err);
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <div className="container">
+    <div className="container m-5 p-5">
+      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit}>
@@ -114,15 +109,15 @@ export default function Login() {
                 {loading ? "Waiting..." : "Login"}
               </button>
             </form>
-            <Link className="text-primary " to="/register">
-              Register
-            </Link>
-            <Link
-              className="text-danger float-right"
-              to="/auth/forgot-password"
-            >
-              Forgot password
-            </Link>
+
+            <div className="d-flex justify-content-between">
+              <Link className="text-primary" to="/register">
+                Register
+              </Link>
+              <Link className="text-danger" to="/auth/forgot-password">
+                Forgot password
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -39,12 +39,8 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1 className="display-3 text-center bg-primary text-light p-5">
-        Forgot password
-      </h1>
-
-      <div className="container">
+    <div className="container-fluid m-5 p-5">
+      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit} autoComplete="off">

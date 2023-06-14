@@ -40,6 +40,7 @@ import Payment from "./pages/payment/Payment";
 import Completion from "./pages/payment/Completion";
 import CheckoutForm from "./pages/payment/CheckoutForm";
 // import Header from "./components/nav/Header";
+import Navbar from "./components/nav/Navbar";
 
 const PageNotFound = () => (
   <div className="text-center p-5">404 PAGE NOT FOUND!</div>
@@ -53,7 +54,8 @@ function App() {
       <Elements stripe={stripe}>
         <AuthProvider>
           <SearchProvider>
-            <Main />
+            {/* <Main /> */}
+            <Navbar />
             <ToastContainer
               position="top-center"
               autoClose={5000}

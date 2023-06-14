@@ -11,19 +11,13 @@ import { passwordResetSchema } from "../../validations";
 export default function PasswordReset() {
   // state
 
-  const [values1] = useState({
-    otp: "",
-    email: "",
-    password: "",
-  });
-  const { otp, email, password } = values1;
-
   const [loading, setLoading] = useState(false);
   // hooks
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     // e.preventDefault();
+    const { otp, email, password } = values;
 
     try {
       setLoading(true);
@@ -72,12 +66,8 @@ export default function PasswordReset() {
   });
 
   return (
-    <div>
-      <h1 className="display-1 text-center bg-primary text-light p-5">
-        Reset Password
-      </h1>
-
-      <div className="container">
+    <div className="container-fluid m-5 p-5">
+      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit}>
@@ -103,7 +93,6 @@ export default function PasswordReset() {
 
               <input
                 type="text"
-                class="form-control"
                 id="validationCustom03"
                 name="email"
                 placeholder="Enter your email"

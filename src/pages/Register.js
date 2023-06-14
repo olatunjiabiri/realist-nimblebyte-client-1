@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import { Link, useNavigate } from "react-router-dom";
+import config from "../NewConfig";
 
 export default function Register() {
   // state
@@ -23,6 +24,7 @@ export default function Register() {
         {
           email,
           password,
+          appId: config.appId,
         }
       );
 
@@ -44,10 +46,8 @@ export default function Register() {
   };
 
   return (
-    <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Register</h1> */}
-
-      <div className="container">
+    <div className="container m-5 p-5" style={{ marginTop: "80px" }}>
+      <div className="container mt-5 pt-5">
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit}>
@@ -76,7 +76,7 @@ export default function Register() {
                 {loading ? "Waiting..." : "Register"}
               </button>
             </form>
-            <div className="mt-4 text-grey-600">
+            <div className="mt-3 text-grey-600">
               Already have an account?{" "}
               <span>
                 <Link className="text-danger" to="/login">

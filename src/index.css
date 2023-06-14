@@ -5,6 +5,46 @@
 .pointer {
   cursor: pointer;
 }
+
+.navbar-light .navbar-nav .nav-link  {
+  /* color: var(--accent-color); */
+  color: #2196f3;
+  font-weight:600;
+  font-size: 1.3rem
+}
+
+.dropdown-item  {
+  /* color: var(--accent-color); */
+  color: #2196f3;
+  font-weight:600;
+  font-size: 1rem
+}
+
+.link {
+  text-decoration: none !important;
+}
+
+.footer-color {
+   color: white ;
+   font-weight:600;
+  font-size: 1.3rem
+}
+
+.footer-color:hover {
+  color:#e2770d
+
+}
+
+.dropdown:active { color: #e2770d; }
+
+.dropdown-item:hover {
+  color:#e2770d
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color:#e2770d
+}
+
 .hoverable:hover {
   transform: scale(1.01);
   box-shadow: 0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -17,9 +57,9 @@
   border-radius: 0px;
 }
 
-.active-button {
+/* .active-button {
   background: #191970;
-}
+} */
 
 .map-info-window {
   width: 120px;
@@ -27,64 +67,14 @@
   overflow: hidden;
 }
 
-.paddings {
-  padding: 1.5rem;
+
+#custom-nav {
+  -webkit-box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  z-index:999;
+  /* &.--not-top {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  } */
 }
 
-.innerWidth {
-  width: 100%;
-}
-
-.flexCenter {
-  display: flex;
-  row-gap: 2rem;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.flexStart {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.flexEnd {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.flexColCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.flexColStart {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-.flexColEnd {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.primaryText {
-  color: #1f3e72;
-  font-weight: bold;
-  font-size: 2rem;
-}
-
-.secondaryText {
-  color: rgb(140 139 139);
-  font-size: 0.9rem;
-}
-.orangeText {
-  color: orange;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
