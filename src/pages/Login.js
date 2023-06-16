@@ -71,8 +71,8 @@ export default function Login() {
           : navigate("/dashboard");
       }
     } catch (err) {
-      if (err.response.data.message === "Email Not Confirmed") {
-        toast.error(err.response.data.message + ", Check your mail");
+      if (err.response.data.success === false) {
+        toast.error(err.response.data.message);
       } else toast.error("Something went wrong", err);
       setLoading(false);
     }
