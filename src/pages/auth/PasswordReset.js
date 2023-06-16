@@ -83,12 +83,12 @@ export default function PasswordReset() {
                 autoFocus
               />
               {errors.otp && touched.otp && (
-                <p className="mt-0 text-danger">
+                <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <div> otp must be a number</div>
+                    <p> otp must be a number</p>
                   </small>
-                </p>
+                </div>
               )}
 
               <input
@@ -105,12 +105,12 @@ export default function PasswordReset() {
               />
 
               {errors.email && touched.email && (
-                <p className="mt-0 text-danger">
+                <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <div> {errors.email}</div>
+                    <p> {errors.email}</p>
                   </small>
-                </p>
+                </div>
               )}
 
               <input
@@ -125,12 +125,12 @@ export default function PasswordReset() {
                 onBlur={handleBlur}
               />
               {errors.password && touched.password && (
-                <p className="mt-0 text-danger">
+                <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <div> {errors.password}</div>
+                    <p> {errors.password}</p>
                   </small>
-                </p>
+                </div>
               )}
 
               <input
@@ -144,12 +144,12 @@ export default function PasswordReset() {
                 onBlur={handleBlur}
               />
               {errors.confirmPassword && touched.confirmPassword && (
-                <p className="mt-0 text-danger">
+                <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <div> {errors.confirmPassword}</div>
+                    <p> {errors.confirmPassword}</p>
                   </small>
-                </p>
+                </div>
               )}
 
               <button

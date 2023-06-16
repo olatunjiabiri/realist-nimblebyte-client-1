@@ -158,7 +158,7 @@ const Navbar = () => {
                         <li>
                           <NavLink
                             className="dropdown-item"
-                            to="/user/settings"
+                            to="/user/update-password"
                           >
                             Change Password
                           </NavLink>

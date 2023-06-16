@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/auth";
 import { SearchProvider } from "./context/search";
-import Main from "./components/nav/Main";
+// import Main from "./components/nav/Main";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +27,9 @@ import RentLand from "./pages/user/ad/RentLand";
 import AdView from "./pages/AdView";
 import Footer from "./components/nav/Footer";
 import UpdateProfile from "./pages/user/UpdateProfile";
-import Settings from "./pages/user/Settings";
+// import Settings from "./pages/user/Settings";
+import UpdatePassword from "./pages/user/UpdatePassword";
+
 import AdEdit from "./pages/user/ad/AdEdit";
 import Wishlist from "./pages/user/Wishlist";
 import Enquiries from "./pages/user/Enquiries";
@@ -39,11 +41,16 @@ import Search from "./pages/Search";
 import Payment from "./pages/payment/Payment";
 import Completion from "./pages/payment/Completion";
 import CheckoutForm from "./pages/payment/CheckoutForm";
-// import Header from "./components/nav/Header";
 import Navbar from "./components/nav/Navbar";
 
 const PageNotFound = () => (
-  <div className="text-center p-5">404 PAGE NOT FOUND!</div>
+  <div className="container-fluid m-5 p-5">
+    <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
+      <div className="text-center p-5">
+        <h2>404 PAGE NOT FOUND!</h2>
+      </div>
+    </div>
+  </div>
 );
 
 const stripe = loadStripe("PUBLIC-KEY");
@@ -98,7 +105,12 @@ function App() {
                 <Route path="ad/create/rent/house" element={<RentHouse />} />
                 <Route path="ad/create/rent/land" element={<RentLand />} />
                 <Route path="user/profile" element={<UpdateProfile />} />
-                <Route path="user/settings" element={<Settings />} />
+                {/* <Route path="user/settings" element={<Settings />} /> */}
+                <Route
+                  path="user/update-password"
+                  element={<UpdatePassword />}
+                />
+
                 <Route path="user/ad/:slug" element={<AdEdit />} />
                 <Route path="user/wishlist" element={<Wishlist />} />
                 <Route path="user/enquiries" element={<Enquiries />} />
