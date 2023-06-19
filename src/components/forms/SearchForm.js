@@ -24,7 +24,7 @@ export default function SearchForm() {
   const handleSearch = async () => {
     setSearch({ ...search, loading: false });
 
-    console.log("search options>>>>", search);
+    // console.log("search options>>>>", search);
 
     try {
       const { results, page, price, ...rest } = search;
@@ -48,7 +48,7 @@ export default function SearchForm() {
         }));
       }
     } catch (err) {
-      //  ¿ console.log(err);
+      //   console.log(err);
       setSearch({ ...search, loading: false });
     }
   };
@@ -81,7 +81,6 @@ export default function SearchForm() {
                   },
                 }}
               />
-              {/* </div> */}
             </div>
 
             <div className="d-flex flex-wrap btn-group justify-content-center filter-options">
@@ -89,16 +88,6 @@ export default function SearchForm() {
                 <select
                   className="form-select mb-2 pl-1 "
                   aria-label="form-select select-options"
-                  // size={3}
-                  // disabled={filter}
-                  // defaultValue="Purpose"
-                  onClick={(e) => {
-                    setSearch({
-                      ...search,
-                      action: e.target.value,
-                      price: "",
-                    });
-                  }}
                   onChange={(e) => {
                     setSearch({ ...search, action: e.target.value, price: "" });
                     setPropertyType(false);
@@ -121,9 +110,6 @@ export default function SearchForm() {
                   aria-label="form-select select-options"
                   // disabled={filter}
                   onChange={(e) => {
-                    setSearch({ ...search, type: e.target.value, price: "" });
-                  }}
-                  onClick={(e) => {
                     setSearch({ ...search, type: e.target.value, price: "" });
                   }}
                 >
