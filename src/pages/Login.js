@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useAuth } from "../context/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -42,7 +42,9 @@ export default function Login() {
       );
 
       if (!data?.success) {
-        toast.error(data.message);
+        // toast.error(data.message);
+        toast.error("Account does not exist, Please register");
+
         setLoading(false);
       } else {
         const { token, user } = data.responsePayload;
@@ -59,26 +61,26 @@ export default function Login() {
           JSON.stringify({ token, user, wishlist: userWishlist })
         );
         toast.success("Login successful");
+        // showToastMessage();
         setLoading(false);
 
-        if (auth.user?.firstName === null) navigate("/user/profile");
+        if (auth.user?.firstName === "") navigate("/user/profile");
 
         location?.state !== null
           ? navigate(location.state)
           : navigate("/dashboard");
       }
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong. Try again.");
+      if (err.response.data.success === false) {
+        toast.error(err.response.data.message);
+      } else toast.error("Something went wrong", err);
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Login</h1> */}
-
-      <div className="container">
+    <div className="container m-5 p-5">
+      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit}>
@@ -107,15 +109,15 @@ export default function Login() {
                 {loading ? "Waiting..." : "Login"}
               </button>
             </form>
-            <Link className="text-primary " to="/register">
-              Register
-            </Link>
-            <Link
-              className="text-danger float-right"
-              to="/auth/forgot-password"
-            >
-              Forgot password
-            </Link>
+
+            <div className="d-flex justify-content-between">
+              <Link className="text-primary" to="/register">
+                Register
+              </Link>
+              <Link className="text-danger" to="/auth/forgot-password">
+                Forgot password
+              </Link>
+            </div>
           </div>
         </div>
       </div>

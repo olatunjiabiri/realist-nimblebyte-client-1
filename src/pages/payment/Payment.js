@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
@@ -46,17 +46,19 @@ function Payment() {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          {/* <div className="col-lg-4 offset-lg-4"> */}
+      <div className="container m-5 p-5">
+        <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
+          <div className="row">
+            {/* <div className="col-lg-4 offset-lg-4"> */}
             <h1> Stripe Payment </h1>
             {clientSecret && stripePromise && (
               <Elements stripe={stripePromise} options={{ clientSecret }}>
                 <CheckoutForm />
               </Elements>
             )}
-          {/* </div>{" "} */}
-        </div>{" "}
+            {/* </div>{" "} */}
+          </div>{" "}
+        </div>
       </div>
     </>
   );

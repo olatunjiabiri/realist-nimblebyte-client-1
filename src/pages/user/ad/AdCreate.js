@@ -19,33 +19,29 @@ export default function AdCreate() {
   };
 
   return (
-    <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Ad Create</h1> */}
-      {/* <div className="d-flex align-items-center" style={{backgroundImage:"url(/banner2.png)", backgroundSize:"auto 100%", backgroundPosition: "left top", height:300, width:"100%"}}></div> */}
-      {/* <Sidebar /> */}
-
+    <div className="container">
       <div
         className="d-flex justify-content-center align-items-center vh-100"
         // style={{ marginTop: "-16%" }}
       >
-        <div className="col-lg-6">
+        <div className="col-lg-6 mx-2">
           <button
             onClick={handleSell}
-            className="btn btn -primary btn-lg col-12 p-5"
+            className="btn btn-info btn-lg col-12 p-5"
           >
             <span className="h2">Sell</span>
           </button>
           {sell && (
-            <div className="my-1">
+            <div className="m-1">
               <button
                 onClick={() => navigate("/ad/create/sell/House")}
-                className="btn btn-secondary p-5 col-6"
+                className="btn btn-info btn-lg p-5 col-6"
               >
                 House
               </button>
               <button
                 onClick={() => navigate("/ad/create/sell/Land")}
-                className="btn btn-secondary p-5 col-6"
+                className="btn btn-info btn-lg p-5 col-6"
               >
                 Land
               </button>
@@ -56,7 +52,7 @@ export default function AdCreate() {
         <div className="col-lg-6">
           <button
             onClick={handleRent}
-            className="btn btn -primary btn-lg col-12 p-5"
+            className="btn btn-info btn-lg col-12 p-5"
           >
             <span className="h2">Rent</span>
           </button>
@@ -64,13 +60,13 @@ export default function AdCreate() {
             <div className="my-1">
               <button
                 onClick={() => navigate("/ad/create/rent/House")}
-                className="btn btn-secondary p-5 col-6"
+                className="btn btn-info btn-lg p-5 col-6"
               >
                 House
               </button>
               <button
                 onClick={() => navigate("/ad/create/rent/Land")}
-                className="btn btn-secondary p-5 col-6"
+                className="btn btn-info btn-lg p-5 col-6"
               >
                 Land
               </button>

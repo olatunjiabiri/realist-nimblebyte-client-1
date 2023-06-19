@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from "react";
 import SearchForm from "../components/forms/SearchForm";
 import { useSearch } from "../context/search";
 import AdCard from "../components//cards/AdCard";
 
 export default function Search() {
   const [search, setSearch] = useSearch();
+  const [searchFilters, setSearchFilters] = useState(false);
 
   return (
     <div>

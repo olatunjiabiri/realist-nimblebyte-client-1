@@ -6,7 +6,7 @@ import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export default function AdEdit({ action, type }) {
   // state

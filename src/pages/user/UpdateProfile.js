@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
 
 import ProfileUpload from "../../components/forms/ProfileUpload";
@@ -127,9 +128,9 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container m-5 p-5 top-margin">
         {/* <Sidebar /> */}
-        <div className="container mt-2">
+        <div className="container mt-5">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
               <div className="form-group">
@@ -138,13 +139,13 @@ export default function UpdateProfile() {
                   autoFocus
                   placeholder="Select User Account Type"
                   onChange={onOptionChange}
-                  className="form-control form-control-lg"
+                  className="form-select form-select-lg"
                 >
-                  {/* <option selected> Select User Account Type</option> */}
-                  <option className="form-control-lg mb-5" value={"Buyer"}>
+                  <option selected> Select User Account Type</option>
+                  <option className="form-select-lg mb-5" value={"Buyer"}>
                     Buyer
                   </option>
-                  <option className="form-control-lg mb-5" value={"Seller"}>
+                  <option className="form-select-lg mb-5" value={"Seller"}>
                     Seller
                   </option>
                 </select>
@@ -183,7 +184,7 @@ export default function UpdateProfile() {
                 <input
                   type="text"
                   placeholder="Firstname"
-                  className="form-control mb-3"
+                  className="form-control mt-3 mb-3"
                   value={firstName}
                   onChange={(e) =>
                     // setFirstName(slugify(e.target.value.toLowerCase()))

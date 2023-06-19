@@ -14,8 +14,10 @@ export default function Agents() {
 
   const fetchAgents = async () => {
     try {
-      const { data } = await axios.get("/agents");
-      setAgents(data);
+      const { data } = await axios.get(
+        `https://payorigins-auth.azurewebsites.net/user/GetUsersByRole?roleName=Seller`
+      );
+      setAgents(data.responsePayload);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -36,15 +38,13 @@ export default function Agents() {
 
   return (
     <div>
-       <div >
-      <SearchForm />
-
+      <div>
+        <SearchForm />
       </div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Agents</h1> */}
       <div className="container">
         <div className="row">
           {agents?.map((agent) => (
-            <UserCard user={agent} key={agent._id} />
+            <UserCard user={agent} key={agent.userId} />
           ))}
         </div>
       </div>
