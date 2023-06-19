@@ -1,5 +1,5 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import "./index.css";
 
@@ -12,7 +12,6 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -38,7 +37,6 @@ export default function CheckoutForm() {
     } else {
       setMessage("An unexpected error occured.");
     }
-
     // if (error.type === "card_error" || error.type === "validation_error") {
     //   setMessage(error.message);
     // } else {
@@ -54,7 +52,11 @@ export default function CheckoutForm() {
         <div className="col-lg-4 offset-lg-4">
           <form id="payment-form" onSubmit={handleSubmit}>
             <PaymentElement id="payment-element" />
-            <button disabled={isProcessing || !stripe || !elements} id="submit">
+            <button
+              className="btn btn-primary mt-2"
+              disabled={isProcessing || !stripe || !elements}
+              id="submit"
+            >
               <span id="button-text">
                 {isProcessing ? "Processing ... " : "Pay now"}
               </span>
