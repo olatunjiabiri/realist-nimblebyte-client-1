@@ -31,7 +31,7 @@ export default function Dashboard() {
         `/user-ads/${auth.user?.userId}/${page}`
       );
       // setAds(data.ads);
-      console.log("data", data);
+      // console.log("data", data);
       setAds([...ads, ...data.ads]);
       setTotal(data.total);
     } catch (err) {

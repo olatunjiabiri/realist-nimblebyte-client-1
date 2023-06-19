@@ -119,7 +119,7 @@ function App() {
 
               <Route path="/ad/:slug" element={<AdView />} />
               <Route path="/agents" element={<Agents />} />
-              <Route path="/agent/:username" element={<Agent />} />
+              <Route path="/agent/:firstName" element={<Agent />} />
 
               <Route path="/buy" element={<Buy />} />
               <Route path="/rent" element={<Rent />} />
