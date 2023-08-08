@@ -1,5 +1,6 @@
 const config = {
-  API: "https://realist-korpea-backend.azurewebsites.net/api",
+  // API: "https://realist-korpea-backend.azurewebsites.net/api",
+  API: "https://realist-node-backend.azurewebsites.net/api",
   // API: "http://localhost:8000/api",
   GOOGLE_PLACES_KEY: "AIzaSyDeaCvuV2krPlpVWEzGcQ2cWwmc5s5k4NU",
   GOOGLE_MAPS_KEY: "AIzaSyCed96G-hxME8bDpJZB26MkROOKenNUwuc",
