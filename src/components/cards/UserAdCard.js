@@ -2,10 +2,11 @@ import { Badge } from "antd";
 import { Link } from "react-router-dom";
 import AdFeatures from "../../components/cards/AdFeatures";
 import { formatNumber } from "../../helpers/ad";
+import millify from "millify";
 
 export default function UserAdCard({ ad }) {
   return (
-    <div className="col-lg-4 p-4 gx-4 gy-4">
+    <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6">
       <Link to={`/user/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${ad?.action}`}
@@ -21,7 +22,8 @@ export default function UserAdCard({ ad }) {
             <div className="card-body">
               <h3>
                 <span>&#8358;</span>
-                {formatNumber(ad?.price)}
+                {/* {formatNumber(ad?.price)} */}
+                {millify(ad?.price)}
               </h3>
               <p className="card-text">{ad?.address}</p>
 

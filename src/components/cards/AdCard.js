@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import AdFeatures from "../../components/cards/AdFeatures";
 import { formatNumber } from "../../helpers/ad";
 import dayjs from "dayjs";
-// import millify from "millify";
+import millify from "millify";
 
 export default function AdCard({ ad }) {
   return (
     <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
-      <Link to={`/ad/${ad.slug}`}>
+      <Link className="link" to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${ad?.action}`}
           color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
@@ -24,8 +24,8 @@ export default function AdCard({ ad }) {
               <h3>
                 {" "}
                 <span>&#8358;</span>
-                {formatNumber(ad?.price)}
-                {/* {millify(ad?.price)} */}
+                {/* {formatNumber(ad?.price)} */}
+                {millify(ad?.price)}
               </h3>
               <p className="card-text">{ad?.address}</p>
 

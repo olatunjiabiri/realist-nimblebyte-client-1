@@ -12,30 +12,31 @@ export default function Footer() {
         </div>
 
         <div className="col-4 text-light">
-          <ul style={{ listStyleType: "none", color: "white" }}>
+          <ul className="link footer-color" style={{ listStyleType: "none" }}>
             <li>Quick Links</li>
             <li>
-              <Link style={{ color: "white" }} to="/">
+              {/* <Link style={{ color: "white" }} to="/"> */}
+              <Link className="link footer-color" to="/">
                 Home
               </Link>
             </li>
             <li>
-              <Link style={{ color: "white" }} to="/search">
+              <Link className="link footer-color" to="/search">
                 Search
               </Link>
             </li>
             <li>
-              <Link style={{ color: "white" }} to="/buy">
+              <Link className="link footer-color" to="/buy">
                 Buy
               </Link>
             </li>
             <li>
-              <Link style={{ color: "white" }} to="/rent">
+              <Link className="link footer-color" to="/rent">
                 Rent
               </Link>
             </li>
             <li>
-              <Link style={{ color: "white" }} to="/agents">
+              <Link className="link footer-color" to="/agents">
                 Our Agents
               </Link>
             </li>

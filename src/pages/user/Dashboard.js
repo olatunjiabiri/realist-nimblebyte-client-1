@@ -31,7 +31,7 @@ export default function Dashboard() {
         `/user-ads/${auth.user?.userId}/${page}`
       );
       // setAds(data.ads);
-      console.log("data", data);
+      // console.log("data", data);
       setAds([...ads, ...data.ads]);
       setTotal(data.total);
     } catch (err) {
@@ -42,25 +42,27 @@ export default function Dashboard() {
   return (
     <div>
       {!seller ? (
-        <div
-          // className=" container d-flex justify-content-center align-items-center vh-100"
-          className="col-lg-8 offset-lg-2 mt-4 mb-4"
-          // style={{ marginTop: "-10%" }}
-        >
-          {/* <div className="row">
-            <h2>
-              Hey{" "}
-              {auth.user?.firstName
-                ? auth.user?.firstName
-                : auth.user?.email?.split("@")[0]}
-              , Welcome to Realist App
-            </h2>
-          </div> */}
+        <div className="container m-5">
+          <div
+            // className=" container d-flex justify-content-center align-items-center vh-100"
+            className="col-lg-8 offset-lg-2 mt-4 mb-4"
+            style={{ marginTop: "-10%" }}
+          >
+            <div className="row">
+              <h2>
+                Hey{" "}
+                {auth.user?.firstName
+                  ? auth.user?.firstName
+                  : auth.user?.email?.split("@")[0]}
+                , Welcome to Realist App
+              </h2>
+            </div>
+          </div>
         </div>
       ) : (
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
+        <div className="container m-5">
+          <div className="row" style={{ marginTop: "80px" }}>
+            <div className="col-lg-6 offset-lg-2 mt-4 mb-4">
               <h3>Listed ads - Total {total} ads found</h3>
             </div>
           </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
 
 import ProfileUpload from "../../components/forms/ProfileUpload";
@@ -207,9 +208,7 @@ export default function ProfileForm() {
                   placeholder="Firstname"
                   className="form-control mb-3"
                   value={firstName}
-                  onChange={(e) =>
-                    setFirstName(e.target.value)
-                  }
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
                 <input
                   type="text"

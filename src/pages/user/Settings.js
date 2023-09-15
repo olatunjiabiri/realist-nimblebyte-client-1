@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export default function Settings() {
   // state
@@ -29,8 +29,8 @@ export default function Settings() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="container mt-2">
+      <div className="container-fluid m-5 p-5">
+        <div className="container mt-5">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
               <form onSubmit={handleSubmit}>

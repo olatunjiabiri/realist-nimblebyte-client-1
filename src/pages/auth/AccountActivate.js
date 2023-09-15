@@ -1,11 +1,19 @@
-import React,  { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import axios from "axios";
+import { useAuth } from "../../context/auth";
 
 export default function AccountActivate() {
   // hooks
   const [searchParams] = useSearchParams();
+
+  // context
+  const [auth, setAuth] = useAuth();
+  // state
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const token = searchParams.get("token");
   const userId = searchParams.get("userid");
@@ -15,6 +23,51 @@ export default function AccountActivate() {
   useEffect(() => {
     if (token) requestActivation();
   }, [token]);
+
+  useEffect(() => {
+    if (auth.user) {
+      setRole(auth.user?.role);
+    }
+  }, []);
+
+  const addDefaultRole = async () => {
+    try {
+      setLoading(true);
+
+      const { data } = await axios.post(
+        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
+        {
+          userId: auth.user.userId,
+          role: "Buyer",
+        }
+      );
+
+      if (!data.success) {
+        toast.error(data.message);
+        setLoading(false);
+      } else {
+        auth.user.role.push("Buyer");
+
+        setAuth({ ...auth });
+        console.log("auth", auth);
+
+        let fromLS = JSON.parse(localStorage.getItem("auth"));
+        // fromLS.user.role = { role: "Buyer" };
+
+        fromLS.user.role.push("Seller");
+
+        localStorage.setItem("auth", JSON.stringify(fromLS));
+        setLoading(false);
+        toast.success("Role Added");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(
+        "Something went wrong. Default Role cannot be assigned now. Try again."
+      );
+      setLoading(false);
+    }
+  };
 
   const requestActivation = async () => {
     try {
@@ -29,6 +82,7 @@ export default function AccountActivate() {
         // navigate("/login");
       } else {
         console.log(response);
+        addDefaultRole();
 
         toast.success("Your email has been confirmed. Log in to Realist app.");
         navigate("/login");
