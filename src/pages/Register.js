@@ -3,6 +3,7 @@ import axios from "axios";
 
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import config from "../NewConfig";
 
 export default function Register() {
   // state
@@ -22,6 +23,8 @@ export default function Register() {
         {
           email,
           password,
+          phoneNumber: "",
+          appId: config.appId,
         }
       );
 
