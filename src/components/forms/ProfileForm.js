@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
 
 import ProfileUpload from "../../components/forms/ProfileUpload";
+import config from "../../NewConfig";
 
 export default function ProfileForm() {
   // context
@@ -45,13 +47,10 @@ export default function ProfileForm() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Seller",
-        }
-      );
+      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
+        userId: auth.user.userId,
+        role: "Seller",
+      });
       // console.log('role response data >>>>', data)
       if (!data.success) {
         toast.error(data.message);
@@ -80,7 +79,7 @@ export default function ProfileForm() {
       setLoading(true);
 
       const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/updateProfile`,
+        `${config.AUTH_API}/user/updateProfile`,
         {
           firstName,
           lastName,
@@ -207,9 +206,7 @@ export default function ProfileForm() {
                   placeholder="Firstname"
                   className="form-control mb-3"
                   value={firstName}
-                  onChange={(e) =>
-                    setFirstName(e.target.value)
-                  }
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
                 <input
                   type="text"

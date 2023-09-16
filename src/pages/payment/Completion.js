@@ -1,7 +1,13 @@
-import React from 'react'
+import React from "react";
 
-function Completion(props) {
-    return <h1>Thank you! 🎉</h1>;
-  }
-  
-  export default Completion;
+const Completion = (props) => {
+  return (
+    <div className="container m-5 p-5">
+      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
+        <h1>Thank you! 🎉</h1>;
+      </div>
+    </div>
+  );
+};
+
+export default Completion;

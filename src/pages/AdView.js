@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ImageGallery from "../components/misc/ImageGallery";
 import Logo from "../logo.svg";
 import AdFeatures from "../components/cards/AdFeatures";
 import { formatNumber } from "../helpers/ad";
+import millify from "millify";
 import dayjs from "dayjs";
 import LikeUnlike from "../components/misc/LikeUnlike";
 import MapCard from "../components/cards/MapCard";
@@ -63,12 +64,12 @@ export default function AdView() {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid mt-5 pt-5">
         <div className="row mt-2">
           <div className="col-lg-4">
             <div className="d-flex justify-content-between">
               <button className="btn btn-primary disabled mt-2">
-                {ad.type} for {ad.action='SELL'? "SALE" : ad.action}
+                {ad.type} for {(ad.action = "SELL" ? "SALE" : ad.action)}
               </button>
               <LikeUnlike ad={ad} />
             </div>
@@ -80,7 +81,8 @@ export default function AdView() {
             <h3 className="mt-3 h2">
               {" "}
               <span>&#8358;</span>
-              {formatNumber(ad.price)}
+              {/* {formatNumber(ad.price)} */}
+              {millify(ad?.price)}
             </h3>
             <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
           </div>
@@ -100,7 +102,8 @@ export default function AdView() {
 
             <h1>
               {ad?.type} in {ad?.address} for {ad?.action} <span>&#8358;</span>
-              {formatNumber(ad?.price)}
+              {/* {formatNumber(ad?.price)} */}
+              {millify(ad?.price)}
             </h1>
 
             <AdFeatures ad={ad} />

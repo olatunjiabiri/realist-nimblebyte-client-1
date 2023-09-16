@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/auth";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import ProfileUpload from "../../components/forms/ProfileUpload";
+import config from "../../NewConfig";
+import { useAuth } from "../../context/auth";
 
 export default function UpdateProfile() {
   // context
@@ -45,13 +46,10 @@ export default function UpdateProfile() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Seller",
-        }
-      );
+      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
+        userId: auth.user.userId,
+        role: "Seller",
+      });
       // console.log('role response data >>>>', data)
       if (!data.success) {
         // toast.error(data.message);
@@ -80,7 +78,7 @@ export default function UpdateProfile() {
       setLoading(true);
 
       const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/updateProfile`,
+        `${config.AUTH_API}/user/updateProfile`,
         {
           firstName,
           lastName,
@@ -127,9 +125,9 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container m-5 p-5 top-margin">
         {/* <Sidebar /> */}
-        <div className="container mt-2">
+        <div className="container mt-5">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
               <div className="form-group">
@@ -138,13 +136,16 @@ export default function UpdateProfile() {
                   autoFocus
                   placeholder="Select User Account Type"
                   onChange={onOptionChange}
-                  className="form-control form-control-lg"
+                  className="form-select form-select-lg"
                 >
-                  {/* <option selected> Select User Account Type</option> */}
-                  <option className="form-control-lg mb-5" value={"Buyer"}>
+                  <option disabled selected>
+                    {" "}
+                    Select User Account Type
+                  </option>
+                  <option className="form-select-lg mb-5" value={"Buyer"}>
                     Buyer
                   </option>
-                  <option className="form-control-lg mb-5" value={"Seller"}>
+                  <option className="form-select-lg mb-5" value={"Seller"}>
                     Seller
                   </option>
                 </select>
@@ -183,7 +184,7 @@ export default function UpdateProfile() {
                 <input
                   type="text"
                   placeholder="Firstname"
-                  className="form-control mb-3"
+                  className="form-control mt-3 mb-3"
                   value={firstName}
                   onChange={(e) =>
                     // setFirstName(slugify(e.target.value.toLowerCase()))

@@ -1,8 +1,10 @@
-import  React,{ useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import config from "../../NewConfig";
 
 export default function Login() {
   // state
@@ -11,15 +13,14 @@ export default function Login() {
   // hooks
   const navigate = useNavigate();
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // console.log(email, password);
       setLoading(true);
 
-      const {data} = await axios.get(
-        `https://payorigins-auth.azurewebsites.net/user/SendResetPasswordCode?email=${email}`
+      const { data } = await axios.get(
+        `${config.AUTH_API}/user/SendResetPasswordCode?email=${email}&appId=${config.appId}`
       );
 
       if (data?.error) {
@@ -39,10 +40,8 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1 className="display-3 text-center bg-primary text-light p-5">Forgot password</h1>
-
-      <div className="container">
+    <div className="container-fluid m-5 p-5">
+      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit} autoComplete="off">

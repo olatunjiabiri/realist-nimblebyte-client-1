@@ -5,36 +5,39 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 
-import { passwordResetSchema } from "../../validations";
+import { useAuth } from "../../context/auth";
 import config from "../../NewConfig";
+import { updatePasswordSchema } from "../../../src/validations";
 
-export default function PasswordReset() {
+export default function UpdatePassword() {
+  // context
+  const [auth, setAuth] = useAuth();
   // state
-
   const [loading, setLoading] = useState(false);
   // hooks
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     // e.preventDefault();
-    const { otp, email, password } = values;
+    const { currentPassword, newPassword } = values;
 
     try {
       setLoading(true);
-      const response = await axios.post(
-        `${config.AUTH_API}/user/ResetPassword`,
+      // console.log("values>>>>", values);
+      const { data } = await axios.post(
+        `${config.AUTH_API}/user/ChangePassword`,
         {
-          otp,
-          email,
-          password,
+          UserId: auth.user?.userId,
+          OldPassword: currentPassword,
+          NewPassword: newPassword,
         }
       );
 
-      if (!response.data.success) {
-        toast.error(response.data.message);
+      if (!data.success) {
+        toast.error(data.message);
         setLoading(false);
       } else {
-        toast.success("Your password has been reset, Login");
+        toast.success("Password Updated");
         setLoading(false);
         actions.resetForm();
         navigate("/login");
@@ -56,98 +59,74 @@ export default function PasswordReset() {
     handleSubmit,
   } = useFormik({
     initialValues: {
-      otp: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      currentPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     },
-    validationSchema: passwordResetSchema,
+    validationSchema: updatePasswordSchema,
     onSubmit,
   });
 
   return (
-    <div className="container-fluid m-5 p-5">
+    <div className="container m-5 p-5">
       <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-4 offset-lg-4">
             <form onSubmit={handleSubmit}>
               <input
-                type="text"
-                name="otp"
-                placeholder="Enter the otp"
-                value={values.otp}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className="form-control mb-1"
+                type="password"
+                id="validationCustom03"
+                name="currentPassword"
+                placeholder="Current password"
+                className="form-control mb-2"
                 // required
                 autoFocus
-              />
-              {errors.otp && touched.otp && (
-                <div className="mt-0 text-danger">
-                  <small>
-                    {" "}
-                    <p> otp must be a number</p>
-                  </small>
-                </div>
-              )}
-
-              <input
-                type="text"
-                id="validationCustom03"
-                name="email"
-                placeholder="Enter your email"
-                className="form-control mb-1"
-                // required
-                // autoFocus
-                value={values.email}
+                value={values.currentPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
 
-              {errors.email && touched.email && (
+              {errors.currentPassword && touched.currentPassword && (
                 <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <p> {errors.email}</p>
+                    <p> {errors.currentPassword}</p>
                   </small>
                 </div>
               )}
 
               <input
                 type="password"
-                name="password"
-                placeholder="Enter your password"
-                className="form-control mb-1"
-                // required
-                // autoFocus
-                value={values.password}
+                name="newPassword"
+                placeholder="New password"
+                className="form-control mb-2"
+                value={values.newPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.password && touched.password && (
+              {errors.newPassword && touched.newPassword && (
                 <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <p> {errors.password}</p>
+                    <p> {errors.newPassword}</p>
                   </small>
                 </div>
               )}
 
               <input
                 type="password"
-                name="confirmPassword"
-                placeholder="Enter the password again"
-                className="form-control mb-1"
-                // required
+                name="confirmNewPassword"
+                placeholder="Confirm the new password"
+                className="form-control mb-2"
                 value={values.confirmPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.confirmPassword && touched.confirmPassword && (
+              {errors.confirmNewPassword && touched.confirmNewPassword && (
                 <div className="mt-0 text-danger">
                   <small>
                     {" "}
-                    <p> {errors.confirmPassword}</p>
+                    <p> {errors.confirmNewPassword}</p>
                   </small>
                 </div>
               )}

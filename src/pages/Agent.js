@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import UserCard from "../components/cards/UserCard";
 import AdCard from "../components/cards/AdCard";
 
-export default function Agent() {
+export default function Agent({ user }) {
   // state
   const [agent, setAgent] = useState(null);
   const [ads, setAds] = useState([]);
+  const [total, setTotal] = useState(0);
+
   const [loading, setLoading] = useState(true);
 
-  const params = useParams();
-  //   console.log(params.username);
-
   useEffect(() => {
-    if (params?.username) fetchAgent();
-  }, [params?.username]);
+    fetchAds();
+  }, [user?.Id]);
 
-  const fetchAgent = async () => {
+  const fetchAds = async () => {
     try {
-      const { data } = await axios.get(`/agent/${params.username}`);
-      setAgent(data.user);
-      setAds(data.ads);
+      const { data } = await axios.get(`/agent-ads/${user?.userId}`);
+      console.log("Ads data", data);
+      setAds([data.ads]);
+      setTotal(data.total);
       setLoading(false);
     } catch (err) {
       console.log(err);
-      setLoading(false);
     }
   };
 
@@ -42,14 +40,10 @@ export default function Agent() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">
-        {agent?.name ?? agent?.username}
-      </h1> */}
-
       <div className="container">
         <div className="row">
           <div className="col-lg-4"></div>
-          <UserCard user={agent} />
+          <UserCard user={user} />
           <div className="col-lg-4"></div>
         </div>
       </div>

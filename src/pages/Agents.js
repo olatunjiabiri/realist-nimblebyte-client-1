@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserCard from "../components/cards/UserCard";
 import SearchForm from "../components/forms/SearchForm";
+import config from "../NewConfig";
 
 export default function Agents() {
   // state
@@ -14,8 +15,10 @@ export default function Agents() {
 
   const fetchAgents = async () => {
     try {
-      const { data } = await axios.get("/agents");
-      setAgents(data);
+      const { data } = await axios.get(
+        `${config.AUTH_API}/user/GetUsersByRole?roleName=Seller`
+      );
+      setAgents(data.responsePayload);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -36,15 +39,13 @@ export default function Agents() {
 
   return (
     <div>
-       <div >
-      <SearchForm />
-
+      <div>
+        <SearchForm />
       </div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Agents</h1> */}
       <div className="container">
         <div className="row">
           {agents?.map((agent) => (
-            <UserCard user={agent} key={agent._id} />
+            <UserCard user={agent} key={agent.userId} />
           ))}
         </div>
       </div>

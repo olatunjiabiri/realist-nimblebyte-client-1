@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 import axios from "axios";
 
 export default function ContactSeller({ ad }) {
@@ -69,7 +70,7 @@ export default function ContactSeller({ ad }) {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               autoFocus={true}
-              disabled={!loggedIn}
+              // disabled={!loggedIn}
             ></textarea>
 
             <input
@@ -78,7 +79,7 @@ export default function ContactSeller({ ad }) {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              disabled={!loggedIn}
+              // disabled={!loggedIn}
             />
 
             <input
@@ -87,7 +88,7 @@ export default function ContactSeller({ ad }) {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={!loggedIn}
+              // disabled={!loggedIn}
             />
 
             <input
@@ -96,18 +97,14 @@ export default function ContactSeller({ ad }) {
               placeholder="Enter your phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              disabled={!loggedIn}
+              // disabled={!loggedIn}
             />
 
             <button
               className="btn btn-primary mt-4 mb-5"
               disabled={!name || !email || loading}
             >
-              {loggedIn
-                ? loading
-                  ? "Please wait"
-                  : "Send enquiry"
-                : "Login to send enquiry"}
+              {loading ? "Please wait" : "Send enquiry"}
             </button>
           </form>
         </div>
