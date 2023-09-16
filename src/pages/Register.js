@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { toast } from "react-toastify";
-
 import { Link, useNavigate } from "react-router-dom";
+
 import config from "../NewConfig";
 
 export default function Register() {
@@ -24,6 +24,7 @@ export default function Register() {
         {
           email,
           password,
+          phoneNumber: "",
           appId: config.appId,
         }
       );

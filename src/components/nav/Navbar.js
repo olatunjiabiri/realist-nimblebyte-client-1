@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
+        className="navbar navbar-expand-lg navbar-light bg-light justify-content-center"
         id="custom-nav"
       >
         <div className="container">
