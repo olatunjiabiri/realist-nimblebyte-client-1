@@ -19,15 +19,12 @@ export default function Register() {
     try {
       // console.log(email, password);
       setLoading(true);
-      const response = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/signUp`,
-        {
-          email,
-          password,
-          phoneNumber: "",
-          appId: config.appId,
-        }
-      );
+      const response = await axios.post(`${config.AUTH_API}/user/signUp`, {
+        email,
+        password,
+        phoneNumber: "",
+        appId: config.appId,
+      });
 
       // console.log(response)
       if (!response.data.success) {

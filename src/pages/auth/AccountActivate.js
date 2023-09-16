@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 import { useAuth } from "../../context/auth";
+import config from "../../NewConfig";
 
 export default function AccountActivate() {
   // hooks
@@ -34,13 +35,10 @@ export default function AccountActivate() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Buyer",
-        }
-      );
+      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
+        userId: auth.user.userId,
+        role: "Buyer",
+      });
 
       if (!data.success) {
         toast.error(data.message);
@@ -72,7 +70,7 @@ export default function AccountActivate() {
   const requestActivation = async () => {
     try {
       const response = await axios.get(
-        `https://payorigins-auth.azurewebsites.net/user/ConfirmEmail?token=${token}&userId=${userId}`
+        `${config.AUTH_API}/user/ConfirmEmail?token=${token}&userId=${userId}`
       );
 
       console.log("response activate=>", response);

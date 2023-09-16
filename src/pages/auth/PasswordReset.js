@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 import { useFormik } from "formik";
 
 import { passwordResetSchema } from "../../validations";
+import config from "../../NewConfig";
 
 export default function PasswordReset() {
   // state
@@ -22,7 +22,7 @@ export default function PasswordReset() {
     try {
       setLoading(true);
       const response = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/ResetPassword`,
+        `${config.AUTH_API}/user/ResetPassword`,
         {
           otp,
           email,

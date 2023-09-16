@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserCard from "../components/cards/UserCard";
 import SearchForm from "../components/forms/SearchForm";
+import config from "../NewConfig";
 
 export default function Agents() {
   // state
@@ -15,7 +16,7 @@ export default function Agents() {
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `https://payorigins-auth.azurewebsites.net/user/GetUsersByRole?roleName=Seller`
+        `${config.AUTH_API}/user/GetUsersByRole?roleName=Seller`
       );
       setAgents(data.responsePayload);
       setLoading(false);
