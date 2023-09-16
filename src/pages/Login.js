@@ -4,6 +4,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+// import { config } from "../NewConfig";
+import config from "./../NewConfig";
 
 export default function Login() {
   // context
@@ -33,13 +35,12 @@ export default function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/SignIn`,
-        {
-          email,
-          password,
-        }
-      );
+      const { data } = await axios.post(`${config.AUTH_API}/user/SignIn`, {
+        email,
+        password,
+        phoneNumber: "",
+      });
+      // console.log(data);
 
       if (!data?.success) {
         // toast.error(data.message);

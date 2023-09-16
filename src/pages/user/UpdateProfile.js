@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 import { useNavigate } from "react-router-dom";
 
 import ProfileUpload from "../../components/forms/ProfileUpload";
+import config from "../../NewConfig";
+import { useAuth } from "../../context/auth";
 
 export default function UpdateProfile() {
   // context
@@ -46,13 +46,10 @@ export default function UpdateProfile() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Seller",
-        }
-      );
+      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
+        userId: auth.user.userId,
+        role: "Seller",
+      });
       // console.log('role response data >>>>', data)
       if (!data.success) {
         // toast.error(data.message);
@@ -81,7 +78,7 @@ export default function UpdateProfile() {
       setLoading(true);
 
       const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/updateProfile`,
+        `${config.AUTH_API}/user/updateProfile`,
         {
           firstName,
           lastName,
@@ -141,7 +138,10 @@ export default function UpdateProfile() {
                   onChange={onOptionChange}
                   className="form-select form-select-lg"
                 >
-                  <option selected> Select User Account Type</option>
+                  <option disabled selected>
+                    {" "}
+                    Select User Account Type
+                  </option>
                   <option className="form-select-lg mb-5" value={"Buyer"}>
                     Buyer
                   </option>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import config from "../../NewConfig";
 
 export default function Login() {
   // state
@@ -19,7 +20,7 @@ export default function Login() {
       setLoading(true);
 
       const { data } = await axios.get(
-        `https://payorigins-auth.azurewebsites.net/user/SendResetPasswordCode?email=${email}`
+        `${config.AUTH_API}/user/SendResetPasswordCode?email=${email}&appId=${config.appId}`
       );
 
       if (data?.error) {

@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 import { useFormik } from "formik";
-import { useAuth } from "../../context/auth";
 
+import { useAuth } from "../../context/auth";
+import config from "../../NewConfig";
 import { updatePasswordSchema } from "../../../src/validations";
 
 export default function UpdatePassword() {
@@ -23,9 +23,9 @@ export default function UpdatePassword() {
 
     try {
       setLoading(true);
-      console.log("values>>>>", values);
+      // console.log("values>>>>", values);
       const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/ChangePassword`,
+        `${config.AUTH_API}/user/ChangePassword`,
         {
           UserId: auth.user?.userId,
           OldPassword: currentPassword,

@@ -27,9 +27,9 @@ export default function ImageGallery({ photos }) {
       <div className="box">
         <Carousel useKeyboardArrows={true}>
           {photos.map((x, index) => (
-            <div className="slide">
-              key={index}
-              <img alt="sample_file" src={x.src} key={index} />
+            <div key={index} className="slide">
+              {/* key={index} */}
+              <img alt="sample_file" src={x.src} />
             </div>
           ))}
         </Carousel>
