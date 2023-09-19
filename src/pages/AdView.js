@@ -110,7 +110,7 @@ export default function AdView() {
 
             <hr />
 
-            <h3 className="fw-bold">{ad?.title}</h3>
+            {/* <h3 className="fw-bold">{ad?.title}</h3> */}
 
             {/* <HTMLRenderer
               html={ad?.description?.replaceAll(".", "<br/><br/>")}
