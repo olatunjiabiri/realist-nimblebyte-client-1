@@ -5,7 +5,7 @@ import AdForm from "../../../components/forms/AdForm";
 export default function RentLand() {
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="container mt-5">
         <AdForm action="Rent" type="Land" />
       </div>

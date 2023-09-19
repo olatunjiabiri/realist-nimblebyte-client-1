@@ -40,10 +40,10 @@ const Navbar = () => {
             >
               <Link to={"/"}>
                 <img
-                  src="./korpealogo.png"
-                  alt="Korpea"
+                  src="./nimblelogo2.png"
+                  alt="NimbleByte"
                   height={50}
-                  width={100}
+                  width={50}
                 />
               </Link>
             </nav>

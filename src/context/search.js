@@ -4,8 +4,8 @@ const SearchContext = createContext();
 
 const innitialState = {
   address: "",
-  action: "Buy", //Buy
-  type: "House", //House
+  action: "", //Buy
+  type: "", //House
   price: "All price", //All price
   priceRange: [0, 1000000000000],
   results: [],

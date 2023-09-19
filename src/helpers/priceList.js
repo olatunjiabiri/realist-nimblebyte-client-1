@@ -11,12 +11,17 @@ const sellPrices = [
   },
   {
     _id: 2,
-    name: "₦10m to ₦100m",
-    array: [1000000, 100000000],
+    name: "₦10m to ₦50m",
+    array: [10000000, 50000000],
   },
   {
     _id: 3,
-    name: "₦100m to ₦100b",
+    name: "₦50m to ₦100m",
+    array: [50000000, 100000000],
+  },
+  {
+    _id: 4,
+    name: "₦100m and Above",
     array: [100000000, 100000000000],
   },
 ];
@@ -39,8 +44,13 @@ const rentPrices = [
   },
   {
     _id: 3,
-    name: "₦5m to ₦100m",
-    array: [5000000, 100000000],
+    name: "₦5m to ₦10m",
+    array: [5000000, 10000000],
+  },
+  {
+    _id: 4,
+    name: "₦10m to ₦100m",
+    array: [10000000, 100000000],
   },
 ];
 
