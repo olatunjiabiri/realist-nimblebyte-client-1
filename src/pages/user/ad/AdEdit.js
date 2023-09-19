@@ -1,14 +1,18 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+
 import config from "../../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "../../../components/forms/ImageUpload";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../../../context/auth";
 
 export default function AdEdit({ action, type }) {
+  // context
+  const [auth, setAuth] = useAuth();
+  const [userId, setUserId] = useState("");
   // state
   const [ad, setAd] = useState({
     _id: "",
@@ -38,6 +42,10 @@ export default function AdEdit({ action, type }) {
     }
   }, [params?.slug]);
 
+  useEffect(() => {
+    setUserId(auth.user?.userId);
+  }, []);
+
   const fetchAd = async () => {
     try {
       const { data } = await axios.get(`/ad/${params.slug}`);
@@ -65,7 +73,7 @@ export default function AdEdit({ action, type }) {
         // make API put request
         setAd({ ...ad, loading: true });
 
-        const { data } = await axios.put(`/ad/${ad._id}`, ad);
+        const { data } = await axios.put(`/ad/${ad._id}/${userId}`, ad);
         // console.log("ad create response => ", data);
         if (data?.error) {
           toast.error(data.error);
@@ -86,7 +94,7 @@ export default function AdEdit({ action, type }) {
     try {
       setAd({ ...ad, loading: true });
 
-      const { data } = await axios.delete(`/ad/${ad._id}`);
+      const { data } = await axios.delete(`/ad/${ad._id}/${userId}`);
       // console.log("ad create response => ", data);
       if (data?.error) {
         toast.error(data.error);
@@ -205,7 +213,7 @@ export default function AdEdit({ action, type }) {
                     ad.loading ? "disabled" : ""
                   }`}
                 >
-                  {ad.loading ? "Saving..." : "Submit"}
+                  {ad.loading ? "Saving..." : "Update"}
                 </button>
 
                 <button
