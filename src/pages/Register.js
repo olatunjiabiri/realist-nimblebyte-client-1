@@ -17,13 +17,13 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // console.log(email, password);
       setLoading(true);
       const response = await axios.post(`${config.AUTH_API}/user/signUp`, {
         email,
         password,
         phoneNumber: "",
         emailId: config.emailId,
+        path: `${window.location.origin}/auth/account-activate`
         // appId: config.appId,
       });
 
