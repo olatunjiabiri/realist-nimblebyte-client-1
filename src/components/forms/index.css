@@ -21,6 +21,14 @@
     border-radius: 0%;
  }
 
+ .adform-wrapper {
+    background-color: #fff;
+    border-radius: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+ }
+
 @media screen and (max-width:640) {
     .filter-options{
         display: none

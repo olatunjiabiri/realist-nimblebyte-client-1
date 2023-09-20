@@ -28,36 +28,47 @@ export default function Wishlist() {
   };
 
   return (
-    <div>
+    <div className="container-fluid p-0">
       {!ads?.length ? (
-        <div
-          className="d-flex justify-content-center align-items-center vh-100"
-          style={{ marginTop: "-10%" }}
-        >
-          <h3 className="text-left">
-            Hey{" "}
-            {auth.user?.firstName
-              ? auth.user?.firstName
-              : auth.user?.email?.split("@")[0]}
-            {/* , Welcome to Realist App */}
-          </h3>
-          <h3>
-            {/* Hey {auth.user?.firstName ? auth.user?.firstName : auth.user?.email} */}
-            , You have not liked any properties yet!
-          </h3>
+        <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
+          <div className="row">
+            <div className="col-12 text-center"></div>
+            <h3 className="text-left">
+              Hey{" "}
+              {auth.user?.firstName
+                ? auth.user?.firstName
+                : auth.user?.email?.split("@")[0]}
+              ,{/* , Welcome to Realist App */}
+            </h3>
+            <h3>
+              {/* Hey {auth.user?.firstName ? auth.user?.firstName : auth.user?.email} */}
+              You have not liked any properties yet!
+            </h3>
+          </div>
         </div>
       ) : (
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
-              <h3>You have liked {ads?.length} properties</h3>
+        <div className="container-fluid">
+          {/* <div className="row"> */}
+          <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
+            <div className="row">
+              <div className="col-12 text-center">
+                <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
+                  <h2>You have liked {ads?.length} properties</h2>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="row">
-            {ads?.map((ad) => (
-              <AdCard ad={ad} key={ad._id} />
-            ))}
+          <div className="card-body p-4">
+            <div className="row pb-3">
+              <div className="col-6"></div>
+              <div className="col-6 text-end"></div>
+              <div className="row">
+                {ads?.map((ad) => (
+                  <AdCard ad={ad} key={ad._id} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
