@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchForm from "../components/forms/SearchForm";
 import { useSearch } from "../context/search";
 import AdCard from "../components//cards/AdCard";
@@ -7,6 +7,11 @@ export default function Search() {
   const [search, setSearch] = useSearch();
   const [searchFilters, setSearchFilters] = useState(false);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div>
       {/* <h1 className="display-1 bg-primary text-light p-5">Search</h1> */}
