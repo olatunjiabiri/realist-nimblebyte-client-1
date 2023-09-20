@@ -55,7 +55,8 @@ export default function SearchForm() {
 
   return (
     <>
-      <div className="searchForm-container mt-5 pt-5">
+    
+    <div className="searchForm-container mt-5 pt-5">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -110,6 +111,7 @@ export default function SearchForm() {
                 <select
                   className="form-select mb-2 pl-1"
                   aria-label="form-select select-options"
+      
                   // disabled={filter}
                   onChange={(e) => {
                     setSearch({ ...search, type: e.target.value, price: "" });
@@ -201,5 +203,5 @@ export default function SearchForm() {
         </div>
       </div>
     </>
-  );
+);
 }

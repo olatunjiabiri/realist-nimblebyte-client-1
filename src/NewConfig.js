@@ -1,12 +1,13 @@
 const config = {
   API:
-    process.env.NODE_ENV !== "production"
+    process.env.NODE_ENV === "production"
       ? "http://localhost:8000/api"
       : "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API:
-    process.env.NODE_ENV !== "production"
+    process.env.NODE_ENV === "production"
       ? "http://localhost:5001"
-      : "https://nimblebyte-website-node-backend.azurewebsites.net/api",
+     // : "https://nimblebyte-website-node-backend.azurewebsites.net/api",
+     : "https://authbackendservice.azurewebsites.net",
 
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",

@@ -48,7 +48,7 @@ export default function ContactSeller({ ad }) {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong. Try again.");
+      toast.error("Something went wrong! Try again.");
       setLoading(false);
     }
   };
@@ -58,7 +58,7 @@ export default function ContactSeller({ ad }) {
       <div className="row">
         <div className="col-lg-8 offset-lg-2">
           <h3>
-            Contact{" "}
+            Contact this Property{" "}
             {ad?.postedBy?.name ? ad?.postedBy?.name : ad?.postedBy?.username}
           </h3>
 
@@ -104,7 +104,7 @@ export default function ContactSeller({ ad }) {
               className="btn btn-primary mt-4 mb-5"
               disabled={!name || !email || loading}
             >
-              {loading ? "Please wait" : "Send enquiry"}
+              {loading ? "Please wait" : "Send Enquiry"}
             </button>
           </form>
         </div>
