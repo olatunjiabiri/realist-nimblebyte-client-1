@@ -55,8 +55,7 @@ export default function SearchForm() {
 
   return (
     <>
-    
-    <div className="searchForm-container mt-5 pt-5">
+      <div className="searchForm-container mt-5 pt-5">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -68,8 +67,8 @@ export default function SearchForm() {
             width: "100%",
           }}
         >
-          <div className="container bg-light filter-container">
-            <div className="form-control border-0 my-2">
+          <div className="container col-lg-8">
+            <div className="form-control my-4 text-center rounded-pill ">
               <GooglePlacesAutocomplete
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
@@ -84,10 +83,13 @@ export default function SearchForm() {
               />
             </div>
 
-            <div className="d-flex flex-wrap btn-group justify-content-center filter-options">
-              <div className="form-row m-1">
+            <div
+              className="d-flex flex-wrap btn-group justify-content-evenly filter-options"
+              //className=""
+            >
+              <div className="row justify-content-evenly col-lg-8">
                 <select
-                  className="form-select mb-2 pl-1 "
+                  className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                   aria-label="form-select select-options"
                   onChange={(e) => {
                     setSearch({ ...search, action: e.target.value, price: "" });
@@ -109,9 +111,8 @@ export default function SearchForm() {
                 </select>
 
                 <select
-                  className="form-select mb-2 pl-1"
+                  className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                   aria-label="form-select select-options"
-      
                   // disabled={filter}
                   onChange={(e) => {
                     setSearch({ ...search, type: e.target.value, price: "" });
@@ -134,7 +135,7 @@ export default function SearchForm() {
                 {search.action === "Buy" ? (
                   <>
                     <select
-                      className="form-select mb-2 pl-1"
+                      className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                       aria-label="form-select select-options"
                       // disabled={filter}
                       onChange={(e) => {
@@ -164,7 +165,7 @@ export default function SearchForm() {
                 ) : (
                   <>
                     <select
-                      className="form-select mb-2 pl-1"
+                      className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                       aria-label="form-select select-options"
                       // disabled={filter}
                       onChange={(e) => {
@@ -190,18 +191,20 @@ export default function SearchForm() {
                     </select>
                   </>
                 )}
-                <div className="col-md-12 text-center mt-3">
-                  <button onClick={handleSearch} className="btn btn-danger">
-                    Search
-                  </button>
-                </div>
               </div>
             </div>
-
+            <div className="d-grid col-5 mx-auto text-center mt-3">
+              <button
+                onClick={handleSearch}
+                className="btn btn-warning rounded-pill"
+              >
+                Search
+              </button>
+            </div>
             {/* <pre>{JSON.stringify(search, null, 4)}</pre> */}
           </div>
         </div>
       </div>
     </>
-);
+  );
 }
