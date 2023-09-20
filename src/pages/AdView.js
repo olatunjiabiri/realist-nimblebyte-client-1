@@ -28,6 +28,11 @@ export default function AdView() {
     if (params?.slug) fetchAd();
   }, [params?.slug]);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+  
   const fetchAd = async () => {
     try {
       const { data } = await axios.get(`/ad/${params.slug}`);
@@ -66,17 +71,15 @@ export default function AdView() {
     <>
       <div className="container-fluid mt-5 pt-5">
         <div className="row mt-2">
-          <div className="col-lg-4">
-            <div className="d-flex justify-content-between">
-              <button className="btn btn-primary disabled mt-2">
-                {ad.type} for {(ad.action = "SELL" ? "SALE" : ad.action)}
-              </button>
-              <LikeUnlike ad={ad} />
-            </div>
+          <div className="col-lg-8 offset-lg-2 mt-3">
             <div className="mt-4 mb-4">
-              {ad?.sold ? "❌ Off market" : "✅ In market"}
+              <button className="btn btn-success disabled mt-2">
+                {ad?.sold} {(ad.action = "Off Market" ? "In Market" : ad.action)}
+              </button>
+              {/* {ad?.sold ? "❌ Off market" : "✅ In market"} */}
             </div>
-            <h1>{ad.address}</h1>
+            <h1 className="mt-3 h2">
+              {ad.address}</h1>
             <AdFeatures ad={ad} />
             <h3 className="mt-3 h2">
               {" "}
@@ -85,11 +88,16 @@ export default function AdView() {
               {millify(ad?.price)}
             </h3>
             <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
-          </div>
-
-          <div className="col-lg-8">
+            <div className="d-flex justify-content-between">
+              <button className="btn btn-primary disabled mt-2">
+                {ad.type} for {(ad.action = "SELL" ? "SALE" : ad.action)}
+              </button>
+              <LikeUnlike ad={ad} />
+            </div>      
+          </div>     
+          <div className="col-lg-8 offset-lg-2 mt-3">
             <ImageGallery photos={generatePhotosArray(ad?.photos)} />
-          </div>
+          </div>          
         </div>
       </div>
 
@@ -97,24 +105,15 @@ export default function AdView() {
         <div className="row">
           <div className="col-lg-8 offset-lg-2 mt-3">
             <MapCard ad={ad} related={related} />
-
-            <br />
-
-            <h1>
+  
+            <h1 className="mt-3 h2">
               {ad?.type} in {ad?.address} for {ad?.action} <span>&#8358;</span>
               {/* {formatNumber(ad?.price)} */}
               {millify(ad?.price)}
             </h1>
 
             <AdFeatures ad={ad} />
-
-            <hr />
-
-            <h3 className="fw-bold">{ad?.title}</h3>
-
-            {/* <HTMLRenderer
-              html={ad?.description?.replaceAll(".", "<br/><br/>")}
-            /> */}
+            <hr />       
           </div>
         </div>
       </div>
@@ -125,9 +124,9 @@ export default function AdView() {
 
       <div className="container-fluid">
         <h4 className="text-center mb-3">Related Properties</h4>
-        <hr style={{ width: "33%" }} />
+        <hr />
 
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           {related?.map((ad) => (
             <AdCard key={ad._id} ad={ad} />
           ))}

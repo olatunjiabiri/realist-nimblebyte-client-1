@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 import { useNavigate } from "react-router-dom";
 
 import ProfileUpload from "../../components/forms/ProfileUpload";
+import config from "../../NewConfig";
+import { useAuth } from "../../context/auth";
 
 export default function UpdateProfile() {
   // context
@@ -46,13 +46,10 @@ export default function UpdateProfile() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Seller",
-        }
-      );
+      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
+        userId: auth.user.userId,
+        role: "Seller",
+      });
       // console.log('role response data >>>>', data)
       if (!data.success) {
         // toast.error(data.message);
@@ -81,7 +78,7 @@ export default function UpdateProfile() {
       setLoading(true);
 
       const { data } = await axios.post(
-        `https://payorigins-auth.azurewebsites.net/user/updateProfile`,
+        `${config.AUTH_API}/user/updateProfile`,
         {
           firstName,
           lastName,
@@ -128,12 +125,13 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div className="container m-5 p-5 top-margin">
-        {/* <Sidebar /> */}
-        <div className="container mt-5">
-          <div className="row">
-            <div className="col-lg-8 offset-lg-2 mt-2">
-              <div className="form-group">
+      <div className="background-color">
+        <div className="container p-5">
+          {/* <Sidebar /> */}
+          <div className="container mt-5">
+            {/* <div className="row"> */}
+            <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
+              <div className="form-group pt-5 pb-3">
                 {/* <label for="exampleFormControlSelect1">Select User Account Type</label> */}
                 <select
                   autoFocus
@@ -141,7 +139,10 @@ export default function UpdateProfile() {
                   onChange={onOptionChange}
                   className="form-select form-select-lg"
                 >
-                  <option selected> Select User Account Type</option>
+                  <option disabled selected>
+                    {" "}
+                    Select User Account Type
+                  </option>
                   <option className="form-select-lg mb-5" value={"Buyer"}>
                     Buyer
                   </option>
@@ -150,14 +151,17 @@ export default function UpdateProfile() {
                   </option>
                 </select>
               </div>
-              {userType === "Seller" && (
-                <ProfileUpload
-                  photo={photo}
-                  setPhoto={setPhoto}
-                  uploading={uploading}
-                  setUploading={setUploading}
-                />
-              )}
+
+              <div className="form-group col-8 pb-3">
+                {userType === "Seller" && (
+                  <ProfileUpload
+                    photo={photo}
+                    setPhoto={setPhoto}
+                    uploading={uploading}
+                    setUploading={setUploading}
+                  />
+                )}
+              </div>
 
               <form onSubmit={handleSubmit}>
                 {userType === "Seller" ? (
@@ -227,17 +231,20 @@ export default function UpdateProfile() {
                   onChange={(e) => setAbout(e.target.value)}
                   maxLength={200}
                 />
-                <button
-                  className="btn btn-primary col-12 mb-5"
-                  disabled={loading}
-                >
-                  {loading ? "Processing" : "Update profile"}
-                </button>
+                <div className="d-flex justify-content-center">
+                  <button
+                    className="btn btn-primary col-md-6 mt-3 mb-5"
+                    disabled={loading}
+                  >
+                    {loading ? "Processing" : "Update profile"}
+                  </button>
+                </div>
               </form>
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 }

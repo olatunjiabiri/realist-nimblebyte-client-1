@@ -42,6 +42,7 @@ import Payment from "./pages/payment/Payment";
 import Completion from "./pages/payment/Completion";
 import CheckoutForm from "./pages/payment/CheckoutForm";
 import Navbar from "./components/nav/Navbar";
+import BackToTop from "./components/backtotopbutton/BackToTop";
 
 const PageNotFound = () => (
   <div className="container-fluid m-5 p-5">
@@ -130,6 +131,7 @@ function App() {
           </SearchProvider>
         </AuthProvider>
       </Elements>
+      <BackToTop />
     </BrowserRouter>
   );
 }

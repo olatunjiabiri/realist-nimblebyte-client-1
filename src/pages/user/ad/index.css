@@ -1,0 +1,13 @@
+.adedit-wrapper {
+    background-color: #fff;
+    border-radius: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+ }
+
+.adedit-label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+}

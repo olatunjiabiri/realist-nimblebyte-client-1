@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
+        className="navbar navbar-expand-lg navbar-light bg-light justify-content-center"
         id="custom-nav"
       >
         <div className="container">
@@ -40,10 +40,10 @@ const Navbar = () => {
             >
               <Link to={"/"}>
                 <img
-                  src="./korpealogo.png"
-                  alt="Korpea"
+                  src="./nimblelogo2.png"
+                  alt="NimbleByte"
                   height={50}
-                  width={100}
+                  width={50}
                 />
               </Link>
             </nav>

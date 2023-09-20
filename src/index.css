@@ -6,6 +6,12 @@
   cursor: pointer;
 }
 
+.background-color {
+  background-color: #F0F8FE;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .navbar-light .navbar-nav .nav-link  {
   /* color: var(--accent-color); */
   color: #2196f3;
@@ -34,6 +40,12 @@
   color:#e2770d
 
 }
+
+.footer-nav-img{
+    filter: brightness(0) invert(1);
+    margin-right: 0.5rem;
+}
+
 
 .dropdown:active { color: #e2770d; }
 

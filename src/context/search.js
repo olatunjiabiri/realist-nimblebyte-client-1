@@ -6,7 +6,7 @@ const innitialState = {
   address: "",
   action: "", //Buy
   type: "", //House
-  price: "", //All price
+  price: "All price", //All price
   priceRange: [0, 1000000000000],
   results: [],
   page: "",
