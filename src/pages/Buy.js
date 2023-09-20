@@ -14,6 +14,11 @@ export default function Buy() {
     fetchAds();
   }, []);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+  
   const fetchAds = async () => {
     try {
       const { data } = await axios.get("/ads-for-sell");

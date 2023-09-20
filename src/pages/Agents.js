@@ -13,6 +13,11 @@ export default function Agents() {
     fetchAgents();
   }, []);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+  
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(

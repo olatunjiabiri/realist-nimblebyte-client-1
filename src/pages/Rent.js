@@ -14,6 +14,11 @@ export default function Rent() {
     fetchAds();
   }, []);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+  
   console.log('auth>>', auth)
 
   const fetchAds = async () => {
