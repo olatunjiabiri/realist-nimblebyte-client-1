@@ -35,6 +35,12 @@
 
 }
 
+.footer-nav-img{
+    filter: brightness(0) invert(1);
+    margin-right: 0.5rem;
+}
+
+
 .dropdown:active { color: #e2770d; }
 
 .dropdown-item:hover {
