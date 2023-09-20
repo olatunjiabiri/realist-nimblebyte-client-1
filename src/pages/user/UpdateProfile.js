@@ -46,10 +46,13 @@ export default function UpdateProfile() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
-        userId: auth.user.userId,
-        role: "Seller",
-      });
+      const { data } = await axios.post(
+        `${config.AUTH_API}/api/Roles/AddRole`,
+        {
+          userId: auth.user.userId,
+          role: "Seller",
+        }
+      );
       // console.log('role response data >>>>', data)
       if (!data.success) {
         // toast.error(data.message);
