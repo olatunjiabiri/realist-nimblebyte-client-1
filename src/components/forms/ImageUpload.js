@@ -68,7 +68,7 @@ export default function ImageUpload({ ad, setAd }) {
 
   return (
     <>
-      <label className="btn btn-secondary mb-4">
+      <label className="btn btn-secondary m-4">
         {ad.uploading ? "Processing..." : "Upload photos"}
         <input
           onChange={handleUpload}
@@ -84,7 +84,7 @@ export default function ImageUpload({ ad, setAd }) {
           src={file?.Location}
           shape="square"
           size="46"
-          className="ml-2 mb-4"
+          className="ml-2 m-2"
           onClick={() => handleDelete(file)}
         />
       ))}
