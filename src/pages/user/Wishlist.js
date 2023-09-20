@@ -40,10 +40,7 @@ export default function Wishlist() {
                 : auth.user?.email?.split("@")[0]}
               ,{/* , Welcome to Realist App */}
             </h3>
-            <h3>
-              {/* Hey {auth.user?.firstName ? auth.user?.firstName : auth.user?.email} */}
-              You have not liked any properties yet!
-            </h3>
+            <h3>You have not liked any properties yet!</h3>
           </div>
         </div>
       ) : (
@@ -63,7 +60,7 @@ export default function Wishlist() {
             <div className="row pb-3">
               <div className="col-6"></div>
               <div className="col-6 text-end"></div>
-              <div className="row">
+              <div className="row d-flex justify-content-center">
                 {ads?.map((ad) => (
                   <AdCard ad={ad} key={ad._id} />
                 ))}

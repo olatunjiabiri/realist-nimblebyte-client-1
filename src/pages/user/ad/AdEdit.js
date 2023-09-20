@@ -115,6 +115,8 @@ export default function AdEdit({ action, type }) {
       {/* <form> */}
       <div className="container py-5 ">
         <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
+          <h1 class="text-dark text-center p-3">Update Ad</h1>
+          <hr />
           <div className="mb-3 ">
             <div className="">
               <ImageUpload ad={ad} setAd={setAd} />
@@ -271,7 +273,7 @@ export default function AdEdit({ action, type }) {
             </div>
           </div>
 
-          <div className=" d-flex justify-content-between">
+          <div className="d-flex justify-content-around">
             <div class=" ">
               <button
                 onClick={handleClick}

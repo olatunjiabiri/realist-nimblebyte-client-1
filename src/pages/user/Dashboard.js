@@ -51,7 +51,7 @@ export default function Dashboard() {
               style={{ marginTop: "-10%" }}
             >
               <div className="row"> */}
-            <div className="card-header bg-secondary bg-gradient ml-0 py-3">
+            <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
               <div className="row">
                 <div className="col-12 text-center">
                   <h2>
@@ -83,7 +83,7 @@ export default function Dashboard() {
                 <div className="col-6"></div>
                 <div className="col-6 text-end"></div>
 
-                <div className="row">
+                <div className="row d-flex justify-content-center">
                   {ads?.map((ad) => (
                     <UserAdCard ad={ad} key={ad._id} />
                   ))}

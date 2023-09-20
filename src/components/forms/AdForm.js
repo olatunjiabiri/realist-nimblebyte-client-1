@@ -116,6 +116,8 @@ export default function AdForm({ action, type }) {
       <div className="container p-5">
         <div className="row">
           <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
+            <h1 class="text-dark text-center p-3">Create Ad</h1>
+            <hr />
             <div className="my-3">
               <ImageUpload ad={ad} setAd={setAd} />
             </div>
@@ -200,14 +202,16 @@ export default function AdForm({ action, type }) {
               onChange={(e) => setAd({ ...ad, description: e.target.value })}
             />
 
-            <button
-              onClick={handleClick}
-              className={`btn btn-primary col-8 mb-3 ${
-                ad.loading ? "disabled" : ""
-              }`}
-            >
-              {ad.loading ? "Saving..." : "Submit"}
-            </button>
+            <div className="d-flex justify-content-center">
+              <button
+                onClick={handleClick}
+                className={`btn btn-primary col-4 m-3  ${
+                  ad.loading ? "disabled" : ""
+                }`}
+              >
+                {ad.loading ? "Saving..." : "Submit"}
+              </button>
+            </div>
 
             {/* <pre>{JSON.stringify(ad, null, 4)}</pre>
       <pre>{JSON.stringify(auth, null, 4)} </pre> */}
