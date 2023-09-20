@@ -21,7 +21,7 @@ export default function Agents() {
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `${config.AUTH_API}/user/GetUsersByRole?roleName=Seller`
+        `${config.AUTH_API}​/api​/Roles​/GetUsersByRole?roleName=Seller`
       );
       setAgents(data.responsePayload);
       setLoading(false);
