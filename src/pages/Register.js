@@ -23,7 +23,7 @@ export default function Register() {
         email,
         password,
         phoneNumber: "",
-        appId: config.appId,
+        emailId: config.emailId,
       });
 
       // console.log(response)
