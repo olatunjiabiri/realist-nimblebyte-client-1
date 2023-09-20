@@ -86,7 +86,7 @@ export default function Main() {
               aria-current="page"
               to="/"
             >
-              Realist Korpea
+              Realist NimbleByte
             </NavLink>
           </nav>
         </div>

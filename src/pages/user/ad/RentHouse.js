@@ -5,7 +5,7 @@ import AdForm from "../../../components/forms/AdForm";
 export default function RentHouse() {
   return (
     <div>
-      <div className="container mt-5">
+      <div className="container-fluid pt-5 background-color ">
         <AdForm action="Rent" type="House" />
       </div>
     </div>

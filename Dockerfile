@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:18-alpine
+FROM node:19-alpine as build
 ENV NODE_ENV=production
 
 WORKDIR /app
@@ -12,5 +12,5 @@ RUN npm i --production
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 80
 CMD ["npm", "start"]

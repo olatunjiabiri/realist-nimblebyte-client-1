@@ -69,7 +69,7 @@ export default function SearchForm() {
           }}
         >
           <div className="container bg-light filter-container">
-            <div className="form-control my-2">
+            <div className="form-control border-0 my-2">
               <GooglePlacesAutocomplete
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
@@ -94,7 +94,9 @@ export default function SearchForm() {
                     setPropertyType(false);
                   }}
                 >
-                  <option selected>Purpose</option>
+                  <option selected disabled>
+                    Purpose
+                  </option>
                   {action.map((item) => (
                     <option
                       className="optgroup"
@@ -115,7 +117,9 @@ export default function SearchForm() {
                     setSearch({ ...search, type: e.target.value, price: "" });
                   }}
                 >
-                  <option selected>Property Type</option>
+                  <option selected disabled>
+                    Property Type
+                  </option>
                   {type.map((item) => (
                     <option
                       className="optgroup"
@@ -143,7 +147,9 @@ export default function SearchForm() {
                         });
                       }}
                     >
-                      <option selected>Price</option>
+                      <option selected disabled>
+                        Price
+                      </option>
                       {sellPrices.map((item) => (
                         <option
                           className="optgroup"
