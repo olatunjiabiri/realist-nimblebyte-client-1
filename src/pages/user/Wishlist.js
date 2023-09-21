@@ -30,17 +30,18 @@ export default function Wishlist() {
   return (
     <div className="container-fluid p-0">
       {!ads?.length ? (
-        <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
+        <div className="card-header bg-warning text-light bg-gradient ml-0 py-3">
           <div className="row">
-            <div className="col-12 text-center"></div>
-            <h3 className="text-left">
+            <div className="row d-flex justify-content-center">
+            {/* <h3 className="text-left">
               Hey{" "}
               {auth.user?.firstName
                 ? auth.user?.firstName
                 : auth.user?.email?.split("@")[0]}
-              ,{/* , Welcome to Realist App */}
-            </h3>
+              ,, Welcome to Realist App
+            </h3> */}
             <h3>You have not liked any properties yet!</h3>
+            </div>
           </div>
         </div>
       ) : (
