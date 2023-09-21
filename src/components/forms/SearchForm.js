@@ -55,7 +55,7 @@ export default function SearchForm({ navMenuProperty }) {
 
   return (
     <>
-      <div className="searchForm-container mt-5 pt-5">
+      <div className="searchForm-container pt-5">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -78,6 +78,9 @@ export default function SearchForm({ navMenuProperty }) {
                   onChange: ({ value }) => {
                     setSearch({ ...search, address: value.description });
                     setFilter(false);
+                  },
+                  onclick: () => {
+                    this.set(null);
                   },
                 }}
               />

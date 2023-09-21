@@ -48,7 +48,7 @@ export default function Dashboard() {
       {/* className={completed ? 'text-strike' : null} */}
       <div className="card shadow border-0 mt-4">
         {!seller ? (
-          <div className=" container d-flex justify-content-center align-items-center vh-100">
+          <div className="d-flex justify-content-center text-light align-items-center card-header-color">
             <div className="row">
               <div className="col-12 text-center">
                 <h2>
@@ -64,10 +64,13 @@ export default function Dashboard() {
         ) : (
           <div className="">
             {total > 0 && (
-              <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
+              <div className="text-light ml-0 py-3 card-header-color">
                 <div className="row">
                   <div className="col-12 text-center">
-                    <h1>Listed ads - Total {total} ads found</h1>
+                    <h1>
+                      Listed Ads - Total {total}{" "}
+                      {ads?.length > 1 ? "Ads" : "Ad"} found
+                    </h1>
                   </div>
                 </div>
               </div>
