@@ -18,8 +18,8 @@ export default function Rent() {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
   }, []);
-  
-  console.log('auth>>', auth)
+
+  // console.log("auth>>", auth);
 
   const fetchAds = async () => {
     try {
@@ -32,10 +32,9 @@ export default function Rent() {
 
   return (
     <div>
-      <SearchForm />
-      {/* <h1 className="display-1 bg-primary text-light p-5">For Rent</h1> */}
+      <SearchForm navMenuProperty={true} />
       <div className="container">
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           {ads?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />
           ))}

@@ -18,7 +18,7 @@ export default function Buy() {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
   }, []);
-  
+
   const fetchAds = async () => {
     try {
       const { data } = await axios.get("/ads-for-sell");
@@ -30,10 +30,9 @@ export default function Buy() {
 
   return (
     <div>
-      <SearchForm />
-      {/* <h1 className="display-1 bg-primary text-light p-5">For Sell</h1> */}
+      <SearchForm navMenuProperty={true} />
       <div className="container">
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           {ads?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />
           ))}
