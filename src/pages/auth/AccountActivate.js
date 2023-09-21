@@ -17,7 +17,7 @@ export default function AccountActivate() {
   const [loading, setLoading] = useState(false);
 
   const token = searchParams.get("token");
-  const userId = searchParams.get("userid");
+  const userId = searchParams.get("userId");
 
   const navigate = useNavigate();
 

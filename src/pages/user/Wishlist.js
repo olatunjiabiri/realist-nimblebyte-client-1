@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import AdCard from "../../components/cards/AdCard";
+import "./index.css";
 
 export default function Wishlist() {
   // context
@@ -30,16 +31,8 @@ export default function Wishlist() {
   return (
     <div className="container-fluid p-0">
       {!ads?.length ? (
-        <div className="card-header bg-warning text-light bg-gradient ml-0 py-3">
-          <div className="row">
-            <div className="row d-flex justify-content-center">
-            {/* <h3 className="text-left">
-              Hey{" "}
-              {auth.user?.firstName
-                ? auth.user?.firstName
-                : auth.user?.email?.split("@")[0]}
-              ,, Welcome to Realist App
-            </h3> */}
+        <div className="row">
+          <div className="col-12 text-center">
             <h3>You have not liked any properties yet!</h3>
             </div>
           </div>
@@ -51,7 +44,10 @@ export default function Wishlist() {
             <div className="row">
               <div className="col-12 text-center">
                 <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
-                  <h2>You have liked {ads?.length} properties</h2>
+                  <h2>
+                    You have liked {ads?.length}{" "}
+                    {ads?.length > 1 ? "properties" : "property"}
+                  </h2>
                 </div>
               </div>
             </div>

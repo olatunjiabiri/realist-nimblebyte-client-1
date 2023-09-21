@@ -17,11 +17,11 @@ export default function Agents() {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
   }, []);
-  
+
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `${config.AUTH_API}/user/GetUsersByRole?roleName=Seller`
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Seller`
       );
       setAgents(data.responsePayload);
       setLoading(false);

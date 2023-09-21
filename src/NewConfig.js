@@ -12,8 +12,8 @@ const config = {
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   STRIPE_PUBLISHABLE_KEY:
     "pk_test_51N5rmAIPzi27NxkuwY7kRWxrd45VLdOlaFpegNGUksbkeGd4CTnOlDcdHwU7u1yv1Cgln0s36kjMtN9XuiLtXbHK00cbwxDnxX",
-  appId: "CCD4D729-FCE1-4D8D-91B1-4BF80A3DF80C",
-  // emailId: "E4BCBFAA-3258-4934-AA87-891AE86B6E71",
+  // appId: "CCD4D729-FCE1-4D8D-91B1-4BF80A3DF80C",
+  emailId: "E4BCBFAA-3258-4934-AA87-891AE86B6E71",
 };
 
 export default config;
