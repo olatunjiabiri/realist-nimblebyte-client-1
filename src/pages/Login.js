@@ -40,12 +40,8 @@ export default function Login() {
         password,
         phoneNumber: "",
       });
-      // console.log(data);
 
       if (!data?.success) {
-        // toast.error(data.message);
-        toast.error("Account does not exist, Please register");
-
         setLoading(false);
       } else {
         const { token, user } = data.responsePayload;
@@ -73,7 +69,19 @@ export default function Login() {
       }
     } catch (err) {
       if (err.response.data.success === false) {
-        toast.error(err.response.data.message);
+        switch (err.response.data.statusCode) {
+          case 302: //user does not exist
+            toast.error(err.response.data.message);
+            navigate("/register");
+            break;
+          case 401:
+          case 417:
+            toast.error(err.response.data.message); //wrong password
+            break;
+          default:
+          // code block
+        }
+        // toast.error(err.response.data.message);
       } else toast.error("Something went wrong", err);
       setLoading(false);
     }
