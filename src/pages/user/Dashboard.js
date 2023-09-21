@@ -41,42 +41,37 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="container-fluid pt-5 background-color">
+    <div
+      className="container-fluid pt-5 background-color"
+      style={{ minHeight: "700px" }}
+    >
+      {/* className={completed ? 'text-strike' : null} */}
       <div className="card shadow border-0 mt-4">
         {!seller ? (
-          <div>
-            {/* <div
-              // className=" container d-flex justify-content-center align-items-center vh-100"
-              className="col-lg-8 offset-lg-2 mt-4 mb-4"
-              style={{ marginTop: "-10%" }}
-            >
-              <div className="row"> */}
-            <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
-              <div className="row">
-                <div className="col-12 text-center">
-                  <h2>
-                    Hey{" "}
-                    {auth.user?.firstName
-                      ? auth.user?.firstName
-                      : auth.user?.email?.split("@")[0]}
-                    , Welcome to Realist App
-                  </h2>
-                </div>
+          <div className=" container d-flex justify-content-center align-items-center vh-100">
+            <div className="row">
+              <div className="col-12 text-center">
+                <h2>
+                  Hey{" "}
+                  {auth.user?.firstName
+                    ? auth.user?.firstName
+                    : auth.user?.email?.split("@")[0]}
+                  , Welcome to Realist App
+                </h2>
               </div>
             </div>
           </div>
         ) : (
-          // <div className="container m-5">
           <div className="">
-            {/* <div className="row" style={{ marginTop: "80px" }}>
-              <div className="col-lg-6 offset-lg-2 mt-4 mb-4"> */}
-            <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
-              <div className="row">
-                <div className="col-12 text-center">
-                  <h1>Listed ads - Total {total} ads found</h1>
+            {total > 1 && (
+              <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
+                <div className="row">
+                  <div className="col-12 text-center">
+                    <h1>Listed ads - Total {total} ads found</h1>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="card-body p-4">
               <div className="row pb-3">
