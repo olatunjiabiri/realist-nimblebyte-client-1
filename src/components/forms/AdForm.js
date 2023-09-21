@@ -106,7 +106,7 @@ export default function AdForm({ action, type }) {
         setAd({ ...ad, loading: false });
 
         // reload page on redirect
-        // window.location.href = "/dashboard";
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       console.log(err);
