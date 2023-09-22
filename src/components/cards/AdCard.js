@@ -10,10 +10,10 @@ export default function AdCard({ ad }) {
     <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
       <Link className="link" to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
-          text={`${ad?.type} for ${ad?.action}`}
+          text={`${ad?.type} for ${ad?.action === "Sell" ? "Sale" : "Rent"}`}
           color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
         >
-          <div className="card hoverable shadow">
+          <div className="card hoverable p-2 shadow-lg">
             <img
               src={ad?.photos?.[0].Location}
               alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}

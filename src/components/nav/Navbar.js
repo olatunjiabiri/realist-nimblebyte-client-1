@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg navbar-light bg-light justify-content-center"
+        className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
         id="custom-nav"
       >
         <div className="container">
@@ -114,8 +114,17 @@ const Navbar = () => {
                       aria-current="page"
                       to="/login"
                     >
-                      Login/Register
+                      Login
                     </NavLink>
+                    <>
+                      <NavLink
+                        className="nav-item nav-link"
+                        aria-current="page"
+                        to="/register"
+                      >
+                        Register
+                      </NavLink>
+                    </>
                   </>
                 ) : (
                   ""

@@ -31,15 +31,17 @@ export default function Wishlist() {
   return (
     <div className="container-fluid p-0">
       {!ads?.length ? (
-        <div className="row">
-          <div className="col-12 text-center">
-            <h3>You have not liked any properties yet!</h3>
+        <div className="d-flex justify-content-center text-light align-items-center card-header-color">
+          <div className="row">
+            <div className="col-12 text-center">
+              <h3>You have not liked any properties yet!</h3>
             </div>
           </div>
+        </div>
       ) : (
-        <div className="container-fluid">
+        <div className="container-fluid p-0">
           {/* <div className="row"> */}
-          <div className="card-header bg-secondary text-light bg-gradient ml-0 py-3">
+          <div className="text-light ml-0 py-3 card-header-color">
             <div className="row">
               <div className="col-12 text-center">
                 <div className="col-lg-8 offset-lg-2 mt-4 mb-4">

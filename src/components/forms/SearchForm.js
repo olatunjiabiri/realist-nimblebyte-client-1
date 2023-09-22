@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
 
-export default function SearchForm() {
+export default function SearchForm({ navMenuProperty }) {
   // context
   const [search, setSearch] = useSearch();
   const [purpose, setPurpose] = useState(true);
@@ -55,7 +55,7 @@ export default function SearchForm() {
 
   return (
     <>
-      <div className="searchForm-container mt-5 pt-5">
+      <div className="searchForm-container pt-5">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -79,6 +79,9 @@ export default function SearchForm() {
                     setSearch({ ...search, address: value.description });
                     setFilter(false);
                   },
+                  onclick: () => {
+                    this.set(null);
+                  },
                 }}
               />
             </div>
@@ -88,98 +91,24 @@ export default function SearchForm() {
               //className=""
             >
               <div className="row justify-content-evenly col-lg-8">
-                <select
-                  className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                  aria-label="form-select select-options"
-                  onChange={(e) => {
-                    setSearch({ ...search, action: e.target.value, price: "" });
-                    setPropertyType(false);
-                  }}
-                >
-                  <option selected disabled>
-                    Purpose
-                  </option>
-                  {action.map((item) => (
-                    <option
-                      className="optgroup"
-                      key={item._id}
-                      value={item.name}
-                    >
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                  aria-label="form-select select-options"
-                  // disabled={filter}
-                  onChange={(e) => {
-                    setSearch({ ...search, type: e.target.value, price: "" });
-                  }}
-                >
-                  <option selected disabled>
-                    Property Type
-                  </option>
-                  {type.map((item) => (
-                    <option
-                      className="optgroup"
-                      key={item._id}
-                      value={item.name}
-                    >
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-
-                {search.action === "Buy" ? (
+                {!navMenuProperty && (
                   <>
                     <select
                       className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                       aria-label="form-select select-options"
-                      // disabled={filter}
                       onChange={(e) => {
                         setSearch({
                           ...search,
-                          price: e.target.value,
-                          priceRange: sellPrices.find(
-                            (item) => item.name === e.target.value
-                          ).array,
+                          action: e.target.value,
+                          price: "",
                         });
+                        setPropertyType(false);
                       }}
                     >
                       <option selected disabled>
-                        Price
+                        Purpose
                       </option>
-                      {sellPrices.map((item) => (
-                        <option
-                          className="optgroup"
-                          key={item._id}
-                          value={item.name}
-                        >
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                ) : (
-                  <>
-                    <select
-                      className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                      aria-label="form-select select-options"
-                      // disabled={filter}
-                      onChange={(e) => {
-                        setSearch({
-                          ...search,
-                          price: e.target.value,
-                          priceRange: rentPrices.find(
-                            (item) => item.name === e.target.value
-                          ).array,
-                        });
-                      }}
-                    >
-                      <option selected>Price</option>
-                      {rentPrices.map((item) => (
+                      {action.map((item) => (
                         <option
                           className="optgroup"
                           key={item._id}
@@ -191,6 +120,94 @@ export default function SearchForm() {
                     </select>
                   </>
                 )}
+                (
+                <>
+                  <select
+                    className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                    aria-label="form-select select-options"
+                    // disabled={filter}
+                    onChange={(e) => {
+                      setSearch({
+                        ...search,
+                        type: e.target.value,
+                        price: "",
+                      });
+                    }}
+                  >
+                    <option selected disabled>
+                      Property Type
+                    </option>
+                    {type.map((item) => (
+                      <option
+                        className="optgroup"
+                        key={item._id}
+                        value={item.name}
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                  {search.action === "Buy" ? (
+                    <>
+                      <select
+                        className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                        aria-label="form-select select-options"
+                        // disabled={filter}
+                        onChange={(e) => {
+                          setSearch({
+                            ...search,
+                            price: e.target.value,
+                            priceRange: sellPrices.find(
+                              (item) => item.name === e.target.value
+                            ).array,
+                          });
+                        }}
+                      >
+                        <option selected disabled>
+                          Price
+                        </option>
+                        {sellPrices.map((item) => (
+                          <option
+                            className="optgroup"
+                            key={item._id}
+                            value={item.name}
+                          >
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                  ) : (
+                    <>
+                      <select
+                        className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                        aria-label="form-select select-options"
+                        // disabled={filter}
+                        onChange={(e) => {
+                          setSearch({
+                            ...search,
+                            price: e.target.value,
+                            priceRange: rentPrices.find(
+                              (item) => item.name === e.target.value
+                            ).array,
+                          });
+                        }}
+                      >
+                        <option selected>Price</option>
+                        {rentPrices.map((item) => (
+                          <option
+                            className="optgroup"
+                            key={item._id}
+                            value={item.name}
+                          >
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                  )}
+                </>
+                )
               </div>
             </div>
             <div className="d-grid col-5 mx-auto text-center mt-3">
