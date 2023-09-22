@@ -63,9 +63,7 @@ export default function Login() {
 
         if (auth.user?.firstName === "") navigate("/user/profile");
 
-        location?.state !== null
-          ? navigate(location.state)
-          : navigate("/dashboard");
+        location?.state !== null ? navigate(location.state) : navigate("/");
       }
     } catch (err) {
       if (err.response.data.success === false) {
