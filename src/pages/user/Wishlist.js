@@ -36,7 +36,6 @@ export default function Wishlist() {
             <h3>You have not liked any properties yet!</h3>
             </div>
           </div>
-        </div>
       ) : (
         <div className="container-fluid">
           {/* <div className="row"> */}
