@@ -17,7 +17,7 @@ export default function Home() {
     }
     fetchAds();
   }, []);
-  
+
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
@@ -39,7 +39,7 @@ export default function Home() {
         <SearchForm />
       </div>
 
-      <div className="container mt-5 pt-5">
+      <div className="container pt-3">
         <div className="row">
           {adsForSell?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />

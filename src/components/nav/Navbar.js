@@ -85,14 +85,17 @@ const Navbar = () => {
               >
                 Rent
               </NavLink>
-
-              <NavLink
-                className="nav-item nav-link"
-                aria-current="page"
-                to="/agents"
-              >
-                Agents
-              </NavLink>
+              {loggedIn ? (
+                <NavLink
+                  className="nav-item nav-link"
+                  aria-current="page"
+                  to="/agents"
+                >
+                  Agents
+                </NavLink>
+              ) : (
+                ""
+              )}
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="nav d-flex lead">
