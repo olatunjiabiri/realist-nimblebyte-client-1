@@ -4,6 +4,7 @@ import AdFeatures from "../../components/cards/AdFeatures";
 import { formatNumber } from "../../helpers/ad";
 import dayjs from "dayjs";
 import millify from "millify";
+import ContactOwnerButton from "../contactOwnerButton/ContactOwnerButton";
 
 export default function AdCard({ ad }) {
   return (
@@ -30,9 +31,16 @@ export default function AdCard({ ad }) {
               <p className="card-text">{ad?.address}</p>
 
               <AdFeatures ad={ad} />
-              <p className="card-text">
-                Posted {dayjs(ad?.createdAt).fromNow()}
-              </p>
+              <div className="d-flex justify-content-between">
+                <p className="pt-3 card-text">
+                  Posted {dayjs(ad?.createdAt).fromNow()}
+                </p>
+                <Link className="link" to={`/ad/${ad.slug}`}>
+                  <p className="justify-content-end">
+                    <ContactOwnerButton />
+                  </p>
+                </Link>
+              </div>
             </div>
           </div>
         </Badge.Ribbon>
