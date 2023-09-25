@@ -35,10 +35,13 @@ export default function AccountActivate() {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(`${config.AUTH_API}/user/AddRole`, {
-        userId: auth.user.userId,
-        role: "Buyer",
-      });
+      const { data } = await axios.post(
+        `${config.AUTH_API}/api/Roles/AddRole`,
+        {
+          userId: auth.user.userId,
+          role: "Buyer",
+        }
+      );
 
       if (!data.success) {
         toast.error(data.message);
@@ -80,7 +83,7 @@ export default function AccountActivate() {
         // navigate("/login");
       } else {
         console.log(response);
-        addDefaultRole();
+        // addDefaultRole();
 
         toast.success("Your email has been confirmed. Log in to Realist app.");
         navigate("/login");

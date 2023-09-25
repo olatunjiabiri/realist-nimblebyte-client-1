@@ -106,6 +106,8 @@ function App() {
                 <Route path="ad/create/rent/house" element={<RentHouse />} />
                 <Route path="ad/create/rent/land" element={<RentLand />} />
                 <Route path="user/profile" element={<UpdateProfile />} />
+                <Route path="/agents" element={<Agents />} />
+
                 {/* <Route path="user/settings" element={<Settings />} /> */}
                 <Route
                   path="user/update-password"
@@ -119,7 +121,6 @@ function App() {
               </Route>
 
               <Route path="/ad/:slug" element={<AdView />} />
-              <Route path="/agents" element={<Agents />} />
               <Route path="/agent/:firstName" element={<Agent />} />
 
               <Route path="/buy" element={<Buy />} />
