@@ -119,7 +119,7 @@ export default function AdForm({ action, type }) {
       <div className="container p-5">
         <div className="row">
           <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
-            <h1 class="text-dark text-center p-3">Create Ad</h1>
+            <h1 class="text-dark text-center p-3"> Create Ad for {ad.action} </h1>
             <hr />
             <div className="my-3">
               <ImageUpload ad={ad} setAd={setAd} />
@@ -173,7 +173,7 @@ export default function AdForm({ action, type }) {
                   type="number"
                   min="0"
                   className="form-control mb-3"
-                  placeholder="Enter how many carpark"
+                  placeholder="Enter how many carparks"
                   value={ad.carpark}
                   onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
                 />

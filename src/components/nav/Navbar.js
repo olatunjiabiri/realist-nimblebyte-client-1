@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
+import useSelection from "antd/es/table/hooks/useSelection";
+//import useDropdown from "react-bootstrap/Dropdown";
 // import "./index.css";
 
 const Navbar = () => {
@@ -9,6 +11,7 @@ const Navbar = () => {
   const [auth, setAuth] = useAuth();
   // hooks
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const logout = () => {
     setAuth({ user: null, token: "" });
@@ -18,8 +21,20 @@ const Navbar = () => {
 
   const loggedIn = auth?.user !== null && auth?.token !== "";
 
+  // const handlePostAdClick = () => {
+  //   if (loggedIn) {
+  //     navigate("/ad/create");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
+
   const handlePostAdClick = () => {
-    if (loggedIn) {
+    if (selectedOption === "Sale") {
+      navigate("/ad/create-sale");
+    } else if (selectedOption === "Rent") {
+      navigate("/ad/create-rent");
+    } else if (loggedIn) {
       navigate("/ad/create");
     } else {
       navigate("/login");
@@ -100,13 +115,81 @@ const Navbar = () => {
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="nav d-flex lead">
                 {loggedIn ? (
-                  <a
-                    className="nav-link pointer d-none d-lg-block"
-                    onClick={handlePostAdClick}
-                  >
-                    Post Ad
-                  </a>
+                  <div className="dropdown mr-auto">
+                    <li>
+                      <a
+                        className="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarScrollingDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Post Ad
+                      </a>
+                      <ul
+                        className="dropdown-menu dropdown-menu-right"
+                        aria-labelledby="navbarScrollingDropdown"
+                      >
+                        <li>
+                          <NavLink
+                            className="dropdown-item"
+                            to="/ad/create/sell/house"
+                          >
+                            SALE
+                            <li>
+                              <NavLink
+                                className="dropdown-item"
+                                to="/ad/create/sell/house"
+                              >
+                                House
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                className="dropdown-item"
+                                to="/ad/create/sell/land"
+                              >
+                                Land
+                              </NavLink>
+                            </li>
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className="dropdown-item"
+                            to="/ad/create/rent/land"
+                          >
+                            RENT
+                            <li>
+                              <NavLink
+                                className="dropdown-item"
+                                to="/ad/create/sell/house"
+                              >
+                                House
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                className="dropdown-item"
+                                to="/ad/create/sell/land"
+                              >
+                                Land
+                              </NavLink>
+                            </li>
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </li>
+                  </div>
                 ) : (
+                  // <a
+                  //   className="nav-link pointer d-none d-lg-block"
+                  //   onClick={handlePostAdClick}
+                  // >
+                  //   Post Ad
+                  // </a>
+
                   ""
                 )}
 

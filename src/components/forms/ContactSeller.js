@@ -11,7 +11,7 @@ export default function ContactSeller({ ad }) {
   // state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Hi Property Owner, I will like us to discuss this more. Kindly reach out to me. Thanks.");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState("");
   // hooks
@@ -26,6 +26,12 @@ export default function ContactSeller({ ad }) {
       setPhone(auth.user?.phone);
     }
   }, [loggedIn]);
+
+  // useEffect(() => {
+  //   if(ad?.postedBy?.name){
+  //     setMessage("Hello ${ad?.postedBy?.name}. ${message}");
+  //   }
+  // }, [ad])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +50,7 @@ export default function ContactSeller({ ad }) {
       } else {
         setLoading(false);
         toast.success("Your enquiry has been emailed to the seller");
-        setMessage("");
+        setMessage("Hi Property Owner, I will like us to discuss this more. Kindly reach out to me. Thanks.");
       }
     } catch (err) {
       console.log(err);
@@ -66,7 +72,7 @@ export default function ContactSeller({ ad }) {
             <textarea
               name="message"
               className="form-control mb-3"
-              placeholder="Write your message"
+             // placeholder="Write your message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               autoFocus={true}
@@ -76,7 +82,7 @@ export default function ContactSeller({ ad }) {
             <input
               type="text"
               className="form-control mb-3"
-              placeholder="Enter your name"
+              // placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               // disabled={!loggedIn}
@@ -85,7 +91,7 @@ export default function ContactSeller({ ad }) {
             <input
               type="text"
               className="form-control mb-3"
-              placeholder="Enter your email"
+              // placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               // disabled={!loggedIn}
@@ -94,7 +100,7 @@ export default function ContactSeller({ ad }) {
             <input
               type="text"
               className="form-control mb-3"
-              placeholder="Enter your phone"
+              // placeholder="Enter your phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               // disabled={!loggedIn}

@@ -136,6 +136,7 @@ export default function ProfileForm() {
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
               {/* <div> */}
+                       
               <h4>Select User Type</h4>
               <div className="form-check">
                 <input
