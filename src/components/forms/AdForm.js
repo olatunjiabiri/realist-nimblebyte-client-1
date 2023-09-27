@@ -126,7 +126,7 @@ export default function AdForm({ action, type }) {
           <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
             <h1 class="text-dark text-center p-3">
               {" "}
-              Create Ad for {ad.action}{" "}
+              Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"} {" "}
             </h1>
             <hr />
 
