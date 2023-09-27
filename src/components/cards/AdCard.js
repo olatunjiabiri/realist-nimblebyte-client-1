@@ -40,14 +40,13 @@ export default function AdCard({ ad }) {
 
           <div className="card-body ad-card-body">
             <div className="d-flex justify-content-between">
-              <h3 className="pt-3">
+              <h3 className="pt-1">
                 {" "}
                 <span>&#8358;</span>
                 {/* {formatNumber(ad?.price)} */}
                 {millify(ad?.price)}
               </h3>
-              {/* <section className="like-unlike-button"> */}
-              <section>
+              <section className="like-unlike-button">
                 <LikeUnlike ad={ad} />
               </section>
             </div>
@@ -64,9 +63,6 @@ export default function AdCard({ ad }) {
                   className="bg-white"
                   smooth
                   to={`/ad/${ad.slug}/#contact-owner`}
-                  // scroll={(el) =>
-                  //   el.scrollIntoView({ behavior: "instant", block: "end" })
-                  // }
                   scroll={(el) => scrollWithOffset(el)}
                 >
                   <ContactOwnerButton />
