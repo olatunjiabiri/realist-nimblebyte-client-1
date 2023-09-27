@@ -55,7 +55,7 @@ export default function ContactSeller({ ad }) {
 
   return (
     <>
-      <div className="row">
+      <div id="contact-owner" className="row">
         <div className="col-lg-8 offset-lg-2">
           <h3>
             Contact this Property{" "}

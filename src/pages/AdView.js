@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ImageGallery from "../components/misc/ImageGallery";
-import Logo from "../logo.svg";
+// import Logo from "../logo.svg";
 import AdFeatures from "../components/cards/AdFeatures";
 import { formatNumber } from "../helpers/ad";
 import millify from "millify";
@@ -32,7 +32,7 @@ export default function AdView() {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
   }, []);
-  
+
   const fetchAd = async () => {
     try {
       const { data } = await axios.get(`/ad/${params.slug}`);
@@ -59,7 +59,7 @@ export default function AdView() {
     } else {
       return [
         {
-          src: Logo,
+          src: "Image",
           width: 2,
           height: 1,
         },
@@ -74,12 +74,12 @@ export default function AdView() {
           <div className="col-lg-8 offset-lg-2 mt-3">
             <div className="mt-4 mb-4">
               <button className="btn btn-success disabled mt-2">
-                {ad?.sold} {(ad.action = "Off Market" ? "In Market" : ad.action)}
+                {ad?.sold}{" "}
+                {(ad.action = "Off Market" ? "In Market" : ad.action)}
               </button>
               {/* {ad?.sold ? "❌ Off market" : "✅ In market"} */}
             </div>
-            <h1 className="mt-3 h2">
-              {ad.address}</h1>
+            <h1 className="mt-3 h2">{ad.address}</h1>
             <AdFeatures ad={ad} />
             <h3 className="mt-3 h2">
               {" "}
@@ -93,11 +93,11 @@ export default function AdView() {
                 {ad.type} for {(ad.action = "SELL" ? "SALE" : ad.action)}
               </button>
               <LikeUnlike ad={ad} />
-            </div>      
-          </div>     
+            </div>
+          </div>
           <div className="col-lg-8 offset-lg-2 mt-3">
             <ImageGallery photos={generatePhotosArray(ad?.photos)} />
-          </div>          
+          </div>
         </div>
       </div>
 
@@ -105,15 +105,15 @@ export default function AdView() {
         <div className="row">
           <div className="col-lg-8 offset-lg-2 mt-3">
             <MapCard ad={ad} related={related} />
-  
-            <h1 className="mt-3 h2">
+
+            <h3 className="mt-3 h2">
               {ad?.type} in {ad?.address} for {ad?.action} <span>&#8358;</span>
               {/* {formatNumber(ad?.price)} */}
               {millify(ad?.price)}
-            </h1>
+            </h3>
 
             <AdFeatures ad={ad} />
-            <hr />       
+            <hr />
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function AdView() {
         <ContactSeller ad={ad} />
       </div>
 
-      <div className="container-fluid">
+      <div className="container">
         <h4 className="text-center mb-3">Related Properties</h4>
         <hr />
 

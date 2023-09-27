@@ -1,42 +1,78 @@
 import { Badge } from "antd";
 import { Link } from "react-router-dom";
-import AdFeatures from "../../components/cards/AdFeatures";
-import { formatNumber } from "../../helpers/ad";
 import dayjs from "dayjs";
 import millify from "millify";
+import { HashLink } from "react-router-hash-link";
+import AdFeatures from "../../components/cards/AdFeatures";
+// import { formatNumber } from "../../helpers/ad";
+
+import ContactOwnerButton from "../contactOwnerButton/ContactOwnerButton";
+import LikeUnlike from "../../components/misc/LikeUnlike";
+import "./index.css";
 
 export default function AdCard({ ad }) {
+  const scrollWithOffset = (el) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yOffset = -200;
+    window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+  };
+
   return (
-    <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
-      <Link className="link" to={`/ad/${ad.slug}`}>
-        <Badge.Ribbon
-          text={`${ad?.type} for ${ad?.action === "Sell" ? "Sale" : "Rent"}`}
-          color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
-        >
-          <div className="card hoverable p-2 shadow-lg">
+    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
+      {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
+      <Badge.Ribbon
+        text={`${ad?.type} for ${ad?.action === "Sell" ? "Sale" : "Rent"}`}
+        color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
+      >
+        <div className="card hoverable p-2 shadow-lg">
+          <Link className="link" to={`/ad/${ad.slug}`}>
             <img
               src={ad?.photos?.[0].Location}
               alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
-              style={{ height: "250px", objectFit: "cover" }}
+              style={{
+                height: "250px",
+                maxWidth: "350px",
+                alignSelf: "center",
+                objectFit: "cover",
+              }}
             />
+          </Link>
 
-            <div className="card-body">
-              <h3>
+          <div className="card-body ad-card-body">
+            <div className="d-flex justify-content-between">
+              <h3 className="pt-1">
                 {" "}
                 <span>&#8358;</span>
                 {/* {formatNumber(ad?.price)} */}
                 {millify(ad?.price)}
               </h3>
-              <p className="card-text">{ad?.address}</p>
+              <section className="like-unlike-button">
+                <LikeUnlike ad={ad} />
+              </section>
+            </div>
 
-              <AdFeatures ad={ad} />
-              <p className="card-text">
+            <p className="card-text">{ad?.address}</p>
+
+            <AdFeatures ad={ad} />
+            <div className="d-flex justify-content-between">
+              <p className="pt-3 card-text">
                 Posted {dayjs(ad?.createdAt).fromNow()}
+              </p>
+              <p className="justify-content-end">
+                <HashLink
+                  className="bg-white"
+                  smooth
+                  to={`/ad/${ad.slug}/#contact-owner`}
+                  scroll={(el) => scrollWithOffset(el)}
+                >
+                  <ContactOwnerButton />
+                </HashLink>
               </p>
             </div>
           </div>
-        </Badge.Ribbon>
-      </Link>
+        </div>
+      </Badge.Ribbon>
+      {/* </Link> */}
     </div>
   );
 }
