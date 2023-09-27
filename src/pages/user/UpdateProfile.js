@@ -91,7 +91,6 @@ export default function UpdateProfile() {
           phone,
           about,
           reg_number,
-          photo: photo.Location,
         }
       );
 
@@ -99,7 +98,9 @@ export default function UpdateProfile() {
         toast.error(data.message);
         setLoading(false);
       } else {
-        const data1 = { ...auth.user, role: "Buyer", userId: auth.user.userId };
+        // const data1 = { ...auth.user, role: "Buyer", userId: auth.user.userId };
+        const data1 = { ...auth.user, userId: auth.user.userId };
+
         setAuth({ ...auth, user: data.responsePayload });
 
         let fromLS = JSON.parse(localStorage.getItem("auth"));
@@ -113,7 +114,7 @@ export default function UpdateProfile() {
 
         toast.success("Profile updated");
         // reload page on redirect
-        window.location.href = "/dashboard";
+        window.location.href = "/";
       }
     } catch (err) {
       console.log(err);
@@ -132,121 +133,123 @@ export default function UpdateProfile() {
         <div className="container p-5">
           {/* <Sidebar /> */}
           <div className="container mt-5">
-            {/* <div className="row"> */}
-            <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
-              <div className="form-group pt-5 pb-3">
-                <select
-                  autoFocus
-                  placeholder="Select User Account Type"
-                  onChange={onOptionChange}
-                  className="form-select form-select-lg"
-                >
-                  <option disabled selected>
-                    {" "}
-                    Select User Account Type
-                  </option>
-                  <option className="form-select-lg mb-5" value={"Buyer"}>
-                    Buyer
-                  </option>
-                  <option className="form-select-lg mb-5" value={"Seller"}>
-                    Seller
-                  </option>
-                </select>
-              </div>
-
-              <div className="form-group col-8 pb-3">
-                {userType === "Seller" && (
-                  <ProfileUpload
-                    photo={photo}
-                    setPhoto={setPhoto}
-                    uploading={uploading}
-                    setUploading={setUploading}
-                  />
-                )}
-              </div>
-
-              <form onSubmit={handleSubmit}>
-                {userType === "Seller" ? (
-                  <>
-                    <input
-                      type="text"
-                      placeholder="Company name"
-                      className="form-control mb-3"
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Registration number"
-                      className="form-control mb-3"
-                      value={reg_number}
-                      onChange={(e) => setReg_number(e.target.value)}
-                    />
-                  </>
-                ) : (
-                  ""
-                )}
-
-                <input
-                  type="text"
-                  placeholder="Firstname"
-                  className="form-control mt-3 mb-3"
-                  value={firstName}
-                  onChange={(e) =>
-                    // setFirstName(slugify(e.target.value.toLowerCase()))
-                    setFirstName(e.target.value)
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="Lastname"
-                  className="form-control mb-3"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                <input
-                  type="email"
-                  className="form-control mb-3"
-                  value={email}
-                  readOnly
-                />
-
-                <input
-                  type="text"
-                  placeholder="Address"
-                  className="form-control mb-3"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Phone number"
-                  className="form-control mb-3"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-
-                <textarea
-                  placeholder="Write something interesting about yourself.."
-                  className="form-control mb-3"
-                  value={about}
-                  onChange={(e) => setAbout(e.target.value)}
-                  maxLength={200}
-                />
-                <div className="d-flex justify-content-center">
-                  <button
-                    className="btn btn-primary col-md-6 mt-3 mb-5"
-                    disabled={loading}
+            <div className="row">
+              <div className="border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
+                <h1 class="text-dark text-center p-3">Update Profile</h1>
+                <hr />
+                <div className="form-group col-md-8 pt-3">
+                  <select
+                    autoFocus
+                    placeholder="Select User Account Type"
+                    onChange={onOptionChange}
+                    className="form-select form-select-lg"
                   >
-                    {loading ? "Processing" : "Update profile"}
-                  </button>
+                    <option disabled selected>
+                      {" "}
+                      Select User Account Type
+                    </option>
+                    <option className="form-select-lg mb-5" value={"Buyer"}>
+                      Buyer
+                    </option>
+                    <option className="form-select-lg mb-5" value={"Seller"}>
+                      Seller
+                    </option>
+                  </select>
                 </div>
-              </form>
+
+                <div className="form-group col-8 pb-1">
+                  {userType === "Seller" && (
+                    <ProfileUpload
+                      photo={photo}
+                      setPhoto={setPhoto}
+                      uploading={uploading}
+                      setUploading={setUploading}
+                    />
+                  )}
+                </div>
+
+                <form onSubmit={handleSubmit}>
+                  {userType === "Seller" ? (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Company name"
+                        className="form-control mb-3"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Registration number"
+                        className="form-control mb-3"
+                        value={reg_number}
+                        onChange={(e) => setReg_number(e.target.value)}
+                      />
+                    </>
+                  ) : (
+                    ""
+                  )}
+
+                  <input
+                    type="text"
+                    placeholder="Firstname"
+                    className="form-control mt-3 mb-3"
+                    value={firstName}
+                    onChange={(e) =>
+                      // setFirstName(slugify(e.target.value.toLowerCase()))
+                      setFirstName(e.target.value)
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Lastname"
+                    className="form-control mb-3"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                  <input
+                    type="email"
+                    className="form-control mb-3"
+                    value={email}
+                    readOnly
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    className="form-control mb-3"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Phone number"
+                    className="form-control mb-3"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+
+                  <textarea
+                    placeholder="Write something interesting about yourself.."
+                    className="form-control mb-3"
+                    value={about}
+                    onChange={(e) => setAbout(e.target.value)}
+                    maxLength={200}
+                  />
+                  <div className="d-flex justify-content-center">
+                    <button
+                      className="btn btn-primary col-md-6 mt-3 mb-5"
+                      disabled={loading}
+                    >
+                      {loading ? "Processing" : "Update profile"}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }
