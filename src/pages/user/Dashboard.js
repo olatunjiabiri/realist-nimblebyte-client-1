@@ -64,7 +64,7 @@ export default function Dashboard() {
         ) : (
           <div className="">
             {total > 0 && (
-              <div className="text-light ml-0 py-3 card-header-color">
+              <div className="text-light ml-0 py-5 card-header-color">
                 <div className="row">
                   <div className="col-12 text-center">
                     <h1>
