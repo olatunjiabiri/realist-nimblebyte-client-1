@@ -22,7 +22,6 @@ export default function AdCreate() {
     <div className="container">
       <div
         className="d-flex justify-content-center align-items-center vh-100"
-        // style={{ marginTop: "-16%" }}
       >
         <div className="col-lg-6 mx-2">
           <button

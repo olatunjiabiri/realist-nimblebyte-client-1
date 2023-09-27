@@ -1,50 +1,69 @@
 .searchForm-container {
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
 }
 
 .filter-container {
-    width: 40%;
-    height: 290px ;
-    margin-left: auto;
-    margin-bottom:0%;
-    border-color: red;
+  width: 40%;
+  height: 290px;
+  margin-left: auto;
+  margin-bottom: 0%;
+  border-color: red;
 }
 
 .filter-container button {
-    margin-top: 0%;
+  margin-top: 0%;
 }
 
-.optgroup { 
-    font-size: 1rem;
-    border-radius: 0%;
- }
+.optgroup {
+  font-size: 1rem;
+  border-radius: 0%;
+}
 
- .adform-wrapper {
-    background-color: #fff;
-    border-radius: 1.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+.adform-wrapper {
+  background-color: #fff;
+  border-radius: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
- }
+/* Style the container for the slider toggle */
+.slider-toggle {
+  display: flex;
+  align-items: center;
+}
+/* Style for radio buttons */
+.radio-button {
+  display: flex;
+  align-items: center;
+  margin-right: 16px; /* Adjust the spacing as needed */
+  cursor: pointer;
+  margin-left: ;
+}
 
-@media screen and (max-width:640) {
-    .filter-options{
-        display: none
-    }
-    .btn-group {
-      display: flex;
-      margin: 0%;
-      flex-direction: column;
-    }
-    /* .filter-container {
+/* Style for selected radio button */
+.selected {
+  /* color: green; */
+  font-weight: bold;
+}
+
+@media screen and (max-width: 640) {
+  .filter-options {
+    display: none;
+  }
+  .btn-group {
+    display: flex;
+    margin: 0%;
+    flex-direction: column;
+  }
+  /* .filter-container {
         width: 50%;
         height: 400px ;
         margin-left: auto;
         border-color: red;
     } */
-  }
+}
 
 /* .search-bar-container {
     height: 1500; width: "70%"

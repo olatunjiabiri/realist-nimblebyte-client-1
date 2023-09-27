@@ -135,9 +135,6 @@ export default function UpdateProfile() {
             {/* <div className="row"> */}
             <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
               <div className="form-group pt-5 pb-3">
-                {/* <h2 className="title-name justify-content-center">Update Profile</h2> */}
-
-                {/* <label for="exampleFormControlSelect1">Select User Account Type</label> */}
                 <select
                   autoFocus
                   placeholder="Select User Account Type"

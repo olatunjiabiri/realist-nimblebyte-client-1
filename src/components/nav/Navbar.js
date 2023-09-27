@@ -3,7 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import useSelection from "antd/es/table/hooks/useSelection";
-//import useDropdown from "react-bootstrap/Dropdown";
 // import "./index.css";
 
 const Navbar = () => {
@@ -29,7 +28,7 @@ const Navbar = () => {
   //   }
   // };
 
-  const handlePostAdClick = () => {
+  const handleCreateAdClick = () => {
     if (selectedOption === "Sale") {
       navigate("/ad/create-sale");
     } else if (selectedOption === "Rent") {
@@ -51,8 +50,7 @@ const Navbar = () => {
           <span className="navbar-brand d-flex w-50 me-auto">
             <nav
               className="nav lead"
-              // style={{ marginTop: "-3%" }}
-            >
+              >
               <Link to={"/"}>
                 <img
                   src="./nimblelogo2.png"
@@ -125,7 +123,7 @@ const Navbar = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        Post Ad
+                        Create Ad
                       </a>
                       <ul
                         className="dropdown-menu dropdown-menu-right"
@@ -136,63 +134,23 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/ad/create/sell/house"
                           >
-                            SALE
-                            <li>
-                              <NavLink
-                                className="dropdown-item"
-                                to="/ad/create/sell/house"
-                              >
-                                House
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
-                                className="dropdown-item"
-                                to="/ad/create/sell/land"
-                              >
-                                Land
-                              </NavLink>
-                            </li>
+                            Sale                          
                           </NavLink>
                         </li>
                         <li>
                           <NavLink
                             className="dropdown-item"
-                            to="/ad/create/rent/land"
+                            to="/ad/create/rent/house"
                           >
-                            RENT
-                            <li>
-                              <NavLink
-                                className="dropdown-item"
-                                to="/ad/create/sell/house"
-                              >
-                                House
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
-                                className="dropdown-item"
-                                to="/ad/create/sell/land"
-                              >
-                                Land
-                              </NavLink>
-                            </li>
+                            Rent                      
                           </NavLink>
                         </li>
                       </ul>
                     </li>
                   </div>
                 ) : (
-                  // <a
-                  //   className="nav-link pointer d-none d-lg-block"
-                  //   onClick={handlePostAdClick}
-                  // >
-                  //   Post Ad
-                  // </a>
-
                   ""
                 )}
-
                 {!loggedIn ? (
                   <>
                     <NavLink
@@ -240,11 +198,11 @@ const Navbar = () => {
                             Dashboard
                           </NavLink>
                         </li>
-                        <li>
+                        {/* <li>
                           <NavLink className="dropdown-item" to="/ad/create">
                             Create an Ad
                           </NavLink>
-                        </li>
+                        </li> */}
                         <li>
                           <NavLink className="dropdown-item" to="/user/profile">
                             Update profile
