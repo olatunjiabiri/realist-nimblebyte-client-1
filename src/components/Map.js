@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
-import { formatNumber } from "../helpers/ad";
 import { Avatar } from "antd";
-import { Fragment } from "react";
-// import millify from "millify";
+import millify from "millify";
+// import { formatNumber } from "../helpers/ad";
 
 const Map = (props) => {
   const { ad, related } = props;
@@ -27,7 +26,7 @@ const Map = (props) => {
     width: "100%",
     height: "300px",
   };
-  console.log(ad);
+  // console.log(ad);
   //   6.5244° N, 3.3792° E
   const center = {
     lat: parseFloat(ad?.location?.coordinates[1]),
@@ -35,7 +34,7 @@ const Map = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className="d-flex">
       <GoogleMap
         // onLoad={handleOnload}
         onClick={() => setActiveMarker(null)}
@@ -52,9 +51,17 @@ const Map = (props) => {
           zIndex={500}
         >
           {activeMarker === ad._id ? (
-            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+            <InfoWindow
+              onCloseClick={() => setActiveMarker(null)}
+              anchor={null}
+              marker={activeMarker}
+            >
               <div className="ml-1 mt-2 map-info-window">
-                <Link to={`/ad/${ad.slug}`} onClick={() => {}}>
+                <Link
+                  className="text-decoration-none"
+                  to={`/ad/${ad.slug}`}
+                  onClick={() => {}}
+                >
                   <Avatar
                     src={ad?.photos[0].Location}
                     shape="square"
@@ -62,17 +69,19 @@ const Map = (props) => {
                     className="float-left mr-1"
                   />
 
-                  <h6>
-                    {" "}
-                    <span>&#8358;</span>
-                    {formatNumber(ad?.price)}
-                    {/* {millify(ad?.price)} */}
+                  <div className="d-flex justify-content-between">
+                    <h5>
+                      {" "}
+                      <span>&#8358;</span>
+                      {/* {formatNumber(ad?.price)} */}
+                      {millify(ad?.price)}
+                    </h5>
                     {ad?.bedrooms !== null ? (
-                      <p>{`${ad?.bedrooms} bd ${ad?.bathrooms} ba`}</p>
+                      <h5> {`${ad?.bedrooms} bd ${ad?.bathrooms} ba`}</h5>
                     ) : (
-                      <p>{`${ad?.landsize}`}</p>
+                      <h5>{`${ad?.landsize}`}</h5>
                     )}
-                  </h6>
+                  </div>
                 </Link>
               </div>
             </InfoWindow>
@@ -91,9 +100,15 @@ const Map = (props) => {
             onClick={() => handleActiveMarker(r._id)}
           >
             {activeMarker === r._id ? (
-              <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+              <InfoWindow
+                onCloseClick={() => setActiveMarker(null)}
+                anchor={null}
+                position={center}
+                marker={activeMarker}
+              >
                 <div className="ml-1 mt-2 map-info-window">
                   <Link
+                    className="text-decoration-none"
                     to={`/ad/${r.slug}`}
                     onClick={() => window.location.reloadPage()}
                   >
@@ -103,19 +118,19 @@ const Map = (props) => {
                       size="46"
                       className="float-left mr-1"
                     />
-
-                    <h6>
-                      {" "}
-                      <span>&#8358;</span>
-                      {formatNumber(r?.price)}
-                    {/* {millify(ad?.price)} */}
-                     
+                    <div className="d-flex justify-content-between">
+                      <h5>
+                        {" "}
+                        <span>&#8358;</span>
+                        {/* {formatNumber(r?.price)} */}
+                        {millify(r?.price)}{" "}
+                      </h5>
                       {r?.bedrooms !== null ? (
-                        <p>{`${r?.bedrooms} bd ${r?.bathrooms} ba`}</p>
+                        <h5>{`${r?.bedrooms} bd ${r?.bathrooms} ba`}</h5>
                       ) : (
-                        <p>{`${r?.landsize}`}</p>
+                        <h5>{`${r?.landsize}`}</h5>
                       )}
-                    </h6>
+                    </div>
                   </Link>
                 </div>
               </InfoWindow>
@@ -123,7 +138,7 @@ const Map = (props) => {
           </Marker>
         ))}
       </GoogleMap>
-    </Fragment>
+    </div>
   );
 };
 
