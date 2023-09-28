@@ -9,9 +9,9 @@ export default function ContactSeller({ ad }) {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("Hi Property Owner, I will like us to discuss this more. Kindly reach out to me. Thanks.");
+  const [message, setMessage] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState("");
   // hooks
@@ -21,11 +21,18 @@ export default function ContactSeller({ ad }) {
 
   useEffect(() => {
     if (loggedIn) {
-      setName(auth.user?.name);
-      setEmail(auth.user?.email);
-      setPhone(auth.user?.phone);
+      // If the user is logged in, set their details as initial values in the form fields
+      // Reset message when the ad prop changes
+      setFirstName(auth.user?.firstName || "");
+      setEmail(auth.user?.email || "");
+      setPhone(auth.user?.phone || "");
+      setMessage(
+        `Hi Property Owner, I am interested in the property located at ${
+          ad?.address || ""
+        }. Kindly reach out to me. Thanks`
+      );
     }
-  }, [loggedIn]);
+  }, [auth.user, ad]);
 
   // useEffect(() => {
   //   if(ad?.postedBy?.name){
@@ -38,7 +45,7 @@ export default function ContactSeller({ ad }) {
     setLoading(true);
     try {
       const { data } = await axios.post("/contact-seller", {
-        name,
+        firstName,
         email,
         message,
         phone,
@@ -46,15 +53,13 @@ export default function ContactSeller({ ad }) {
       });
       if (data?.error) {
         toast.error(data?.error);
-        setLoading(false);
       } else {
-        setLoading(false);
         toast.success("Your enquiry has been emailed to the seller");
-        setMessage("Hi Property Owner, I will like us to discuss this more. Kindly reach out to me. Thanks.");
       }
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong! Try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -72,7 +77,6 @@ export default function ContactSeller({ ad }) {
             <textarea
               name="message"
               className="form-control mb-3"
-             // placeholder="Write your message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               autoFocus={true}
@@ -82,16 +86,14 @@ export default function ContactSeller({ ad }) {
             <input
               type="text"
               className="form-control mb-3"
-              // placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               // disabled={!loggedIn}
             />
 
             <input
               type="text"
               className="form-control mb-3"
-              // placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               // disabled={!loggedIn}
@@ -100,7 +102,6 @@ export default function ContactSeller({ ad }) {
             <input
               type="text"
               className="form-control mb-3"
-              // placeholder="Enter your phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               // disabled={!loggedIn}
@@ -108,7 +109,7 @@ export default function ContactSeller({ ad }) {
 
             <button
               className="btn btn-primary mt-4 mb-5"
-              disabled={!name || !email || loading}
+              disabled={!firstName || !email || loading}
             >
               {loading ? "Please wait" : "Send Enquiry"}
             </button>
