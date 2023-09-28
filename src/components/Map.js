@@ -6,6 +6,7 @@ import millify from "millify";
 // import { formatNumber } from "../helpers/ad";
 
 const Map = (props) => {
+  // const google = window.google;
   const { ad, related } = props;
   const [activeMarker, setActiveMarker] = useState(null);
 

@@ -8,6 +8,11 @@ import AdFeatures from "../../components/cards/AdFeatures";
 
 import ContactOwnerButton from "../contactOwnerButton/ContactOwnerButton";
 import LikeUnlike from "../../components/misc/LikeUnlike";
+
+import {
+  ImageGallery,
+  generatePhotosArray,
+} from "../../components/misc/ImageGallery";
 import "./index.css";
 
 export default function AdCard({ ad }) {
@@ -26,7 +31,7 @@ export default function AdCard({ ad }) {
       >
         <div className="card hoverable p-2 shadow-lg">
           <Link className="link" to={`/ad/${ad.slug}`}>
-            <img
+            {/* <img
               src={ad?.photos?.[0].Location}
               alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
               style={{
@@ -35,6 +40,12 @@ export default function AdCard({ ad }) {
                 alignSelf: "center",
                 objectFit: "cover",
               }}
+            /> */}
+            <ImageGallery
+              photos={generatePhotosArray(ad?.photos)}
+              showThumbs={false}
+              showStatus={false}
+              showIndicators={false}
             />
           </Link>
 
