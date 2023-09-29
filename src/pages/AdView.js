@@ -1,7 +1,10 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ImageGallery from "../components/misc/ImageGallery";
+import {
+  ImageGallery,
+  generatePhotosArray,
+} from "../components/misc/ImageGallery";
 // import Logo from "../logo.svg";
 import AdFeatures from "../components/cards/AdFeatures";
 import { formatNumber } from "../helpers/ad";
@@ -40,30 +43,6 @@ export default function AdView() {
       setRelated(data?.related);
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const generatePhotosArray = (photos) => {
-    if (photos?.length > 0) {
-      const x = photos?.length === 1 ? 2 : 4;
-      let arr = [];
-
-      photos.map((p) =>
-        arr.push({
-          src: p.Location,
-          width: x,
-          height: x,
-        })
-      );
-      return arr;
-    } else {
-      return [
-        {
-          src: "Image",
-          width: 2,
-          height: 1,
-        },
-      ];
     }
   };
 
