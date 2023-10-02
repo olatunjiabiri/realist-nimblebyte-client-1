@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Badge } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
@@ -16,11 +18,18 @@ import {
 import "./index.css";
 
 export default function AdCard({ ad }) {
+  const { pathname } = useLocation();
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -200;
     window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
