@@ -31,6 +31,12 @@ export default function Login() {
     }
   };
 
+
+  const handleFaceBookSubmit = async (e) => {
+
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -115,6 +121,21 @@ export default function Login() {
               >
                 {loading ? "Waiting..." : "Login"}
               </button>
+
+              <button
+                disabled={loading}
+                className="btn btn-outline-primary col-12 mb-4"
+              >
+                {"Sign In with Facebook"}
+              </button>
+              <button
+                disabled={loading}
+                className="btn btn-outline-danger col-12 mb-4"
+              >
+
+                <span>{"Sign In with Google"}</span>
+              </button>
+
             </form>
 
             <div className="d-flex justify-content-between">
