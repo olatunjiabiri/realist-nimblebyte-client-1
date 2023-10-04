@@ -33,7 +33,27 @@ export default function Login() {
 
 
   const handleFaceBookSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const { data } = await axios.post(`${config.AUTH_API}/user/facebook-signIn`);
+      console.log(data)
+      if(data?.success){
+        window.location.replace(data.responsePayload);
+      }else{
+        toast.error("Something went wrong");
+      }
+    }
+    catch(err){
+      toast.error("Something went wrong", err);
+    }
+  }
 
+  const handleGoogleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      console.log("Google")
+    }
+    catch(err){}
   }
 
 
@@ -123,16 +143,17 @@ export default function Login() {
               </button>
 
               <button
+                onClick={handleFaceBookSubmit}
                 disabled={loading}
                 className="btn btn-outline-primary col-12 mb-4"
               >
                 {"Sign In with Facebook"}
               </button>
               <button
+                onClick={handleGoogleSubmit}
                 disabled={loading}
                 className="btn btn-outline-danger col-12 mb-4"
               >
-
                 <span>{"Sign In with Google"}</span>
               </button>
 

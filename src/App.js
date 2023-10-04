@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AccountActivate from "./pages/auth/AccountActivate";
+import FacebookAuthResponse from "./pages/auth/FacebookAuthResponse";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import PasswordReset from "./pages/auth/PasswordReset";
 import AccessAccount from "./pages/auth/AccessAccount";
@@ -86,6 +87,10 @@ function App() {
               <Route
                 path="/auth/account-activate"
                 element={<AccountActivate />}
+              />
+              <Route
+                path="/auth/facebook-authentication"
+                element={<FacebookAuthResponse />}
               />
               <Route
                 path="/auth/forgot-password"
