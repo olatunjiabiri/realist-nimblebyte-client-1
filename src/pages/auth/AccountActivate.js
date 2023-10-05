@@ -76,8 +76,6 @@ export default function AccountActivate() {
         `${config.AUTH_API}/user/ConfirmEmail?token=${token}&userId=${userId}`
       );
 
-      console.log("response activate=>", response);
-
       if (!response?.data?.success) {
         toast.error(response?.data?.message);
         // navigate("/login");
