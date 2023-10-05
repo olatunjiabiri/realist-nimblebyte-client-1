@@ -21,8 +21,8 @@ export default function FacebookAuthResponse(){
   const code = searchParams.get("code");
 
     useEffect(() => {
-        loginUserOnResponse();
-    })
+       if(code) loginUserOnResponse();
+    }, [code])
     
     const fetchUserWishlists = async (user) => {
       const { userId } = user;
