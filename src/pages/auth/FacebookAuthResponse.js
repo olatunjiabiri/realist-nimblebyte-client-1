@@ -34,7 +34,7 @@ export default function FacebookAuthResponse(){
       }
     };
     
-    const loginUserOnResponse = async (e) => {
+    const loginUserOnResponse = async () => {
         try{
           const { data } = await axios.get(`${config.AUTH_API}/user/facebook-callback?code=${code}`);
           if(data?.success){
