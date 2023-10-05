@@ -36,7 +36,6 @@ export default function Login() {
     e.preventDefault();
     try{
       const { data } = await axios.post(`${config.AUTH_API}/user/facebook-signIn`);
-      console.log(data)
       if(data?.success){
         window.location.replace(data.responsePayload);
       }else{
@@ -71,12 +70,9 @@ export default function Login() {
         setLoading(false);
       } else {
         const { token, user } = data.responsePayload;
-
         const wishlistData = await fetchUserWishlists(user);
         const { wishlist } = wishlistData;
         const userWishlist = wishlist[0]?.wishlist;
-
-        // console.log("wishlistData =>", userWishlist);
         setAuth({ token, user, wishlist: userWishlist });
 
         localStorage.setItem(
@@ -84,7 +80,6 @@ export default function Login() {
           JSON.stringify({ token, user, wishlist: userWishlist })
         );
         toast.success("Login successful");
-        // showToastMessage();
         setLoading(false);
 
         if (auth.user?.firstName === "") navigate("/user/profile");
