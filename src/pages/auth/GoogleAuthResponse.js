@@ -35,10 +35,32 @@ export default function GoogleAuthResponse(){
 
  const loginUserOnResponse = async () => {
     try{
-        console.log(code)
+      const { data } = await axios.get(`${config.AUTH_API}/user/google-callback?code=${code}`);
+      if(data?.success){
+        const { token, user } = data.responsePayload;
+        const wishlistData = await fetchUserWishlists(user);
+        const { wishlist } = wishlistData;
+        const userWishlist = wishlist[0]?.wishlist;
+        setAuth({ token, user, wishlist: userWishlist });
+
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({ token, user, wishlist: userWishlist })
+        );
+        toast.success("Login successful");
+        setLoading(false);
+
+        if (auth.user?.firstName === "") navigate("/user/profile");
+
+        location?.state !== null ? navigate(location.state) : navigate("/");
+      }else{
+        toast.error("Something went wrong");
+        navigate("/login");
+      }
     }
     catch(err){
-
+      toast.error("Something went wrong, please try again", err);
+      navigate("/login");
     }
  }
 
