@@ -61,17 +61,13 @@ export default function Agents() {
           {filteredAgents.length > 0 ? (
             <AgentsList returnedAgents={filteredAgents} />
           ) : (
-            // <div className="agents-page-init-load">...</div>
-            <div
-              className="d-flex justify-content-center align-items-center vh-100"
-              style={{ marginTop: "-10%" }}
-            >
+            <div className="d-flex justify-content-center align-items-center vh-100 agents-page-init-load">
               <img
                 className="agent-search-image"
                 src="searching-magnifying-glass.png"
                 alt=""
               />
-              <h3 className="">
+              <h3 className="agent-search-text">
                 Find agents in your area.
                 <p className="mt-3">
                   Enter your location or search for a specific agent by name.
