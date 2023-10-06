@@ -28,6 +28,11 @@
     padding-right: 1rem;
 
  }
+ 
+ .agent-search-controls-container {
+    display: flex;
+    flex-direction: row;
+}
 
 @media screen and (max-width:640) {
     .filter-options{
@@ -38,14 +43,15 @@
       margin: 0%;
       flex-direction: column;
     }
-    /* .filter-container {
-        width: 50%;
-        height: 400px ;
-        margin-left: auto;
-        border-color: red;
-    } */
+
+    .agent-search-controls-container {
+        flex-direction: column;
+    }
+  
   }
 
-/* .search-bar-container {
-    height: 1500; width: "70%"
-} */
+  @media (max-width: 768px) {
+    .agent-search-controls-container {
+        flex-direction: column;
+        }
+ }

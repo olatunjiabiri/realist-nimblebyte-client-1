@@ -13,6 +13,8 @@ export default function Dashboard() {
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+
   const [loading, setLoading] = useState(false);
 
   const seller = auth.user?.role?.includes("Seller");
@@ -29,7 +31,7 @@ export default function Dashboard() {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${auth.user?.userId}/${page}`
+        `/user-ads/${auth.user?.userId}/${page}/${perPage}`
       );
       // setAds(data.ads);
       // console.log("data", data);

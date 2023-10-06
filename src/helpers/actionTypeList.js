@@ -20,4 +20,19 @@ const action = [
   },
 ];
 
-export { type, action };
+const agentSpecialty = [
+  {
+    _id: 0,
+    name: "Any",
+  },
+  {
+    _id: 1,
+    name: "Buyer Agent",
+  },
+  {
+    _id: 1,
+    name: "Listing Agent",
+  },
+];
+
+export { type, action, agentSpecialty };
