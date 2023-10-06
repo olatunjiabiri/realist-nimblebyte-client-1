@@ -5,8 +5,8 @@ const config = {
     "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API:
     // process.env.NODE_ENV === "production"
-     "https://localhost:7298",
-   // "https://authbackendservice.azurewebsites.net",
+    //   ? "http://localhost:5001" :
+    "https://authbackendservice.azurewebsites.net",
 
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
