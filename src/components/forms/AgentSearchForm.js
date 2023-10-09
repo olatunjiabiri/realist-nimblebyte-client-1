@@ -80,7 +80,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
               onChange={(e) => setSpecialty(e.target.value)}
             >
               <option selected disabled>
-                Specialities
+                Speciality
               </option>
               {agentSpecialty.map((item) => (
                 <option className="optgroup" key={item._id} value={item.name}>

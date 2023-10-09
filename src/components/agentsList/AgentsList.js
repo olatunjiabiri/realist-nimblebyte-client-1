@@ -10,7 +10,7 @@ const AgentsList = ({ returnedAgents }) => {
   setAgent(returnedAgents);
 
   return (
-    <div className="table-responsive mt-5 pt-5">
+    <div className="table-responsive mt-5">
       <table className="table table-striped">
         <thead className="table-heading">
           <tr>
@@ -47,9 +47,11 @@ const AgentsList = ({ returnedAgents }) => {
                     {ag.firstName}, &nbsp; {ag.lastName}
                   </p>
                 </Link>
-                <p className="agent-text2">{ag.company ?? "#PhoneNumber"}</p>
+                <p className="agent-text2">{ag.company ?? "#Company"}</p>
                 <p className="agent-text2">{ag.phone ?? "#PhoneNumber"}</p>
-                <p className="agent-text2">{ag.licenceNumber ?? "#licence"}</p>
+                <p className="agent-text2">
+                  {ag.licenceNumber ?? "#licence No."}
+                </p>
               </td>
 
               <td>{ag.address}</td>
