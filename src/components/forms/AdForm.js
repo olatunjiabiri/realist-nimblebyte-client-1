@@ -35,7 +35,12 @@ export default function AdForm({ action, type }) {
   });
   // hooks
   const navigate = useNavigate();
-
+  const [selectedFormType, setSelectedFormType] = useState("House");
+  const handleToggle = () => {
+    setSelectedFormType((prevType) =>
+      prevType === "House" ? "Land" : "House"
+    );
+  };
   useEffect(() => {
     if (auth.user) {
       setRole(auth.user?.role);
@@ -106,7 +111,7 @@ export default function AdForm({ action, type }) {
         setAd({ ...ad, loading: false });
 
         // reload page on redirect
-        window.location.href = "/dashboard";
+        window.location.href = "/payment/paystack/paystack";
       }
     } catch (err) {
       console.log(err);
@@ -119,8 +124,45 @@ export default function AdForm({ action, type }) {
       <div className="container p-5">
         <div className="row">
           <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
-            <h1 class="text-dark text-center p-3">Create Ad</h1>
+            <h1 class="text-dark text-center p-3">
+              {" "}
+              Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"} {" "}
+            </h1>
             <hr />
+
+            <div className="container-div d-flex justify-content-center">
+              <label
+                className={`radio-button ${
+                  selectedFormType === "House" ? "selected" : ""
+                }`}
+              >
+                <input
+                  className="input-style m-2"
+                  type="radio"
+                  name="formType"
+                  value="House"
+                  checked={selectedFormType === "House"}
+                  onChange={() => setSelectedFormType("House")}
+                />
+                House
+              </label>
+              <label
+                className={`radio-button ${
+                  selectedFormType === "Land" ? "selected" : ""
+                }`}
+              >
+                <input
+                  className="input-style m-2"
+                  type="radio"
+                  name="formType"
+                  value="Land"
+                  checked={selectedFormType === "Land"}
+                  onChange={() => setSelectedFormType("Land")}
+                />
+                Land
+              </label>
+            </div>
+
             <div className="my-3">
               <ImageUpload ad={ad} setAd={setAd} />
             </div>
@@ -139,7 +181,6 @@ export default function AdForm({ action, type }) {
               />
             </div>
 
-            {/* <div style={{ marginTop: "80px" }}> */}
             <div>
               <CurrencyInput
                 placeholder="Enter price"
@@ -149,7 +190,7 @@ export default function AdForm({ action, type }) {
               />
             </div>
 
-            {type === "House" ? (
+            {type === "House" && selectedFormType === "House" ? (
               <>
                 <input
                   type="number"
@@ -173,13 +214,14 @@ export default function AdForm({ action, type }) {
                   type="number"
                   min="0"
                   className="form-control mb-3"
-                  placeholder="Enter how many carpark"
+                  placeholder="Enter how many carparks"
                   value={ad.carpark}
                   onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
                 />
               </>
             ) : (
               ""
+              //  {type === "Land" && selectedFormType === "Land" ?
             )}
 
             <input
@@ -215,9 +257,6 @@ export default function AdForm({ action, type }) {
                 {ad.loading ? "Saving..." : "Submit"}
               </button>
             </div>
-
-            {/* <pre>{JSON.stringify(ad, null, 4)}</pre>
-      <pre>{JSON.stringify(auth, null, 4)} </pre> */}
           </div>
         </div>
       </div>

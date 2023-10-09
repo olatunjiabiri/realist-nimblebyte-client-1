@@ -21,10 +21,12 @@ export default function Search() {
         <div className="row">
           {search.results?.length > 0 ? (
             <div className="col-md-12 text-center p-5">
-              Found {search.results?.length} results
+             <button className="btn btn-info disabled">
+             <b>Found {search.results?.length} results</b>
+             </button>
             </div>
           ) : (
-            <div className="col-md-12 text-center p-5">No properties found</div>
+            <div className="col-md-12 text-center p-5"><b>No properties found</b></div>
           )}
         </div>
 

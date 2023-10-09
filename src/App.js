@@ -8,14 +8,16 @@ import { AgentProvider } from "./context/agent";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import Paystack from "./pages/payment/paystack/Paystack";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AccountActivate from "./pages/auth/AccountActivate";
+import FacebookAuthResponse from "./pages/auth/FacebookAuthResponse";
+import GoogleAuthResponse from "./pages/auth/GoogleAuthResponse";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import PasswordReset from "./pages/auth/PasswordReset";
 import AccessAccount from "./pages/auth/AccessAccount";
@@ -110,6 +112,10 @@ function App() {
                   <Route path="ad/create/rent/house" element={<RentHouse />} />
                   <Route path="ad/create/rent/land" element={<RentLand />} />
                   <Route path="user/profile" element={<UpdateProfile />} />
+                  <Route
+                    path="payment/paystack/paystack"
+                    element={<Paystack />}
+                  />
 
                   <Route path="/our-service" element={<ContactSeller />} />
 
