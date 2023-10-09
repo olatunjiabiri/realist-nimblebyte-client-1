@@ -6,9 +6,9 @@ import { SearchProvider } from "./context/search";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import Paystack from "./components/paystack/Paystack";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -82,6 +82,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset-password" element={<PasswordReset />} />
+         
 
               <Route
                 path="/auth/account-activate"
@@ -95,6 +96,7 @@ function App() {
                 path="/auth/access-account/:token"
                 element={<AccessAccount />}
               />
+              <Route path="components/paystack" element={<Paystack/>}/>
               <Route path="user/payment" element={<Payment />} />
               <Route path="user/completion" element={<Completion />} />
               <Route path="user/checkout" element={<CheckoutForm />} />
