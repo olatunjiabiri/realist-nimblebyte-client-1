@@ -193,7 +193,9 @@ export default function SearchForm({ navMenuProperty }) {
                           });
                         }}
                       >
-                        <option selected>Price</option>
+                        <option selected disabled>
+                          Price
+                        </option>
                         {rentPrices.map((item) => (
                           <option
                             className="optgroup"

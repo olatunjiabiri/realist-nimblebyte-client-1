@@ -31,6 +31,34 @@ export default function Login() {
     }
   };
 
+
+  const handleFaceBookSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const { data } = await axios.post(`${config.AUTH_API}/user/facebook-signIn`);
+      if(data?.success){
+        window.location.replace(data.responsePayload);
+      }else{
+        toast.error("Something went wrong");
+      }
+    }
+    catch(err){
+      toast.error("Something went wrong", err);
+    }
+  }
+
+  const handleGoogleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const { data } = await axios.get(`${config.AUTH_API}/user/google-signIn`);
+      window.location.replace(data);
+    }
+    catch(err){
+      toast.error("Something went wrong", err);
+    }
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -45,12 +73,9 @@ export default function Login() {
         setLoading(false);
       } else {
         const { token, user } = data.responsePayload;
-
         const wishlistData = await fetchUserWishlists(user);
         const { wishlist } = wishlistData;
         const userWishlist = wishlist[0]?.wishlist;
-
-        // console.log("wishlistData =>", userWishlist);
         setAuth({ token, user, wishlist: userWishlist });
 
         localStorage.setItem(
@@ -58,7 +83,6 @@ export default function Login() {
           JSON.stringify({ token, user, wishlist: userWishlist })
         );
         toast.success("Login successful");
-        // showToastMessage();
         setLoading(false);
 
         if (auth.user?.firstName === "") navigate("/user/profile");
@@ -115,6 +139,22 @@ export default function Login() {
               >
                 {loading ? "Waiting..." : "Login"}
               </button>
+
+              <button
+                onClick={handleFaceBookSubmit}
+                disabled={loading}
+                className="btn btn-outline-primary col-12 mb-4"
+              >
+                {"Sign In with Facebook"}
+              </button>
+              <button
+                onClick={handleGoogleSubmit}
+                disabled={loading}
+                className="btn btn-outline-danger col-12 mb-4"
+              >
+                <span>{"Sign In with Google"}</span>
+              </button>
+
             </form>
 
             <div className="d-flex justify-content-between">
