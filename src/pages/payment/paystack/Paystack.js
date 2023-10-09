@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Paystack.css";
-// import { usePaystackPayment } from "react-paystack";
 import PaystackPop from "@paystack/inline-js";
 
 
@@ -23,7 +22,7 @@ const Paystack = () => {
 				setName("");
 				setEmail("");
 				setAmount("");
-				window.location.href = "http://localhost:3000/";
+				window.location.href = "/";
 			},
 			onCancel(){
 				alert("You have canceled the transaction!")

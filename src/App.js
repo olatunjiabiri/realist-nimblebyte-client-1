@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import Paystack from "./components/paystack/Paystack";
+import Paystack from "./pages/payment/paystack/Paystack";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -106,7 +106,7 @@ function App() {
                 path="/auth/access-account/:token"
                 element={<AccessAccount />}
               />
-              <Route path="components/paystack" element={<Paystack/>}/>
+              {/* <Route path="components/paystack/paystack" element={<Paystack/>}/> */}
               <Route path="user/payment" element={<Payment />} />
               <Route path="user/completion" element={<Completion />} />
               <Route path="user/checkout" element={<CheckoutForm />} />
@@ -120,7 +120,7 @@ function App() {
                 <Route path="ad/create/rent/land" element={<RentLand />} />
                 <Route path="user/profile" element={<UpdateProfile />} />
                 <Route path="/agents" element={<Agents />} />
-
+                <Route path="payment/paystack/paystack" element={<Paystack />} />
                 <Route path="/our-service" element={<ContactSeller />} />
 
                 {/* <Route path="user/settings" element={<Settings />} /> */}
