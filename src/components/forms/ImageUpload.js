@@ -68,7 +68,7 @@ export default function ImageUpload({ ad, setAd }) {
 
   return (
     <>
-      <label className="btn btn-secondary m-4">
+      <label className="btn btn-primary m-4">
         {ad.uploading ? "Processing..." : "Upload photos"}
         <input
           onChange={handleUpload}

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
+import useSelection from "antd/es/table/hooks/useSelection";
 // import "./index.css";
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
   const [auth, setAuth] = useAuth();
   // hooks
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const logout = () => {
     setAuth({ user: null, token: "" });
@@ -18,8 +20,20 @@ const Navbar = () => {
 
   const loggedIn = auth?.user !== null && auth?.token !== "";
 
-  const handlePostAdClick = () => {
-    if (loggedIn) {
+  // const handlePostAdClick = () => {
+  //   if (loggedIn) {
+  //     navigate("/ad/create");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
+
+  const handleCreateAdClick = () => {
+    if (selectedOption === "Sale") {
+      navigate("/ad/create-sale");
+    } else if (selectedOption === "Rent") {
+      navigate("/ad/create-rent");
+    } else if (loggedIn) {
       navigate("/ad/create");
     } else {
       navigate("/login");
@@ -36,8 +50,7 @@ const Navbar = () => {
           <span className="navbar-brand d-flex w-50 me-auto">
             <nav
               className="nav lead"
-              // style={{ marginTop: "-3%" }}
-            >
+              >
               <Link to={"/"}>
                 <img
                   src="./nimblelogo2.png"
@@ -100,16 +113,44 @@ const Navbar = () => {
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="nav d-flex lead">
                 {loggedIn ? (
-                  <a
-                    className="nav-link pointer d-none d-lg-block"
-                    onClick={handlePostAdClick}
-                  >
-                    Post Ad
-                  </a>
+                  <div className="dropdown mr-auto">
+                    <li>
+                      <a
+                        className="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarScrollingDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Create Ad
+                      </a>
+                      <ul
+                        className="dropdown-menu dropdown-menu-right"
+                        aria-labelledby="navbarScrollingDropdown"
+                      >
+                        <li>
+                          <NavLink
+                            className="dropdown-item"
+                            to="/ad/create/sell/house"
+                          >
+                            Sale                          
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className="dropdown-item"
+                            to="/ad/create/rent/house"
+                          >
+                            Rent                      
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </li>
+                  </div>
                 ) : (
                   ""
                 )}
-
                 {!loggedIn ? (
                   <>
                     <NavLink
@@ -157,11 +198,11 @@ const Navbar = () => {
                             Dashboard
                           </NavLink>
                         </li>
-                        <li>
+                        {/* <li>
                           <NavLink className="dropdown-item" to="/ad/create">
                             Create an Ad
                           </NavLink>
-                        </li>
+                        </li> */}
                         <li>
                           <NavLink className="dropdown-item" to="/user/profile">
                             Update profile
