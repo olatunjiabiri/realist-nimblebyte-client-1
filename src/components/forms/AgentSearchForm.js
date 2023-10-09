@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { agentSpecialty } from "../../helpers/actionTypeList";
-import "./index.css";
+// import "./index.css";
+import "./AgentSearchForm.css";
 
 export default function AgentSearchForm({ parentCallback, agents }) {
   const [specialty, setSpecialty] = useState(true);
@@ -54,6 +55,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
           }}
         >
           <div className="d-flex row justify-content-evenly col-lg-8 agent-search-controls-container">
+            <div className="agent-search-title">Find an Agent</div>
             <input
               type="search"
               className="form-control pl-1 py-2 col text-center rounded-pill mx-2 my-1"

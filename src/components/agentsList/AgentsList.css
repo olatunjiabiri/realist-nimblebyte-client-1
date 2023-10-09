@@ -1,10 +1,57 @@
-.table-heading {
-    padding: 12px 16px;
-    color: rgb(42, 42, 51);
-    text-transform: none;
+.datatable {
+    height: 1000px;
+    padding: 20px;
+    margin-top: 20px;
+  } 
+
+.datatableTitle{
     font-weight: 400;
+    width: 100%;
     font-size: 24px;
-    }
+    color: rgb(42, 42, 51);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} 
+ 
+.cellWithImg {
+    display: flex;
+    align-items: center;
+}
+.cellImg {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+ }
+
+.agent-text1 {
+    font-weight: 700;
+    color: #2196F3;
+    font-size: 20px;
+    line-height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.agent-text2 {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+.more-details-button {
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 32px;
+}
 
 .table-item {
     color: rgb(42, 42, 51);
@@ -16,43 +63,13 @@
     min-width: 200px;
 }
 
-.agent-image {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    object-fit: cover;
+.table-heading {
+padding: 12px 16px;
+color: rgb(42, 42, 51);
+text-transform: none;
+font-weight: 400;
+font-size: 24px;
 }
-
-.more-button {
-    font-weight: 500;
-    font-size: 40px;
-    line-height: 32px;
-}
-
-.data-width {
-    min-width: 200px;
-}
-
-
-.agent-text1 {
-    font-weight: 700;
-    color: #2196F3;
-    font-size: 16px;
-    line-height: 22px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.agent-text2 {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    display: block;
-    align-items: center;
-    justify-content: center;
-}
-
 
 @media (max-width: 767px) {
     .table-heading {
@@ -64,4 +81,30 @@
         font-size: 16px;
         line-height: 24px;
     }
+    .datatable {
+        height: 1000px;
+        padding: 20px;
+        margin-top: 20px;
+      } 
+
+      .datatableTitle {
+        font-size: 20px;
+      }
+
+      .cellImg {
+        width: 70px;
+        height: 70px;
+      }
+      .agent-text1 {
+            font-size: 16px;
+      }
+      .agent-text2 {
+        font-size: 16px;
   }
+
+  .more-details-button {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 32px;
+}
+ }

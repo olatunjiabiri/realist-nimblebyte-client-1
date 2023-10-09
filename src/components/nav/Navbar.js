@@ -90,7 +90,7 @@ const Navbar = () => {
                 aria-current="page"
                 to="/agents"
               >
-                Find Agent
+                Sell
               </NavLink>
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">

@@ -29,11 +29,6 @@
 
  }
  
- .agent-search-controls-container {
-    display: flex;
-    flex-direction: row;
-}
-
 @media screen and (max-width:640) {
     .filter-options{
         display: none
@@ -42,16 +37,5 @@
       display: flex;
       margin: 0%;
       flex-direction: column;
-    }
-
-    .agent-search-controls-container {
-        flex-direction: column;
-    }
-  
+    } 
   }
-
-  @media (max-width: 768px) {
-    .agent-search-controls-container {
-        flex-direction: column;
-        }
- }
