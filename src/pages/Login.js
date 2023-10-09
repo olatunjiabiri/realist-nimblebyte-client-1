@@ -50,9 +50,12 @@ export default function Login() {
   const handleGoogleSubmit = async (e) => {
     e.preventDefault();
     try{
-      console.log("Google")
+      const { data } = await axios.get(`${config.AUTH_API}/user/google-signIn`);
+      window.location.replace(data);
     }
-    catch(err){}
+    catch(err){
+      toast.error("Something went wrong", err);
+    }
   }
 
 
