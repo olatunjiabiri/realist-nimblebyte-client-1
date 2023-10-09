@@ -5,7 +5,7 @@ import axios from "axios";
 import config from "../../NewConfig";
 import { useAuth } from "../../context/auth";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function FacebookAuthResponse(){
 
