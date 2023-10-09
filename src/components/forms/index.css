@@ -13,34 +13,6 @@
 }
 
 .filter-container button {
-<<<<<<< HEAD
-    margin-top: 0%;
-}
-
-.optgroup { 
-    font-size: 1rem;
-    border-radius: 0%;
- }
-
- .adform-wrapper {
-    background-color: #fff;
-    border-radius: 1.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-
- }
- 
-@media screen and (max-width:640) {
-    .filter-options{
-        display: none
-    }
-    .btn-group {
-      display: flex;
-      margin: 0%;
-      flex-direction: column;
-    } 
-  }
-=======
   margin-top: 0%;
 }
 
@@ -95,4 +67,3 @@
 /* .search-bar-container {
     height: 1500; width: "70%"
 } */
->>>>>>> ff91564e4d94d76af2c628be2fa5268d27fc7d09
