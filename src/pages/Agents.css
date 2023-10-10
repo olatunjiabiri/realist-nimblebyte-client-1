@@ -10,8 +10,8 @@
 
 @media (max-width: 768px) {
     .agents-page-init-load {
-        /* height: 700px; */
-        margin-top: -60%;
+        height: 400px;
+        /* padding-top: -60%; */
     }
     .agent-search-image {
         height: 100px;

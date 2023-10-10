@@ -92,6 +92,7 @@ export default function Agents() {
           ))} */}
         </div>
       </div>
+      {/* <pre>{JSON.stringify(agents, null, 4)} </pre> */}
     </div>
   );
 }
