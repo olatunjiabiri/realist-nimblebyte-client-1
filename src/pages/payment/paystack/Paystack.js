@@ -1,54 +1,27 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useAuth } from "../../../context/auth";
-
+import config from "../../../NewConfig";
 import "./Paystack.css";
-import PaystackPop from "@paystack/inline-js";
+import axios from "axios";
 
 const Paystack = () => {
-  const [auth, setAuth] = useAuth();
 
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
 
   const location = useLocation();
-  const data = location.state;
+  const param = location.state;
 
   const PayWithPayStack = async (e) => {
     e.preventDefault();
-
-    // Create a payment request object
-    const paymentRequest = {
-      adId: data.adID,
-      amount: amount * 100, // Convert amount to kobo (Paystack's currency)
-    };
-
     try {
-      // Make a POST request to your backend to initiate payment
-      const response = await fetch(
-        "https://localhost:7067/api/payments/initialize",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(paymentRequest),
-        }
-      );
-
-      if (response.ok) {
-        // Payment initiation was successful
-        const data = await response.json();
-        const { paymentUrl } = data;
-
-        console.log("paymentUrl>>", paymentUrl);
-
-        // Redirect the user to the payment gateway URL
-        window.location.href = paymentUrl;
-      } else {
-        // Handle error response from the backend
-        console.error("Payment initiation failed:", response.statusText);
+      const { data } = await axios.post(`${config.PAYMENT_API}/api/payments/initialize`, {
+        adId: param.adID,
+        amount: amount * 100
+      });
+      if(data.success){
+        window.location.replace(data.responsePayload.authorizationUrl);
       }
     } catch (error) {
       console.error("Error initiating payment:", error);
