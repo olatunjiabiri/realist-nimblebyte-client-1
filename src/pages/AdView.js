@@ -52,12 +52,12 @@ export default function AdView() {
         <div className="row mt-2">
           <div className="col-lg-8 offset-lg-2 mt-3">
             <div className="mt-4 mb-4">
-              <button className="btn btn-success disabled mt-2">
-                {ad?.sold}{" "}
-                {(ad.action = "Off Market" ? "In Market" : ad.action)}
-              </button>
-              {/* {ad?.sold ? "❌ Off market" : "✅ In market"} */}
+              {/* <button className="btn btn-success disabled mt-2">
+                {ad?.sold ? "❌ Off market" : "✅ In market"}
+              </button> */}
+              {ad?.sold ? "❌ Off market" : "✅ In market"}
             </div>
+
             <h1 className="mt-3 h2">{ad.address}</h1>
             <AdFeatures ad={ad} />
             <h3 className="mt-3 h2">
@@ -69,7 +69,7 @@ export default function AdView() {
             <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
             <div className="d-flex justify-content-between">
               <button className="btn btn-primary disabled mt-2">
-                {ad.type} for {(ad.action = "SELL" ? "SALE" : ad.action)}
+                {ad.type} for {ad.action === "Sell" ? "SALE" : "RENT"}
               </button>
               <LikeUnlike ad={ad} />
             </div>

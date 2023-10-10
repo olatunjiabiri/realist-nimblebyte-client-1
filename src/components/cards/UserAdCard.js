@@ -9,7 +9,7 @@ export default function UserAdCard({ ad }) {
     <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6">
       <Link to={`/user/ad/${ad.slug}`} className="text-decoration-none">
         <Badge.Ribbon
-          text={`${ad?.type} for ${ad?.action}`}
+          text={`${ad?.type} for ${ad?.action === "Sell" ? "Sale" : "Rent"}`}
           color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
         >
           <div className="card hoverable shadow">

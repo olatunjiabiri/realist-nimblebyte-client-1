@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import UserCard from "../components/cards/UserCard";
 import AdCard from "../components/cards/AdCard";
@@ -8,16 +9,23 @@ export default function Agent({ user }) {
   const [agent, setAgent] = useState(null);
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
 
   const [loading, setLoading] = useState(true);
+  const params = useParams();
 
   useEffect(() => {
     fetchAds();
   }, [user?.Id]);
 
+  console.log(params);
+
   const fetchAds = async () => {
     try {
-      const { data } = await axios.get(`/agent-ads/${user?.userId}`);
+      const { data } = await axios.get(
+        `/user-ads/${params.userId}/${page}/${perPage}`
+      );
       console.log("Ads data", data);
       setAds([data.ads]);
       setTotal(data.total);
@@ -57,6 +65,7 @@ export default function Agent({ user }) {
           ))}
         </div>
       </div>
+      <pre>{JSON.stringify(ads, null, 4)} </pre>
     </div>
   );
 }
