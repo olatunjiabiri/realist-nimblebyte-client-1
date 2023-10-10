@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import useTheme from "@mui/system/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import AgentsList from "../components/agentsList/AgentsList";
+import AgentsMobileList from "../components/agentsList/AgentsMobileList";
+
 import config from "../NewConfig";
 import AgentSearchForm from "./../components/forms/AgentSearchForm";
 import "./Agents.css";
 
 export default function Agents() {
+  const theme = useTheme();
+  const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
   // state
   const [agents, setAgents] = useState();
   const [loading, setLoading] = useState(true);
@@ -59,7 +65,13 @@ export default function Agents() {
       <div className="container">
         <div className="row">
           {filteredAgents.length > 0 ? (
-            <AgentsList returnedAgents={filteredAgents} />
+            <>
+              {isSmScreen ? (
+                <AgentsMobileList returnedAgents={filteredAgents} />
+              ) : (
+                <AgentsList returnedAgents={filteredAgents} />
+              )}
+            </>
           ) : (
             <div className="d-flex justify-content-center align-items-center vh-100 agents-page-init-load">
               <img
