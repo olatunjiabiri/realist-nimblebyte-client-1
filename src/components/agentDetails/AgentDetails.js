@@ -4,9 +4,9 @@ import "./AgentDetails.css";
 const AgentDetails = ({ agent }) => {
   console.log(agent[0]);
   return (
-    <div className="container mt-5 pt-5">
+    <div className="container mt-5 py-5">
       <div className="row">
-        <div className="col-lg-4 agt-left-c">
+        <div className="col-md-4 agt-left-c">
           {/* <div className="agt-image"> */}
           <img
             className="agt-image"
@@ -17,10 +17,10 @@ const AgentDetails = ({ agent }) => {
           {/* </div> */}
         </div>
 
-        <div className="col-lg-8 agt-info">
+        <div className="col-md-8 agt-info">
           <p className="agt-text1">
             {" "}
-            {agent[0].firstName} {agent[0].lastName}
+            {agent[0].firstName.toUpperCase()} {agent[0].lastName.toUpperCase()}
           </p>
           <p className="agt-text2">{agent[0].email ?? " "}</p>
           <p className="agt-text2">{agent[0].company ?? "#Company"}</p>
