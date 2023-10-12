@@ -76,7 +76,7 @@ const ContactAgentForm = ({ agent }) => {
     <>
       <div className="bd-1 form-container bd-color">
         <div className="contact-form-title text-center">
-          <span>Contact {agent && agent[0].firstName.toUpperCase()}</span>
+          <span>Contact {agent && agent[0]?.firstName?.toUpperCase()}</span>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group mt-4">
