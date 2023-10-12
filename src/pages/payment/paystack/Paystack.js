@@ -9,21 +9,24 @@ const Paystack = () => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const param = location.state;
 
   const PayWithPayStack = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const { data } = await axios.post(`${config.PAYMENT_API}/api/payments/initialize`, {
         adId: param.adID,
         amount: amount * 100
       });
       if(data.success){
         window.location.replace(data.responsePayload.authorizationUrl);
+        setLoading(false)
       }
     } catch (error) {
+      setLoading(false)
       console.error("Error initiating payment:", error);
     }
   };
@@ -71,9 +74,15 @@ const Paystack = () => {
                 />
               </div>
               <div>
-                <button type="submit" onClick={PayWithPayStack}>
-                  Pay Now
+                <button
+                  type="submit" onClick={PayWithPayStack}
+                  className={` ${ loading ? "disabled" : "" }`}>
+                  {loading ? "Submitting..." : "Pay Now"}
                 </button>
+               
+                {/* <button type="submit" onClick={PayWithPayStack}>
+                  Pay Now
+                </button> */}
               </div>
             </form>
           </div>
