@@ -2,3 +2,23 @@
     height: 500px;
     color:antiquewhite
 }
+
+.agent-contact-f {
+    padding: 3rem;
+}
+
+.ads-listing {
+    padding-top: 3rem;
+    margin: 0rem 1rem;
+}
+
+@media (max-width: 767px) {
+    .agent-contact-f {
+        padding: 0.5rem 2.5rem;
+    }
+
+    .ads-listing {
+        padding-top: 3rem;
+        margin: 3rem 1rem;
+    }
+}

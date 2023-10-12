@@ -1,0 +1,48 @@
+.bd-1 {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px;
+}
+.bd-color {
+  border-color: #939495;
+}
+.form-container {
+  padding: 2.5rem 1.5rem;
+  display: inline-block;
+  text-align: left;
+  font-family: "Montserrat";
+  width: 100%;
+  background: white;
+}
+.btn-color {
+  background-color: #61A1FE;
+  color: #fff;
+}
+
+.contact-form-title {
+  color: #4b4d4e;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.form-label {
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #4b4d4e;
+}
+
+.form-label1 {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+}
