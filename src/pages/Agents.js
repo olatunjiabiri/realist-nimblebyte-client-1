@@ -75,7 +75,7 @@ export default function Agents() {
           ) : (
             <div className="d-flex justify-content-center align-items-center vh-100 agents-page-init-load">
               <img
-                className="agent-search-image"
+                className="agent-search-image p-5"
                 src="searching-magnifying-glass.png"
                 alt=""
               />

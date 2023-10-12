@@ -128,6 +128,7 @@ const AgentsList = ({ returnedAgents }) => {
           pageSizeOptions={[5, 10, 20, 30, 40]}
         />
       </div>
+      {/* <pre>{JSON.stringify(agent, null, 4)} </pre> */}
     </>
   );
 };

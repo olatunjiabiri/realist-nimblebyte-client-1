@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import UserCard from "../components/cards/UserCard";
-import AdCard from "../components/cards/AdCard";
+import useTheme from "@mui/system/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import AgentDetails from "../components/agentDetails/AgentDetails";
+import ContactAgentForm from "../components/forms/contactAgentForm/ContactAgentForm";
+import config from "../NewConfig";
+import AgentAdsTable from "../components/agentAdsTable/AgentAdsTable";
+import AgentAdsMobileTable from "../components/agentAdsTable/AgentAdsMobileTable";
 
 export default function Agent({ user }) {
+  const theme = useTheme();
+  const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
   // state
   const [agent, setAgent] = useState(null);
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
+  const [agents, setAgents] = useState();
 
   const [loading, setLoading] = useState(true);
+
   const params = useParams();
 
   useEffect(() => {
     fetchAds();
+    fetchAgents();
   }, [user?.Id]);
-
-  console.log(params);
 
   const fetchAds = async () => {
     try {
@@ -32,6 +41,24 @@ export default function Agent({ user }) {
       setLoading(false);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const fetchAgents = async () => {
+    try {
+      const { data } = await axios.get(
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Seller`
+      );
+      setAgents(data.responsePayload);
+      setAgent(
+        data?.responsePayload.filter((a) => {
+          return a.userId === params.userId;
+        })
+      );
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
     }
   };
 
@@ -48,24 +75,37 @@ export default function Agent({ user }) {
 
   return (
     <div>
-      <div className="container">
+      <div className="container mt-5 pt-5">
         <div className="row">
-          <div className="col-lg-4"></div>
-          <UserCard user={user} />
-          <div className="col-lg-4"></div>
+          <div className="col-lg-7">
+            {agent && <AgentDetails agent={agent} />}
+          </div>
+
+          <div className="col-lg-5 agent-contact-f">
+            <ContactAgentForm agent={agent} />
+          </div>
         </div>
       </div>
 
-      <h2 className="text-center m-5">Recent Listings</h2>
-
       <div className="container">
+        <h2 className="text-center pt-5 ads-listing">Recent Listings</h2>
         <div className="row">
-          {ads?.map((ad) => (
-            <AdCard ad={ad} key={ad._id} />
-          ))}
+          {ads.length > 0 ? (
+            <>
+              {isSmScreen ? (
+                <AgentAdsMobileTable ads={ads} />
+              ) : (
+                <AgentAdsTable ads={ads} />
+              )}
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
-      <pre>{JSON.stringify(ads, null, 4)} </pre>
+      {/* <pre>{JSON.stringify(params.userId, null, 4)} </pre>
+      <pre>{JSON.stringify(agent, null, 4)} </pre>
+      <pre>{JSON.stringify(ads, null, 4)} </pre> */}
     </div>
   );
 }
