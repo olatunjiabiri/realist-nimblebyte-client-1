@@ -48,9 +48,7 @@ const Navbar = () => {
       >
         <div className="container">
           <span className="navbar-brand d-flex w-50 me-auto">
-            <nav
-              className="nav lead"
-              >
+            <nav className="nav lead">
               <Link to={"/"}>
                 <img
                   src="./nimblelogo2.png"
@@ -74,14 +72,14 @@ const Navbar = () => {
             className="navbar-collapse collapse w-100"
             id="collapsingNavbar3"
           >
-            <ul className="navbar-nav w-100 justify-content-center">
-              <NavLink
+            <ul className="navbar-nav w-100 justify-content-center justify-content-around">
+              {/* <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
                 to="/search"
               >
                 Search
-              </NavLink>
+              </NavLink> */}
 
               <NavLink
                 className="nav-item nav-link"
@@ -107,7 +105,7 @@ const Navbar = () => {
               </NavLink>
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
-              <nav className="nav d-flex lead">
+              <nav className="navbar-nav lead">
                 {loggedIn ? (
                   <div className="dropdown mr-auto">
                     <li>
@@ -130,7 +128,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/ad/create/sell/house"
                           >
-                            Sale                          
+                            Sale
                           </NavLink>
                         </li>
                         <li>
@@ -138,7 +136,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/ad/create/rent/house"
                           >
-                            Rent                      
+                            Rent
                           </NavLink>
                         </li>
                       </ul>

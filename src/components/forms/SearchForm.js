@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../NewConfig";
@@ -21,6 +21,12 @@ export default function SearchForm({ navMenuProperty }) {
   // hooks
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const path = window.location.pathname.split("/");
+    setPurpose(path[1] === "buy" ? "Buy" : path[1]);
+    search.action = path[1] === "buy" ? "Buy" : path[1];
+  }, []);
+
   const handleSearch = async () => {
     setSearch({ ...search, loading: false });
 
@@ -28,6 +34,7 @@ export default function SearchForm({ navMenuProperty }) {
 
     try {
       const { results, page, price, ...rest } = search;
+      // console.log("rest options>>>>", rest);
 
       const query = queryString.stringify(rest);
       // console.log("query===>", query);
