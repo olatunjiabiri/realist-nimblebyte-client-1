@@ -20,7 +20,8 @@ const AgentDetails = ({ agent }) => {
         <div className="col-md-8 agt-info">
           <p className="agt-text1">
             {" "}
-            {agent[0].firstName.toUpperCase()} {agent[0].lastName.toUpperCase()}
+            {agent[0]?.firstName?.toUpperCase()}{" "}
+            {agent[0]?.lastName?.toUpperCase()}
           </p>
           <p className="agt-text2">{agent[0].email ?? " "}</p>
           <p className="agt-text2">{agent[0].company ?? "#Company"}</p>
