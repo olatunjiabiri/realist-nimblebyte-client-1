@@ -20,6 +20,7 @@ const AuthProvider = ({ children }) => {
   // configure axios
   axios.defaults.baseURL = config.API;
   axios.defaults.headers.common["Authorization"] = auth?.token;
+  axios.defaults.headers.common["Id"] = auth?.user?.email;
   // axios.defaults.headers.common["refresh_token"] = auth?.refreshToken;
 
   // axios.interceptors.response.use(

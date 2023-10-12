@@ -4,34 +4,40 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
-import "./ContactAgentForm.css";
-// import { contactAgentSchema } from "./validations";
-// import API, { AppId} from "../../config";
+import { useAuth } from "../../../context/auth";
 
-const ContactAgentForm = ({ agentName }) => {
+import "./ContactAgentForm.css";
+import { contactAgentSchema } from "./validations";
+import config from "../../../NewConfig";
+
+
+const ContactAgentForm = ({ agent }) => {
   const navigate = useNavigate();
 
   
   // state
   const [loading, setLoading] = useState(false);
+  const [auth, setAuth] = useAuth();
 
-
-  // const submitHandler = async (e) => {
   const onSubmit = async (values, actions) => {
-    // e.preventDefault();
+    
     try {
       setLoading(true);
 
-      const response = await axios.post(`${""}/contact-us`, {
+
+      const response = await axios.post(`${config.AUTH_API}/api/Emailing/EmailEquiry`, {
         name: values.contactName,
-        email: values.email,
+        senderEmail: values.email,
         phone: values.phone,
-        messages: values.message,
+        message: values.message,
+        receiverEmail: agent[0].email,
+        // emailId: config.emailId,
+         appId: config.appId,                
       });
 
    
 
-      console.log("response>>>", response);
+      // console.log("response>>>", response);
       if (!response.data.success) {
         toast.error(response.data.message);
         setLoading(false);
@@ -57,12 +63,12 @@ const ContactAgentForm = ({ agentName }) => {
     handleSubmit,
   } = useFormik({
     initialValues: {
-      contactName: "",
-      email: "",
-      phone: "",
+      contactName: auth.user?.firstName || "",
+      email: auth.user?.email || "",
+      phone: auth.user?.phone || "",
       message: "",
     },
-    // validationSchema: passwordResetSchema,
+    validationSchema: contactAgentSchema,
     onSubmit,
   });
 
@@ -70,7 +76,7 @@ const ContactAgentForm = ({ agentName }) => {
     <>
       <div className="bd-1 form-container bd-color">
         <div className="contact-form-title text-center">
-          <span>Contact {agentName}</span>
+          <span>Contact {agent && agent[0].firstName.toUpperCase()}</span>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group mt-4">
