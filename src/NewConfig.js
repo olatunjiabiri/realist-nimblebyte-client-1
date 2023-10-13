@@ -8,7 +8,7 @@ const config = {
     //"https://localhost:7298",
     "https://authbackendservice.azurewebsites.net",
   PAYMENT_API:
-     "https://realist-payment-service.azurewebsites.net/api",
+     "https://realist-payment-service.azurewebsites.net",
      //  "https://localhost:7067",
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
