@@ -1,6 +1,7 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import "./index.css";
 
 export default function CheckoutForm() {
@@ -47,25 +48,27 @@ export default function CheckoutForm() {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-4 offset-lg-4">
-          <form id="payment-form" onSubmit={handleSubmit}>
-            <PaymentElement id="payment-element" />
-            <button
-              className="btn btn-primary mt-2"
-              disabled={isProcessing || !stripe || !elements}
-              id="submit"
-            >
-              <span id="button-text">
-                {isProcessing ? "Processing ... " : "Pay now"}
-              </span>
-            </button>
-            {/* Show any error or success messages */}
-            {message && <div id="payment-message">{message}</div>}
-          </form>
+    <ContentWrapper>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 offset-md-4">
+            <form id="payment-form" onSubmit={handleSubmit}>
+              <PaymentElement id="payment-element" />
+              <button
+                className="btn btn-primary mt-2"
+                disabled={isProcessing || !stripe || !elements}
+                id="submit"
+              >
+                <span id="button-text">
+                  {isProcessing ? "Processing ... " : "Pay now"}
+                </span>
+              </button>
+              {/* Show any error or success messages */}
+              {message && <div id="payment-message">{message}</div>}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </ContentWrapper>
   );
 }
