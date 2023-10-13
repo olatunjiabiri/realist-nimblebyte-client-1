@@ -6,6 +6,7 @@ import { useAuth } from "../context/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 // import { config } from "../NewConfig";
 import config from "./../NewConfig";
+import ContentWrapper from "../components/contentWrapper/ContentWrapper";
 
 export default function Login() {
   // context
@@ -31,33 +32,31 @@ export default function Login() {
     }
   };
 
-
   const handleFaceBookSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const { data } = await axios.post(`${config.AUTH_API}/user/facebook-signIn`);
-      if(data?.success){
+    try {
+      const { data } = await axios.post(
+        `${config.AUTH_API}/user/facebook-signIn`
+      );
+      if (data?.success) {
         window.location.replace(data.responsePayload);
-      }else{
+      } else {
         toast.error("Something went wrong");
       }
-    }
-    catch(err){
+    } catch (err) {
       toast.error("Something went wrong", err);
     }
-  }
+  };
 
   const handleGoogleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const { data } = await axios.get(`${config.AUTH_API}/user/google-signIn`);
       window.location.replace(data);
-    }
-    catch(err){
+    } catch (err) {
       toast.error("Something went wrong", err);
     }
-  }
-
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -110,65 +109,60 @@ export default function Login() {
   };
 
   return (
-    <div className="container m-5 p-5">
-      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
-        <div className="row">
-          <div className="col-lg-4 offset-lg-4">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Enter your email"
-                className="form-control mb-4"
-                required
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="form-control mb-4"
-                required
-                autoFocus
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                disabled={loading}
-                className="btn btn-primary col-12 mb-4"
-              >
-                {loading ? "Waiting..." : "Login"}
-              </button>
+    <ContentWrapper>
+      <div className="row">
+        <div className="col-md-4 offset-md-4">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter your email"
+              className="form-control mb-4"
+              required
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="form-control mb-4"
+              required
+              autoFocus
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button disabled={loading} className="btn btn-primary col-12 mb-4">
+              {loading ? "Waiting..." : "Login"}
+            </button>
 
-              <button
-                onClick={handleFaceBookSubmit}
-                disabled={loading}
-                className="btn btn-outline-primary col-12 mb-4"
-              >
-                {"Sign In with Facebook"}
-              </button>
-              <button
-                onClick={handleGoogleSubmit}
-                disabled={loading}
-                className="btn btn-outline-danger col-12 mb-4"
-              >
-                <span>{"Sign In with Google"}</span>
-              </button>
+            <button
+              onClick={handleFaceBookSubmit}
+              disabled={loading}
+              className="btn btn-outline-primary col-12 mb-4"
+            >
+              {"Sign In with Facebook"}
+            </button>
+            <button
+              onClick={handleGoogleSubmit}
+              disabled={loading}
+              className="btn btn-outline-danger col-12 mb-4"
+            >
+              <span>{"Sign In with Google"}</span>
+            </button>
+          </form>
 
-            </form>
-
-            <div className="d-flex justify-content-between">
-              <Link className="text-primary" to="/register">
-                Register
-              </Link>
-              <Link className="text-danger" to="/auth/forgot-password">
-                Forgot password
-              </Link>
-            </div>
+          <div className="d-flex justify-content-between">
+            <Link className="text-primary" to="/register">
+              Register
+            </Link>
+            <Link className="text-danger" to="/auth/forgot-password">
+              Forgot password
+            </Link>
           </div>
         </div>
       </div>
+
       {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
-    </div>
+    </ContentWrapper>
   );
 }

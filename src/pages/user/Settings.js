@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 export default function Settings() {
   // state
@@ -29,30 +30,28 @@ export default function Settings() {
 
   return (
     <>
-      <div className="container-fluid m-5 p-5">
-        <div className="container mt-5">
-          <div className="row">
-            <div className="col-lg-8 offset-lg-2 mt-2">
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  className="form-control mb-4"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+      <ContentWrapper>
+        <div className="row">
+          <div className="col-md-8 offset-md-2 mt-2">
+            <form onSubmit={handleSubmit}>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="form-control mb-4"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-                <button
-                  className="btn btn-primary col-12 mb-4"
-                  disabled={loading}
-                >
-                  {loading ? "Processing" : "Update password"}
-                </button>
-              </form>
-            </div>
+              <button
+                className="btn btn-primary col-12 mb-4"
+                disabled={loading}
+              >
+                {loading ? "Processing" : "Update password"}
+              </button>
+            </form>
           </div>
         </div>
-      </div>
+      </ContentWrapper>
     </>
   );
 }
