@@ -5,8 +5,8 @@ const config = {
     "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API:
     // process.env.NODE_ENV === "production"
-    "https://localhost:7298",
-    //"https://authbackendservice.azurewebsites.net",
+    //"https://localhost:7298",
+    "https://authbackendservice.azurewebsites.net",
   PAYMENT_API:
      "https://realist-payment-service.azurewebsites.net/api",
      //  "https://localhost:7067",
