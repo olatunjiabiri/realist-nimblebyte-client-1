@@ -28,6 +28,11 @@ export default function UserAdCard({ ad }) {
                     {millify(ad?.price)}
                   </h3>
                 </div>
+              </div>
+              <p className="card-text">{ad?.address}</p>
+
+              <AdFeatures ad={ad} />
+              <div className="d-flex justify-content-between">
                 <div className="">
                   <button
                     className={`btn ${
@@ -41,10 +46,15 @@ export default function UserAdCard({ ad }) {
                       : "Pending"}
                   </button>
                 </div>
+                <div className="">
+                  <button
+                    className={`btn ${ad.sold ? "btn-danger" : "btn-primary"}`}
+                    style={{ width: "120px" }}
+                  >
+                    {ad.sold ? "Sold" : "Available"}
+                  </button>
+                </div>
               </div>
-              <p className="card-text">{ad?.address}</p>
-
-              <AdFeatures ad={ad} />
             </div>
           </div>
         </Badge.Ribbon>
