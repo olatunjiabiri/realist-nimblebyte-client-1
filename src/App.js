@@ -49,15 +49,14 @@ import Navbar from "./components/nav/Navbar";
 import BackToTop from "./components/backtotopbutton/BackToTop";
 import ContactSeller from "./components/forms/ContactSeller";
 import PaystackVerifyPayment from "./pages/payment/paystack/paystack-verification/paystackVerifyPayment";
+import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 
 const PageNotFound = () => (
-  <div className="container-fluid m-5 p-5">
-    <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
-      <div className="text-center p-5">
-        <h2>404 PAGE NOT FOUND!</h2>
-      </div>
+  <ContentWrapper>
+    <div className="text-center p-5">
+      <h2>404 PAGE NOT FOUND!</h2>
     </div>
-  </div>
+  </ContentWrapper>
 );
 
 const stripe = loadStripe("PUBLIC-KEY");
@@ -113,9 +112,14 @@ function App() {
                   <Route path="ad/create/rent/house" element={<RentHouse />} />
                   <Route path="ad/create/rent/land" element={<RentLand />} />
                   <Route path="user/profile" element={<UpdateProfile />} />
-                  <Route path="payment/paystack/paystack" element={<Paystack />}/>
-                  <Route path="payment/paystack/paystack-verification/paystackVerifyPayment" 
-                  element={<PaystackVerifyPayment />}/>
+                  <Route
+                    path="payment/paystack/paystack"
+                    element={<Paystack />}
+                  />
+                  <Route
+                    path="payment/paystack/paystack-verification/paystackVerifyPayment"
+                    element={<PaystackVerifyPayment />}
+                  />
                   <Route path="/our-service" element={<ContactSeller />} />
 
                   {/* <Route path="user/settings" element={<Settings />} /> */}

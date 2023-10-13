@@ -4,6 +4,7 @@ import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 import config from "../../NewConfig";
 
@@ -46,20 +47,18 @@ function Payment() {
 
   return (
     <>
-      <div className="container m-5 p-5">
-        <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
-          <div className="row">
-            {/* <div className="col-lg-4 offset-lg-4"> */}
-            <h1> Stripe Payment </h1>
-            {clientSecret && stripePromise && (
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm />
-              </Elements>
-            )}
-            {/* </div>{" "} */}
-          </div>{" "}
-        </div>
-      </div>
+      <ContentWrapper>
+        <div className="row">
+          {/* <div className="col-lg-4 offset-lg-4"> */}
+          <h1> Stripe Payment </h1>
+          {clientSecret && stripePromise && (
+            <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <CheckoutForm />
+            </Elements>
+          )}
+          {/* </div>{" "} */}
+        </div>{" "}
+      </ContentWrapper>
     </>
   );
 }

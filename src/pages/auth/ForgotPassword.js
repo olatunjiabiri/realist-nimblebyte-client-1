@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import config from "../../NewConfig";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 export default function Login() {
   // state
@@ -40,34 +41,29 @@ export default function Login() {
   };
 
   return (
-    <div className="container-fluid m-5 p-5">
-      <div className="container mt-5 pt-5" style={{ marginTop: "80px" }}>
-        <div className="row">
-          <div className="col-lg-4 offset-lg-4">
-            <form onSubmit={handleSubmit} autoComplete="off">
-              <input
-                type="text"
-                placeholder="Enter your email"
-                className="form-control mb-4"
-                required
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <button
-                disabled={loading}
-                className="btn btn-primary col-12 mb-4"
-              >
-                {loading ? "Waiting..." : "Submit"}
-              </button>
-            </form>
+    <ContentWrapper>
+      <div className="row">
+        <div className="col-md-4 offset-md-4">
+          <form onSubmit={handleSubmit} autoComplete="off">
+            <input
+              type="text"
+              placeholder="Enter your email"
+              className="form-control mb-4"
+              required
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button disabled={loading} className="btn btn-primary col-12 mb-4">
+              {loading ? "Waiting..." : "Submit"}
+            </button>
+          </form>
 
-            <Link className="text-danger" to="/login">
-              Back to login
-            </Link>
-          </div>
+          <Link className="text-danger" to="/login">
+            Back to login
+          </Link>
         </div>
       </div>
-    </div>
+    </ContentWrapper>
   );
 }
