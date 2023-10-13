@@ -16,21 +16,42 @@ export default function Footer() {
         <div className="col-4 text-light">
           <div className="link footer-color" style={{ listStyleType: "none" }}>
             <div className="mt-4">Quick Links</div>
-          
+
             <Link to="/">
-              <img src="./home3.png" className="footer-nav-img" alt="Home" height={35} width={35} />
-            </Link>
-            <Link to="/search">
-            <img src="./search.png" className=" footer-nav-img" alt="search" height={40} width={40} />
+              <img
+                src="./home3.png"
+                className="footer-nav-img"
+                alt="Home"
+                height={35}
+                width={35}
+              />
             </Link>
             <Link to="/buy">
-            <img src="./buy.png" className=" footer-nav-img" alt="buy" height={35} width={35} />
+              <img
+                src="./buy.png"
+                className=" footer-nav-img"
+                alt="buy"
+                height={35}
+                width={35}
+              />
             </Link>
             <Link to="/rent">
-            <img src="./rent.png" className=" footer-nav-img" alt="rent" height={35} width={35} />
+              <img
+                src="./rent.png"
+                className=" footer-nav-img"
+                alt="rent"
+                height={35}
+                width={35}
+              />
             </Link>
             <Link to="/agents">
-            <img src="./ouragents.png" className=" footer-nav-img" alt="ouragents" height={35} width={35} />
+              <img
+                src="./ouragents.png"
+                className=" footer-nav-img"
+                alt="ouragents"
+                height={35}
+                width={35}
+              />
             </Link>
           </div>
         </div>

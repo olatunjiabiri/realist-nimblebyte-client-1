@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import ContentWrapper from "../components/contentWrapper/ContentWrapper";
 
 import config from "../NewConfig";
 
@@ -23,7 +24,7 @@ export default function Register() {
         password,
         phoneNumber: "",
         emailId: config.emailId,
-        path: `${window.location.origin}/auth/account-activate`
+        path: `${window.location.origin}/auth/account-activate`,
         // appId: config.appId,
       });
 
@@ -45,47 +46,42 @@ export default function Register() {
   };
 
   return (
-    <div className="container m-5 p-5" style={{ marginTop: "80px" }}>
-      <div className="container mt-5 pt-5">
-        <div className="row">
-          <div className="col-lg-4 offset-lg-4">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Enter your email"
-                className="form-control mb-4"
-                required
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="form-control mb-4"
-                required
-                autoFocus
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                disabled={loading}
-                className="btn btn-primary col-12 mb-4"
-              >
-                {loading ? "Waiting..." : "Register"}
-              </button>
-            </form>
-            <div className="mt-3 text-grey-600">
-              Already have an account?{" "}
-              <span>
-                <Link className="text-danger" to="/login">
-                  Log in
-                </Link>
-              </span>
-            </div>
+    <ContentWrapper>
+      <div className="row">
+        <div className="col-md-4 offset-md-4">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter your email"
+              className="form-control mb-4"
+              required
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="form-control mb-4"
+              required
+              autoFocus
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button disabled={loading} className="btn btn-primary col-12 mb-4">
+              {loading ? "Waiting..." : "Register"}
+            </button>
+          </form>
+          <div className="mt-3 text-grey-600">
+            Already have an account?{" "}
+            <span>
+              <Link className="text-danger" to="/login">
+                Log in
+              </Link>
+            </span>
           </div>
         </div>
       </div>
-    </div>
+    </ContentWrapper>
   );
 }
