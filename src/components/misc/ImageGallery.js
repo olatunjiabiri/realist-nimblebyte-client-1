@@ -20,7 +20,7 @@ export const ImageGallery = ({
           {photos.map((x, index) => (
             <div key={index} className="slide">
               {/* key={index} */}
-              <img src={x.src} alt="Loading" />
+              <img src={x.src} alt="Loading" width="30" height="300" />
             </div>
           ))}
         </Carousel>
