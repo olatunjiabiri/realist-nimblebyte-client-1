@@ -57,6 +57,8 @@ export default function AdCard({ ad }) {
               showThumbs={false}
               showStatus={false}
               showIndicators={false}
+              height={"300"}
+              width={"30"}
             />
             {/* </Link> */}
             <div className="card-body ad-card-body">
