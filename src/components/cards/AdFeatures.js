@@ -7,7 +7,7 @@ export default function AdFeatures({ ad }) {
     <p className="card-text d-flex justify-content-between">
       {ad?.bedrooms ? (
         <span>
-          <IoBedOutline /> {ad?.bedrooms}
+          <IoBedOutline /> {ad?.bedrooms}{ad.bedrooms === 1 ? 'bed' : 'beds'}
         </span>
       ) : (
         ""
@@ -15,7 +15,7 @@ export default function AdFeatures({ ad }) {
 
       {ad?.bathrooms ? (
         <span>
-          <TbBath /> {ad?.bathrooms}
+          <TbBath /> {ad?.bathrooms}{ad.bathrooms === 1 ? 'bath' : 'baths'}
         </span>
       ) : (
         ""
