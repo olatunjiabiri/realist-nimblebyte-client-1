@@ -8,8 +8,12 @@ export default function Home() {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [adsForSell, setAdsForSell] = useState();
-  const [adsForRent, setAdsForRent] = useState();
+  const [ads, setAds] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(18);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (auth.user === null) {
@@ -19,15 +23,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (page === 1) return;
+    fetchAds();
+  }, [page]);
+
+  useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
   }, []);
 
   const fetchAds = async () => {
     try {
-      const { data } = await axios.get("/ads");
-      setAdsForSell(data.adsForSell);
-      setAdsForRent(data.adsForRent);
+      const { data } = await axios.get(`/ads/${page}/${perPage}`);
+
+      //setAds((prevAds) => [...prevAds, ...data.ads]);
+      setAds([...ads, ...data.ads]);
+      setTotal(data.total);
     } catch (err) {
       console.log(err);
     }
@@ -41,14 +52,30 @@ export default function Home() {
 
       <div className="container pt-3">
         <div className="row">
-          {adsForSell?.map((ad) => (
-            <AdCard ad={ad} key={ad._id} />
-          ))}
-
-          {adsForRent?.map((ad) => (
+          {ads?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />
           ))}
         </div>
+
+        {ads?.length < total ? (
+          <div className="row">
+            <div className="col text-center mt-4 mb-4">
+              <button
+                disabled={loading}
+                className="btn btn-warning"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(page + 1);
+                }}
+              >
+                {loading ? "Loading..." : `${ads?.length} / ${total} Load more`}
+              </button>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
     </div>
