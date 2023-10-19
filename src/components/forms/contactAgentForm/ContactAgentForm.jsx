@@ -25,19 +25,16 @@ const ContactAgentForm = ({ agent }) => {
       setLoading(true);
 
 
-      const response = await axios.post(`${config.AUTH_API}/api/Emailing/EmailEquiry`, {
-        name: values.contactName,
-        senderEmail: values.email,
-        phone: values.phone,
+      const response = await axios.post(`${config.AUTH_API}/api/contactseller/contact-agent`, {
+        userName: values.contactName,
+        userEmail: values.email,
+        userPhone: values.phone,
         message: values.message,
-        receiverEmail: agent[0].email,
-        // emailId: config.emailId,
-         appId: config.appId,                
+        agentEmail: agent[0].email,
+        agentName : agent[0].firstName,
+        agentPhone: agent[0].phone
       });
-
-   
-
-      // console.log("response>>>", response);
+          console.log("response>>>", response);
       if (!response.data.success) {
         toast.error(response.data.message);
         setLoading(false);
