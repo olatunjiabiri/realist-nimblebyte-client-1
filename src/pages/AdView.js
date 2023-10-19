@@ -46,7 +46,7 @@ export default function AdView() {
   };
 
   return (
-    <div className="container d-flex flex-column">
+    <div className="container-fluid d-flex flex-column">
     
       <div className="container mt-5 pt-3">
         <div className="row mt-2">
@@ -71,7 +71,9 @@ export default function AdView() {
                 </button>
               </div>
               <div className="flex-test">
-                <span className="ml-auto">{ <LikeUnlike ad={ad} /> }</span> 
+              <span className="ml-auto"> {ad?.sold ? "❌ Off market" : "✅ In market"}</span> 
+
+                <span className="ml-auto share-icon">{ <LikeUnlike ad={ad} /> }</span> 
                 <span className="save">Save</span>
 
                 <span>{ <FiShare ad={ad} className="h5 pointer share-icon" /> }</span> 
@@ -80,12 +82,30 @@ export default function AdView() {
             </div>
           </div>
 
-          <div className="row">
-            <div className="">
+          <div class="col-8">
+           <div>
               <ImageGallery photos={generatePhotosArray(ad?.photos)} />
             </div>
+          </div>
+          <div class="col-4">
+            <div className="d-flex justify-content-between">
+              <div>
+                  <h3 className="mt-3 h2 adview-feature">
+                    {" "}
+                    <span>&#8358;</span>
+                    {millify(ad?.price)}
+                  </h3> 
+                  <span> <AdFeatures ad={ad} /></span>
+                  <p className="adview-address mt-1">
+                       <span className="adview-address">{ad.address}</span>
+                  </p>
+              </div>
+            </div>
+          </div>
 
-            
+
+
+          <div className="row">
             <div className="row adview-flex-details">
               <div className="d-flex justify-content-between">
                 <div>
