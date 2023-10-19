@@ -1,0 +1,18 @@
+.flex-div {
+    height: 41px
+}
+
+.flex-test {
+    margin-left: auto;
+    align-self: center;
+    font-size: smaller;
+}
+
+.save {
+    margin: 6px
+    
+}
+
+.share-icon {
+    margin-left: 10px
+}

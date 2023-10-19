@@ -76,11 +76,11 @@ export default function LikeUnlike({ ad }) {
     <>
       {auth.wishlist?.includes(ad?._id) ? (
         <span>
-          <FcLike onClick={handleUnlike} className="h2 m-3 pointer" />
+          <FcLike onClick={handleUnlike} className="h5  pointer" />
         </span>
       ) : (
         <span>
-          <FcLikePlaceholder onClick={handleLike} className="h2 m-3 pointer" />
+          <FcLikePlaceholder onClick={handleLike} className="h5  pointer" />
         </span>
       )}
       {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}

@@ -1,20 +1,19 @@
 import { useParams } from "react-router-dom";
+import { FiShare } from "react-icons/fi";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   ImageGallery,
   generatePhotosArray,
 } from "../components/misc/ImageGallery";
-// import Logo from "../logo.svg";
 import AdFeatures from "../components/cards/AdFeatures";
-import { formatNumber } from "../helpers/ad";
 import millify from "millify";
 import dayjs from "dayjs";
 import LikeUnlike from "../components/misc/LikeUnlike";
 import MapCard from "../components/cards/MapCard";
-// import HTMLRenderer from "react-html-renderer";
 import AdCard from "../components/cards/AdCard";
-import ContactSeller from "../components/forms/ContactSeller";
+import "./AdView.css";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -47,14 +46,12 @@ export default function AdView() {
   };
 
   return (
-    <>
-      <div className="container-fluid mt-5 pt-5">
+    <div className="container d-flex flex-column">
+    
+      <div className="mt-5 pt-3">
         <div className="row mt-2">
-          <div className="col-lg-8 offset-lg-2 mt-3">
-            <div className="mt-4 mb-4">
-              {/* <button className="btn btn-success disabled mt-2">
-                {ad?.sold ? "❌ Off market" : "✅ In market"}
-              </button> */}
+          <div className="row offset-lg-2 mt-3">
+            {/* <div className="mt-4 mb-4">    
               {ad?.sold ? "❌ Off market" : "✅ In market"}
             </div>
 
@@ -63,42 +60,54 @@ export default function AdView() {
             <h3 className="mt-3 h2">
               {" "}
               <span>&#8358;</span>
-              {/* {formatNumber(ad.price)} */}
               {millify(ad?.price)}
             </h3>
-            <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
-            <div className="d-flex justify-content-between">
-              <button className="btn btn-primary disabled mt-2">
-                {ad.type} for {ad.action === "Sell" ? "SALE" : "RENT"}
-              </button>
-              <LikeUnlike ad={ad} />
+            <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p> */}
+
+            <div className="d-flex col-lg-8 justify-content-between flex-div">
+              <div>
+                <button type="button" className="btn btn-primary btn-sm disabled">
+                  {ad.type} for {ad.action === "Sell" ? "SALE" : "RENT"}
+                </button>
+              </div>
+              <div className="flex-test">
+                <span className="ml-auto">{ <LikeUnlike ad={ad} /> }</span> 
+                <span className="save">Save</span>
+
+                <span>{ <FiShare ad={ad} className="h5 pointer share-icon" /> }</span> 
+                <span className="save">Share</span>
+              </div>
             </div>
+            {/* <div className="d-flex justify-content-between flex-div">
+              <div className="col-lg-8">
+              </div>
+            </div> */}
           </div>
-          <div className="col-lg-8 offset-lg-2 mt-3">
-            <ImageGallery photos={generatePhotosArray(ad?.photos)} />
+
+          <div className="row  offset-lg-2">
+            <div className="col-lg-8">
+              <ImageGallery photos={generatePhotosArray(ad?.photos)} />
+            </div>
+            
           </div>
+          
         </div>
       </div>
 
       <div className="container mb-5">
         <div className="row">
-          <div className="col-lg-8 offset-lg-2 mt-3">
+          <div className="col-lg-4 offset-lg-2 mt-3">
             <MapCard ad={ad} related={related} />
 
             <h3 className="mt-3 h2">
               {ad?.type} in {ad?.address} for {ad?.action} <span>&#8358;</span>
-              {/* {formatNumber(ad?.price)} */}
+            
               {millify(ad?.price)}
             </h3>
 
-            <AdFeatures ad={ad} />
-            <hr />
+            {/* <AdFeatures ad={ad} /> */}
           </div>
         </div>
-      </div>
-
-      <div className="container">
-        <ContactSeller ad={ad} />
       </div>
 
       <div className="container">
@@ -111,6 +120,6 @@ export default function AdView() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
