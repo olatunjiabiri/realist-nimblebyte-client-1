@@ -48,9 +48,9 @@ export default function AdView() {
   return (
     <div className="container d-flex flex-column">
     
-      <div className="mt-5 pt-3">
+      <div className="container mt-5 pt-3">
         <div className="row mt-2">
-          <div className="row offset-lg-2 mt-3">
+          <div className="row  mt-3 justify-content-between">
             {/* <div className="mt-4 mb-4">    
               {ad?.sold ? "❌ Off market" : "✅ In market"}
             </div>
@@ -64,7 +64,7 @@ export default function AdView() {
             </h3>
             <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p> */}
 
-            <div className="d-flex col-lg-8 justify-content-between flex-div">
+            <div className="d-flex  flex-div">
               <div>
                 <button type="button" className="btn btn-primary btn-sm disabled">
                   {ad.type} for {ad.action === "Sell" ? "SALE" : "RENT"}
@@ -78,37 +78,51 @@ export default function AdView() {
                 <span className="save">Share</span>
               </div>
             </div>
-            {/* <div className="d-flex justify-content-between flex-div">
-              <div className="col-lg-8">
-              </div>
-            </div> */}
           </div>
 
-          <div className="row  offset-lg-2">
-            <div className="col-lg-8">
+          <div className="row">
+            <div className="">
               <ImageGallery photos={generatePhotosArray(ad?.photos)} />
             </div>
+
             
+            <div className="row adview-flex-details">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <h3 className="mt-3 h2">
+                    {" "}
+                    <span>&#8358;</span>
+                    {millify(ad?.price)}
+                    <p className="adview-address overflow-wrap overflow-wrap--break-word">
+                       <span className="adview-address">{ad.address}</span>
+                    </p>
+                  </h3> 
+                </div>
+               
+                <div className="adview-detail-contact-button rounded border border-muted">
+                  <button type="button" className="btn btn-primary">
+                    <span className="contact-agent">Contact Owner</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="row mt-5">
+              <div>
+                <MapCard ad={ad} related={related} />
+              </div>
+            </div>
           </div>
-          
         </div>
       </div>
 
-      <div className="container mb-5">
+      {/* <div className="container mb-5">
         <div className="row">
-          <div className="col-lg-4 offset-lg-2 mt-3">
+          <div className="col-lg-6 offset-lg-2 mt-3">
             <MapCard ad={ad} related={related} />
-
-            <h3 className="mt-3 h2">
-              {ad?.type} in {ad?.address} for {ad?.action} <span>&#8358;</span>
-            
-              {millify(ad?.price)}
-            </h3>
-
-            {/* <AdFeatures ad={ad} /> */}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="container">
         <h4 className="text-center mb-3">Related Properties</h4>
