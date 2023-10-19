@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { setKey, geocode, RequestType } from "react-geocode";
 
 import { agentSpecialty } from "../../helpers/actionTypeList";
+import config from "../../NewConfig";
+
 // import "./index.css";
 import "./AgentSearchForm.css";
 
@@ -11,9 +14,52 @@ export default function AgentSearchForm({ parentCallback, agents }) {
   const [loading, setLoading] = useState(true);
   const [filteredAgents, setFilteredAgents] = useState([]);
 
+  setKey(config.GOOGLE_MAPS_KEY);
+
   useEffect(() => {
-    //
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation not supported");
+    }
   }, []);
+
+  const success = (position) => {
+    geocode(
+      RequestType.LATLNG,
+      `${position.coords.latitude},${position.coords.longitude}`,
+      {
+        location_type: "ROOFTOP", // Override location type filter for this request.
+        enable_address_descriptor: true, // Include address descriptor in response.
+      }
+    )
+      .then(({ results }) => {
+        const neighborhood = results[0].address_components[2].long_name;
+        const { city, state, country, sublocality } =
+          results[0].address_components.reduce((acc, component) => {
+            if (component.types.includes("locality"))
+              acc.city = component.long_name;
+            else if (component.types.includes("neighborhood"))
+              acc.state = component.long_name;
+            else if (component.types.includes("administrative_area_level_2"))
+              acc.state = component.long_name;
+            else if (component.types.includes("country"))
+              acc.country = component.long_name;
+            return acc;
+          }, {});
+        // console.log(city, state, country, sublocality);
+        // console.log(neighborhood);
+
+        setAgentLocation(neighborhood || city);
+
+        // console.log(address);
+      })
+      .catch(console.error);
+  };
+
+  const error = () => {
+    console.log("Unable to retrieve your location");
+  };
 
   const handleSearch = () => {
     try {
