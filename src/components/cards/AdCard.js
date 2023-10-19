@@ -64,17 +64,17 @@ export default function AdCard({ ad }) {
   // export default BasicExample;
 
   return (
-    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
-      {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
-      <Badge.Ribbon
-        text={`${ad?.type} for ${
-          ad?.action === "Sell" ? "Sale" : "Rent"
-        }   |   ${ad?.sold ? "Not Available" : "Available"}`}
-        color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
-      >
-        <div className="card hoverable p-2 shadow-lg">
-          {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
-          {/* <img
+    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-height">
+      <Link className="link" to={`/ad/${ad.slug}`}>
+        <Badge.Ribbon
+          text={`${ad?.type} for ${
+            ad?.action === "Sell" ? "Sale" : "Rent"
+          }   |   ${ad?.sold ? "Not Available" : "Available"}`}
+          color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
+        >
+          <div className="card hoverable p-2 shadow-lg">
+            {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
+            {/* <img
               src={ad?.photos?.[0].Location}
               alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
               style={{
@@ -84,53 +84,55 @@ export default function AdCard({ ad }) {
                 objectFit: "cover",
               }}
             />{" "} */}
-          <ImageGallery
-            photos={generatePhotosArray(ad?.photos)}
-            showThumbs={false}
-            showStatus={false}
-            showIndicators={false}
-          />
-          {/* </Link> */}
-          <div className="card-body ad-card-body">
-            <div className="d-flex justify-content-between">
-              <h3 className="pt-1">
-                {" "}
-                <span>&#8358;</span>
-                {/* {formatNumber(ad?.price)} */}
-                {millify(ad?.price)}
-              </h3>
-              <section className="like-unlike-button">
-                <LikeUnlike ad={ad} />
-              </section>
-            </div>
+            <ImageGallery
+              photos={generatePhotosArray(ad?.photos)}
+              showThumbs={false}
+              showStatus={false}
+              showIndicators={false}
+              height={"300"}
+              width={"30"}
+            />
+            {/* </Link> */}
+            <div className="card-body ad-card-body">
+              <div className="d-flex justify-content-between">
+                <h3 className="pt-1">
+                  {" "}
+                  <span>&#8358;</span>
+                  {/* {formatNumber(ad?.price)} */}
+                  {millify(ad?.price)}
+                </h3>
+                <section className="like-unlike-button">
+                  <LikeUnlike ad={ad} />
+                </section>
+              </div>
 
-            <p className="card-text">{ad?.address}</p>
+              <div className="card-text address-height">{ad?.address}</div>
 
-            <AdFeatures ad={ad} />
-            <div className="d-flex justify-content-between">
-              <p className="pt-3 card-text">
-                Posted {dayjs(ad?.createdAt).fromNow()}
-              </p>
-              <p className="justify-content-end">
-                <Link className="bg-white" smooth>
-                  <button
-                    className="contact-owner-button"
-                    onClick={() => setIsOpen(true)}
-                  >
-                    Contact Owner
-                  </button>
-                </Link>
+              <AdFeatures ad={ad} />
+              <div className="d-flex justify-content-between">
+                <p className="pt-3 card-text">
+                  Posted {dayjs(ad?.createdAt).fromNow()}
+                </p>
+                <p className="justify-content-end">
+                  <Link className="bg-white" smooth>
+                    <button
+                      className="contact-owner-button"
+                      onClick={() => setIsOpen(true)}
+                    >
+                      Contact Owner
+                    </button>
+                  </Link>
 
-                <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-                  <BasicExample />
-                  {/* <ContactSellerModal /> */}
-                </Modall>
-              </p>
+                  <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+                    <BasicExample />
+                    {/* <ContactSellerModal /> */}
+                  </Modall>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </Badge.Ribbon>
-      {/* </Link> */}
+        </Badge.Ribbon>
+      </Link>
     </div>
   );
 }
