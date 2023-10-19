@@ -6,27 +6,52 @@ export const ImageGallery = ({
   showThumbs = true,
   showStatus = true,
   showIndicators = true,
+  height = null,
+  width = null,
 }) => {
-  return (
-    <>
-      <div className="box">
-        <Carousel
-          showThumbs={showThumbs}
-          showStatus={showStatus}
-          infiniteLoop={true}
-          autoPlay={true}
-          showIndicators={showIndicators}
-        >
-          {photos.map((x, index) => (
-            <div key={index} className="slide">
-              {/* key={index} */}
-              <img src={x.src} alt="Loading" />
-            </div>
-          ))}
-        </Carousel>
-      </div>
-    </>
-  );
+  if (height == null && width == null) {
+    return (
+      <>
+        <div className="box">
+          <Carousel
+            showThumbs={showThumbs}
+            showStatus={showStatus}
+            infiniteLoop={true}
+            autoPlay={true}
+            showIndicators={showIndicators}
+          >
+            {photos.map((x, index) => (
+              <div key={index} className="slide">
+                {/* key={index} */}
+                <img src={x.src} alt="Loading" />
+              </div>
+            ))}
+          </Carousel>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="box">
+          <Carousel
+            showThumbs={showThumbs}
+            showStatus={showStatus}
+            infiniteLoop={true}
+            autoPlay={true}
+            showIndicators={showIndicators}
+          >
+            {photos.map((x, index) => (
+              <div key={index} className="slide">
+                {/* key={index} */}
+                <img src={x.src} alt="Loading" width={width} height={height} />
+              </div>
+            ))}
+          </Carousel>
+        </div>
+      </>
+    );
+  }
 };
 export const generatePhotosArray = (photos) => {
   if (photos?.length > 0) {

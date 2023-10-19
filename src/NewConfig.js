@@ -7,9 +7,8 @@ const config = {
     // process.env.NODE_ENV === "production"
     //"https://localhost:7298",
     "https://authbackendservice.azurewebsites.net",
-  PAYMENT_API:
-     "https://realist-payment-service.azurewebsites.net",
-     //  "https://localhost:7067",
+  PAYMENT_API: "https://realist-payment-service.azurewebsites.net",
+  //  "https://localhost:7067",
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   STRIPE_PUBLISHABLE_KEY:
@@ -18,9 +17,10 @@ const config = {
   emailId: "E4BCBFAA-3258-4934-AA87-891AE86B6E71",
 
   // PAYSTACK_KEYS = "development"
-  REACT_APP_PS_PUBLIC_TEST_KEY: "pk_test_sk_test_8b48c4990c2ac49a717cdda794f7104ae4ed56a4",
-  REACT_APP_PS_PUBLIC_LIVE_KEY: "pk_live_pk_test_6970b3ab22034b9a72ff64c8ffd57e9df76ecb4a"
-
+  REACT_APP_PS_PUBLIC_TEST_KEY:
+    "pk_test_sk_test_8b48c4990c2ac49a717cdda794f7104ae4ed56a4",
+  REACT_APP_PS_PUBLIC_LIVE_KEY:
+    "pk_live_pk_test_6970b3ab22034b9a72ff64c8ffd57e9df76ecb4a",
 };
 
 export default config;

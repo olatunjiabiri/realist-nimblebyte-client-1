@@ -32,7 +32,7 @@ export default function AdCard({ ad }) {
   }, [pathname]);
 
   return (
-    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6">
+    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-height">
       <Link className="link" to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${
@@ -57,6 +57,8 @@ export default function AdCard({ ad }) {
               showThumbs={false}
               showStatus={false}
               showIndicators={false}
+              height={"300"}
+              width={"30"}
             />
             {/* </Link> */}
             <div className="card-body ad-card-body">
@@ -72,7 +74,7 @@ export default function AdCard({ ad }) {
                 </section>
               </div>
 
-              <p className="card-text">{ad?.address}</p>
+              <div className="card-text address-height">{ad?.address}</div>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">
