@@ -4,19 +4,15 @@ import { Badge } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import millify from "millify";
-import { HashLink } from "react-router-hash-link";
 import AdFeatures from "../../components/cards/AdFeatures";
 // import { formatNumber } from "../../helpers/ad";
 
-import ContactOwnerButton from "../contactOwnerButton/ContactOwnerButton";
 import LikeUnlike from "../../components/misc/LikeUnlike";
 import {
   ImageGallery,
   generatePhotosArray,
 } from "../../components/misc/ImageGallery";
 import Modall from "../modal/Modal";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 
 import "./index.css";
 import ContactSellerModal from "./../contactSellerModal/ContactSellerModal";
@@ -36,35 +32,11 @@ export default function AdCard({ ad }) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  function BasicExample() {
-    return (
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-    );
-  }
-
-  // export default BasicExample;
-
   return (
     <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-height">
+      <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <ContactSellerModal ad={ad} />
+      </Modall>
       <Link className="link" to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${
@@ -114,19 +86,14 @@ export default function AdCard({ ad }) {
                   Posted {dayjs(ad?.createdAt).fromNow()}
                 </p>
                 <p className="justify-content-end">
-                  <Link className="bg-white" smooth>
+                  <Link className="bg-white">
                     <button
                       className="contact-owner-button"
                       onClick={() => setIsOpen(true)}
                     >
-                      Contact Owner
+                      Contact Property
                     </button>
                   </Link>
-
-                  <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-                    <BasicExample />
-                    {/* <ContactSellerModal /> */}
-                  </Modall>
                 </p>
               </div>
             </div>

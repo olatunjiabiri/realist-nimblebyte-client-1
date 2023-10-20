@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/auth";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { toast } from "react-toastify";
 
-import {
-  ImageGallery,
-  generatePhotosArray,
-} from "../../components/misc/ImageGallery";
-
 import "./ContactSellerModal.css";
-
-import axios from "axios";
+import { useAuth } from "../../context/auth";
+import config from "../../NewConfig";
 
 const ContactSellerModal = ({ ad, onClose, onSubmit }) => {
   // context
@@ -21,28 +15,63 @@ const ContactSellerModal = ({ ad, onClose, onSubmit }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // hooks
-  const navigate = useNavigate();
+  const [agent, setAgent] = useState("");
 
   const loggedIn = auth.user !== null && auth.token !== "";
 
   useEffect(() => {
+    fetchAgents();
     if (loggedIn) {
-      setName(auth.user?.name);
-      setEmail(auth.user?.email);
-      setPhone(auth.user?.phone);
+      setName(auth.user?.firstName || "");
+      setEmail(auth.user?.email || "");
+      setPhone(auth.user?.phone || "");
+      setMessage(
+        `Hi, I am interested in the property located at ${
+          ad?.address || ""
+        }.  Thanks`
+      );
     }
   }, [loggedIn]);
+
+  const fetchAgents = async () => {
+    try {
+      const { data } = await axios.get(
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Seller`
+      );
+      setAgent(
+        data?.responsePayload.filter((a) => {
+          return a.userId === ad?.postedBy;
+        })
+      );
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+      // setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await onSubmit({ name, email, message, phone, adId: ad._id });
+      setLoading(true);
+
+      const response = await axios.post(
+        `${config.AUTH_API}/api/ContactSeller`,
+        {
+          adId: ad?._id,
+          message,
+          sellerEmail: agent[0].email.toString() || "",
+          enquirerEmail: email,
+          propertyPageUrl: `https://realistclientapp2.azurewebsites.net/ad/${ad?.slug}`,
+          enquirerName: name,
+          enquirerPhone: phone,
+          propertyAddress: ad.address,
+        }
+      );
+      console.log("response>>>", response);
+      toast.success("Your enquiry has been sent to the seller");
       setLoading(false);
-      onClose();
-      toast.success("Your enquiry has been emailed to the seller");
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong! Try again.");
@@ -52,67 +81,64 @@ const ContactSellerModal = ({ ad, onClose, onSubmit }) => {
 
   return (
     <>
-      <div className="modal-overlay"></div>
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
-        <h3>Contact this Property</h3>
+      {ad && (
+        <div className="modal-content">
+          <h3 className="modal-content-title">Contact this Property</h3>
+          <div className="modal-image-wrapper">
+            <img
+              src={ad?.photos[0].Location}
+              alt=""
+              className="property-image"
+              width={300}
+              height={30}
+            />
+          </div>
 
-        <img src="./room.jpg" alt="Property Image" className="property-image" />
+          <form className="contact-modal">
+            <input
+              type="text"
+              className="form-control mb-3"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-        {/* <ImageGallery
-          photos={generatePhotosArray(ad?.photos)}
-          showThumbs={false}
-          showStatus={false}
-          showIndicators={false}
-          alt="Property Image"
-          className="property-image"
-        /> */}
+            <input
+              type="text"
+              className="form-control contact-modal-control mb-3"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-        <form className="contact-modal" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="form-control mb-3"
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+            <input
+              type="text"
+              className="form-control contact-modal-control mb-3"
+              placeholder="Enter your phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
 
-          <input
-            type="text"
-            className="form-control contact-modal-control mb-3"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <textarea
+              name="message"
+              className="form-control contact-modal-control mb-3"
+              id="form-control-textarea"
+              placeholder="Write your message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              autoFocus={true}
+            ></textarea>
 
-          <input
-            type="text"
-            className="form-control contact-modal-control mb-3"
-            placeholder="Enter your phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-
-          <textarea
-            name="message"
-            className="form-control contact-modal-control mb-3"
-            id="form-control-textarea"
-            placeholder="Write your message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            autoFocus={true}
-          ></textarea>
-
-          <button
-            className="contact-modal-btn btn btn-primary mt-4 mb-5"
-            disabled={!name || !email || loading}
-          >
-            {loading ? "Please wait" : "Send Enquiry"}
-          </button>
-        </form>
-      </div>
+            <button
+              onClick={handleSubmit}
+              className="btn btn-primary mt-4 mb-5 contact-modal-btn"
+              disabled={!name || !email || loading}
+            >
+              {loading ? "Please wait" : "Send Enquiry"}
+            </button>
+          </form>
+        </div>
+      )}
     </>
   );
 };

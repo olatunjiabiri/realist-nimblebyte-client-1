@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease-in-out;
-    overflow: hidden;
+    overflow: hidden; /* auto */
     z-index: 999;
     padding: 40px 20px 20px;
     opacity: 0;
@@ -35,4 +35,34 @@
     align-items: center;
     justify-content: center;
     font-size: 2rem;
+  }
+
+  .close-btn {
+    position: absolute;
+    font-size: 20px;
+    top: 40px;
+    right: 20px;
+    z-index: 100000;
+    border: 0px;
+  }
+
+
+  @media (max-width: 767px) {
+    .modal-content {
+      width: 50%;
+      height: 50%;
+    }
+
+    .close-btn {
+      top: 4px;
+      right: 2px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    /* Add styles for medium-sized screens here */
+    .close-btn {
+      top: 40px;
+      right: 30px;
+    }
   }

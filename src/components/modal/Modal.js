@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import ReactPortal from "../ReactPortal";
+import { AiOutlineClose } from "react-icons/ai";
+
 import "./Modal.css";
 
 function Modall({ children, isOpen, handleClose }) {
@@ -23,10 +25,12 @@ function Modall({ children, isOpen, handleClose }) {
         nodeRef={nodeRef}
       >
         <div className="modal" ref={nodeRef}>
-          <button onClick={handleClose} className="close-btn">
-            Close
-          </button>
-          <div className="modal-content">{children}</div>
+          <div className="modal-content">
+            <button onClick={handleClose} className="close-btn">
+              <AiOutlineClose />
+            </button>
+            {children}
+          </div>
         </div>
       </CSSTransition>
     </ReactPortal>
