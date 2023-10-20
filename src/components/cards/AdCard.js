@@ -73,9 +73,9 @@ export default function AdCard({ ad }) {
                   {/* {formatNumber(ad?.price)} */}
                   {millify(ad?.price)}
                 </h3>
-                <section className="like-unlike-button">
+                <Link className="like-unlike-button">
                   <LikeUnlike ad={ad} />
-                </section>
+                </Link>
               </div>
 
               <div className="card-text address-height">{ad?.address}</div>
