@@ -14,10 +14,8 @@ export default function Footer() {
         </div>
 
         <div className="col-12 col-md-4 text-light">
-        <div className="mt-4 fs-3">Quick Links</div>
+          <h4 className="mt-4">Quick Links</h4>
           <div className="link footer-color" style={{ listStyleType: "none" }}>
-            
-
             <Link to="/">
               <img
                 src="./home3.png"
