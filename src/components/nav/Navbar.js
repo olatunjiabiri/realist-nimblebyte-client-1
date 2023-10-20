@@ -12,6 +12,20 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const openMobileMenu = () => {
+    setMobileMenuOpen(true);
+  };
+
   const logout = () => {
     setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
@@ -28,17 +42,17 @@ const Navbar = () => {
   //   }
   // };
 
-  const handleCreateAdClick = () => {
-    if (selectedOption === "Sale") {
-      navigate("/ad/create-sale");
-    } else if (selectedOption === "Rent") {
-      navigate("/ad/create-rent");
-    } else if (loggedIn) {
-      navigate("/ad/create");
-    } else {
-      navigate("/login");
-    }
-  };
+  // const handleCreateAdClick = () => {
+  //   if (selectedOption === "Sale") {
+  //     navigate("/ad/create-sale");
+  //   } else if (selectedOption === "Rent") {
+  //     navigate("/ad/create-rent");
+  //   } else if (loggedIn) {
+  //     navigate("/ad/create");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   return (
     <>
@@ -49,7 +63,7 @@ const Navbar = () => {
         <div className="container">
           <span className="navbar-brand d-flex w-50 me-auto">
             <nav className="nav lead">
-              <Link to={"/"}>
+              <Link to={"/"} onClick={closeMobileMenu}>
                 <img
                   src="./nimblelogo2.png"
                   alt="NimbleByte"
@@ -65,11 +79,14 @@ const Navbar = () => {
             data-bs-toggle="collapse"
             data-bs-target="#collapsingNavbar3"
             data-bs-auto-close="true"
+            onClick={toggleMobileMenu}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            className="navbar-collapse collapse w-100"
+            className={`navbar-collapse collapse w-100 ${
+              mobileMenuOpen ? "show" : ""
+            }`}
             id="collapsingNavbar3"
           >
             <ul className="navbar-nav w-100 justify-content-center justify-content-around">
@@ -85,6 +102,7 @@ const Navbar = () => {
                 className="nav-item nav-link"
                 aria-current="page"
                 to="/buy"
+                onClick={closeMobileMenu}
               >
                 Buy
               </NavLink>
@@ -93,6 +111,7 @@ const Navbar = () => {
                 className="nav-item nav-link"
                 aria-current="page"
                 to="/rent"
+                onClick={closeMobileMenu}
               >
                 Rent
               </NavLink>
@@ -100,6 +119,7 @@ const Navbar = () => {
                 className="nav-item nav-link"
                 aria-current="page"
                 to="/agents"
+                onClick={closeMobileMenu}
               >
                 Sell
               </NavLink>
@@ -127,6 +147,7 @@ const Navbar = () => {
                           <NavLink
                             className="dropdown-item"
                             to="/ad/create/sell/house"
+                            onClick={closeMobileMenu}
                           >
                             Sale
                           </NavLink>
@@ -135,6 +156,7 @@ const Navbar = () => {
                           <NavLink
                             className="dropdown-item"
                             to="/ad/create/rent/house"
+                            onClick={closeMobileMenu}
                           >
                             Rent
                           </NavLink>
@@ -151,6 +173,7 @@ const Navbar = () => {
                       className="nav-item nav-link"
                       aria-current="page"
                       to="/login"
+                      onClick={closeMobileMenu}
                     >
                       Login
                     </NavLink>
@@ -159,6 +182,7 @@ const Navbar = () => {
                         className="nav-item nav-link"
                         aria-current="page"
                         to="/register"
+                        onClick={closeMobileMenu}
                       >
                         Register
                       </NavLink>
@@ -188,7 +212,11 @@ const Navbar = () => {
                         aria-labelledby="navbarScrollingDropdown"
                       >
                         <li>
-                          <NavLink className="dropdown-item" to="/dashboard">
+                          <NavLink
+                            className="dropdown-item"
+                            to="/dashboard"
+                            onClick={closeMobileMenu}
+                          >
                             Dashboard
                           </NavLink>
                         </li>
@@ -198,7 +226,11 @@ const Navbar = () => {
                           </NavLink>
                         </li> */}
                         <li>
-                          <NavLink className="dropdown-item" to="/user/profile">
+                          <NavLink
+                            className="dropdown-item"
+                            to="/user/profile"
+                            onClick={closeMobileMenu}
+                          >
                             Update profile
                           </NavLink>
                         </li>
@@ -206,6 +238,7 @@ const Navbar = () => {
                           <NavLink
                             className="dropdown-item"
                             to="/user/update-password"
+                            onClick={closeMobileMenu}
                           >
                             Change Password
                           </NavLink>
@@ -215,8 +248,11 @@ const Navbar = () => {
                         </li>
                         <li>
                           <a
-                            onClick={logout}
-                            // className="navbar-nav nav-item nav-link"
+                            onClick={() => {
+                              closeMobileMenu();
+                              logout();
+                              // You can also add other logic here if needed
+                            }}
                             className="dropdown-item"
                           >
                             Logout
