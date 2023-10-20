@@ -46,7 +46,7 @@ export default function AdView() {
   };
 
   return (
-    <div className="container-fluid d-flex flex-column h-100">
+    <div className="container-fluid d-flex flex-column h-100 mt-3">
     
       <div className="container mt-5 pt-3 h-100">
         <div className="row mt-2">
@@ -158,7 +158,7 @@ export default function AdView() {
         </div>
       </div> */}
 
-      {/* <div className="container">
+      <div className="container">
         <h4 className="text-center mb-3">Related Properties</h4>
         <hr />
 
@@ -167,7 +167,7 @@ export default function AdView() {
             <AdCard key={ad._id} ad={ad} />
           ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
