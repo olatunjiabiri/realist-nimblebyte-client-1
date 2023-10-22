@@ -1,6 +1,11 @@
-.agt-info {
+/* .agt-info {
    padding: 0rem 3rem 3rem;
+} */
+
+.agt-info {
+   padding: 0;
 }
+
 
 .agt-image {
     width: 250px;
@@ -50,7 +55,9 @@
     margin: 0px;
  }
 
- @media (max-width: 767px) {
+
+ 
+ @media (max-width: 1024px) {
    .agt-left-c {
       display: flex;
       justify-content: center;
@@ -60,6 +67,7 @@
    }
    .agt-image {
    margin-right: 0rem;
+   padding-left: 10px;
    }
    .agt-text1 {    
       font-weight: 600;
@@ -77,3 +85,16 @@
    }
    
  }
+ 
+
+
+@media (min-width: 1024px){
+   .col-md-4 .col-md-8 .col-sm-12 {
+     flex: 0 0 33.3333333333333%; 
+     max-width: 33.333333333333333%;
+   }
+   .agt-image {
+     width: 150%;
+   }
+ }
+ 
