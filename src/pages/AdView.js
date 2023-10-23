@@ -22,6 +22,7 @@ dayjs.extend(relativeTime);
 export default function AdView() {
   // state
   const [ad, setAd] = useState({});
+  const [isEmpty, setIsEmpty] = useState(false)
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,6 +45,9 @@ export default function AdView() {
         setAd(data?.ad);
         setRelated(data?.related);
         setLoading(false)
+      }else{
+        setIsEmpty(true)
+        setLoading(false)
       }
       
     } catch (err) {
@@ -53,11 +57,13 @@ export default function AdView() {
 
   return (
     <div className="container-fluid d-flex flex-column h-100 mt-3">
-      {loading ? (
-        <div  className="display-1 d-flex justify-content-center align-items-center vh-100">
-            <span> Loading... </span>
-        </div>
-        ) : (
+      {loading ? 
+        (
+          <div  className="display-1 d-flex justify-content-center align-items-center vh-100">
+              <span> Loading... </span>
+          </div>
+        ) : 
+        (
           <div>
             <div className="container mt-5 pt-3 h-100 ">
 
@@ -160,7 +166,8 @@ export default function AdView() {
               </div>
             </div>
           </div>
-        )}
+        )
+      }
     </div>
   );
 }
