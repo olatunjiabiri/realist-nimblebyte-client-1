@@ -24,8 +24,5 @@ yarn-error.log*
 
 src/config.js
 
-package-lock.json
-/package-lock.json
-
 .vs
 /.vs
