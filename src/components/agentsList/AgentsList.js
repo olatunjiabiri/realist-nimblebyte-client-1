@@ -1,19 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
-import { useAgent } from "../../context/agent";
 
 import "./AgentsList.css";
 
 import { DataGrid } from "@mui/x-data-grid";
 
 const AgentsList = ({ returnedAgents }) => {
-  const [agent, setAgent] = useAgent();
-  setAgent(returnedAgents);
-
   useEffect(() => {});
-
-  console.log("returnedAgents>>", returnedAgents);
 
   const userColumns = [
     {

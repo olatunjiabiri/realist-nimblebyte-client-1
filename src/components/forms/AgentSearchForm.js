@@ -1,65 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { setKey, geocode, RequestType } from "react-geocode";
+// import { useCurrentLocation } from "../../context/currentLocation";
 
-import { agentSpecialty } from "../../helpers/actionTypeList";
-import config from "../../NewConfig";
+// import { agentSpecialty } from "../../helpers/actionTypeList";
 
 // import "./index.css";
 import "./AgentSearchForm.css";
 
 export default function AgentSearchForm({ parentCallback, agents }) {
-  const [specialty, setSpecialty] = useState(true);
+  // const [currentLocation, setCurrentLocation] = useCurrentLocation();
+  const [currentLocation, setCurrentLocation] = useState(
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+  );
+
+  // const [specialty, setSpecialty] = useState(true);
   const [agentName, setAgentName] = useState("");
-  const [agentLocation, setAgentLocation] = useState("");
+  const [agentLocation, setAgentLocation] = useState(
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+  );
   const [loading, setLoading] = useState(true);
   const [filteredAgents, setFilteredAgents] = useState([]);
 
-  setKey(config.GOOGLE_MAPS_KEY);
-
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
-    } else {
-      console.log("Geolocation not supported");
-    }
-  }, []);
-
-  const success = (position) => {
-    geocode(
-      RequestType.LATLNG,
-      `${position.coords.latitude},${position.coords.longitude}`,
-      {
-        location_type: "ROOFTOP", // Override location type filter for this request.
-        enable_address_descriptor: true, // Include address descriptor in response.
-      }
-    )
-      .then(({ results }) => {
-        const neighborhood = results[0].address_components[2].long_name;
-        const { city, state, country, sublocality } =
-          results[0].address_components.reduce((acc, component) => {
-            if (component.types.includes("locality"))
-              acc.city = component.long_name;
-            else if (component.types.includes("neighborhood"))
-              acc.state = component.long_name;
-            else if (component.types.includes("administrative_area_level_2"))
-              acc.state = component.long_name;
-            else if (component.types.includes("country"))
-              acc.country = component.long_name;
-            return acc;
-          }, {});
-        // console.log(city, state, country, sublocality);
-        // console.log(neighborhood);
-
-        setAgentLocation(neighborhood || city);
-
-        // console.log(address);
-      })
-      .catch(console.error);
-  };
-
-  const error = () => {
-    console.log("Unable to retrieve your location");
-  };
+    setAgentLocation(currentLocation);
+  }, [currentLocation]);
 
   const handleSearch = () => {
     try {
@@ -122,7 +85,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
               onChange={(e) => setAgentName(e.target.value)}
             />
 
-            <select
+            {/* <select
               className="form-select pl-1 col text-center rounded-pill mx-2 my-1"
               aria-label="form-select select-options"
               onChange={(e) => setSpecialty(e.target.value)}
@@ -135,7 +98,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
                   {item.name}
                 </option>
               ))}
-            </select>
+            </select> */}
             <div className="d-grid col mx-2 my-1 text-center">
               <button
                 onClick={() => handleSearch()}

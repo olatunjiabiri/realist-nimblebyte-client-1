@@ -8,20 +8,27 @@ import AgentsMobileList from "../components/agentsList/AgentsMobileList";
 
 import config from "../NewConfig";
 import AgentSearchForm from "./../components/forms/AgentSearchForm";
+
 import "./Agents.css";
 
 export default function Agents() {
   const theme = useTheme();
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [currentLocation, setCurrentLocation] = useState(
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+  );
+
   // state
   const [agents, setAgents] = useState();
   const [loading, setLoading] = useState(true);
 
   const [filteredAgents, setFilteredAgents] = useState([]);
+  const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
     fetchAgents();
-  }, []);
+  }, [currentLocation]);
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
@@ -31,7 +38,6 @@ export default function Agents() {
   const handleCallback = (agentSearchFormData) => {
     setFilteredAgents(agentSearchFormData);
   };
-  // console.log("agentSearchFormData", filteredAgents);
 
   const fetchAgents = async () => {
     try {
@@ -40,6 +46,16 @@ export default function Agents() {
       );
       setAgents(data.responsePayload);
       setLoading(false);
+      // console.log("agents new>>", data.responsePayload);
+
+      // console.log("clocation first", currentLocation);
+      const afiltered = Object.values(data.responsePayload).filter((agent) =>
+        agent.address?.toLowerCase().includes(currentLocation?.toLowerCase())
+      );
+      // console.log("afiltered", afiltered);
+
+      setFiltered(afiltered.length > 0 ? afiltered : agents);
+      // console.log("filteredAgents 234", filtered);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -58,41 +74,47 @@ export default function Agents() {
   }
 
   return (
-    <div>
-      <div>
-        <AgentSearchForm parentCallback={handleCallback} agents={agents} />
-      </div>
-      <div className="container">
-        <div className="row">
-          {filteredAgents.length > 0 ? (
-            <>
-              {isSmScreen ? (
-                <AgentsMobileList returnedAgents={filteredAgents} />
+    <>
+      {filteredAgents && (
+        <div>
+          <div>
+            <AgentSearchForm
+              parentCallback={handleCallback}
+              agents={agents}
+              agentLocation={currentLocation}
+            />
+          </div>
+          <div className="container">
+            <div className="row">
+              {filteredAgents.length > 0 ? (
+                <>
+                  {isSmScreen ? (
+                    <AgentsMobileList returnedAgents={filteredAgents} />
+                  ) : (
+                    <AgentsList returnedAgents={filteredAgents} />
+                  )}
+                </>
               ) : (
-                <AgentsList returnedAgents={filteredAgents} />
+                // <div className="d-flex justify-content-center align-items-center vh-100 agents-page-init-load">
+                <>
+                  {isSmScreen ? (
+                    <AgentsMobileList
+                      returnedAgents={filtered ? filtered : agents}
+                    />
+                  ) : (
+                    <AgentsList returnedAgents={filtered ? filtered : agents} />
+                  )}
+                </>
               )}
-            </>
-          ) : (
-            <div className="d-flex justify-content-center align-items-center vh-100 agents-page-init-load">
-              <img
-                className="agent-search-image p-5"
-                src="searching-magnifying-glass.png"
-                alt=""
-              />
-              <h3 className="agent-search-text">
-                Find agents in your area.
-                <p className="mt-3">
-                  Enter your location or search for a specific agent by name.
-                </p>
-              </h3>
-            </div>
-          )}
-          {/* {agents?.map((agent) => (
+              {/* {agents?.map((agent) => (
             <UserCard user={agent} key={agent.userId} />
           ))} */}
+            </div>
+          </div>
+          {/* <pre>{JSON.stringify(currentLocation, null, 4)} </pre> */}
+          {/* <pre>{JSON.stringify(agents, null, 4)} </pre> */}
         </div>
-      </div>
-      {/* <pre>{JSON.stringify(agents, null, 4)} </pre> */}
-    </div>
+      )}
+    </>
   );
 }
