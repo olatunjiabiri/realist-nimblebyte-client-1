@@ -51,14 +51,14 @@ h-container {
 }
 
 @media (max-width: 768px) and (max-width: 1024px) {
-  .row.align-items-left.text-left.p-4.bg-dark.text-light.pt-4 {
+  .footer-word {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     text-align: center;
   }
 
-  .col-12.col-md-8 {
+  .footer-links {
     text-align: center;
   }
 
