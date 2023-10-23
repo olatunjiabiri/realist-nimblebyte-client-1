@@ -32,7 +32,7 @@ export default function LikeUnlike({ ad }) {
       const fromLS = JSON.parse(localStorage.getItem("auth"));
       fromLS.wishlist = wishlist;
       localStorage.setItem("auth", JSON.stringify(fromLS));
-
+      // navigate("/");
       toast.success("Added to wishlist");
       // console.log("handle like auth  2=> ", auth);
     } catch (err) {
@@ -65,6 +65,7 @@ export default function LikeUnlike({ ad }) {
         fromLS.wishlist = updatedWishlist;
         localStorage.setItem("auth", JSON.stringify(fromLS));
         // console.log('auth after >>>>', auth)
+        // navigate("/");
         toast.success("Removed from wishlist");
       }
     } catch (err) {
