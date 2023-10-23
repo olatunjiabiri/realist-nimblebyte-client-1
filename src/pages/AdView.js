@@ -60,7 +60,11 @@ export default function AdView() {
         ) : (
           <div>
             <div className="container mt-5 pt-3 h-100 ">
+
+              {/* large screen */}
               <div className="row mt-2">
+
+                {/* page header */}
                 <div className="row  mt-3 justify-content-between">
                   <div className="d-flex  flex-div">
                     <div>
@@ -80,11 +84,14 @@ export default function AdView() {
                   </div>
                 </div>
 
+                {/* left-view - image_gallery*/}
                 <div class="col-8 display-adview-lg">
                 <div>
                     <ImageGallery photos={generatePhotosArray(ad?.photos)} />
                   </div>
                 </div>
+
+                 {/* right-view - ad_details */}
                 <div class="col-4 display-adview-lg">
                   <div>
                     <div className="right-side-screen">
@@ -112,6 +119,7 @@ export default function AdView() {
               </div>
             </div>
 
+            {/* medium and smaller screen */}
             <div className="container justify-content-center display-adview-sm">
               <div>
                   <ImageGallery photos={generatePhotosArray(ad?.photos)} />
@@ -141,6 +149,7 @@ export default function AdView() {
             </div>
 
             <br/>
+            {/* related properties */}
             <div className="container related-margin">
               <h4 className="text-center mb-3">Related Properties</h4>
               <hr />
