@@ -15,6 +15,7 @@ export default function AdForm({ action, type }) {
   const [auth, setAuth] = useAuth();
   // state
   const [role, setRole] = useState("");
+  const [feature, setFeature] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [ad, setAd] = useState({
@@ -32,6 +33,7 @@ export default function AdForm({ action, type }) {
     type,
     action,
     postedBy: auth.user.userId,
+    feature:[]
   });
   // hooks
   const navigate = useNavigate();
@@ -45,8 +47,24 @@ export default function AdForm({ action, type }) {
     if (auth.user) {
       setRole(auth.user?.role);
     }
+    if(type){
+      getFeature(type);
+    }
   }, []);
 
+  const getFeature = async (propType) =>{
+    setLoading(true);
+    const { data } = await axios.get(
+      `${config.API}/api/adFeature/type=${propType}`,
+    );
+    if(!data.success){
+      toast.error(data.message);
+      setLoading(false);
+    } else{
+      setFeature(data)
+      setLoading(false);
+    }
+  }
   const sellerRole = async () => {
     try {
       setLoading(true);
@@ -239,7 +257,23 @@ export default function AdForm({ action, type }) {
               value={ad.title}
               onChange={(e) => setAd({ ...ad, title: e.target.value })}
             />
-
+             <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              multiple
+              value={personName}
+              onChange={handleChange}
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
+            >
+              {names.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={personName.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
             <textarea
               className="form-control mb-3"
               placeholder="Enter description"
