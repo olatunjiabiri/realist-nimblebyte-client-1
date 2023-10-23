@@ -99,12 +99,22 @@
     }
 } */
 
+.display-icon-description {
+    display: inline;
+}
+
 @media (min-width:300px) and (max-width:900px) {
     .display-adview-sm {
         display: block;
     }
 
     .display-adview-lg {
+        display: none;
+    }
+}
+
+@media (max-width:500px) {
+    .display-icon-description {
         display: none;
     }
 }

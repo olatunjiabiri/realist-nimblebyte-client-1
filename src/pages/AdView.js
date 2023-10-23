@@ -61,10 +61,10 @@ export default function AdView() {
               <span className="ml-auto"> {ad?.sold ? "❌ Off market" : "✅ In market"}</span> 
 
                 <span className="ml-auto share-icon">{ <LikeUnlike ad={ad} /> }</span> 
-                <span className="save">Save</span>
+                <span className="save display-icon-description">Save</span>
 
                 <span>{ <FiShare ad={ad} className="h5 pointer share-icon" /> }</span> 
-                <span className="save">Share</span>
+                <span className="save display-icon-description">Share</span>
               </div>
             </div>
           </div>
