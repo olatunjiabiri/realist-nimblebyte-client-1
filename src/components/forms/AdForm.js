@@ -6,6 +6,13 @@ import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
 import { useAuth } from "../../context/auth";
 import "./index.css";
@@ -18,6 +25,16 @@ export default function AdForm({ action, type }) {
   const [feature, setFeature] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
   const [ad, setAd] = useState({
     photos: [],
     uploading: false,
@@ -51,17 +68,21 @@ export default function AdForm({ action, type }) {
       getFeature(type);
     }
   }, []);
+ 
+  const handleSelect = () =>{
 
-  const getFeature = async (propType) =>{
+  }
+  const getFeature = async (type) =>{
     setLoading(true);
     const { data } = await axios.get(
-      `${config.API}/api/adFeature/type=${propType}`,
+      `${config.API}/adFeature/${type}`,
     );
     if(!data.success){
       toast.error(data.message);
       setLoading(false);
     } else{
       setFeature(data)
+      console.log("feature data",data)
       setLoading(false);
     }
   }
@@ -257,23 +278,26 @@ export default function AdForm({ action, type }) {
               value={ad.title}
               onChange={(e) => setAd({ ...ad, title: e.target.value })}
             />
-             <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              multiple
-              value={personName}
-              onChange={handleChange}
-              input={<OutlinedInput label="Tag" />}
-              renderValue={(selected) => selected.join(', ')}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem key={name} value={name}>
-                  <Checkbox checked={personName.indexOf(name) > -1} />
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl sx={{width: '100%', mb:2 }}>
+              <InputLabel id="demo-multiple-checkbox-label">Select Feature</InputLabel>
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={feature}
+                onChange={handleSelect}
+                input={<OutlinedInput label="Tag" />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+              >
+                {feature.map((feat) => (
+                  <MenuItem key={feat.id} value={feat.id}>
+                    <Checkbox checked={feature.indexOf(feat) > -1} />
+                    <ListItemText primary={feat.feature} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <textarea
               className="form-control mb-3"
               placeholder="Enter description"
