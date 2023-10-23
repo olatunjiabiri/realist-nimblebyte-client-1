@@ -48,22 +48,9 @@ export default function AdView() {
   return (
     <div className="container-fluid d-flex flex-column h-100 mt-3">
     
-      <div className="container mt-5 pt-3 h-100">
+      <div className="container mt-5 pt-3 h-100 ">
         <div className="row mt-2">
           <div className="row  mt-3 justify-content-between">
-            {/* <div className="mt-4 mb-4">    
-              {ad?.sold ? "❌ Off market" : "✅ In market"}
-            </div>
-
-            <h1 className="mt-3 h2">{ad.address}</h1>
-            <AdFeatures ad={ad} />
-            <h3 className="mt-3 h2">
-              {" "}
-              <span>&#8358;</span>
-              {millify(ad?.price)}
-            </h3>
-            <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p> */}
-
             <div className="d-flex  flex-div">
               <div>
                 <button type="button" className="btn btn-primary btn-sm disabled">
@@ -82,12 +69,12 @@ export default function AdView() {
             </div>
           </div>
 
-          <div class="col-8">
+          <div class="col-8 display-adview-lg">
            <div>
               <ImageGallery photos={generatePhotosArray(ad?.photos)} />
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-4 display-adview-lg">
             <div>
               <div className="right-side-screen">
                   <h3 className="mt-3 h2 adview-feature">
@@ -108,60 +95,44 @@ export default function AdView() {
                   
                   <span><h5>Overview</h5></span>
                   <span>Welcome to your sun-drenched oasis where Lakeview meets Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is nestled within a boutique elevator building, offering the perfect blend of modern convenience and comfort. One of the standout features of this home is the private balcony, where you can bask in the sun's rays while enjoying your morning coffee or unwind with a glass of wine in the evening. And with a deeded garage parking spot included, you'll never have to worry about finding a spot when you return home. You'll find ample closet space throughout, including three convenient hallway closets.</span>
-                  
-                  <h5 className="mt-3">Related Properties</h5>
-                      <div className="row justify-content-center related-props">
-                        {related?.map((ad) => (
-                          <AdCard key={ad._id} ad={ad} />
-                        ))}
-                      </div>
               </div>
             </div>
           </div>
-
-          {/* <div className="row">
-            <div className="row adview-flex-details">
-              <div className="d-flex justify-content-between">
-                <div>
-                  <h3 className="mt-3 h2">
-                    {" "}
-                    <span>&#8358;</span>
-                    {millify(ad?.price)}
-                    <p className="adview-address overflow-wrap overflow-wrap--break-word">
-                       <span className="adview-address">{ad.address}</span>
-                    </p>
-                  </h3> 
-                </div>
-               
-                <div className="adview-detail-contact-button rounded border border-muted">
-                  <button type="button" className="btn btn-primary">
-                    <span className="contact-agent">Contact Owner</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="row mt-5">
-              <div>
-                <MapCard ad={ad} related={related} />
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
 
-      {/* <div className="container mb-5">
-        <div className="row">
-          <div className="col-lg-6 offset-lg-2 mt-3">
-            <MapCard ad={ad} related={related} />
-          </div>
+      <div className="container justify-content-center display-adview-sm">
+        <div>
+            <ImageGallery photos={generatePhotosArray(ad?.photos)} />
         </div>
-      </div> */}
+        <div>
+              <div>
+                  <h3 className="mt-3 h2 adview-feature">
+                    {" "}
+                    <span>&#8358;</span>
+                    {millify(ad?.price)}
+                  </h3> 
+                  <span> <AdFeatures ad={ad} /></span>
+                  <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
+                  <p className="adview-address mt-1">
+                       <span className="adview-address">{ad.address}</span>
+                  </p>
+                    <button type="button" class="btn btn-primary contact-agent">Contact Owner</button>
+                  <div className="mt-2">
+                   <MapCard ad={ad} related={related} />
+                  </div>
+                  <hr className="hr"/>
+                  
+                  <span><h5>Overview</h5></span>
+                  <span>Welcome to your sun-drenched oasis where Lakeview meets Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is nestled within a boutique elevator building, offering the perfect blend of modern convenience and comfort. One of the standout features of this home is the private balcony, where you can bask in the sun's rays while enjoying your morning coffee or unwind with a glass of wine in the evening. And with a deeded garage parking spot included, you'll never have to worry about finding a spot when you return home. You'll find ample closet space throughout, including three convenient hallway closets.</span>
+              </div>
+            </div>
+      </div>
 
-      <div className="container">
+      <br/>
+      <div className="container related-margin">
         <h4 className="text-center mb-3">Related Properties</h4>
         <hr />
-
         <div className="row d-flex justify-content-center">
           {related?.map((ad) => (
             <AdCard key={ad._id} ad={ad} />
