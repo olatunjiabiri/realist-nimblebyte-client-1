@@ -1,24 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Badge } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import millify from "millify";
-import { HashLink } from "react-router-hash-link";
 import AdFeatures from "../../components/cards/AdFeatures";
 // import { formatNumber } from "../../helpers/ad";
 
-import ContactOwnerButton from "../contactOwnerButton/ContactOwnerButton";
 import LikeUnlike from "../../components/misc/LikeUnlike";
-
 import {
   ImageGallery,
   generatePhotosArray,
 } from "../../components/misc/ImageGallery";
+import Modall from "../modal/Modal";
+
 import "./index.css";
+import ContactSellerModal from "./../contactSellerModal/ContactSellerModal";
 
 export default function AdCard({ ad }) {
   const { pathname } = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
@@ -33,6 +34,9 @@ export default function AdCard({ ad }) {
 
   return (
     <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-height">
+      <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <ContactSellerModal ad={ad} />
+      </Modall>
       <Link className="link" to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${
@@ -69,9 +73,9 @@ export default function AdCard({ ad }) {
                   {/* {formatNumber(ad?.price)} */}
                   {millify(ad?.price)}
                 </h3>
-                <section className="like-unlike-button">
+                <Link className="like-unlike-button">
                   <LikeUnlike ad={ad} />
-                </section>
+                </Link>
               </div>
 
               <div className="card-text address-height">{ad?.address}</div>
@@ -82,14 +86,14 @@ export default function AdCard({ ad }) {
                   Posted {dayjs(ad?.createdAt).fromNow()}
                 </p>
                 <p className="justify-content-end">
-                  <HashLink
-                    className="bg-white"
-                    smooth
-                    to={`/ad/${ad.slug}/#contact-owner`}
-                    scroll={(el) => scrollWithOffset(el)}
-                  >
-                    <ContactOwnerButton />
-                  </HashLink>
+                  <Link className="bg-white">
+                    <button
+                      className="contact-owner-button"
+                      onClick={() => setIsOpen(true)}
+                    >
+                      Contact Property
+                    </button>
+                  </Link>
                 </p>
               </div>
             </div>
