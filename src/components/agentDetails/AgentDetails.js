@@ -6,7 +6,7 @@ const AgentDetails = ({ agent }) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-4 col-sm-12 agt-left-c">
+        <div className="col-md-4 col-sm-12 agt-left-c agt-details">
           {/* <div className="agt-image"> */}
           <img
             className="agt-image"
@@ -30,10 +30,10 @@ const AgentDetails = ({ agent }) => {
             {agent[0].licenceNumber ?? "#licence No."}
           </p>
         </div>
-        <div className="agt-address col-md-8 col-sm-12">
+        <div className="agt-address col-md-8 col-sm-12 ">
           <p className="agt-add">{agent[0].address ?? "#address"}</p>
         </div>
-        <div className="agt-about col-md-8 col-sm-12">
+        <div className="agt-about col-md-8 col-sm-12 ">
           <h3> About me</h3>
         </div>
       </div>
