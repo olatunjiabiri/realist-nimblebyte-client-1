@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import millify from "millify";
 import AdFeatures from "../../components/cards/AdFeatures";
+import { useAuth } from "../../context/auth";
+
 // import { formatNumber } from "../../helpers/ad";
 
 import LikeUnlike from "../../components/misc/LikeUnlike";
@@ -20,6 +22,7 @@ import ContactSellerModal from "./../contactSellerModal/ContactSellerModal";
 export default function AdCard({ ad }) {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [auth, setAuth] = useAuth();
 
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
@@ -73,9 +76,16 @@ export default function AdCard({ ad }) {
                   {/* {formatNumber(ad?.price)} */}
                   {millify(ad?.price)}
                 </h3>
-                <Link className="like-unlike-button">
-                  <LikeUnlike ad={ad} />
-                </Link>
+
+                {auth?.user === null ? (
+                  <Link className="like-unlike-button" to="/login">
+                    <LikeUnlike ad={ad} size={"h2 m-3"} />
+                  </Link>
+                ) : (
+                  <Link className="like-unlike-button">
+                    <LikeUnlike ad={ad} size={"h2 m-3"} />
+                  </Link>
+                )}
               </div>
 
               <div className="card-text address-height">{ad?.address}</div>
