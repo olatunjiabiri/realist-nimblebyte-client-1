@@ -189,14 +189,11 @@ const Navbar = () => {
                       >
                         <li>
                           <NavLink className="dropdown-item" to="/dashboard">
-                            Dashboard
+                            {auth.user?.role?.includes("Seller")
+                              ? "Dashboard"
+                              : "Wishlist"}
                           </NavLink>
                         </li>
-                        {/* <li>
-                          <NavLink className="dropdown-item" to="/ad/create">
-                            Create an Ad
-                          </NavLink>
-                        </li> */}
                         <li>
                           <NavLink className="dropdown-item" to="/user/profile">
                             Update profile
