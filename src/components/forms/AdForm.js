@@ -13,7 +13,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-
 import { useAuth } from "../../context/auth";
 import "./index.css";
 
@@ -22,7 +21,6 @@ export default function AdForm({ action, type }) {
   const [auth, setAuth] = useAuth();
   // state
   const [role, setRole] = useState("");
-  const [feature, setFeature] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const ITEM_HEIGHT = 48;
@@ -55,11 +53,25 @@ export default function AdForm({ action, type }) {
   // hooks
   const navigate = useNavigate();
   const [selectedFormType, setSelectedFormType] = useState("House");
-  const handleToggle = () => {
-    setSelectedFormType((prevType) =>
-      prevType === "House" ? "Land" : "House"
-    );
+
+  const [feature, setFeature] = useState([]);
+  const [features, setFeatures] = useState([]);
+
+  // const handleToggle = () => {
+  //   setSelectedFormType((prevType) =>
+  //     prevType === "House" ? "Land" : "House"
+  //   );
+  // };
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+      setFeature(
+        typeof value === 'string' ? value.split(',') : value,
+      );
   };
+
   useEffect(() => {
     if (auth.user) {
       setRole(auth.user?.role);
@@ -69,20 +81,17 @@ export default function AdForm({ action, type }) {
     }
   }, []);
  
-  const handleSelect = () =>{
-
-  }
   const getFeature = async (type) =>{
     setLoading(true);
     const { data } = await axios.get(
       `${config.API}/adFeature/${type}`,
     );
-    if(!data.success){
-      toast.error(data.message);
+    if(!data){
       setLoading(false);
     } else{
-      setFeature(data)
       console.log("feature data",data)
+      setFeatures(data.features)
+      
       setLoading(false);
     }
   }
@@ -285,14 +294,14 @@ export default function AdForm({ action, type }) {
                 id="demo-multiple-checkbox"
                 multiple
                 value={feature}
-                onChange={handleSelect}
+                onChange={handleChange}
                 input={<OutlinedInput label="Tag" />}
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
               >
-                {feature.map((feat) => (
-                  <MenuItem key={feat.id} value={feat.id}>
-                    <Checkbox checked={feature.indexOf(feat) > -1} />
+                {features.map((feat) => (
+                  <MenuItem key={feat.feature} value={feat.feature}>
+                    <Checkbox checked={feature.indexOf(feat.feature) > -1} />
                     <ListItemText primary={feat.feature} />
                   </MenuItem>
                 ))}
