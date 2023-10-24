@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef  } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navbarRef = useRef(null);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -22,10 +23,6 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
-  const openMobileMenu = () => {
-    setMobileMenuOpen(true);
-  };
-
   const logout = () => {
     setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
@@ -33,6 +30,27 @@ const Navbar = () => {
   };
 
   const loggedIn = auth?.user !== null && auth?.token !== "";
+
+
+  useEffect(() => {
+    const closeMobileMenuOnOutsideClick = (e) => {
+      if (
+        mobileMenuOpen &&
+        navbarRef.current &&
+        !navbarRef.current.contains(e.target)
+      ) {
+        closeMobileMenu();
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener("click", closeMobileMenuOnOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", closeMobileMenuOnOutsideClick);
+    };
+  }, [mobileMenuOpen]);
 
   // const handlePostAdClick = () => {
   //   if (loggedIn) {
@@ -59,6 +77,7 @@ const Navbar = () => {
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
         id="custom-nav"
+        ref={navbarRef}
       >
         <div className="container">
           <span className="navbar-brand d-flex w-50 me-auto">
