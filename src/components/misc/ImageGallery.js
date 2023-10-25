@@ -14,6 +14,7 @@ export const ImageGallery = ({
       <>
         <div className="box">
           <Carousel
+            showArrows={true}
             showThumbs={showThumbs}
             showStatus={showStatus}
             infiniteLoop={true}

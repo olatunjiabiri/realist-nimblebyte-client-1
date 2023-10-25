@@ -5,9 +5,10 @@ import { Icon } from "@iconify/react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function LikeUnlike({ ad }) {
+export default function LikeUnlike({ ad, size = null }) {
   // context
   const [auth, setAuth] = useAuth();
+
   // hooks
   const navigate = useNavigate();
 
@@ -23,7 +24,6 @@ export default function LikeUnlike({ ad }) {
         adId: ad._id,
         userId: auth?.user?.userId,
       });
-      // console.log('data ==>', data)
       const { wishlist } = data;
 
       console.log("handle like wishlist => ", wishlist);
@@ -34,7 +34,6 @@ export default function LikeUnlike({ ad }) {
       localStorage.setItem("auth", JSON.stringify(fromLS));
       // navigate("/");
       toast.success("Added to wishlist");
-      // console.log("handle like auth  2=> ", auth);
     } catch (err) {
       console.log(err);
     }
@@ -64,7 +63,6 @@ export default function LikeUnlike({ ad }) {
         const fromLS = JSON.parse(localStorage.getItem("auth"));
         fromLS.wishlist = updatedWishlist;
         localStorage.setItem("auth", JSON.stringify(fromLS));
-        // console.log('auth after >>>>', auth)
         // navigate("/");
         toast.success("Removed from wishlist");
       }
@@ -77,11 +75,14 @@ export default function LikeUnlike({ ad }) {
     <>
       {auth.wishlist?.includes(ad?._id) ? (
         <span>
-          <FcLike onClick={handleUnlike} className="h5  pointer" />
+          <FcLike onClick={handleUnlike} className={`${size}  pointer`} />
         </span>
       ) : (
         <span>
-          <FcLikePlaceholder onClick={handleLike} className="h5  pointer" />
+          <FcLikePlaceholder
+            onClick={handleLike}
+            className={`${size} pointer`}
+          />
         </span>
       )}
       {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
