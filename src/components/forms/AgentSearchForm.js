@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
+// import { useCurrentLocation } from "../../context/currentLocation";
 
-import { agentSpecialty } from "../../helpers/actionTypeList";
+// import { agentSpecialty } from "../../helpers/actionTypeList";
+
 // import "./index.css";
 import "./AgentSearchForm.css";
 
 export default function AgentSearchForm({ parentCallback, agents }) {
-  const [specialty, setSpecialty] = useState(true);
+  // const [currentLocation, setCurrentLocation] = useCurrentLocation();
+  const [currentLocation, setCurrentLocation] = useState(
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+  );
+
+  // const [specialty, setSpecialty] = useState(true);
   const [agentName, setAgentName] = useState("");
-  const [agentLocation, setAgentLocation] = useState("");
+  const [agentLocation, setAgentLocation] = useState(
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+  );
   const [loading, setLoading] = useState(true);
   const [filteredAgents, setFilteredAgents] = useState([]);
 
   useEffect(() => {
-    //
-  }, []);
+    setAgentLocation(currentLocation);
+  }, [currentLocation]);
 
   const handleSearch = () => {
     try {
@@ -76,7 +85,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
               onChange={(e) => setAgentName(e.target.value)}
             />
 
-            <select
+            {/* <select
               className="form-select pl-1 col text-center rounded-pill mx-2 my-1"
               aria-label="form-select select-options"
               onChange={(e) => setSpecialty(e.target.value)}
@@ -89,7 +98,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
                   {item.name}
                 </option>
               ))}
-            </select>
+            </select> */}
             <div className="d-grid col mx-2 my-1 text-center">
               <button
                 onClick={() => handleSearch()}
