@@ -15,6 +15,10 @@ export default function Wishlist() {
     fetchAds();
   }, [auth.token !== ""]);
 
+  useEffect(() => {
+    fetchAds();
+  }, [auth.wishlist]);
+
   const fetchAds = async () => {
     try {
       // const { data } = await axios.post("/wishlist", { adId: ad._id, userId: auth?.user?.userId});
@@ -46,7 +50,7 @@ export default function Wishlist() {
               <div className="col-12 text-center">
                 <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
                   <h2>
-                    You have liked {ads?.length}{" "}
+                    You have liked {auth.wishlist.length}{" "}
                     {ads?.length > 1 ? "properties" : "property"}
                   </h2>
                 </div>

@@ -47,13 +47,14 @@ export default function LikeUnlike({ ad, size = null }) {
         });
         return;
       }
-      const { data } = await axios.delete(
-        `/wishlist/${ad._id}/${auth?.user?.userId}`
+
+      const { data } = await axios.patch(
+        `/wishlist/user/${auth?.user?.userId}/ad/${ad._id}`
       );
 
-      const { acknowledged, deletedCount } = data;
+      const { ok } = data;
 
-      if (acknowledged && deletedCount === 1) {
+      if (ok) {
         const updatedWishlist = auth.wishlist?.filter((d) => {
           return d !== ad._id;
         });
