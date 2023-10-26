@@ -43,40 +43,6 @@ export default function ProfileForm() {
     }
   }, []);
 
-  const sellerRole = async () => {
-    try {
-      setLoading(true);
-
-      const { data } = await axios.post(
-        `${config.AUTH_API}/api/Roles/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Seller",
-        }
-      );
-
-      // console.log('role response data >>>>', data)
-      if (!data.success) {
-        toast.error(data.message);
-        setLoading(false);
-      } else {
-        setAuth({ ...auth, user: { role: "Seller" } });
-
-        let fromLS = JSON.parse(localStorage.getItem("auth"));
-        fromLS.user = { role: "Seller" };
-        localStorage.setItem("auth", JSON.stringify(fromLS));
-        setLoading(false);
-        toast.success("Role Added");
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error(
-        "Something went wrong. Role cannot be assigned now. Try again."
-      );
-      setLoading(false);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -113,10 +79,6 @@ export default function ProfileForm() {
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
 
-        if (!auth.user?.role?.includes("Seller") || userType === "Seller") {
-          sellerRole();
-        }
-
         toast.success("Profile updated");
         // reload page on redirect
         // window.location.href = "/dashboard";
@@ -140,7 +102,7 @@ export default function ProfileForm() {
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
               {/* <div> */}
-                       
+
               <h4>Select User Type</h4>
               <div className="form-check">
                 <input
