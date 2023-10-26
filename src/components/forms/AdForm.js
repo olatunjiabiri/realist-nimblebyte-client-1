@@ -14,6 +14,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useAuth } from "../../context/auth";
+import { useFormik } from "formik";
+import { adformSchema } from "../../../src/validations";
 import "./index.css";
 
 export default function AdForm({ action, type }) {
@@ -33,6 +35,7 @@ export default function AdForm({ action, type }) {
       },
     },
   };
+
   const [ad, setAd] = useState({
     photos: [],
     uploading: false,
@@ -50,20 +53,20 @@ export default function AdForm({ action, type }) {
     postedBy: auth.user.userId,
     feature:[]
   });
+  
   // hooks
   const navigate = useNavigate();
   const [selectedFormType, setSelectedFormType] = useState("House");
-
   const [feature, setFeature] = useState([]);
   const [features, setFeatures] = useState([]);
 
-  // const handleToggle = () => {
-  //   setSelectedFormType((prevType) =>
-  //     prevType === "House" ? "Land" : "House"
-  //   );
-  // };
+  const onSubmit = async (values, actions) => {
+    
+    console.log(values)
 
-  const handleChange = (event) => {
+  };
+
+  const handleInputChange = (event) => {
     const {
       target: { value },
     } = event;
@@ -83,18 +86,19 @@ export default function AdForm({ action, type }) {
  
   const getFeature = async (type) =>{
     setLoading(true);
+    setFeatures([]);
+    //setState({features: []});
     const { data } = await axios.get(
       `${config.API}/adFeature/${type}`,
     );
     if(!data){
       setLoading(false);
     } else{
-      console.log("feature data",data)
       setFeatures(data.features)
-      
       setLoading(false);
     }
   }
+  
   const sellerRole = async () => {
     try {
       setLoading(true);
@@ -136,9 +140,10 @@ export default function AdForm({ action, type }) {
 
   const handleClick = async () => {
     try {
+
+      //price validation
       setAd({ ...ad, loading: true });
       const { data } = await axios.post("/ad", ad);
-      console.log("ad create response => ", data);
       if (data?.error) {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
@@ -167,10 +172,33 @@ export default function AdForm({ action, type }) {
     }
   };
 
+  const {
+    values,
+    errors,
+    isSubmitting,
+    handleBlur,
+    handleChange,
+    touched,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      price: "",
+      bedrooms: "",
+      bathrooms: "",
+      landsize: "",
+      title: "",
+      description: "",
+     
+    },
+    validationSchema: adformSchema,
+    onSubmit,
+  });
+
   return (
     <div>
       <div className="container p-5">
         <div className="row">
+        <form onSubmit={handleSubmit}>
           <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
             <h1 class="text-dark text-center p-3">
               {" "}
@@ -190,7 +218,7 @@ export default function AdForm({ action, type }) {
                   name="formType"
                   value="House"
                   checked={selectedFormType === "House"}
-                  onChange={() => setSelectedFormType("House")}
+                  onChange={() => {setSelectedFormType("House"); getFeature("House")}}
                 />
                 House
               </label>
@@ -205,7 +233,7 @@ export default function AdForm({ action, type }) {
                   name="formType"
                   value="Land"
                   checked={selectedFormType === "Land"}
-                  onChange={() => setSelectedFormType("Land")}
+                  onChange={() => {setSelectedFormType("Land"); getFeature("Land")}}
                 />
                 Land
               </label>
@@ -228,13 +256,15 @@ export default function AdForm({ action, type }) {
                 }}
               />
             </div>
-
             <div>
               <CurrencyInput
                 placeholder="Enter price"
-                defaultValue={ad.price}
+                name="price"
+                value={values.price}
                 className="form-control mb-3"
-                onValueChange={(value) => setAd({ ...ad, price: value })}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                // onValueChange={(value) => setAd({ ...ad, price: value })}
               />
             </div>
 
@@ -243,19 +273,25 @@ export default function AdForm({ action, type }) {
                 <input
                   type="number"
                   min="0"
+                  name="bedrooms"
                   className="form-control mb-3"
                   placeholder="Enter how many bedrooms"
-                  value={ad.bedrooms}
-                  onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.bedrooms}
+                  // onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
                 />
 
                 <input
                   type="number"
                   min="0"
+                  name="bathrooms"
                   className="form-control mb-3"
                   placeholder="Enter how many bathrooms"
-                  value={ad.bathrooms}
-                  onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.bathrooms}
+                  // onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
                 />
 
                 <input
@@ -274,49 +310,59 @@ export default function AdForm({ action, type }) {
 
             <input
               type="text"
+              name="landsize"
               className="form-control mb-3"
               placeholder="Size of land"
-              value={ad.landsize}
-              onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.landsize}
+              // onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
             />
 
             <input
               type="text"
+              name="title"
               className="form-control mb-3"
               placeholder="Enter title"
-              value={ad.title}
-              onChange={(e) => setAd({ ...ad, title: e.target.value })}
+              value={values.title}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              // onChange={(e) => setAd({ ...ad, title: e.target.value })}
             />
-            <FormControl sx={{width: '100%', mb:2 }}>
+           {features?.length > 0 ? <> < FormControl sx={{width: '100%', mb:2 }}>
               <InputLabel id="demo-multiple-checkbox-label">Select Feature</InputLabel>
               <Select
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
                 multiple
                 value={feature}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 input={<OutlinedInput label="Tag" />}
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
               >
-                {features.map((feat) => (
+                 {features.map((feat) => (
                   <MenuItem key={feat.feature} value={feat.feature}>
                     <Checkbox checked={feature.indexOf(feat.feature) > -1} />
                     <ListItemText primary={feat.feature} />
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+            </FormControl></> :<></>}
             <textarea
               className="form-control mb-3"
+              name="description"
               placeholder="Enter description"
-              value={ad.description}
-              onChange={(e) => setAd({ ...ad, description: e.target.value })}
+              value={values.description}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              // onChange={(e) => setAd({ ...ad, description: e.target.value })}
             />
 
             <div className="d-flex justify-content-center">
               <button
-                onClick={handleClick}
+                // onClick={onSubmit}
+                type="button"
                 className={`btn btn-primary col-4 m-3  ${
                   ad.loading ? "disabled" : ""
                 }`}
@@ -325,8 +371,11 @@ export default function AdForm({ action, type }) {
               </button>
             </div>
           </div>
+        </form>
+          
         </div>
       </div>
+         {/* <pre>{JSON.stringify(features, null, 4)}</pre> */}
     </div>
   );
 }
