@@ -212,7 +212,7 @@ export default function AdForm({ action, type }) {
                 </label>
               </div>
 
-              <div className="my-3">
+              <div className="mb-3">
                 <ImageUpload ad={ad} setAd={setAd} />
               </div>
 
@@ -297,6 +297,9 @@ export default function AdForm({ action, type }) {
                   renderValue={(selected) => selected.join(', ')}
                   MenuProps={MenuProps}
                 >
+                   {/* <MenuItem disabled value="">
+                      <em>Placeholder</em>
+                  </MenuItem> */}
                   {features.map((feat) => (
                     <MenuItem key={feat.feature} value={feat.feature}>
                       <Checkbox checked={feature.indexOf(feat.feature) > -1} />
