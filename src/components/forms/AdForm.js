@@ -60,12 +60,7 @@ export default function AdForm({ action, type }) {
   const [feature, setFeature] = useState([]);
   const [features, setFeatures] = useState([]);
 
-  const onSubmit = async (values, actions) => {
-    
-    console.log(values)
-
-  };
-
+  
   const handleInputChange = (event) => {
     const {
       target: { value },
@@ -172,207 +167,163 @@ export default function AdForm({ action, type }) {
     }
   };
 
-  const {
-    values,
-    errors,
-    isSubmitting,
-    handleBlur,
-    handleChange,
-    touched,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      price: "",
-      bedrooms: "",
-      bathrooms: "",
-      landsize: "",
-      title: "",
-      description: "",
-     
-    },
-    validationSchema: adformSchema,
-    onSubmit,
-  });
-
   return (
     <div>
       <div className="container p-5">
         <div className="row">
-        <form onSubmit={handleSubmit}>
-          <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
-            <h1 class="text-dark text-center p-3">
-              {" "}
-              Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"}{" "}
-            </h1>
-            <hr />
+          <form>
+            <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
+              <h1 class="text-dark text-center p-3">
+                {" "}
+                Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"}{" "}
+              </h1>
+              <hr />
 
-            <div className="container-div d-flex justify-content-center">
-              <label
-                className={`radio-button ${
-                  selectedFormType === "House" ? "selected" : ""
-                }`}
-              >
-                <input
-                  className="input-style m-2"
-                  type="radio"
-                  name="formType"
-                  value="House"
-                  checked={selectedFormType === "House"}
-                  onChange={() => {setSelectedFormType("House"); getFeature("House")}}
+              <div className="container-div d-flex justify-content-center">
+                <label
+                  className={`radio-button ${
+                    selectedFormType === "House" ? "selected" : ""
+                  }`}
+                >
+                  <input
+                    className="input-style m-2"
+                    type="radio"
+                    name="formType"
+                    value="House"
+                    checked={selectedFormType === "House"}
+                    onChange={() => {setSelectedFormType("House"); getFeature("House")}}
+                  />
+                  House
+                </label>
+                <label
+                  className={`radio-button ${
+                    selectedFormType === "Land" ? "selected" : ""
+                  }`}
+                >
+                  <input
+                    className="input-style m-2"
+                    type="radio"
+                    name="formType"
+                    value="Land"
+                    checked={selectedFormType === "Land"}
+                    onChange={() => {setSelectedFormType("Land"); getFeature("Land")}}
+                  />
+                  Land
+                </label>
+              </div>
+
+              <div className="my-3">
+                <ImageUpload ad={ad} setAd={setAd} />
+              </div>
+
+              <div className="mb-3 border-0 ">
+                <GooglePlacesAutocomplete
+                  apiKey={config.GOOGLE_PLACES_KEY}
+                  apiOptions="ng"
+                  selectProps={{
+                    defaultInputValue: ad?.address,
+                    placeholder: "Search for address..",
+                    onChange: ({ value }) => {
+                      setAd({ ...ad, address: value.description });
+                    },
+                  }}
                 />
-                House
-              </label>
-              <label
-                className={`radio-button ${
-                  selectedFormType === "Land" ? "selected" : ""
-                }`}
-              >
-                <input
-                  className="input-style m-2"
-                  type="radio"
-                  name="formType"
-                  value="Land"
-                  checked={selectedFormType === "Land"}
-                  onChange={() => {setSelectedFormType("Land"); getFeature("Land")}}
+              </div>
+              <div>
+                <CurrencyInput
+                  placeholder="Enter price"
+                  defaultValue={ad.price}
+                  className="form-control mb-3"
+                  onValueChange={(value) => setAd({ ...ad, price: value })}
                 />
-                Land
-              </label>
-            </div>
+              </div>
 
-            <div className="my-3">
-              <ImageUpload ad={ad} setAd={setAd} />
-            </div>
+              {type === "House" && selectedFormType === "House" ? (
+                <>
+                  <input
+                      type="number"
+                      min="0"
+                      className="form-control mb-3"
+                      placeholder="Enter how many bedrooms"
+                      value={ad.bedrooms}
+                      onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
+                  />
+                  <input
+                      type="number"
+                      min="0"
+                      className="form-control mb-3"
+                      placeholder="Enter how many bathrooms"
+                      value={ad.bathrooms}
+                      onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
+                  />
+                  <input
+                      type="number"
+                      min="0"
+                      className="form-control mb-3"
+                      placeholder="Enter how many carparks"
+                      value={ad.carpark}
+                      onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
+                  />
+                </>
+              ) : (
+                ""
+                //  {type === "Land" && selectedFormType === "Land" ?
+              )}
 
-            <div className="mb-3 border-0 ">
-              <GooglePlacesAutocomplete
-                apiKey={config.GOOGLE_PLACES_KEY}
-                apiOptions="ng"
-                selectProps={{
-                  defaultInputValue: ad?.address,
-                  placeholder: "Search for address..",
-                  onChange: ({ value }) => {
-                    setAd({ ...ad, address: value.description });
-                  },
-                }}
+              <input
+                 type="text"
+                 className="form-control mb-3"
+                 placeholder="Size of land"
+                 value={ad.landsize}
+                 onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
               />
-            </div>
-            <div>
-              <CurrencyInput
-                placeholder="Enter price"
-                name="price"
-                value={values.price}
-                className="form-control mb-3"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // onValueChange={(value) => setAd({ ...ad, price: value })}
+              <input
+                  type="text"
+                  className="form-control mb-3"
+                  placeholder="Enter title"
+                  value={ad.title}
+                  onChange={(e) => setAd({ ...ad, title: e.target.value })}
               />
+            {features?.length > 0 ? <> < FormControl sx={{width: '100%', mb:2 }}>
+                {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
+                <Select
+                  labelId="demo-multiple-checkbox-label"
+                  placeholder="Enter feature"
+                  id="demo-multiple-checkbox"
+                  multiple
+                  value={feature}
+                  onChange={handleInputChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) => selected.join(', ')}
+                  MenuProps={MenuProps}
+                >
+                  {features.map((feat) => (
+                    <MenuItem key={feat.feature} value={feat.feature}>
+                      <Checkbox checked={feature.indexOf(feat.feature) > -1} />
+                      <ListItemText primary={feat.feature} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl></> :<></>}
+              <textarea
+                 className="form-control mb-3"
+                 placeholder="Enter description"
+                 value={ad.description}
+                 onChange={(e) => setAd({ ...ad, description: e.target.value })}
+              />
+              <div className="d-flex justify-content-center">
+                <button
+                  onClick={handleClick}
+                  type="button"
+                  className={`btn btn-primary col-4 m-3  ${
+                    ad.loading ? "disabled" : ""
+                  }`}
+                >
+                  {ad.loading ? "Saving..." : "Submit"}
+                </button>
+              </div>
             </div>
-
-            {type === "House" && selectedFormType === "House" ? (
-              <>
-                <input
-                  type="number"
-                  min="0"
-                  name="bedrooms"
-                  className="form-control mb-3"
-                  placeholder="Enter how many bedrooms"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.bedrooms}
-                  // onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
-                />
-
-                <input
-                  type="number"
-                  min="0"
-                  name="bathrooms"
-                  className="form-control mb-3"
-                  placeholder="Enter how many bathrooms"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.bathrooms}
-                  // onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
-                />
-
-                <input
-                  type="number"
-                  min="0"
-                  className="form-control mb-3"
-                  placeholder="Enter how many carparks"
-                  value={ad.carpark}
-                  onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
-                />
-              </>
-            ) : (
-              ""
-              //  {type === "Land" && selectedFormType === "Land" ?
-            )}
-
-            <input
-              type="text"
-              name="landsize"
-              className="form-control mb-3"
-              placeholder="Size of land"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.landsize}
-              // onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
-            />
-
-            <input
-              type="text"
-              name="title"
-              className="form-control mb-3"
-              placeholder="Enter title"
-              value={values.title}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              // onChange={(e) => setAd({ ...ad, title: e.target.value })}
-            />
-           {features?.length > 0 ? <> < FormControl sx={{width: '100%', mb:2 }}>
-              <InputLabel id="demo-multiple-checkbox-label">Select Feature</InputLabel>
-              <Select
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                multiple
-                value={feature}
-                onChange={handleInputChange}
-                input={<OutlinedInput label="Tag" />}
-                renderValue={(selected) => selected.join(', ')}
-                MenuProps={MenuProps}
-              >
-                 {features.map((feat) => (
-                  <MenuItem key={feat.feature} value={feat.feature}>
-                    <Checkbox checked={feature.indexOf(feat.feature) > -1} />
-                    <ListItemText primary={feat.feature} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl></> :<></>}
-            <textarea
-              className="form-control mb-3"
-              name="description"
-              placeholder="Enter description"
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              // onChange={(e) => setAd({ ...ad, description: e.target.value })}
-            />
-
-            <div className="d-flex justify-content-center">
-              <button
-                // onClick={onSubmit}
-                type="button"
-                className={`btn btn-primary col-4 m-3  ${
-                  ad.loading ? "disabled" : ""
-                }`}
-              >
-                {ad.loading ? "Saving..." : "Submit"}
-              </button>
-            </div>
-          </div>
-        </form>
-          
+          </form> 
         </div>
       </div>
          {/* <pre>{JSON.stringify(features, null, 4)}</pre> */}
