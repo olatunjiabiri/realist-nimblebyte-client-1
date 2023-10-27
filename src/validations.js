@@ -1,14 +1,5 @@
 import * as yup from "yup";
 
-export const adformSchema = yup.object().shape({
-  price: yup.number().required("Required"),
-  description: yup.string().required("Required"),
-  landsize: yup.string().required("Required"),
-  title: yup.string().required("Required"),
-  bedrooms: yup.string().required("Required"),
-  bathrooms: yup.string().required("Required")
-});
-
 export const passwordResetSchema = yup.object().shape({
   otp: yup.number().required("Enter the otp"),
   password: yup
