@@ -9,7 +9,7 @@ import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 
 export default function ProfileForm({ sourceURL }) {
-  console.log("sourceURL", sourceURL);
+  // console.log("sourceURL", sourceURL);
   // context
   const [auth, setAuth] = useAuth();
   // state
@@ -124,7 +124,7 @@ export default function ProfileForm({ sourceURL }) {
                       value={`${
                         userType === "Buyer" ? "Client" : "Agent/Seller"
                       }`}
-                      className="form-control mt-3 adedit-label"
+                      className="form-control pl-3 mt-3 adedit-label"
                       readOnly
                     />
                   </div>
@@ -151,7 +151,7 @@ export default function ProfileForm({ sourceURL }) {
                         >
                           Do you want to be Agent/Seller ?
                         </label>
-                        <div className="col-sm-6 d-flex justify-content-between">
+                        <div className="col-sm-4 d-flex justify-content-between">
                           <label
                             className={`radio-button ${
                               isAgent === false ? "selected" : ""

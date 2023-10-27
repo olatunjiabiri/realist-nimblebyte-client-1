@@ -15,12 +15,12 @@ export default function BeAgent() {
     setPathURL(path[2]);
   }, []);
 
-  console.log("pathurl", pathURL);
+  // console.log("pathurl", pathURL);
 
   return (
     <>
       <ProfileForm sourceURL={pathURL} />
-      <pre>{JSON.stringify(pathURL, null, 4)} </pre>
+      {/* <pre>{JSON.stringify(pathURL, null, 4)} </pre> */}
     </>
   );
 }

@@ -68,7 +68,7 @@ export default function ProfileUpload({
 
   return (
     <>
-      <label className="btn btn-secondary mb-4 mt-4">
+      <label className="btn btn-secondary mb-4">
         {uploading ? "Processing..." : "Upload photos"}
         <input
           onChange={handleUpload}
