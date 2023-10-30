@@ -22,7 +22,7 @@
   
   .property-image {
     border-radius: 20px; 
-    width: 420px;
+    width: 400px; /*420*/
     height: 150px;
     display: block; 
     padding: 0 20px 20px;
@@ -45,14 +45,17 @@
   
   
   .modal-content {
-    /* position: fixed; */
+    /* padding-top: 2rem; */
+    display: flex;
+    align-items: center;
+    position: fixed;
     background: #fff;
     width: 500px;  
-    height: 700px;
+    height: 650px;
     border-radius: 20px;
-    /* overflow: auto; */
+    overflow: auto;
   }
-  
+ 
  
   .contact-owner-button {
     bottom: 20px;
