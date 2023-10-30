@@ -105,14 +105,14 @@ export default function AdView() {
               </div>
 
               {/* left-view - image_gallery*/}
-              <div class="col-8 display-adview-lg">
+              <div className="col-8 display-adview-lg">
                 <div>
                   <ImageGallery photos={generatePhotosArray(ad?.photos)} />
                 </div>
               </div>
 
               {/* right-view - ad_details */}
-              <div class="col-4 display-adview-lg">
+              <div className="col-4 display-adview-lg">
                 <div>
                   <div className="right-side-screen">
                     <h3 className="mt-3 h2 adview-feature">
