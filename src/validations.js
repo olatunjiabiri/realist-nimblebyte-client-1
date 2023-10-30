@@ -42,3 +42,12 @@ export const updatePasswordSchema = yup.object().shape({
     .oneOf([yup.ref("newPassword"), ""], "Password must match")
     .required("Required"),
 });
+
+export const contactSellerFormSchema = yup.object().shape({
+  name: yup.string().required("Name is Required"),
+  phone: yup.string().required("Phone No. is Required"),
+  email: yup
+    .string()
+    .required("Enter your email")
+    .email("Invalid email address"),
+});
