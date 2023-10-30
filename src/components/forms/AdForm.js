@@ -6,16 +6,15 @@ import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
+import ListItemText from "@mui/material/ListItemText";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 import { useAuth } from "../../context/auth";
-import { useFormik } from "formik";
-import { adformSchema } from "../../../src/validations";
+
 import "./index.css";
 
 export default function AdForm({ action, type }) {
@@ -24,6 +23,11 @@ export default function AdForm({ action, type }) {
   // state
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedFormType, setSelectedFormType] = useState("House");
+  const [feature, setFeature] = useState([]);
+  const [features, setFeatures] = useState([]);
+  // hooks
+  const navigate = useNavigate();
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -51,49 +55,39 @@ export default function AdForm({ action, type }) {
     type,
     action,
     postedBy: auth.user.userId,
-    feature:[]
+    features,
   });
-  
-  // hooks
-  const navigate = useNavigate();
-  const [selectedFormType, setSelectedFormType] = useState("House");
-  const [feature, setFeature] = useState([]);
-  const [features, setFeatures] = useState([]);
-
-  
-  const handleInputChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-      setFeature(
-        typeof value === 'string' ? value.split(',') : value,
-      );
-  };
 
   useEffect(() => {
     if (auth.user) {
       setRole(auth.user?.role);
     }
-    if(type){
+    if (type) {
       getFeature(type);
     }
-  }, []);
- 
-  const getFeature = async (type) =>{
+  }, [type]);
+
+  const handleInputChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFeature(typeof value === "string" ? value.split(",") : value);
+    setAd({ ...ad, features: value });
+  };
+
+  const getFeature = async (type) => {
     setLoading(true);
     setFeatures([]);
     //setState({features: []});
-    const { data } = await axios.get(
-      `${config.API}/adFeature/${type}`,
-    );
-    if(!data){
+    const { data } = await axios.get(`${config.API}/adFeature/${type}`);
+    if (!data) {
       setLoading(false);
-    } else{
-      setFeatures(data.features)
+    } else {
+      setFeatures(data.features);
       setLoading(false);
     }
-  }
-  
+  };
+
   const sellerRole = async () => {
     try {
       setLoading(true);
@@ -134,32 +128,63 @@ export default function AdForm({ action, type }) {
   };
 
   const handleClick = async () => {
+    console.log("Ad....", ad);
+
+    debugger;
     try {
-
-      //price validation
-      setAd({ ...ad, loading: true });
-      const { data } = await axios.post("/ad", ad);
-      if (data?.error) {
-        toast.error(data.error);
-        setAd({ ...ad, loading: false });
+      if (!ad.photos?.length) {
+        toast.error("Photo is required");
+        return;
+      } else if (!ad.address) {
+        toast.error("Address is required");
+        return;
+      } else if (!ad.price) {
+        toast.error("Price is required");
+        return;
+      } else if (!ad.bedrooms) {
+        toast.error("No. of Bedrooms is required");
+        return;
+      } else if (!ad.bathrooms) {
+        toast.error("No. of Bathrooms is required");
+        return;
+      } else if (!ad.carpark) {
+        toast.error("No. of Carpark is required");
+        return;
+      } else if (!ad.landsize) {
+        toast.error("landsize is required");
+        return;
+      } else if (!ad.title) {
+        toast.error("Title is required");
+        return;
+      } else if (!ad.description) {
+        toast.error("Description is required");
+        return;
       } else {
-        // update user in context
-        // setAuth({ ...auth, user: data.user });
-        // update user in local storage
-        // const fromLS = JSON.parse(localStorage.getItem("auth"));
-        // fromLS.user = data.user;
-        // localStorage.setItem("auth", JSON.stringify(fromLS));
+        //price validation
+        setAd({ ...ad, loading: true });
+        const { data } = await axios.post("/ad", ad);
+        if (data?.error) {
+          toast.error(data.error);
+          setAd({ ...ad, loading: false });
+        } else {
+          // update user in context
+          // setAuth({ ...auth, user: data.user });
+          // update user in local storage
+          // const fromLS = JSON.parse(localStorage.getItem("auth"));
+          // fromLS.user = data.user;
+          // localStorage.setItem("auth", JSON.stringify(fromLS));
 
-        if (!auth.user.role?.includes("Seller")) {
-          sellerRole();
+          if (!auth.user.role?.includes("Seller")) {
+            sellerRole();
+          }
+
+          toast.success("Ad created successfully");
+
+          setAd({ ...ad, loading: false });
+
+          const adId = { adID: data.ad._id };
+          navigate("/payment/paystack/paystack", { state: adId });
         }
-
-        toast.success("Ad created successfully");
-
-        setAd({ ...ad, loading: false });
-
-        const adId = { adID: data.ad._id };
-        navigate("/payment/paystack/paystack", { state: adId });
       }
     } catch (err) {
       console.log(err);
@@ -191,7 +216,10 @@ export default function AdForm({ action, type }) {
                     name="formType"
                     value="House"
                     checked={selectedFormType === "House"}
-                    onChange={() => {setSelectedFormType("House"); getFeature("House")}}
+                    onChange={() => {
+                      setSelectedFormType("House");
+                      getFeature("House");
+                    }}
                   />
                   House
                 </label>
@@ -206,7 +234,10 @@ export default function AdForm({ action, type }) {
                     name="formType"
                     value="Land"
                     checked={selectedFormType === "Land"}
-                    onChange={() => {setSelectedFormType("Land"); getFeature("Land")}}
+                    onChange={() => {
+                      setSelectedFormType("Land");
+                      getFeature("Land");
+                    }}
                   />
                   Land
                 </label>
@@ -241,28 +272,30 @@ export default function AdForm({ action, type }) {
               {type === "House" && selectedFormType === "House" ? (
                 <>
                   <input
-                      type="number"
-                      min="0"
-                      className="form-control mb-3"
-                      placeholder="Enter how many bedrooms"
-                      value={ad.bedrooms}
-                      onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
+                    type="number"
+                    min="0"
+                    className="form-control mb-3"
+                    placeholder="Enter how many bedrooms"
+                    value={ad.bedrooms}
+                    onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
                   />
                   <input
-                      type="number"
-                      min="0"
-                      className="form-control mb-3"
-                      placeholder="Enter how many bathrooms"
-                      value={ad.bathrooms}
-                      onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
+                    type="number"
+                    min="0"
+                    className="form-control mb-3"
+                    placeholder="Enter how many bathrooms"
+                    value={ad.bathrooms}
+                    onChange={(e) =>
+                      setAd({ ...ad, bathrooms: e.target.value })
+                    }
                   />
                   <input
-                      type="number"
-                      min="0"
-                      className="form-control mb-3"
-                      placeholder="Enter how many carparks"
-                      value={ad.carpark}
-                      onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
+                    type="number"
+                    min="0"
+                    className="form-control mb-3"
+                    placeholder="Enter how many carparks"
+                    value={ad.carpark}
+                    onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
                   />
                 </>
               ) : (
@@ -271,48 +304,66 @@ export default function AdForm({ action, type }) {
               )}
 
               <input
-                 type="text"
-                 className="form-control mb-3"
-                 placeholder="Size of land"
-                 value={ad.landsize}
-                 onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
+                type="text"
+                className="form-control mb-3"
+                placeholder="Size of land"
+                value={ad.landsize}
+                onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
               />
               <input
-                  type="text"
-                  className="form-control mb-3"
-                  placeholder="Enter title"
-                  value={ad.title}
-                  onChange={(e) => setAd({ ...ad, title: e.target.value })}
+                type="text"
+                className="form-control mb-3"
+                placeholder="Enter title"
+                value={ad.title}
+                onChange={(e) => setAd({ ...ad, title: e.target.value })}
               />
-            {features?.length > 0 ? <> < FormControl sx={{width: '100%', mb:2 }}>
-                {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
-                <Select
-                  labelId="demo-multiple-checkbox-label"
-                  placeholder="Enter feature"
-                  id="demo-multiple-checkbox"
-                  multiple
-                  value={feature}
-                  onChange={handleInputChange}
-                  input={<OutlinedInput label="Tag" />}
-                  renderValue={(selected) => selected.join(', ')}
-                  MenuProps={MenuProps}
-                >
-                   {/* <MenuItem disabled value="">
-                      <em>Placeholder</em>
-                  </MenuItem> */}
-                  {features.map((feat) => (
-                    <MenuItem key={feat.feature} value={feat.feature}>
-                      <Checkbox checked={feature.indexOf(feat.feature) > -1} />
-                      <ListItemText primary={feat.feature} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl></> :<></>}
+              {features?.length > 0 ? (
+                <>
+                  {" "}
+                  <FormControl sx={{ width: "100%", mb: 2 }}>
+                    {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
+                    <Select
+                      // labelId="demo-multiple-checkbox-label"
+                      // placeholder="Enter feature"
+                      id="demo-multiple-checkbox"
+                      displayEmpty
+                      multiple
+                      value={feature}
+                      onChange={handleInputChange}
+                      // input={<OutlinedInput label="Tag" />}
+                      renderValue={(selected) => {
+                        if (selected.length === 0) {
+                          return (
+                            <span form-control mb-3>
+                              Extra Features
+                            </span>
+                          );
+                        }
+
+                        return selected.join(", ");
+                      }}
+                      MenuProps={MenuProps}
+                      inputProps={{ "aria-label": "Without label" }}
+                    >
+                      {features.map((feat) => (
+                        <MenuItem key={feat.feature} value={feat.feature}>
+                          <Checkbox
+                            checked={feature.indexOf(feat.feature) > -1}
+                          />
+                          <ListItemText primary={feat.feature} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </>
+              ) : (
+                <></>
+              )}
               <textarea
-                 className="form-control mb-3"
-                 placeholder="Enter description"
-                 value={ad.description}
-                 onChange={(e) => setAd({ ...ad, description: e.target.value })}
+                className="form-control mb-3"
+                placeholder="Enter description"
+                value={ad.description}
+                onChange={(e) => setAd({ ...ad, description: e.target.value })}
               />
               <div className="d-flex justify-content-center">
                 <button
@@ -326,10 +377,11 @@ export default function AdForm({ action, type }) {
                 </button>
               </div>
             </div>
-          </form> 
+          </form>
         </div>
       </div>
-         {/* <pre>{JSON.stringify(features, null, 4)}</pre> */}
+      <pre>{JSON.stringify(feature, null, 4)}</pre>
+      <pre>{JSON.stringify(ad, null, 4)}</pre>
     </div>
   );
 }
