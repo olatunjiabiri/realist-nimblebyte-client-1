@@ -11,3 +11,9 @@
     font-weight: 500;
     line-height: 20px;
 }
+
+.label-error{
+    /* margin: 0rem; */
+    color: red;
+    font-size: small;
+}
