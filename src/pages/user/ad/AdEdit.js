@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import CurrencyInput from "react-currency-input-field";
@@ -15,7 +13,6 @@ import { toast } from "react-toastify";
 import config from "../../../NewConfig";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import { useAuth } from "../../../context/auth";
-// import AdExtraFeatures from "../../../components/adExtraFeatures/AdExtraFeatures";
 import "./index.css";
 
 export default function AdEdit({ action, type }) {
@@ -27,9 +24,6 @@ export default function AdEdit({ action, type }) {
   const [selectedFormType, setSelectedFormType] = useState("House");
   const [feature, setFeature] = useState([]);
   const [features, setFeatures] = useState([]);
-
-  // hooks
-  //  const navigate = useNavigate();
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -65,8 +59,6 @@ export default function AdEdit({ action, type }) {
   // hooks
   const navigate = useNavigate();
   const params = useParams();
-
-  // console.log("type", ad.type);
 
   useEffect(() => {
     if (params?.slug) {
@@ -191,7 +183,6 @@ export default function AdEdit({ action, type }) {
 
   return (
     <div className="background-color">
-      {/* <form> */}
       <div className="container py-5 ">
         <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
           <h1 className="text-dark text-center p-3">Update Ad</h1>
@@ -390,16 +381,12 @@ export default function AdEdit({ action, type }) {
                 <>
                   {" "}
                   <FormControl sx={{ width: "100%", mb: 2 }}>
-                    {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
                     <Select
-                      // labelId="demo-multiple-checkbox-label"
-                      // placeholder="Enter feature"
                       id="demo-multiple-checkbox"
                       displayEmpty
                       multiple
                       value={ad.features}
                       onChange={handleInputChange}
-                      // input={<OutlinedInput label="Tag" />}
                       renderValue={(selected) => {
                         if (selected.length === 0) {
                           return (
@@ -491,7 +478,6 @@ export default function AdEdit({ action, type }) {
           </div>
         </div>
       </div>
-      {/* </form> */}
       {/* <pre>{JSON.stringify(ad, null, 4)}</pre>
       <pre>{JSON.stringify(features, null, 4)}</pre> */}
     </div>
