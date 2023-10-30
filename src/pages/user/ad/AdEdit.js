@@ -2,19 +2,45 @@ import React, { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
+import ListItemText from "@mui/material/ListItemText";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import CurrencyInput from "react-currency-input-field";
+import { toast } from "react-toastify";
 
 import config from "../../../NewConfig";
-import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "../../../components/forms/ImageUpload";
-import { toast } from "react-toastify";
 import { useAuth } from "../../../context/auth";
+// import AdExtraFeatures from "../../../components/adExtraFeatures/AdExtraFeatures";
 import "./index.css";
+
 export default function AdEdit({ action, type }) {
   // context
   const [auth, setAuth] = useAuth();
   const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(false);
   const [delLoading, setDelLoading] = useState(false);
+  const [selectedFormType, setSelectedFormType] = useState("House");
+  const [feature, setFeature] = useState([]);
+  const [features, setFeatures] = useState([]);
 
+  // hooks
+  //  const navigate = useNavigate();
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
   // state
   const [ad, setAd] = useState({
     _id: "",
@@ -32,12 +58,15 @@ export default function AdEdit({ action, type }) {
     sold: false,
     type,
     action,
+    features,
   });
   const [loaded, setLoaded] = useState(false);
 
   // hooks
   const navigate = useNavigate();
   const params = useParams();
+
+  // console.log("type", ad.type);
 
   useEffect(() => {
     if (params?.slug) {
@@ -60,15 +89,60 @@ export default function AdEdit({ action, type }) {
     }
   };
 
+  useEffect(() => {
+    if (ad.type) {
+      getFeature(ad.type);
+    }
+  }, [ad.type]);
+
+  const handleInputChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFeature(typeof value === "string" ? value.split(",") : value);
+    setAd({ ...ad, features: value });
+  };
+
+  const getFeature = async (type) => {
+    setLoading(true);
+    setFeatures([]);
+    const { data } = await axios.get(`${config.API}/adFeature/${type}`);
+    // console.log("data>>", data);
+    if (!data) {
+      setLoading(false);
+    } else {
+      setFeatures(data.features);
+      setLoading(false);
+    }
+  };
+
   const handleClick = async () => {
-    // console.log(ad);
+    // console.log("ad>>>>>", ad);
     try {
       // validation
       if (!ad.photos?.length) {
         toast.error("Photo is required");
         return;
+      } else if (!ad.address) {
+        toast.error("Address is required");
+        return;
       } else if (!ad.price) {
         toast.error("Price is required");
+        return;
+      } else if (!ad.bedrooms) {
+        toast.error("No. of Bedrooms is required");
+        return;
+      } else if (!ad.bathrooms) {
+        toast.error("No. of Bathrooms is required");
+        return;
+      } else if (!ad.carpark) {
+        toast.error("No. of Carpark is required");
+        return;
+      } else if (!ad.landsize) {
+        toast.error("landsize is required");
+        return;
+      } else if (!ad.title) {
+        toast.error("Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -308,6 +382,57 @@ export default function AdEdit({ action, type }) {
 
           <div className="mb-3 row">
             <label idr="title" className="col-sm-3 col-form-label adedit-label">
+              Extra Features
+            </label>
+
+            <div className="col-sm-9">
+              {features?.length > 0 ? (
+                <>
+                  {" "}
+                  <FormControl sx={{ width: "100%", mb: 2 }}>
+                    {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
+                    <Select
+                      // labelId="demo-multiple-checkbox-label"
+                      // placeholder="Enter feature"
+                      id="demo-multiple-checkbox"
+                      displayEmpty
+                      multiple
+                      value={ad.features}
+                      onChange={handleInputChange}
+                      // input={<OutlinedInput label="Tag" />}
+                      renderValue={(selected) => {
+                        if (selected.length === 0) {
+                          return (
+                            <span form-control mb-3>
+                              Extra Features
+                            </span>
+                          );
+                        }
+
+                        return selected.join(", ");
+                      }}
+                      MenuProps={MenuProps}
+                      inputProps={{ "aria-label": "Without label" }}
+                    >
+                      {features.map((feat) => (
+                        <MenuItem key={feat.feature} value={feat.feature}>
+                          <Checkbox
+                            checked={ad.features.indexOf(feat.feature) > -1}
+                          />
+                          <ListItemText primary={feat.feature} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+
+          <div className="mb-3 row">
+            <label idr="title" className="col-sm-3 col-form-label adedit-label">
               Title
             </label>
             <div className="col-sm-9">
@@ -367,6 +492,8 @@ export default function AdEdit({ action, type }) {
         </div>
       </div>
       {/* </form> */}
+      {/* <pre>{JSON.stringify(ad, null, 4)}</pre>
+      <pre>{JSON.stringify(features, null, 4)}</pre> */}
     </div>
   );
 }

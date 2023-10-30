@@ -78,7 +78,6 @@ export default function AdForm({ action, type }) {
   const getFeature = async (type) => {
     setLoading(true);
     setFeatures([]);
-    //setState({features: []});
     const { data } = await axios.get(`${config.API}/adFeature/${type}`);
     if (!data) {
       setLoading(false);
@@ -128,9 +127,8 @@ export default function AdForm({ action, type }) {
   };
 
   const handleClick = async () => {
-    console.log("Ad....", ad);
+    // console.log("Ad....", ad);
 
-    debugger;
     try {
       if (!ad.photos?.length) {
         toast.error("Photo is required");
@@ -380,8 +378,8 @@ export default function AdForm({ action, type }) {
           </form>
         </div>
       </div>
-      <pre>{JSON.stringify(feature, null, 4)}</pre>
-      <pre>{JSON.stringify(ad, null, 4)}</pre>
+      {/* <pre>{JSON.stringify(feature, null, 4)}</pre>
+      <pre>{JSON.stringify(ad, null, 4)}</pre> */}
     </div>
   );
 }
