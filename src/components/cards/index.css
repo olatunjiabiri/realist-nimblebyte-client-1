@@ -43,3 +43,19 @@
  .card-height {
     height: 650
  }
+
+ .contact-owner-button {
+    bottom: 20px;
+    right: 20px;
+    color: #0056b3;
+    border-color: #0056b3;
+    border-radius: 25px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .contact-owner-button:hover {
+    color:#fff;
+    background-color: #0056b3;
+  }
