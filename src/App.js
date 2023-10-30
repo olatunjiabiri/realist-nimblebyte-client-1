@@ -32,6 +32,8 @@ import RentLand from "./pages/user/ad/RentLand";
 import AdView from "./pages/AdView";
 import Footer from "./components/nav/Footer";
 import UpdateProfile from "./pages/user/UpdateProfile";
+import BeAgent from "./pages/user/BeAgent";
+
 // import Settings from "./pages/user/Settings";
 import UpdatePassword from "./pages/user/UpdatePassword";
 
@@ -120,6 +122,8 @@ function App() {
                     />
                     <Route path="ad/create/rent/land" element={<RentLand />} />
                     <Route path="user/profile" element={<UpdateProfile />} />
+                    <Route path="user/be-agent" element={<BeAgent />} />
+
                     <Route
                       path="payment/paystack/paystack"
                       element={<Paystack />}

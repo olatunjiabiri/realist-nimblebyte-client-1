@@ -98,6 +98,7 @@ export default function AdCard({ ad }) {
                 <p className="justify-content-end">
                   <Link className="bg-white">
                     <button
+                      type="button"
                       className="contact-owner-button"
                       onClick={() => setIsOpen(true)}
                     >

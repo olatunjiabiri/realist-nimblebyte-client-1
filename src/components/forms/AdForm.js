@@ -87,45 +87,6 @@ export default function AdForm({ action, type }) {
     }
   };
 
-  const sellerRole = async () => {
-    try {
-      setLoading(true);
-
-      const { data } = await axios.post(
-        `${config.AUTH_API}/api/Roles/AddRole`,
-        {
-          userId: auth.user.userId,
-          role: "Seller",
-        }
-      );
-      // console.log("role response data >>>>", data);
-      if (!data.success) {
-        toast.error(data.message);
-        setLoading(false);
-      } else {
-        auth.user.role.push("Seller");
-
-        setAuth({ ...auth });
-        console.log("auth", auth);
-
-        let fromLS = JSON.parse(localStorage.getItem("auth"));
-        // fromLS.user.role = { role: "Seller" };
-
-        fromLS.user.role.push("Seller");
-
-        localStorage.setItem("auth", JSON.stringify(fromLS));
-        setLoading(false);
-        toast.success("Role Added");
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error(
-        "Something went wrong. Role cannot be assigned now. Try again."
-      );
-      setLoading(false);
-    }
-  };
-
   const handleClick = async () => {
     // console.log("Ad....", ad);
 
@@ -139,13 +100,13 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
-      } else if (!ad.bedrooms) {
+      } else if (ad.type === "House" && (!ad.bedrooms || ad.bedrooms < 1)) {
         toast.error("No. of Bedrooms is required");
         return;
-      } else if (!ad.bathrooms) {
+      } else if (ad.type === "House" && (!ad.bathrooms || ad.bathrooms < 1)) {
         toast.error("No. of Bathrooms is required");
         return;
-      } else if (!ad.carpark) {
+      } else if (ad.type === "House" && !ad.carpark) {
         toast.error("No. of Carpark is required");
         return;
       } else if (!ad.landsize) {
@@ -171,10 +132,6 @@ export default function AdForm({ action, type }) {
           // const fromLS = JSON.parse(localStorage.getItem("auth"));
           // fromLS.user = data.user;
           // localStorage.setItem("auth", JSON.stringify(fromLS));
-
-          if (!auth.user.role?.includes("Seller")) {
-            sellerRole();
-          }
 
           toast.success("Ad created successfully");
 

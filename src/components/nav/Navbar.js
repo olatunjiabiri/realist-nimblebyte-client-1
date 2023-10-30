@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
-import useSelection from "antd/es/table/hooks/useSelection";
+// import useSelection from "antd/es/table/hooks/useSelection";
 // import "./index.css";
 
 const Navbar = () => {
@@ -248,7 +248,7 @@ const Navbar = () => {
                             to="/user/profile"
                             onClick={closeMobileMenu}
                           >
-                            Update profile
+                            Update Profile
                           </NavLink>
                         </li>
                         <li>
@@ -260,6 +260,17 @@ const Navbar = () => {
                             Change Password
                           </NavLink>
                         </li>
+                        {!auth.user?.role?.includes("Seller") && (
+                          <li>
+                            <NavLink
+                              className="dropdown-item"
+                              to="/user/be-agent"
+                              onClick={closeMobileMenu}
+                            >
+                              Become an Agent
+                            </NavLink>
+                          </li>
+                        )}
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
