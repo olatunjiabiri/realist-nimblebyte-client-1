@@ -129,27 +129,15 @@ export default function AdView() {
                       <span className="adview-address">{ad.address}</span>
                     </p>
 
-                    {auth.user === null ? (
-                      <Link className="bg-white" to="/login">
-                        <button
-                          type="button"
-                          className="btn btn-primary contact-agent"
-                          onClick={() => setIsOpen(true)}
-                        >
-                          Contact Agent
-                        </button>
-                      </Link>
-                    ) : (
-                      <Link className="bg-white">
-                        <button
-                          type="button"
-                          className="btn btn-primary contact-agent"
-                          onClick={() => setIsOpen(true)}
-                        >
-                          Contact Agent
-                        </button>
-                      </Link>
-                    )}
+                    <Link className="bg-white">
+                      <button
+                        type="button"
+                        className="btn btn-primary contact-agent"
+                        onClick={() => setIsOpen(true)}
+                      >
+                        Contact Agent
+                      </button>
+                    </Link>
                     <div className="mt-2">
                       <MapCard ad={ad} related={related} />
                     </div>

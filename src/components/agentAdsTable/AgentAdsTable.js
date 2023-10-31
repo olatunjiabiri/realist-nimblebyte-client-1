@@ -14,7 +14,7 @@ const AgentAdsTable = ({ ads }) => {
     setAgent(ads[0]);
   }, []);
 
-  console.log("ads>>", ads[0]);
+  // console.log("ads>>", ads[0]);
 
   const userColumns = [
     {
