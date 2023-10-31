@@ -13,28 +13,20 @@ const ContactSellerModal = ({ ad, onClose }) => {
   const [auth, setAuth] = useAuth();
   // state
   const [message, setMessage] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const [agent, setAgent] = useState("");
 
-  const loggedIn = auth.user !== null && auth.token !== "";
-
   useEffect(() => {
     fetchAgents();
-    if (loggedIn) {
-      setName(auth.user?.firstName || "");
-      setEmail(auth.user?.email || "");
-      setPhone(auth.user?.phone || "");
-    }
+
     setMessage(
       `Hi, I am interested in the property located at ${
         ad?.address || ""
       }.  Thanks`
     );
-  }, [loggedIn, ad?.address, auth?.user]);
+  }, [ad?.address]);
 
   const fetchAgents = async () => {
     try {
@@ -93,9 +85,9 @@ const ContactSellerModal = ({ ad, onClose }) => {
     handleSubmit,
   } = useFormik({
     initialValues: {
-      name: name,
-      phone: phone,
-      email: email,
+      name: auth?.user?.firstName || "",
+      phone: auth?.user?.phone || "",
+      email: auth?.user?.email || "",
       message: message,
     },
     validationSchema: contactSellerFormSchema,

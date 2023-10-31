@@ -2,7 +2,7 @@ import React from "react";
 import "./AgentDetails.css";
 
 const AgentDetails = ({ agent }) => {
-  console.log(agent[0]);
+  // console.log(agent[0]);
   return (
     <div className="container">
       <div className="row">
