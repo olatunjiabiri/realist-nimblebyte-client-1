@@ -48,10 +48,14 @@ export default function UserAdCard({ ad }) {
                 </div>
                 <div className="">
                   <button
-                    className={`btn ${ad.sold ? "btn-danger" : "btn-primary"}`}
-                    style={{ width: "120px" }}
+                    className={`btn ${
+                      (ad.sold === "Sold" && "btn-danger") ||
+                      (ad.sold === "Available" && "btn-primary") ||
+                      (ad.sold === "Under Contract" && "btn-warning")
+                    }`}
+                    style={{ width: "150px" }}
                   >
-                    {ad.sold ? "Sold" : "Available"}
+                    {ad.sold}
                   </button>
                 </div>
               </div>

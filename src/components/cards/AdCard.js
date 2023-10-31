@@ -44,7 +44,7 @@ export default function AdCard({ ad }) {
         <Badge.Ribbon
           text={`${ad?.type} for ${
             ad?.action === "Sell" ? "Sale" : "Rent"
-          }   |   ${ad?.sold ? "Not Available" : "Available"}`}
+          }   |   ${ad?.sold}`}
           color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
         >
           <div className="card hoverable p-2 shadow-lg">
