@@ -13,28 +13,20 @@ const ContactSellerModal = ({ ad, onClose }) => {
   const [auth, setAuth] = useAuth();
   // state
   const [message, setMessage] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const [agent, setAgent] = useState("");
 
-  const loggedIn = auth.user !== null && auth.token !== "";
-
   useEffect(() => {
     fetchAgents();
-    if (loggedIn) {
-      setName(auth.user?.firstName || "");
-      setEmail(auth.user?.email || "");
-      setPhone(auth.user?.phone || "");
-    }
+
     setMessage(
       `Hi, I am interested in the property located at ${
         ad?.address || ""
       }.  Thanks`
     );
-  }, [loggedIn, ad?.address, auth?.user]);
+  }, [ad?.address]);
 
   const fetchAgents = async () => {
     try {
@@ -68,11 +60,13 @@ const ContactSellerModal = ({ ad, onClose }) => {
           sellerEmail: agent[0].email.toString() || "",
           enquirerEmail: email,
           propertyPageUrl: `https://realistclientapp2.azurewebsites.net/ad/${ad?.slug}`,
+          sellerName: agent[0].firstName || "",
           enquirerName: name,
           enquirerPhone: phone,
           propertyAddress: ad.address,
         }
       );
+
       console.log("response>>>", response);
       toast.success("Your enquiry has been sent to the seller");
       setLoading(false);
@@ -93,10 +87,12 @@ const ContactSellerModal = ({ ad, onClose }) => {
     handleSubmit,
   } = useFormik({
     initialValues: {
-      name: name,
-      phone: phone,
-      email: email,
-      message: message,
+      name: auth?.user?.firstName || "",
+      phone: auth?.user?.phone || "",
+      email: auth?.user?.email || "",
+      message: `Hi, I am interested in the property located at ${
+        ad?.address || ""
+      }.  Thanks`,
     },
     validationSchema: contactSellerFormSchema,
     onSubmit,
@@ -185,8 +181,9 @@ const ContactSellerModal = ({ ad, onClose }) => {
               className="form-control contact-modal-control mb-3"
               id="form-control-textarea"
               placeholder="Write your message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={values.message}
+              onChange={handleChange}
+              onBlur={handleBlur}
               autoFocus={true}
             ></textarea>
 

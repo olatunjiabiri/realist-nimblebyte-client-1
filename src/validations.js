@@ -44,10 +44,10 @@ export const updatePasswordSchema = yup.object().shape({
 });
 
 export const contactSellerFormSchema = yup.object().shape({
-  name: yup.string().required("Name is Required"),
-  phone: yup.string().required("Phone No. is Required"),
+  name: yup.string().required("Name is required"),
+  phone: yup.string().required("Phone No. is required"),
   email: yup
     .string()
-    .required("Enter your email")
+    .required("Email is required")
     .email("Invalid email address"),
 });
