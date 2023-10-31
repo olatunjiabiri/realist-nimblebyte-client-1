@@ -100,13 +100,13 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
-      } else if (!ad.bedrooms) {
+      } else if (ad.type === "House" && (!ad.bedrooms || ad.bedrooms < 1)) {
         toast.error("No. of Bedrooms is required");
         return;
-      } else if (!ad.bathrooms) {
+      } else if (ad.type === "House" && (!ad.bathrooms || ad.bathrooms < 1)) {
         toast.error("No. of Bathrooms is required");
         return;
-      } else if (!ad.carpark) {
+      } else if (ad.type === "House" && !ad.carpark) {
         toast.error("No. of Carpark is required");
         return;
       } else if (!ad.landsize) {

@@ -34,7 +34,7 @@ const ContactAgentForm = ({ agent }) => {
         agentName : agent[0].firstName,
         agentPhone: agent[0].phone
       });
-          console.log("response>>>", response);
+          // console.log("response>>>", response);
       if (!response.data.success) {
         toast.error(response.data.message);
         setLoading(false);
@@ -171,7 +171,7 @@ const ContactAgentForm = ({ agent }) => {
               disabled={loading}
               // onClick={submitHandler}
             >
-              {loading ? "LOADING" : "Contact"}
+              {isSubmitting ? "LOADING" : "Contact"}
             </button>
           </div>
         </form>
