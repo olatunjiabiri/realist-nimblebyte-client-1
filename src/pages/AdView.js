@@ -19,6 +19,7 @@ import Modall from "../../src/components/modal/Modal";
 import ContactSellerModal from "../components/contactSellerModal/ContactSellerModal";
 import { useAuth } from "../context/auth";
 import "./AdView.css";
+import { TiMediaRecord } from "react-icons/ti";
 
 dayjs.extend(relativeTime);
 
@@ -142,22 +143,31 @@ export default function AdView() {
                       <MapCard ad={ad} related={related} />
                     </div>
                     <hr className="hr" />
-
                     <span>
                       <h5>Overview</h5>
                     </span>
                     <span>
-                      Welcome to your sun-drenched oasis where Lakeview meets
-                      Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is
-                      nestled within a boutique elevator building, offering the
-                      perfect blend of modern convenience and comfort. One of
-                      the standout features of this home is the private balcony,
-                      where you can bask in the sun's rays while enjoying your
-                      morning coffee or unwind with a glass of wine in the
-                      evening. And with a deeded garage parking spot included,
-                      you'll never have to worry about finding a spot when you
-                      return home. You'll find ample closet space throughout,
-                      including three convenient hallway closets.
+                      {ad.description}
+                    </span>
+                    <hr />
+                    <span>
+                      <h5>Features</h5>
+                    </span>
+                    <span>
+                      
+                        {ad.features?.map((feat, index) => (
+                          // <li key={feat} value={feat}>{feat}</li>
+                          <div className="container">
+                            <div className="row">
+                              <div className="col">
+                                  <li key={feat} value={feat}> {ad.features[index + index]}</li>
+                              </div>
+                              <div className="col">
+                                  <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
+                              </div>
+                            </div>
+                          </div>
+                        ))}  
                     </span>
                   </div>
                 </div>
@@ -214,24 +224,15 @@ export default function AdView() {
                 <div className="text-center">
                       <h5>Overview</h5>
                 </div>
-                <span>
-                  Welcome to your sun-drenched oasis where Lakeview meets
-                  Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is
-                  nestled within a boutique elevator building, offering the
-                  perfect blend of modern convenience and comfort. One of the
-                  standout features of this home is the private balcony, where
-                  you can bask in the sun's rays while enjoying your morning
-                  coffee or unwind with a glass of wine in the evening. And with
-                  a deeded garage parking spot included, you'll never have to
-                  worry about finding a spot when you return home. You'll find
-                  ample closet space throughout, including three convenient
-                  hallway closets.
-                </span>
+                  <span>
+                    {ad.description}
+                  </span>
               </div>
             </div>
           </div>
 
           {/* related properties */}
+          <br />
           <div className="container related-margin">
             <h4 className="text-center mb-3">Related Properties</h4>
             <hr />
