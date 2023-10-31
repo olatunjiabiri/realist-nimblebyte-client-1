@@ -28,7 +28,8 @@
 }
 
 .share-icon {
-    margin-left: 10px
+    margin-left: 10px;
+    font-size: 18px;
 }
 
 .adview-flex-details {
@@ -63,6 +64,10 @@
     margin-bottom: -6px
 }
 
+.adview-feature-price {
+    margin-bottom: 1px
+}
+
 .related-props {
     margin-top: -38px;
 }
@@ -71,6 +76,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     height: 550px;
+    padding: 3px;
 }
 
 .hr {

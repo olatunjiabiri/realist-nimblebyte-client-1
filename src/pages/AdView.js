@@ -115,12 +115,12 @@ export default function AdView() {
               <div className="col-4 display-adview-lg">
                 <div>
                   <div className="right-side-screen">
-                    <h3 className="mt-3 h2 adview-feature">
+                    <h3 className="mt-3 h2 adview-feature adview-feature-price">
                       {" "}
                       <span>&#8358;</span>
                       {millify(ad?.price)}
                     </h3>
-                    <span>
+                    <span > 
                       {" "}
                       <AdFeatures ad={ad} />
                     </span>
@@ -231,7 +231,6 @@ export default function AdView() {
             </div>
           </div>
 
-          <br />
           {/* related properties */}
           <div className="container related-margin">
             <h4 className="text-center mb-3">Related Properties</h4>

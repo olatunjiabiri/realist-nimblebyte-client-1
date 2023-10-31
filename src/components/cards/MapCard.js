@@ -12,7 +12,7 @@ export default function MapCard({ ad, related }) {
 
   if (ad?.location?.coordinates?.length) {
     return (
-      <div style={{ width: "100%", height: "300px" }}>
+      <div style={{ width: "100%", height: "280px" }}>
         <Map ad={ad} isLoaded={isLoaded} related={related}></Map>
       </div>
     );
