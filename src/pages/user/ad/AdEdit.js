@@ -49,7 +49,7 @@ export default function AdEdit({ action, type }) {
     title: "",
     description: "",
     loading: false,
-    sold: false,
+    sold: "Available",
     type,
     action,
     features,
@@ -339,34 +339,55 @@ export default function AdEdit({ action, type }) {
             >
               Status
             </label>
-            <div className="col-sm-6 d-flex justify-content-between">
+            <div className="col-sm-9 d-flex justify-content-between">
+              {/* <div className="col-sm-9 d-flex"> */}
               <label
                 className={`radio-button ${
-                  ad.sold === false ? "selected" : ""
+                  ad.sold === "Available" ? "selected" : ""
                 }`}
               >
                 <input
-                  className="input-style m-3 col-sm-3 col-form-label adedit-label"
+                  className="input-style m-3 col col-form-label adedit-label"
+                  // defaultValue={"Available"}
+                  defaultChecked={ad.sold === "Available"}
                   type="radio"
                   name="adStatus"
-                  value={false}
-                  checked={ad.sold === false}
-                  onChange={() => setAd({ ...ad, sold: false })}
+                  value={"Available"}
+                  checked={ad.sold === "Available"}
+                  onChange={() => setAd({ ...ad, sold: "Available" })}
                 />
-                <span className="pl-5"> Available</span>
+                <span className="pl-3"> Available</span>
               </label>
               <label
-                className={`radio-button ${ad.sold === true ? "selected" : ""}`}
+                className={`radio-button ${
+                  ad.sold === "Sold" ? "selected" : ""
+                }`}
               >
                 <input
-                  className=" input-style m-3  col-sm-3 col-form-label adedit-label"
+                  className="input-style m-2  col col-form-label adedit-label"
                   type="radio"
                   name="adStatus"
-                  value={true}
-                  checked={ad.sold === true}
-                  onChange={() => setAd({ ...ad, sold: true })}
+                  value={"Sold"}
+                  checked={ad.sold === "Sold"}
+                  onChange={() => setAd({ ...ad, sold: "Sold" })}
                 />
-                Sold
+                <span className="pl-3"> Sold</span>
+              </label>
+              <label
+                className={`radio-button ${
+                  ad.sold === "Under Contract" ? "selected" : ""
+                }`}
+              >
+                <input
+                  className="input-style m-2 col col-form-label adedit-label"
+                  type="radio"
+                  name="adStatus"
+                  value={"Under Contract"}
+                  checked={ad.sold === "Under Contract"}
+                  onChange={() => setAd({ ...ad, sold: "Under Contract" })}
+                />
+                Under Contract
+                {/* <span className="pl-3"> Under Contract</span> */}
               </label>
             </div>
           </div>
@@ -479,7 +500,7 @@ export default function AdEdit({ action, type }) {
         </div>
       </div>
       {/* <pre>{JSON.stringify(ad, null, 4)}</pre>
-      <pre>{JSON.stringify(features, null, 4)}</pre> */}
+      <pre>{JSON.stringify(ad.sold, null, 4)}</pre> */}
     </div>
   );
 }
