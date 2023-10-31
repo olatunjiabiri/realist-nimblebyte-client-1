@@ -211,9 +211,9 @@ export default function AdView() {
                 </div>
                 <hr className="hr" />
 
-                <span>
-                  <h5>Overview</h5>
-                </span>
+                <div className="text-center">
+                      <h5>Overview</h5>
+                </div>
                 <span>
                   Welcome to your sun-drenched oasis where Lakeview meets
                   Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is

@@ -25,7 +25,7 @@ const Map = (props) => {
 
   const containerStyle = {
     width: "100%",
-    height: "300px",
+    height: "250px",
   };
   // console.log(ad);
   //   6.5244° N, 3.3792° E
