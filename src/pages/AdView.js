@@ -169,9 +169,13 @@ export default function AdView() {
                                     <div className="col">
                                         <li key={feat} value={feat}> {ad.features[index + index]}</li>
                                     </div>
-                                    <div className="col">
-                                        <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
-                                    </div>
+                                    { (ad.features.length - 1) % 2 != 0 ?
+                                      (<>
+                                        <div className="col">
+                                          <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
+                                        </div>
+                                      </>):(<></>)
+                                    }
                                   </div>
                                 ):(<></>)}
                               </div>
