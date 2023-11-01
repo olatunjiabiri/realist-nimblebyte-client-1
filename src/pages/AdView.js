@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { FiShare } from "react-icons/fi";
+import { HiPause } from "react-icons/hi2";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -88,11 +89,26 @@ export default function AdView() {
                   <div className="flex-test">
                     <span className="ml-auto">
                       {" "}
-                      {ad?.sold ? "❌ Off market" : "✅ In market"}
+                      {(ad?.sold === "Sold" && "❌ Off market") ||
+                        (ad?.sold === "Available" && "✅ Available ") ||
+                        (ad?.sold === "Under Contract" && (
+                          <span className="mt-2">
+                            <HiPause className="h5 mt-1 under-contract-icon" />
+                            {"Under Contract"}
+                          </span>
+                        ))}
                     </span>
 
                     <span className="ml-auto share-icon">
-                      {<LikeUnlike ad={ad} />}
+                      {auth?.user === null ? (
+                        <Link to="/login" state={{ fromAction: "like" }}>
+                          <LikeUnlike ad={ad} size={"h4"} />
+                        </Link>
+                      ) : (
+                        <Link>
+                          <LikeUnlike ad={ad} size={"h4"} />
+                        </Link>
+                      )}
                     </span>
                     <span className="save display-icon-description">Save</span>
 
