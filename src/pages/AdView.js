@@ -221,19 +221,43 @@ export default function AdView() {
                 <div className="mt-2">
                   <MapCard ad={ad} related={related} />
                 </div>
-                <hr className="hr" />
 
-                <div className="text-center">
+                <div className="text-center mt-2">
                       <h5>Overview</h5>
+                      <hr />
                 </div>
                   <span>
                     {ad.description}
                   </span>
+
+                <div className="text-center mt-3">
+                      <h5>Features</h5>
+                      <hr />
+                </div>
+                <span>
+                        {ad.features?.map((feat, index) => (
+                          // <li key={feat} value={feat}>{feat}</li>
+                          <div className="container">
+                            {ad.features.length - 2 >= index ? 
+                            (
+                              <div className="row">
+                                <div className="col">
+                                    <li key={feat} value={feat}> {ad.features[index + index]}</li>
+                                </div>
+                                <div className="col">
+                                    <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
+                                </div>
+                              </div>
+                            ):(<></>)}
+                          </div>
+                        ))}  
+                    </span>
               </div>
             </div>
           </div>
 
           {/* related properties */}
+          <br/>
           <div className="container related-margin">
             <h4 className="text-center mb-3">Related Properties</h4>
             <hr />

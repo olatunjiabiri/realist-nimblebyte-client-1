@@ -112,6 +112,7 @@
 @media (min-width:300px) and (max-width:900px) {
     .display-adview-sm {
         display: block;
+        /* margin-bottom: 8%; */
     }
 
     .display-adview-lg {
