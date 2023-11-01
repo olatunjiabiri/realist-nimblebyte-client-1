@@ -100,7 +100,15 @@ export default function AdView() {
                     </span>
 
                     <span className="ml-auto share-icon">
-                      {<LikeUnlike ad={ad} />}
+                      {auth?.user === null ? (
+                        <Link to="/login" state={{ fromAction: "like" }}>
+                          <LikeUnlike ad={ad} size={"h4"} />
+                        </Link>
+                      ) : (
+                        <Link>
+                          <LikeUnlike ad={ad} size={"h4"} />
+                        </Link>
+                      )}
                     </span>
                     <span className="save display-icon-description">Save</span>
 
