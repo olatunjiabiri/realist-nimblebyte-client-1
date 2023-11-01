@@ -77,7 +77,7 @@
 
     .modal-content {
       width: 300px;
-      height: 610px;
+      height: 660px; /* 610px */
     }
 
     .property-image {
