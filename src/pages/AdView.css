@@ -31,6 +31,10 @@
     margin-left: 10px
 }
 
+.under-contract-icon {
+    color:#FFC107;
+}
+
 .adview-flex-details {
     margin-top: -1%;
     /* border: 1px solid #000; */
