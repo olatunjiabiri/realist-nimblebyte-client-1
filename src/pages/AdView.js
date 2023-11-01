@@ -154,18 +154,20 @@ export default function AdView() {
                       <h5>Features</h5>
                     </span>
                     <span>
-                      
                         {ad.features?.map((feat, index) => (
                           // <li key={feat} value={feat}>{feat}</li>
                           <div className="container">
-                            <div className="row">
-                              <div className="col">
-                                  <li key={feat} value={feat}> {ad.features[index + index]}</li>
+                            {ad.features.length - 2 >= index ? 
+                            (
+                              <div className="row">
+                                <div className="col">
+                                    <li key={feat} value={feat}> {ad.features[index + index]}</li>
+                                </div>
+                                <div className="col">
+                                    <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
+                                </div>
                               </div>
-                              <div className="col">
-                                  <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
-                              </div>
-                            </div>
+                            ):(<></>)}
                           </div>
                         ))}  
                     </span>
@@ -232,7 +234,6 @@ export default function AdView() {
           </div>
 
           {/* related properties */}
-          <br />
           <div className="container related-margin">
             <h4 className="text-center mb-3">Related Properties</h4>
             <hr />
