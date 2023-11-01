@@ -161,7 +161,6 @@ export default function AdView() {
                         </span>
                         <span>
                             {ad.features?.map((feat, index) => (
-                              // <li key={feat} value={feat}>{feat}</li>
                               <div className="container">
                                 {ad.features.length - 2 >= index || ad.features.length === 1 ? 
                                 (
@@ -169,7 +168,7 @@ export default function AdView() {
                                     <div className="col">
                                         <li key={feat} value={feat}> {ad.features[index + index]}</li>
                                     </div>
-                                    { (ad.features.length - 1) % 2 != 0 ?
+                                    { (ad.features.length != index && ad.features.length - 1) % 2 != 0 ?
                                       (<>
                                         <div className="col">
                                           <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
@@ -250,22 +249,25 @@ export default function AdView() {
                       <hr />
                     </div>
                     <span>
-                        {ad.features?.map((feat, index) => (
-                          // <li key={feat} value={feat}>{feat}</li>
-                          <div className="container">
-                            {ad.features.length - 2 >= index ? 
-                            (
-                              <div className="row">
-                                <div className="col">
-                                    <li key={feat} value={feat}> {ad.features[index + index]}</li>
-                                </div>
-                                <div className="col">
-                                    <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
-                                </div>
+                            {ad.features?.map((feat, index) => (
+                              <div className="container">
+                                {ad.features.length - 2 >= index || ad.features.length === 1 ? 
+                                (
+                                  <div className="row">
+                                    <div className="col">
+                                        <li key={feat} value={feat}> {ad.features[index + index]}</li>
+                                    </div>
+                                    { (ad.features.length != index && ad.features.length - 1) % 2 != 0 ?
+                                      (<>
+                                        <div className="col">
+                                          <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
+                                        </div>
+                                      </>):(<></>)
+                                    }
+                                  </div>
+                                ):(<></>)}
                               </div>
-                            ):(<></>)}
-                          </div>
-                        ))}  
+                            ))}  
                     </span>
                  </>
                 }
