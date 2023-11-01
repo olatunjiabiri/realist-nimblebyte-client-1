@@ -3,21 +3,17 @@
   border-style: solid;
   border-radius: 16px;
 }
-.bd-color {
-  border-color: #939495;
+.contact-bd-color {
+  border-color: #0DCAF0;
 }
-.form-container {
-  padding: 2.5rem 1.5rem;
+.contact-us-container {
+  padding: 1.5rem 1.5rem;
   display: inline-block;
   text-align: left;
-  font-family: "Montserrat";
   width: 100%;
   background: white;
 }
-.btn-color {
-  background-color: #f97b22;
-  color: #fff;
-}
+
 
 .contact-form-title {
   color: #4b4d4e;
