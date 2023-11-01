@@ -142,6 +142,8 @@ export default function AdView() {
                     <div className="mt-2">
                       <MapCard ad={ad} related={related} />
                     </div>
+
+                      {/* overview */}
                     <hr className="hr" />
                     <span>
                       <h5>Overview</h5>
@@ -149,28 +151,34 @@ export default function AdView() {
                     <span>
                       {ad.description}
                     </span>
-                    <hr />
-                    <span>
-                      <h5>Features</h5>
-                    </span>
-                    <span>
-                        {ad.features?.map((feat, index) => (
-                          // <li key={feat} value={feat}>{feat}</li>
-                          <div className="container">
-                            {ad.features.length - 2 >= index ? 
-                            (
-                              <div className="row">
-                                <div className="col">
-                                    <li key={feat} value={feat}> {ad.features[index + index]}</li>
-                                </div>
-                                <div className="col">
-                                    <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
-                                </div>
+                   
+                    {/* features */}
+                    {ad.features.length > 0 ?
+                      (<>
+                        <hr />
+                        <span>
+                          <h5>Features</h5>
+                        </span>
+                        <span>
+                            {ad.features?.map((feat, index) => (
+                              // <li key={feat} value={feat}>{feat}</li>
+                              <div className="container">
+                                {ad.features.length - 2 >= index || ad.features.length === 1 ? 
+                                (
+                                  <div className="row">
+                                    <div className="col">
+                                        <li key={feat} value={feat}> {ad.features[index + index]}</li>
+                                    </div>
+                                    <div className="col">
+                                        <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
+                                    </div>
+                                  </div>
+                                ):(<></>)}
                               </div>
-                            ):(<></>)}
-                          </div>
-                        ))}  
-                    </span>
+                            ))}  
+                        </span>
+                      </>):(<></>)
+                    }
                   </div>
                 </div>
               </div>
@@ -230,11 +238,14 @@ export default function AdView() {
                     {ad.description}
                   </span>
 
-                <div className="text-center mt-3">
+                {/*features*/}
+                {ad.features.length > 0 &&
+                 <>
+                    <div className="text-center mt-3">
                       <h5>Features</h5>
                       <hr />
-                </div>
-                <span>
+                    </div>
+                    <span>
                         {ad.features?.map((feat, index) => (
                           // <li key={feat} value={feat}>{feat}</li>
                           <div className="container">
@@ -252,6 +263,8 @@ export default function AdView() {
                           </div>
                         ))}  
                     </span>
+                 </>
+                }
               </div>
             </div>
           </div>
