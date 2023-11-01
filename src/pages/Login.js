@@ -113,6 +113,12 @@ export default function Login() {
       <div className="row">
         <div className="col-md-4 offset-md-4">
           <form onSubmit={handleSubmit}>
+            {location?.state?.fromAction === "like" && (
+              <div className="h4 mb-4 text-center">
+                {" "}
+                Login or Create an Account to like an Ad
+              </div>
+            )}
             <input
               type="text"
               placeholder="Enter your email"
