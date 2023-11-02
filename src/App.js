@@ -102,6 +102,14 @@ function App() {
                     element={<ForgotPassword />}
                   />
                   <Route
+                    path="/auth/google-authentication"
+                    element={<GoogleAuthResponse />}
+                  />
+                   <Route
+                    path="/auth/facebook-authentication"
+                    element={<FacebookAuthResponse />}
+                  />
+                  <Route
                     path="/auth/access-account/:token"
                     element={<AccessAccount />}
                   />

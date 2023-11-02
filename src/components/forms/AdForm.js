@@ -23,7 +23,6 @@ export default function AdForm({ action, type }) {
   // state
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedFormType, setSelectedFormType] = useState("House");
   const [feature, setFeature] = useState([]);
   const [features, setFeatures] = useState([]);
   // hooks
@@ -62,10 +61,13 @@ export default function AdForm({ action, type }) {
     if (auth.user) {
       setRole(auth.user?.role);
     }
-    if (type) {
-      getFeature(type);
+  }, []);
+
+  useEffect(() => {
+    if (ad.type) {
+      getFeature(ad.type);
     }
-  }, [type]);
+  }, [ad.type]);
 
   const handleInputChange = (event) => {
     const {
@@ -100,9 +102,12 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
+<<<<<<< HEAD
       } else if (!ad.landsize) {
         toast.error("landsize is required");
         return;
+=======
+>>>>>>> 7d1bd32524b49209df2ff928579df7bf87329ae0
       } else if (!ad.title) {
         toast.error("Title is required");
         return;
@@ -153,17 +158,17 @@ export default function AdForm({ action, type }) {
               <div className="container-div d-flex justify-content-center">
                 <label
                   className={`radio-button ${
-                    selectedFormType === "House" ? "selected" : ""
+                    ad.type === "House" ? "selected" : ""
                   }`}
                 >
                   <input
                     className="input-style m-2"
                     type="radio"
                     name="formType"
-                    value="House"
-                    checked={selectedFormType === "House"}
+                    value={"House"}
+                    checked={ad.type === "House"}
                     onChange={() => {
-                      setSelectedFormType("House");
+                      setAd({ ...ad, type: "House" });
                       getFeature("House");
                     }}
                   />
@@ -171,17 +176,17 @@ export default function AdForm({ action, type }) {
                 </label>
                 <label
                   className={`radio-button ${
-                    selectedFormType === "Land" ? "selected" : ""
+                    ad.type === "Land" ? "selected" : ""
                   }`}
                 >
                   <input
                     className="input-style m-2"
                     type="radio"
                     name="formType"
-                    value="Land"
-                    checked={selectedFormType === "Land"}
+                    value={"Land"}
+                    checked={ad.type === "Land"}
                     onChange={() => {
-                      setSelectedFormType("Land");
+                      setAd({ ...ad, type: "Land" });
                       getFeature("Land");
                     }}
                   />
@@ -215,7 +220,7 @@ export default function AdForm({ action, type }) {
                 />
               </div>
 
-              {type === "House" && selectedFormType === "House" ? (
+              {type === "House" && ad.type === "House" ? (
                 <>
                   <input
                     type="number"
@@ -246,7 +251,6 @@ export default function AdForm({ action, type }) {
                 </>
               ) : (
                 ""
-                //  {type === "Land" && selectedFormType === "Land" ?
               )}
 
               <input
@@ -267,16 +271,12 @@ export default function AdForm({ action, type }) {
                 <>
                   {" "}
                   <FormControl sx={{ width: "100%", mb: 2 }}>
-                    {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
                     <Select
-                      // labelId="demo-multiple-checkbox-label"
-                      // placeholder="Enter feature"
                       id="demo-multiple-checkbox"
                       displayEmpty
                       multiple
                       value={feature}
                       onChange={handleInputChange}
-                      // input={<OutlinedInput label="Tag" />}
                       renderValue={(selected) => {
                         if (selected.length === 0) {
                           return (
