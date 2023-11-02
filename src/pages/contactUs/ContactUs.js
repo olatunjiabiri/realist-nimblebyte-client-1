@@ -156,16 +156,22 @@ const ContactUs = () => {
                     placeholder="Select Message type"
                     onChange={handleChange}
                     name="subject"
-                    className="form-select form-select-lg"
+                    className="form-select form-select-lg f-select"
                   >
                     {/* <option disabled selected>
                     {" "}
                     Select Message type
                   </option> */}
-                    <option className="form-select-lg mb-3" value={"Enquiry"}>
+                    <option
+                      className="form-select-lg mb-3 f-select"
+                      value={"Enquiry"}
+                    >
                       Enquiry
                     </option>
-                    <option className="form-select-lg mb-3" value={"Complaint"}>
+                    <option
+                      className="form-select-lg mb-3 f-select"
+                      value={"Complaint"}
+                    >
                       Complaint
                     </option>
                   </select>

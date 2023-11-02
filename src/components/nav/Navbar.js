@@ -143,6 +143,14 @@ const Navbar = () => {
               >
                 Sell
               </NavLink>
+              <NavLink
+                className="nav-item nav-link"
+                aria-current="page"
+                to="/contact-us"
+                onClick={closeMobileMenu}
+              >
+                Contact Us
+              </NavLink>
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="navbar-nav lead">
