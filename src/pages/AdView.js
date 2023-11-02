@@ -61,6 +61,29 @@ export default function AdView() {
     }
   };
 
+  const showTable = () => {
+    const tableRows = [];
+    for (let i = 0; i < ad?.features.length; i = i + 2) {
+      tableRows.push(
+        <div className="container">
+           <div className="row"  key={ad.features[i] + "-" + ad.features[i + 1] + "-" + i}>
+              <div className="col">
+                  <li>{ad.features[i]}</li>
+              </div>
+              { (ad.features.length - 1 === i && ad.features.length) % 2 === 0 ?
+               (
+                <div className="col">
+                  <li>{ad.features[i + 1]}</li>
+                </div>
+               ):(<></>)}
+              
+           </div>
+        </div>
+      );
+    }
+    return tableRows;
+  };
+
   return (
     <div className="container-fluid d-flex flex-column h-100 mt-3">
       {loading ? (
@@ -159,26 +182,8 @@ export default function AdView() {
                         <span>
                           <h5>Features</h5>
                         </span>
-                        <span>
-                            {ad.features?.map((feat, index) => (
-                              <div className="container">
-                                {ad.features.length - 2 >= index || ad.features.length === 1 ? 
-                                (
-                                  <div className="row">
-                                    <div className="col">
-                                        <li key={feat} value={feat}> {ad.features[index + index]}</li>
-                                    </div>
-                                    { (ad.features.length != index && ad.features.length - 1) % 2 != 0 ?
-                                      (<>
-                                        <div className="col">
-                                          <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
-                                        </div>
-                                      </>):(<></>)
-                                    }
-                                  </div>
-                                ):(<></>)}
-                              </div>
-                            ))}  
+                        <span> 
+                            {showTable()}
                         </span>
                       </>):(<></>)
                     }
@@ -248,26 +253,8 @@ export default function AdView() {
                       <h5>Features</h5>
                       <hr />
                     </div>
-                    <span>
-                            {ad.features?.map((feat, index) => (
-                              <div className="container">
-                                {ad.features.length - 2 >= index || ad.features.length === 1 ? 
-                                (
-                                  <div className="row">
-                                    <div className="col">
-                                        <li key={feat} value={feat}> {ad.features[index + index]}</li>
-                                    </div>
-                                    { (ad.features.length != index && ad.features.length - 1) % 2 != 0 ?
-                                      (<>
-                                        <div className="col">
-                                          <li key={feat} value={feat}>{ad.features[index + index + 1]}</li>
-                                        </div>
-                                      </>):(<></>)
-                                    }
-                                  </div>
-                                ):(<></>)}
-                              </div>
-                            ))}  
+                    <span> 
+                        {showTable()}
                     </span>
                  </>
                 }
