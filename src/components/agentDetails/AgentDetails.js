@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import "./AgentDetails.css";
 
 const AgentDetails = ({ agent }) => {
-  // console.log(agent[0]);
+  console.log("agent", agent[0]);
   const theme = useTheme();
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
@@ -16,7 +16,7 @@ const AgentDetails = ({ agent }) => {
             display: "flex",
             flexDirection: isSmScreen ? "column" : "row",
             justifyContent: isSmScreen ? "center" : "flex-start",
-            alignItems: isSmScreen ? "center" : "flex-start",
+            alignItems: isSmScreen ? "center" : "center",
           }}
         >
           <img
@@ -58,6 +58,9 @@ const AgentDetails = ({ agent }) => {
         </div>
         <div className="agt-about col-md-8 col-sm-12 ">
           <h3> About me</h3>
+          <p className="agt-text2">
+            {agent[0].description ?? "#No description"}
+          </p>
         </div>
       </div>
     </div>
