@@ -78,7 +78,11 @@ export default function AdCard({ ad }) {
                 </h3>
 
                 {auth?.user === null ? (
-                  <Link className="like-unlike-button" to="/login">
+                  <Link
+                    className="like-unlike-button"
+                    to="/login"
+                    state={{ fromAction: "like" }}
+                  >
                     <LikeUnlike ad={ad} size={"h2 m-3"} />
                   </Link>
                 ) : (

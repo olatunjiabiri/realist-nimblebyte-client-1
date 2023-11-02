@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { FiShare } from "react-icons/fi";
+import { HiPause } from "react-icons/hi2";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -19,6 +20,7 @@ import Modall from "../../src/components/modal/Modal";
 import ContactSellerModal from "../components/contactSellerModal/ContactSellerModal";
 import { useAuth } from "../context/auth";
 import "./AdView.css";
+import { TiMediaRecord } from "react-icons/ti";
 
 dayjs.extend(relativeTime);
 
@@ -60,6 +62,29 @@ export default function AdView() {
     }
   };
 
+  const showTable = () => {
+    const tableRows = [];
+    for (let i = 0; i < ad?.features.length; i = i + 2) {
+      tableRows.push(
+        <div className="container">
+           <div className="row"  key={ad.features[i] + "-" + ad.features[i + 1] + "-" + i}>
+              <div className="col">
+                  <li>{ad.features[i]}</li>
+              </div>
+              { (ad.features.length - 1 === i && ad.features.length) % 2 === 0 ?
+               (
+                <div className="col">
+                  <li>{ad.features[i + 1]}</li>
+                </div>
+               ):(<></>)}
+              
+           </div>
+        </div>
+      );
+    }
+    return tableRows;
+  };
+
   return (
     <div className="container-fluid d-flex flex-column h-100 mt-3">
       {loading ? (
@@ -88,11 +113,26 @@ export default function AdView() {
                   <div className="flex-test">
                     <span className="ml-auto">
                       {" "}
-                      {ad?.sold ? "❌ Off market" : "✅ In market"}
+                      {(ad?.sold === "Sold" && "❌ Off market") ||
+                        (ad?.sold === "Available" && "✅ Available ") ||
+                        (ad?.sold === "Under Contract" && (
+                          <span className="mt-2">
+                            <HiPause className="h5 mt-1 under-contract-icon" />
+                            {"Under Contract"}
+                          </span>
+                        ))}
                     </span>
 
                     <span className="ml-auto share-icon">
-                      {<LikeUnlike ad={ad} />}
+                      {auth?.user === null ? (
+                        <Link to="/login" state={{ fromAction: "like" }}>
+                          <LikeUnlike ad={ad} size={"h4"} />
+                        </Link>
+                      ) : (
+                        <Link>
+                          <LikeUnlike ad={ad} size={"h4"} />
+                        </Link>
+                      )}
                     </span>
                     <span className="save display-icon-description">Save</span>
 
@@ -115,12 +155,12 @@ export default function AdView() {
               <div className="col-4 display-adview-lg">
                 <div>
                   <div className="right-side-screen">
-                    <h3 className="mt-3 h2 adview-feature">
+                    <h3 className="mt-3 h2 adview-feature adview-feature-price">
                       {" "}
                       <span>&#8358;</span>
                       {millify(ad?.price)}
                     </h3>
-                    <span>
+                    <span > 
                       {" "}
                       <AdFeatures ad={ad} />
                     </span>
@@ -141,24 +181,28 @@ export default function AdView() {
                     <div className="mt-2">
                       <MapCard ad={ad} related={related} />
                     </div>
-                    <hr className="hr" />
 
+                      {/* overview */}
+                    <hr className="hr" />
                     <span>
                       <h5>Overview</h5>
                     </span>
                     <span>
-                      Welcome to your sun-drenched oasis where Lakeview meets
-                      Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is
-                      nestled within a boutique elevator building, offering the
-                      perfect blend of modern convenience and comfort. One of
-                      the standout features of this home is the private balcony,
-                      where you can bask in the sun's rays while enjoying your
-                      morning coffee or unwind with a glass of wine in the
-                      evening. And with a deeded garage parking spot included,
-                      you'll never have to worry about finding a spot when you
-                      return home. You'll find ample closet space throughout,
-                      including three convenient hallway closets.
+                      {ad.description}
                     </span>
+                   
+                    {/* features */}
+                    {ad.features.length > 0 ?
+                      (<>
+                        <hr />
+                        <span>
+                          <h5>Features</h5>
+                        </span>
+                        <span> 
+                            {showTable()}
+                        </span>
+                      </>):(<></>)
+                    }
                   </div>
                 </div>
               </div>
@@ -209,30 +253,33 @@ export default function AdView() {
                 <div className="mt-2">
                   <MapCard ad={ad} related={related} />
                 </div>
-                <hr className="hr" />
 
-                <span>
-                  <h5>Overview</h5>
-                </span>
-                <span>
-                  Welcome to your sun-drenched oasis where Lakeview meets
-                  Lincoln Park! This stunning 2-bedroom, 2-bathroom gem is
-                  nestled within a boutique elevator building, offering the
-                  perfect blend of modern convenience and comfort. One of the
-                  standout features of this home is the private balcony, where
-                  you can bask in the sun's rays while enjoying your morning
-                  coffee or unwind with a glass of wine in the evening. And with
-                  a deeded garage parking spot included, you'll never have to
-                  worry about finding a spot when you return home. You'll find
-                  ample closet space throughout, including three convenient
-                  hallway closets.
-                </span>
+                <div className="text-center mt-2">
+                      <h5>Overview</h5>
+                      <hr />
+                </div>
+                  <span>
+                    {ad.description}
+                  </span>
+
+                {/*features*/}
+                {ad.features.length > 0 &&
+                 <>
+                    <div className="text-center mt-3">
+                      <h5>Features</h5>
+                      <hr />
+                    </div>
+                    <span> 
+                        {showTable()}
+                    </span>
+                 </>
+                }
               </div>
             </div>
           </div>
 
-          <br />
           {/* related properties */}
+          <br/>
           <div className="container related-margin">
             <h4 className="text-center mb-3">Related Properties</h4>
             <hr />

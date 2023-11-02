@@ -102,22 +102,21 @@ const ContactSellerModal = ({ ad, onClose }) => {
     <>
       {ad && (
         <div>
-          <div className="">
-            <h3 className="modal-content-title text-center ">
-              Contact this Property
-            </h3>
-          </div>
-          <div className="modal-image-wrapper">
-            <img
-              src={ad?.photos[0].Location}
-              alt=""
-              className="property-image"
-              width={300}
-              height={30}
-            />
-          </div>
-
           <form className="contact-modal" onSubmit={handleSubmit}>
+            <div className="">
+              <h3 className="modal-content-title text-center ">
+                Contact this Property
+              </h3>
+            </div>
+            <div className="modal-image-wrapper">
+              <img
+                src={ad?.photos[0].Location}
+                alt=""
+                className="property-image"
+                width={300}
+                height={30}
+              />
+            </div>
             <input
               type="text"
               className="form-control mb-3"
