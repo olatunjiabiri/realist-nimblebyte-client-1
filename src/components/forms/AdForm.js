@@ -102,12 +102,6 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
-<<<<<<< HEAD
-      } else if (!ad.landsize) {
-        toast.error("landsize is required");
-        return;
-=======
->>>>>>> 7d1bd32524b49209df2ff928579df7bf87329ae0
       } else if (!ad.title) {
         toast.error("Title is required");
         return;
