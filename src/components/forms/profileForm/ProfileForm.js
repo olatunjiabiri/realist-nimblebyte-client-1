@@ -121,9 +121,7 @@ export default function ProfileForm({ sourceURL }) {
                       id="price"
                       name="price"
                       placeholder="Enter price"
-                      value={`${
-                        userType === "Buyer" ? "Client" : "Agent/Seller"
-                      }`}
+                      value={`${userType === "Buyer" ? "User" : "Agent"}`}
                       className="form-control pl-3 mt-3 adedit-label"
                       readOnly
                     />
@@ -149,7 +147,7 @@ export default function ProfileForm({ sourceURL }) {
                           id="isAgent"
                           className="col-sm-6 col-form-label adedit-label"
                         >
-                          Do you want to be Agent/Seller ?
+                          Do you want to be an Agent ?
                         </label>
                         <div className="col-sm-4 d-flex justify-content-between">
                           <label
