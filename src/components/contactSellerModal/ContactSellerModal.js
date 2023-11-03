@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -8,7 +9,7 @@ import { useAuth } from "../../context/auth";
 import config from "../../NewConfig";
 import { contactSellerFormSchema } from "../../../src/validations";
 
-const ContactSellerModal = ({ ad, onClose }) => {
+const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   // context
   const [auth, setAuth] = useAuth();
   // state
@@ -24,19 +25,19 @@ const ContactSellerModal = ({ ad, onClose }) => {
     setMessage(
       `Hi, I am interested in the property located at ${
         ad?.address || ""
-      }.  Thanks`
+      }.  Thanks`,
     );
   }, [ad?.address]);
 
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Seller`
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Seller`,
       );
       setAgent(
         data?.responsePayload.filter((a) => {
           return a.userId === ad?.postedBy;
-        })
+        }),
       );
       // setLoading(false);
     } catch (err) {
@@ -50,8 +51,6 @@ const ContactSellerModal = ({ ad, onClose }) => {
 
     setLoading(true);
     try {
-      setLoading(true);
-
       const response = await axios.post(
         `${config.AUTH_API}/api/ContactSeller`,
         {
@@ -64,14 +63,15 @@ const ContactSellerModal = ({ ad, onClose }) => {
           enquirerName: name,
           enquirerPhone: phone,
           propertyAddress: ad.address,
-        }
+        },
       );
 
       console.log("response>>>", response);
       toast.success("Your enquiry has been sent to the seller");
+      setIsOpen(false);
       setLoading(false);
     } catch (err) {
-      console.error(err);
+      console.error("enquiry error", err);
       toast.error("Something went wrong! Try again.");
       setLoading(false);
     }

@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Badge } from "antd";
@@ -38,7 +39,7 @@ export default function AdCard({ ad }) {
   return (
     <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-height">
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-        <ContactSellerModal ad={ad} />
+        <ContactSellerModal ad={ad} setIsOpen={setIsOpen} />
       </Modall>
       <Link className="link" to={`/ad/${ad.slug}`}>
         <Badge.Ribbon

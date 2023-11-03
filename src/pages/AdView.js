@@ -67,19 +67,22 @@ export default function AdView() {
     for (let i = 0; i < ad?.features.length; i = i + 2) {
       tableRows.push(
         <div className="container">
-           <div className="row"  key={ad.features[i] + "-" + ad.features[i + 1] + "-" + i}>
+          <div
+            className="row"
+            key={ad.features[i] + "-" + ad.features[i + 1] + "-" + i}
+          >
+            <div className="col">
+              <li>{ad.features[i]}</li>
+            </div>
+            {(ad.features.length - 1 === i && ad.features.length) % 2 === 0 ? (
               <div className="col">
-                  <li>{ad.features[i]}</li>
+                <li>{ad.features[i + 1]}</li>
               </div>
-              { (ad.features.length - 1 === i && ad.features.length) % 2 === 0 ?
-               (
-                <div className="col">
-                  <li>{ad.features[i + 1]}</li>
-                </div>
-               ):(<></>)}
-              
-           </div>
-        </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>,
       );
     }
     return tableRows;
@@ -94,7 +97,7 @@ export default function AdView() {
       ) : (
         <div>
           <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-            <ContactSellerModal ad={ad} />
+            <ContactSellerModal ad={ad} setIsOpen={setIsOpen} />
           </Modall>
           <div className="container mt-5 pt-3 h-100 ">
             {/* large screen */}
@@ -160,7 +163,7 @@ export default function AdView() {
                       <span>&#8358;</span>
                       {millify(ad?.price)}
                     </h3>
-                    <span > 
+                    <span>
                       {" "}
                       <AdFeatures ad={ad} />
                     </span>
@@ -182,27 +185,25 @@ export default function AdView() {
                       <MapCard ad={ad} related={related} />
                     </div>
 
-                      {/* overview */}
+                    {/* overview */}
                     <hr className="hr" />
                     <span>
                       <h5>Overview</h5>
                     </span>
-                    <span>
-                      {ad.description}
-                    </span>
-                   
+                    <span>{ad.description}</span>
+
                     {/* features */}
-                    {ad.features.length > 0 ?
-                      (<>
+                    {ad.features.length > 0 ? (
+                      <>
                         <hr />
                         <span>
                           <h5>Features</h5>
                         </span>
-                        <span> 
-                            {showTable()}
-                        </span>
-                      </>):(<></>)
-                    }
+                        <span>{showTable()}</span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
@@ -255,31 +256,27 @@ export default function AdView() {
                 </div>
 
                 <div className="text-center mt-2">
-                      <h5>Overview</h5>
-                      <hr />
+                  <h5>Overview</h5>
+                  <hr />
                 </div>
-                  <span>
-                    {ad.description}
-                  </span>
+                <span>{ad.description}</span>
 
                 {/*features*/}
-                {ad.features.length > 0 &&
-                 <>
+                {ad.features.length > 0 && (
+                  <>
                     <div className="text-center mt-3">
                       <h5>Features</h5>
                       <hr />
                     </div>
-                    <span> 
-                        {showTable()}
-                    </span>
-                 </>
-                }
+                    <span>{showTable()}</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
 
           {/* related properties */}
-          <br/>
+          <br />
           <div className="container related-margin">
             <h4 className="text-center mb-3">Related Properties</h4>
             <hr />
