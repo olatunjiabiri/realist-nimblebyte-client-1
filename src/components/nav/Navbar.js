@@ -146,7 +146,8 @@ const Navbar = () => {
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="navbar-nav lead">
-                {auth?.user?.role.includes("Agent") ? (
+                {auth?.user?.role.includes("Agent") ||
+                auth?.user?.role.includes("Admin") ? (
                   <div className="dropdown mr-auto">
                     <li>
                       <a
