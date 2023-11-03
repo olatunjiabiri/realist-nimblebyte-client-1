@@ -46,8 +46,8 @@ export default function ProfileForm({ sourceURL }) {
   }, []);
 
   useEffect(() => {
-    if (auth?.user?.role && auth.user?.role?.includes("Seller")) {
-      setUserType("Seller");
+    if (auth?.user?.role && auth.user?.role?.includes("Agent")) {
+      setUserType("Agent");
     }
   }, [auth?.user?.role]);
 
@@ -129,7 +129,7 @@ export default function ProfileForm({ sourceURL }) {
                 </div>
 
                 {/* <div className="form-group col-8 pb-1">
-                  {(userType === "Seller" || isAgent) && (
+                  {(userType === "Agent" || isAgent) && (
                     <ProfileUpload
                       photo={photo}
                       setPhoto={setPhoto}
@@ -178,7 +178,7 @@ export default function ProfileForm({ sourceURL }) {
                               checked={isAgent === true}
                               onChange={() => {
                                 setIsAgent(true);
-                                // setUserType("Seller");
+                                // setUserType("Agent");
                               }}
                             />
                             Yes
@@ -189,7 +189,7 @@ export default function ProfileForm({ sourceURL }) {
                   )}
 
                   <div className="form-group col-8 pb-1">
-                    {(userType === "Seller" || isAgent || sourceURL) && (
+                    {(userType === "Agent" || isAgent || sourceURL) && (
                       <ProfileUpload
                         photo={photo}
                         setPhoto={setPhoto}
@@ -198,7 +198,7 @@ export default function ProfileForm({ sourceURL }) {
                       />
                     )}
                   </div>
-                  {userType === "Seller" || isAgent || sourceURL ? (
+                  {userType === "Agent" || isAgent || sourceURL ? (
                     <>
                       <input
                         type="text"
@@ -265,7 +265,7 @@ export default function ProfileForm({ sourceURL }) {
                     onChange={(e) => setAbout(e.target.value)}
                     maxLength={200}
                   />
-                  {(userType === "Seller" || isAgent || sourceURL) && (
+                  {(userType === "Agent" || isAgent || sourceURL) && (
                     <label className="alert alert-warning d-flex align-items-center">
                       <span>
                         <AiFillWarning

@@ -146,7 +146,7 @@ const Navbar = () => {
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="navbar-nav lead">
-                {loggedIn ? (
+                {auth?.user?.role.includes("Agent") ? (
                   <div className="dropdown mr-auto">
                     <li>
                       <a
@@ -237,7 +237,7 @@ const Navbar = () => {
                             to="/dashboard"
                             onClick={closeMobileMenu}
                           >
-                            {auth.user?.role?.includes("Seller")
+                            {auth?.user?.role?.includes("Agent")
                               ? "Dashboard"
                               : "Wishlist"}
                           </NavLink>
@@ -260,7 +260,7 @@ const Navbar = () => {
                             Change Password
                           </NavLink>
                         </li>
-                        {!auth.user?.role?.includes("Seller") && (
+                        {!auth.user?.role?.includes("Agent") && (
                           <li>
                             <NavLink
                               className="dropdown-item"
