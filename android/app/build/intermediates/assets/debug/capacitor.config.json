@@ -1,0 +1,9 @@
+{
+	"appId": "com.realistapp1.app",
+	"appName": "realistapp1",
+	"webDir": "build",
+	"server": {
+		"androidScheme": "http://localhost:3000",
+		"cleartext": true
+	}
+}
