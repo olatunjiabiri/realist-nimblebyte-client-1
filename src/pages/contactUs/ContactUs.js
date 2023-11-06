@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 import "./ContactUs.css";
 import { useAuth } from "../../context/auth";
-import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
+// import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 import { contactUsSchema } from "./validations";
 import config from "../../NewConfig";
@@ -17,24 +17,27 @@ const ContactUs = () => {
 
   // state
   const [loading, setLoading] = useState(false);
+  // console.log("subject", auth.user);
 
   const onSubmit = async (values, actions) => {
     const { contactName, email, message, phone, subject } = values;
-    console.log("subject", subject);
 
     try {
       // console.log(email, password);
       setLoading(true);
 
-      const response = await axios.post(`${config.AUTH_API}/api/contact-us`, {
-        name: contactName,
-        email: email,
-        phone: phone,
-        messages: message,
-        subject: subject,
-      });
+      const response = await axios.post(
+        `${config.AUTH_API}/api/Emailing/ContactUs`,
+        {
+          Name: contactName,
+          Email: email,
+          Phone: phone,
+          Message: message,
+          Subject: subject,
+        }
+      );
 
-      console.log("response>>>", response);
+      // console.log("response>>>", response);
       if (!response.data.success) {
         toast.error(response.data.message);
         setLoading(false);
@@ -135,7 +138,7 @@ const ContactUs = () => {
                     type="tel"
                     name="phone"
                     className="form-control mb-3"
-                    placeholder="Enter your email"
+                    placeholder="Enter your phone"
                     value={values.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -158,10 +161,6 @@ const ContactUs = () => {
                     name="subject"
                     className="form-select form-select-lg f-select"
                   >
-                    {/* <option disabled selected>
-                    {" "}
-                    Select Message type
-                  </option> */}
                     <option
                       className="form-select-lg mb-3 f-select"
                       value={"Enquiry"}

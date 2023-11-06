@@ -81,7 +81,7 @@ const Navbar = () => {
         ref={navbarRef}
       >
         <div className="container">
-          <span className="navbar-brand d-flex w-50 me-auto">
+          <span className="navbar-brand d-flex w-25 me-auto">
             <nav className="nav lead">
               <Link to={"/"} onClick={closeMobileMenu}>
                 <img
