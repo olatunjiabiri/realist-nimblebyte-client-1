@@ -28,7 +28,7 @@ src/config.js
 /.vs
 
 # Gradle related
-.gradle/
+android/.gradle/
 build/
 
 # Gradle wrapper
