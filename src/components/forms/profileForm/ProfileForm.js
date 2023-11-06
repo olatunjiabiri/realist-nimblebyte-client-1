@@ -19,7 +19,7 @@ export default function ProfileForm({ sourceURL }) {
   const [company, setCompany] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [about, setAbout] = useState("");
+  const [aboutMe, setAboutMe] = useState("");
   const [reg_number, setReg_number] = useState("");
   const [userType, setUserType] = useState("Buyer");
 
@@ -39,9 +39,9 @@ export default function ProfileForm({ sourceURL }) {
       setCompany(auth.user?.company);
       setAddress(auth.user?.address);
       setPhone(auth.user?.phone);
-      setAbout(auth.user?.about);
+      setAboutMe(auth.user?.description);
       setPhoto(auth.user?.photo);
-      setReg_number(auth.user?.reg_number);
+      setReg_number(auth.user?.info?.regNumber);
     }
   }, []);
 
@@ -59,14 +59,16 @@ export default function ProfileForm({ sourceURL }) {
       const { data } = await axios.post(
         `${config.AUTH_API}/user/updateProfile`,
         {
+          userId: auth?.user?.userId,
           firstName,
           lastName,
           email,
           company,
           address,
           phone,
-          about,
-          reg_number,
+          description: aboutMe,
+          registrationNumber: reg_number,
+          roles: auth?.user?.role,
         }
       );
 
@@ -74,7 +76,6 @@ export default function ProfileForm({ sourceURL }) {
         toast.error(data.message);
         setLoading(false);
       } else {
-        // const data1 = { ...auth.user, role: "Buyer", userId: auth.user.userId };
         const data1 = { ...auth.user, userId: auth.user.userId };
 
         setAuth({ ...auth, user: data.responsePayload });
@@ -83,6 +84,8 @@ export default function ProfileForm({ sourceURL }) {
         fromLS.user = data1;
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
+
+        // console.log("data storage", localStorage.getItem("auth"));
 
         toast.success("Profile updated");
         // reload page on redirect
@@ -261,8 +264,8 @@ export default function ProfileForm({ sourceURL }) {
                   <textarea
                     placeholder="Write something interesting about yourself.."
                     className="form-control mb-3"
-                    value={about}
-                    onChange={(e) => setAbout(e.target.value)}
+                    value={aboutMe}
+                    onChange={(e) => setAboutMe(e.target.value)}
                     maxLength={200}
                   />
                   {(userType === "Agent" || isAgent || sourceURL) && (
