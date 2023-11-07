@@ -14,7 +14,7 @@ const AgentAdsTable = ({ ads }) => {
     setAgent(ads[0]);
   }, []);
 
-  console.log("ads>>", ads[0]);
+  // console.log("ads>>", ads[0]);
 
   const userColumns = [
     {
@@ -77,12 +77,26 @@ const AgentAdsTable = ({ ads }) => {
       <div className="datatable datatableTitle">
         <DataGrid
           rowSpacing={3}
-          // sx={{ p: 3 }}
           getRowId={(row) => row._id}
           className="datagrid"
           rows={ads[0]}
           columns={userColumns}
-          rowHeight={200}
+          // rowHeight={150}
+          autoHeight
+          {...ads[0]}
+          getRowHeight={() => "auto"}
+          getEstimatedRowHeight={() => 200}
+          sx={{
+            "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
+              py: "8px",
+            },
+            "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
+              py: "15px",
+            },
+            "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
+              py: "22px",
+            },
+          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
