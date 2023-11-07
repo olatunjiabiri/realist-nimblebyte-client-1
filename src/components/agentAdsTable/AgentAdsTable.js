@@ -38,7 +38,7 @@ const AgentAdsTable = ({ ads }) => {
       field: "address",
       headerName: "Address",
       headerClassName: "datatableTitle",
-      width: 500,
+      width: 400,
       className: "table-heading",
       renderCell: (params) => {
         return (
@@ -131,6 +131,9 @@ const AgentAdsTable = ({ ads }) => {
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
+            },
+            sorting: {
+              sortModel: [{ field: "sold", sort: "asc" }],
             },
           }}
           pageSizeOptions={[5, 10, 20, 30, 40]}
