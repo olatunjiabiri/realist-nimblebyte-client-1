@@ -318,15 +318,26 @@ export default function ProfileForm({ sourceURL }) {
                   )}
 
                   <div className="d-flex justify-content-center">
-                    <button
-                      className="btn btn-primary col-md-6 mt-3 mb-5"
-                      disabled={loading}
-                      onClick={() => {
-                        alert("You Data will go through Verification Process.");
-                      }}
-                    >
-                      {loading ? "Processing" : "Update Profile"}
-                    </button>
+                    {userType === "Agent" || isAgent || sourceURL ? (
+                      <button
+                        className="btn btn-primary col-md-6 mt-3 mb-5"
+                        disabled={loading}
+                        onClick={() => {
+                          alert(
+                            "You Data will go through Verification Process."
+                          );
+                        }}
+                      >
+                        {loading ? "Processing" : "Update Profile"}
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-primary col-md-6 mt-3 mb-5"
+                        disabled={loading}
+                      >
+                        {loading ? "Processing" : "Update Profile"}
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>
