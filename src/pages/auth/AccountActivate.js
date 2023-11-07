@@ -55,7 +55,7 @@ export default function AccountActivate() {
         let fromLS = JSON.parse(localStorage.getItem("auth"));
         // fromLS.user.role = { role: "Buyer" };
 
-        // fromLS.user.role.push("Seller");
+        // fromLS.user.role.push("Agent");
 
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);

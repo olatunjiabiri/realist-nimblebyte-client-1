@@ -38,7 +38,7 @@ const AgentAdsTable = ({ ads }) => {
       field: "address",
       headerName: "Address",
       headerClassName: "datatableTitle",
-      width: 500,
+      width: 400,
       className: "table-heading",
       renderCell: (params) => {
         return (
@@ -93,11 +93,11 @@ const AgentAdsTable = ({ ads }) => {
       field: "sold",
       headerName: "Status",
       headerClassName: "datatableTitle",
-      width: 100,
+      width: 200,
       renderCell: (params) => {
         return (
           <div className="table-item">
-            {params.row.sold ? <>"Sold"</> : <>Available</>}
+            {params.row.sold ? <>{params.row.sold}</> : <>Available</>}
           </div>
         );
       },
@@ -108,15 +108,32 @@ const AgentAdsTable = ({ ads }) => {
       <div className="datatable datatableTitle">
         <DataGrid
           rowSpacing={3}
-          // sx={{ p: 3 }}
           getRowId={(row) => row._id}
           className="datagrid"
           rows={ads[0]}
           columns={userColumns}
-          rowHeight={200}
+          // rowHeight={150}
+          getRowHeight={() => "auto"}
+          getEstimatedRowHeight={() => 200}
+          sx={{
+            "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
+              py: "8px",
+            },
+            "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
+              py: "15px",
+            },
+            "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
+              py: "22px",
+            },
+          }}
+          autoHeight
+          {...ads[0]}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
+            },
+            sorting: {
+              sortModel: [{ field: "sold", sort: "asc" }],
             },
           }}
           pageSizeOptions={[5, 10, 20, 30, 40]}

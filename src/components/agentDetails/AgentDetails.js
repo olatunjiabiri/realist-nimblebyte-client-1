@@ -5,38 +5,47 @@ import React from "react";
 import "./AgentDetails.css";
 
 const AgentDetails = ({ agent }) => {
-  console.log("agent", agent[0]);
-  // const theme = useTheme();
-  // const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  // console.log(agent);
   return (
     <div className="container">
       <div className="row">
-        <div className="box">
-          <img src={agent[0]?.photo} alt="" className="agt-image" />
-          <div className="box-details">
-            <p className="agt-text1">
-              {agent[0]?.firstName?.toUpperCase()}{" "}
-              {agent[0]?.lastName?.toUpperCase()}
-              Hillary Clinton
-            </p>
-            <p className="agt-text2">
-              {agent[0]?.email ?? "somethin@mail.com"}
-            </p>
-            <p className="agt-text2">{agent[0]?.company ?? "#Company"}</p>
-            <p className="agt-text2">{agent[0]?.phone ?? "#PhoneNumber"}</p>
-            <p className="agt-text2">
-              {agent[0]?.licenceNumber ?? "#licence No."}
-            </p>
-          </div>
+        <div className="col-md-4 col-sm-12 agt-left-c agt-details">
+          {/* <div className="agt-image"> */}
+          <img
+            className="agt-image"
+            src={agent?.applicationUser.photo}
+            alt=""
+            style={{ height: "250px", objectFit: "cover" }}
+          />
+          {/* </div> */}
         </div>
 
+        <div className="col-md-8 col-sm-12 agt-info text-center">
+          <p className="agt-text1">
+            {" "}
+            {agent?.applicationUser?.firstName?.toUpperCase()}{" "}
+            {agent?.applicationUser?.lastName?.toUpperCase()}
+          </p>
+          <p className="agt-text2">{agent?.applicationUser?.email ?? " "}</p>
+          <p className="agt-text2">
+            {agent?.applicationUser?.company ?? "#Company"}
+          </p>
+          <p className="agt-text2">
+            {agent?.applicationUser?.phone ?? "#PhoneNumber"}
+          </p>
+          <p className="agt-text2">
+            {agent?.registrationNumber ?? "#Registration No."}
+          </p>
+        </div>
         <div className="agt-address col-md-8 col-sm-12 ">
-          <p className="agt-add">{agent[0]?.address ?? "#address"}</p>
+          <p className="agt-add">
+            {agent?.applicationUser?.address ?? "#address"}
+          </p>
         </div>
         <div className="agt-about col-md-8 col-sm-12 ">
           <h3> About me</h3>
-          <p className="agt-text2">
-            {agent[0]?.description ?? "#No description"}
+          <p className="agt-add">
+            {agent?.applicationUser?.description ?? "#description"}
           </p>
         </div>
       </div>

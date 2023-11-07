@@ -83,7 +83,7 @@ export default function ProfileUpload({
           src={photo.Location}
           shape="square"
           size="46"
-          className="ml-2 mb-4 mt-4"
+          className="mx-2 mb-4"
           onClick={() => handleDelete()}
         />
       ) : (

@@ -81,7 +81,7 @@ const Navbar = () => {
         ref={navbarRef}
       >
         <div className="container">
-          <span className="navbar-brand d-flex w-50 me-auto">
+          <span className="navbar-brand d-flex w-25 me-auto">
             <nav className="nav lead">
               <Link to={"/"} onClick={closeMobileMenu}>
                 <img
@@ -143,10 +143,19 @@ const Navbar = () => {
               >
                 Sell
               </NavLink>
+              <NavLink
+                className="nav-item nav-link"
+                aria-current="page"
+                to="/contact-us"
+                onClick={closeMobileMenu}
+              >
+                Contact Us
+              </NavLink>
             </ul>
             <ul className="nav navbar-nav ms-auto w-100 justify-content-end">
               <nav className="navbar-nav lead">
-                {loggedIn ? (
+                {auth?.user?.role?.includes("Agent") ||
+                auth?.user?.role?.includes("Admin") ? (
                   <div className="dropdown mr-auto">
                     <li>
                       <a
@@ -237,7 +246,7 @@ const Navbar = () => {
                             to="/dashboard"
                             onClick={closeMobileMenu}
                           >
-                            {auth.user?.role?.includes("Seller")
+                            {auth?.user?.role?.includes("Agent")
                               ? "Dashboard"
                               : "Wishlist"}
                           </NavLink>
@@ -260,7 +269,7 @@ const Navbar = () => {
                             Change Password
                           </NavLink>
                         </li>
-                        {!auth.user?.role?.includes("Seller") && (
+                        {!auth.user?.role?.includes("Agent") && (
                           <li>
                             <NavLink
                               className="dropdown-item"
