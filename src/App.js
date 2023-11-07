@@ -105,7 +105,7 @@ function App() {
                     path="/auth/google-authentication"
                     element={<GoogleAuthResponse />}
                   />
-                   <Route
+                  <Route
                     path="/auth/facebook-authentication"
                     element={<FacebookAuthResponse />}
                   />

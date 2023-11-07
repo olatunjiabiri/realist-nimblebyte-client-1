@@ -33,7 +33,7 @@ export default function Agent({ user }) {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${params.userId}/${page}/${perPage}`
+        `/user-ads/${params.userId}/${page}/${perPage}`,
       );
       // console.log("Ads data", data);
       setAds([data.ads]);
@@ -82,7 +82,7 @@ export default function Agent({ user }) {
 
   return (
     <div>
-      <div className="container mt-5 pt-5">
+      <div className="container pt-5" style={{ marginTop: "80px" }}>
         <div className="row">
           <div className="col-lg-7">
             {agent && <AgentDetails agent={agent} />}

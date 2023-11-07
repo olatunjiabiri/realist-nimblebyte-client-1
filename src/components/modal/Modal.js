@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import ReactPortal from "../ReactPortal";
@@ -25,8 +26,9 @@ function Modall({ children, isOpen, handleClose }) {
         classNames="modal"
         nodeRef={nodeRef}
       >
-        <div className="modal" ref={nodeRef}>
-          <div className="modal-content">
+        <div className="modal" ref={nodeRef} onClick={handleClose}>
+          {/* Prevent click inside the modal from closing it */}
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <Tooltip title="Close">
               <button onClick={handleClose} className="close-btn">
                 <AiOutlineClose />

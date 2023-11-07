@@ -1,4 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from "react";
+// import useTheme from "@mui/system/useTheme";
+// import useMediaQuery from "@mui/material/useMediaQuery";
 import "./AgentDetails.css";
 
 const AgentDetails = ({ agent }) => {
