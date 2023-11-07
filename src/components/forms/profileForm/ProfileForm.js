@@ -27,6 +27,7 @@ export default function ProfileForm({ sourceURL }) {
   const [photo, setPhoto] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
+  const [roles, setRoles] = useState([]);
 
   // hook
   // const navigate = useNavigate();
@@ -42,6 +43,7 @@ export default function ProfileForm({ sourceURL }) {
       setAboutMe(auth.user?.description);
       setPhoto(auth.user?.photo);
       setReg_number(auth.user?.info?.regNumber);
+      setRoles(auth?.user?.role);
     }
   }, []);
 
@@ -53,43 +55,78 @@ export default function ProfileForm({ sourceURL }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      setLoading(true);
-
-      const { data } = await axios.post(
-        `${config.AUTH_API}/user/updateProfile`,
-        {
-          userId: auth?.user?.userId,
-          firstName,
-          lastName,
-          email,
-          company,
-          address,
-          phone,
-          description: aboutMe,
-          registrationNumber: reg_number,
-          roles: auth?.user?.role,
-        }
-      );
-
-      if (!data.success) {
-        toast.error(data.message);
-        setLoading(false);
+      if ((userType === "Agent" || isAgent || sourceURL) && !photo) {
+        toast.error("Photo is required");
+        return;
+      } else if ((userType === "Agent" || isAgent || sourceURL) && !company) {
+        toast.error("Company name is required");
+        return;
+      } else if (
+        (userType === "Agent" || isAgent || sourceURL) &&
+        !reg_number
+      ) {
+        toast.error("Registration No. is required");
+        return;
+      } else if (!firstName) {
+        toast.error("FirstName is required");
+        return;
+      } else if (!lastName) {
+        toast.error("Lastname is required");
+        return;
+      } else if (!address) {
+        toast.error("Address is required");
+        return;
+      } else if (!phone) {
+        toast.error("Phone No. is required");
+        return;
+      } else if ((userType === "Agent" || isAgent || sourceURL) && !aboutMe) {
+        toast.error("Brief Profile is required");
+        return;
       } else {
-        const data1 = { ...auth.user, userId: auth.user.userId };
+        if (userType === "Agent" || isAgent || sourceURL) {
+          if (!auth.user?.role?.includes("Agent")) {
+            roles.push("Agent");
+          }
+        }
+        setLoading(true);
+        // console.log("Roles", roles);
+        const { data } = await axios.post(
+          `${config.AUTH_API}/user/updateProfile`,
+          {
+            userId: auth?.user?.userId,
+            firstName,
+            lastName,
+            email,
+            company,
+            address,
+            phone,
+            description: aboutMe,
+            registrationNumber: reg_number || "",
+            roles: roles,
+          }
+        );
 
-        setAuth({ ...auth, user: data.responsePayload });
+        if (!data.success) {
+          toast.error(data.message);
+          setLoading(false);
+        } else {
+          const data1 = { ...auth.user, userId: auth.user.userId };
 
-        let fromLS = JSON.parse(localStorage.getItem("auth"));
-        fromLS.user = data1;
-        localStorage.setItem("auth", JSON.stringify(fromLS));
-        setLoading(false);
+          setAuth({ ...auth, user: data.responsePayload });
 
-        // console.log("data storage", localStorage.getItem("auth"));
+          let fromLS = JSON.parse(localStorage.getItem("auth"));
+          fromLS.user = data1;
+          localStorage.setItem("auth", JSON.stringify(fromLS));
+          setLoading(false);
 
-        toast.success("Profile updated");
-        // reload page on redirect
-        window.location.href = "/";
+          // console.log("data storage", localStorage.getItem("auth"));
+
+          toast.success("Profile updated");
+          // reload page on redirect
+          window.location.href = "/";
+        }
       }
     } catch (err) {
       console.log(err);
@@ -106,7 +143,7 @@ export default function ProfileForm({ sourceURL }) {
           <div className="container mt-5">
             <div className="row mb-3">
               <div className="border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
-                <h1 class="text-dark text-center p-3">
+                <h1 className="text-dark text-center p-3">
                   {`${sourceURL ? "Agent Request Form" : "Update Profile"}`}
                 </h1>
                 <hr />
