@@ -95,7 +95,7 @@ const ContactUs = () => {
 
                   <input
                     type="text"
-                    className="form-control mb-3"
+                    className="form-control mb-2"
                     placeholder="Enter your name"
                     name="contactName"
                     id="name"
@@ -116,7 +116,7 @@ const ContactUs = () => {
                   {/* <label className="control-label form-label1"> Email </label> */}
                   <input
                     type="email"
-                    className="form-control mb-3"
+                    className="form-control mb-2"
                     name="email"
                     placeholder="Enter your email"
                     value={values.email}
@@ -137,7 +137,7 @@ const ContactUs = () => {
                   <input
                     type="tel"
                     name="phone"
-                    className="form-control mb-3"
+                    className="form-control mb-2"
                     placeholder="Enter your phone"
                     value={values.phone}
                     onChange={handleChange}
@@ -182,7 +182,7 @@ const ContactUs = () => {
               Message <span className="text-muted">(optional)</span>
             </label> */}
                   <textarea
-                    className="form-control mb-3"
+                    className="form-control mb-2"
                     placeholder="Write your message"
                     cols={10}
                     rows={5}
