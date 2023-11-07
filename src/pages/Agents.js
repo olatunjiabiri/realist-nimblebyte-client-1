@@ -20,11 +20,13 @@ export default function Agents() {
   );
 
   // state
-  const [agents, setAgents] = useState();
+  const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [filteredAgents, setFilteredAgents] = useState([]);
   const [filtered, setFiltered] = useState([]);
+  const [page] = useState(2);
+  const [size] = useState(50);
 
   useEffect(() => {
     fetchAgents();
@@ -41,16 +43,24 @@ export default function Agents() {
 
   const fetchAgents = async () => {
     try {
+      // const { data } = await axios.get(
+      //   `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
+      // );
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
+        `${config.AUTH_API}/api/Agent/agents?page=${page}&size=${size}`
       );
-      setAgents(data.responsePayload);
+      // setAgents(data.responsePayload);
+      setAgents(data);
+
       setLoading(false);
-      // console.log("agents new>>", data.responsePayload);
 
       // console.log("clocation first", currentLocation);
-      const afiltered = Object.values(data.responsePayload).filter((agent) =>
-        agent.address?.toLowerCase().includes(currentLocation?.toLowerCase())
+      const afiltered = data.filter(
+        (agent) =>
+          agent.isApproved &&
+          agent.applicationUser.address
+            ?.toLowerCase()
+            .includes(currentLocation?.toLowerCase())
       );
       // console.log("afiltered", afiltered);
 
@@ -99,10 +109,12 @@ export default function Agents() {
                 <>
                   {isSmScreen ? (
                     <AgentsMobileList
-                      returnedAgents={filtered ? filtered : agents}
+                      returnedAgents={filtered.length > 0 ? filtered : agents}
                     />
                   ) : (
-                    <AgentsList returnedAgents={filtered ? filtered : agents} />
+                    <AgentsList
+                      returnedAgents={filtered.length > 0 ? filtered : agents}
+                    />
                   )}
                 </>
               )}
