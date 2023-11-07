@@ -26,14 +26,3 @@ src/config.js
 
 .vs
 /.vs
-
-# Gradle related
-android/.gradle/
-build/
-
-# Gradle wrapper
-!/gradle/wrapper/gradle-wrapper.jar
-!/gradle/wrapper/gradle-wrapper.properties
-
-# Other common directories to ignore
-out/
