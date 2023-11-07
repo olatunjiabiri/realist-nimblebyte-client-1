@@ -29,12 +29,16 @@ export default function AgentSearchForm({ parentCallback, agents }) {
       const filtered = Object.values(agents).filter(
         (agent) =>
           (!agentLocation ||
-            agent.address
+            agent.applicationUser.address
               ?.toLowerCase()
               .includes(agentLocation.toLowerCase())) &&
           (!agentName ||
-            agent.firstName?.toLowerCase().includes(agentName.toLowerCase()) ||
-            agent.lastName?.toLowerCase().includes(agentName.toLowerCase()))
+            agent.applicationUser.firstName
+              ?.toLowerCase()
+              .includes(agentName.toLowerCase()) ||
+            agent.applicationUser.lastName
+              ?.toLowerCase()
+              .includes(agentName.toLowerCase()))
       );
       setFilteredAgents(filtered);
 

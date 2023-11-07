@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   const [loading, setLoading] = useState(false);
 
-  const seller = auth.user?.role?.includes("Seller");
+  const agent = auth.user?.role?.includes("Agent");
 
   useEffect(() => {
     fetchAds();
@@ -49,7 +49,7 @@ export default function Dashboard() {
     >
       {/* className={completed ? 'text-strike' : null} */}
       <div className="card shadow border-0 mt-4">
-        {!seller ? (
+        {!agent ? (
           <div className="d-flex justify-content-center text-light align-items-center card-header-color">
             <div className="row">
               <div className="col-12 text-center">

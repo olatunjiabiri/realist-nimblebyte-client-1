@@ -7,6 +7,7 @@ import "./AgentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 
 const AgentsList = ({ returnedAgents }) => {
+  // console.log("returnedAgents", returnedAgents);
   useEffect(() => {});
 
   const userColumns = [
@@ -20,7 +21,7 @@ const AgentsList = ({ returnedAgents }) => {
           <div className="agent-image">
             <img
               className="cellImg"
-              src={params.row.photo ?? "nimblelogo2.png"}
+              src={params.row.applicationUser.photo ?? "nimblelogo2.png"}
               alt="avatar"
             />
             {/* <p className="agent-text2">{params.row.company ?? "#Company"}</p>
@@ -49,14 +50,19 @@ const AgentsList = ({ returnedAgents }) => {
               }}
             >
               <p className="agent-text1">
-                {params.row.firstName}, &nbsp; {params.row.lastName}
+                {params.row.applicationUser.firstName}, &nbsp;{" "}
+                {params.row.applicationUser.lastName}
               </p>
             </Link>
 
-            <p className="agent-text2">{params.row.company ?? "#Company"}</p>
-            <p className="agent-text2">{params.row.phone ?? "#PhoneNumber"}</p>
             <p className="agent-text2">
-              {params.row.licenceNumber ?? "#licence No."}
+              {params.row.applicationUser.company ?? "#Company"}
+            </p>
+            <p className="agent-text2">
+              {params.row.applicationUser.phone ?? "#PhoneNumber"}
+            </p>
+            <p className="agent-text2">
+              {params.row.registrationNumber ?? "#licence No."}
             </p>
           </div>
         );
@@ -68,7 +74,9 @@ const AgentsList = ({ returnedAgents }) => {
       headerClassName: "datatableTitle",
       width: 300,
       renderCell: (params) => {
-        return <div className="table-item">{params.row.email}</div>;
+        return (
+          <div className="table-item">{params.row.applicationUser.email}</div>
+        );
       },
     },
 
@@ -78,7 +86,9 @@ const AgentsList = ({ returnedAgents }) => {
       headerClassName: "datatableTitle",
       width: 300,
       renderCell: (params) => {
-        return <div className="table-item">{params.row.address}</div>;
+        return (
+          <div className="table-item">{params.row.applicationUser.address}</div>
+        );
       },
     },
     {
@@ -107,13 +117,28 @@ const AgentsList = ({ returnedAgents }) => {
     <>
       <div className="datatable datatableTitle">
         <DataGrid
-          rowSpacing={3}
+          autoHeight
+          {...returnedAgents}
+          rowSpacing={5}
           // sx={{ p: 3 }}
           getRowId={(row) => row.userId}
           className="datagrid"
           rows={returnedAgents}
           columns={userColumns}
-          rowHeight={200}
+          // rowHeight={200}
+          getRowHeight={() => "auto"}
+          getEstimatedRowHeight={() => 200}
+          sx={{
+            "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
+              py: "8px",
+            },
+            "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
+              py: "15px",
+            },
+            "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
+              py: "22px",
+            },
+          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -122,7 +147,7 @@ const AgentsList = ({ returnedAgents }) => {
           pageSizeOptions={[5, 10, 20, 30, 40]}
         />
       </div>
-      {/* <pre>{JSON.stringify(agent, null, 4)} </pre> */}
+      {/* <pre>{JSON.stringify(returnedAgents, null, 4)} </pre> */}
     </>
   );
 };

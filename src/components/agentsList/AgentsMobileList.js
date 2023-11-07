@@ -33,7 +33,7 @@ const AgentsMobileList = ({ returnedAgents }) => {
             >
               <img
                 className="cellImg"
-                src={params.row.photo ?? "nimblelogo2.png"}
+                src={params.row.applicationUser.photo ?? "nimblelogo2.png"}
                 alt="avatar"
               />
             </Link>
@@ -58,17 +58,20 @@ const AgentsMobileList = ({ returnedAgents }) => {
               }}
             >
               <p className="agent-text1">
-                {params.row.firstName}, &nbsp; {params.row.lastName}
+                {params.row.applicationUser.firstName}, &nbsp;{" "}
+                {params.row.applicationUser.lastName}
               </p>
 
-              <p className="agent-text2">{params.row.company ?? "#Company"}</p>
               <p className="agent-text2">
-                {params.row.phone ?? "#PhoneNumber"}
+                {params.row.applicationUser.company ?? "#Company"}
               </p>
               <p className="agent-text2">
-                {params.row.licenceNumber ?? "#licence No."}
+                {params.row.applicationUser.phone ?? "#PhoneNumber"}
               </p>
-              <p className="agent-text2">{params.row.email}</p>
+              <p className="agent-text2">
+                {params.row.registrationNumber ?? "#licence No."}
+              </p>
+              <p className="agent-text2">{params.row.applicationUser.email}</p>
             </Link>
           </div>
         );
@@ -101,13 +104,28 @@ const AgentsMobileList = ({ returnedAgents }) => {
     <>
       <div className="datatable datatableTitle">
         <DataGrid
-          rowSpacing={3}
+          autoHeight
+          {...returnedAgents}
+          rowSpacing={5}
           // sx={{ p: 3 }}
           getRowId={(row) => row.userId}
           className="datagrid"
           rows={returnedAgents}
           columns={userColumns}
-          rowHeight={200}
+          // rowHeight={200}
+          getRowHeight={() => "auto"}
+          getEstimatedRowHeight={() => 200}
+          sx={{
+            "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
+              py: "8px",
+            },
+            "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
+              py: "15px",
+            },
+            "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
+              py: "22px",
+            },
+          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },

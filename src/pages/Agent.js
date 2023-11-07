@@ -18,8 +18,8 @@ export default function Agent({ user }) {
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
-  const [agents, setAgents] = useState();
+  const [perPage, setPerPage] = useState(50);
+  // const [agents, setAgents] = useState();
 
   const [loading, setLoading] = useState(true);
 
@@ -46,15 +46,22 @@ export default function Agent({ user }) {
 
   const fetchAgents = async () => {
     try {
+      // const { data } = await axios.get(
+      //   `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
+      // );
+
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Seller`
+        `${config.AUTH_API}/api/Agent/agent?userId=${params.userId}`
       );
-      setAgents(data.responsePayload);
-      setAgent(
-        data?.responsePayload.filter((a) => {
-          return a.userId === params.userId;
-        })
-      );
+
+      console.log("agent data>>", data);
+      setAgent(data);
+      // setAgents(data.responsePayload);
+      // setAgent(
+      //   data?.responsePayload.filter((a) => {
+      //     return a.userId === params.userId;
+      //   })
+      // );
       setLoading(false);
     } catch (err) {
       console.log(err);
