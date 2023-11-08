@@ -1,16 +1,35 @@
 import { Badge } from "antd";
+import React from "react";
 import { Link } from "react-router-dom";
 import AdFeatures from "../../components/cards/AdFeatures";
 import { formatNumber } from "../../helpers/ad";
 import millify from "millify";
+import { useNavigate } from "react-router-dom";
 
-export default function UserAdCard({ ad }) {
+export default function UserAdCard({ ad, setIsOpen, approved }) {
+  let navigate = useNavigate();
+
+  const handleClick = (event) => {
+    // Prevent default link behavior
+    event.preventDefault();
+
+    // Check if the modal should be opened
+    if (approved) {
+      navigate(`/user/ad/${ad.slug}`);
+    } else {
+      setIsOpen(true);
+    }
+  };
   return (
     <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6">
-      <Link to={`/user/ad/${ad.slug}`} className="text-decoration-none">
+      <Link
+        to={`/user/ad/${ad.slug}`}
+        // onClick={handleClick}
+        className="text-decoration-none"
+      >
         <Badge.Ribbon
           text={`${ad?.type} for ${ad?.action === "Sell" ? "Sale" : "Rent"}`}
-          color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
+          color={`${ad?.action === "Sell" ? "green" : "blue"}`}
         >
           <div className="card hoverable shadow">
             <img
@@ -50,7 +69,7 @@ export default function UserAdCard({ ad }) {
                   <button
                     className={`btn ${
                       (ad.sold === "Sold" && "btn-danger") ||
-                      (ad.sold === "Available" && "btn-primary") ||
+                      (ad.sold === "Available" && "btn-success") ||
                       (ad.sold === "Under Contract" && "btn-warning")
                     }`}
                     style={{ width: "150px" }}

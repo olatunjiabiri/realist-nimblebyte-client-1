@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
+import Modall from "../modal/Modal";
 // import useSelection from "antd/es/table/hooks/useSelection";
 // import "./index.css";
 
@@ -11,9 +12,38 @@ const Navbar = () => {
   // hooks
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navbarRef = useRef(null);
+
+  const handleRentClick = (event) => {
+    // Prevent default link behavior
+    event.preventDefault();
+    const approved = auth?.user?.info?.isApproved;
+    setMobileMenuOpen(false);
+
+    // Check if the modal should be opened
+    if (approved) {
+      navigate("/ad/create/rent/house");
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const handleSaleClick = (event) => {
+    // Prevent default link behavior
+    event.preventDefault();
+    const approved = auth?.user?.info?.isApproved;
+    setMobileMenuOpen(false);
+
+    // Check if the modal should be opened
+    if (approved) {
+      navigate("/ad/create/sell/house");
+    } else {
+      setIsOpen(true);
+    }
+  };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -75,6 +105,25 @@ const Navbar = () => {
 
   return (
     <>
+      <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <p className="header-modal">Request Pending Approval</p>
+        <div className="info-modal">
+          Dear {auth?.user?.lastName},
+          <br />
+          <br />
+          Your application to become an agent is under review. We typically
+          process requests within 1-3 business days. You will receive an email
+          once a decision is made.
+          <br />
+          <br />
+          For any queries, feel free to contact us.
+          <br />
+          <br />
+          Best,
+          <br />
+          NimbleByte Team
+        </div>
+      </Modall>
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
         id="custom-nav"
@@ -176,19 +225,19 @@ const Navbar = () => {
                           <NavLink
                             className="dropdown-item"
                             to="/ad/create/sell/house"
-                            onClick={closeMobileMenu}
+                            onClick={handleSaleClick}
                           >
                             Sale
                           </NavLink>
                         </li>
                         <li>
-                          <NavLink
+                          <a
                             className="dropdown-item"
                             to="/ad/create/rent/house"
-                            onClick={closeMobileMenu}
+                            onClick={handleRentClick}
                           >
                             Rent
-                          </NavLink>
+                          </a>
                         </li>
                       </ul>
                     </li>
