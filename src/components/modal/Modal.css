@@ -1,69 +1,68 @@
 .modal {
-    position: fixed;
-    inset: 0; /* inset sets all 4 values (top right bottom left) much like how we set padding, margin etc., */
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease-in-out;
-    overflow: hidden; /* auto */
-    z-index: 999;
-    padding: 40px 20px 20px;
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.4);
+  position: fixed;
+  inset: 0; /* inset sets all 4 values (top right bottom left) much like how we set padding, margin etc., */
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden; /* auto */
+  z-index: 999;
+  padding: 40px 20px 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.4);
+}
+
+.modal-enter-done {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+.modal-exit {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.modal-content {
+  padding: 1rem 0;
+  /* width: 100%; */
+  /* height: 70%; */
+  /* background-color: #282c34; */
+  /* color: #fff; */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  font-size: 2rem;
+}
+
+.close-btn {
+  position: absolute;
+  font-size: 20px;
+  top: 17px; /*25 */
+  right: 18px; /*20 */
+  z-index: 100000;
+  border: 5px;
+}
+
+@media (max-width: 767px) {
+  .modal-content {
+    width: 90%;
+    /* height: 80%; */
+    /* padding: 0; */
   }
-  
-  
-  .modal-enter-done {
-    opacity: 1;
-    pointer-events: auto;
-    transform: scale(1);
-  }
-  .modal-exit {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  
-  /* .modal-content {
-    padding-top: 2rem;
-    width: 70%;
-    height: 70%;
-    background-color: #282c34;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-  } */
 
   .close-btn {
-    position: absolute;
-    font-size: 20px;
-    top: 40px; /*25 */
-    right: 50px; /*20 */
-    z-index: 100000;
-    border: 0px;
+    top: 4px;
+    right: 2px;
   }
+}
 
-
-  @media (max-width: 767px) {
-    .modal-content {
-      width: 50%;
-      height: 50%;
-    }
-
-    .close-btn {
-      top: 4px;
-      right: 2px;
-    }
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Add styles for medium-sized screens here */
+  .close-btn {
+    top: 40px;
+    right: 30px;
   }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    /* Add styles for medium-sized screens here */
-    .close-btn {
-      top: 40px;
-      right: 30px;
-    }
-  }
+}
