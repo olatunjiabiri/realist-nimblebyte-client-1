@@ -32,7 +32,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`,
       );
       setAgent(
         data?.responsePayload.filter((a) => {
@@ -69,6 +69,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       console.log("response>>>", response);
       toast.success("Your enquiry has been sent to the agent");
       setLoading(false);
+      setIsOpen(false);
     } catch (err) {
       console.error("enquiry error", err);
       toast.error("Something went wrong! Try again.");
