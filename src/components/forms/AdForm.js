@@ -139,7 +139,7 @@ export default function AdForm({ action, type }) {
 
   return (
     <div>
-      <div className="container p-5">
+      <div className="container contain">
         <div className="row">
           <form>
             <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">

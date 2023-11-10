@@ -108,7 +108,7 @@ export default function AdView() {
                   <div>
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm disabled"
+                      className="btn btn-success btn-sm disabled"
                     >
                       {ad.type} for {ad.action === "Sell" ? "SALE" : "RENT"}
                     </button>
