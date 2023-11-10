@@ -47,6 +47,10 @@
   font-weight: bold;
 }
 
+.contain {
+  padding: 5rem;
+}
+
 @media screen and (max-width: 640) {
   .filter-options {
     display: none;
@@ -56,12 +60,21 @@
     margin: 0%;
     flex-direction: column;
   }
+  .contain {
+    padding: 2rem 0;
+  }
   /* .filter-container {
         width: 50%;
         height: 400px ;
         margin-left: auto;
         border-color: red;
     } */
+}
+
+@media (max-width: 768px) {
+  .contain {
+    padding: 2rem 0;
+  }
 }
 
 /* .search-bar-container {

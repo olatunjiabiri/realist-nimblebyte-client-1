@@ -58,11 +58,13 @@
   bottom: 20px;
   right: 20px;
   color: #0056b3;
+  background-color: #fff;
+  font-weight: 500;
   border-color: #0056b3;
   border-radius: 25px;
   padding: 8px 12px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 @media (max-width: 767px) {
