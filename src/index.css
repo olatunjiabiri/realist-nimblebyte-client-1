@@ -69,6 +69,14 @@
   border-radius: 0px;
 }
 
+.box {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  align-items: center;
+  max-width: 100%;
+  justify-content: flex-start;
+}
+
 /* .active-button {
   background: #191970;
 } */
