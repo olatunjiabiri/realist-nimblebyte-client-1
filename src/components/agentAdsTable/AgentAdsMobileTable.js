@@ -64,7 +64,7 @@ const AgentAdsTable = ({ ads }) => {
                 {millify(params.row.price)}{" "}
               </div>
               <div className="table-item">
-                {params.row.sold ? <>"Sold"</> : <>Available</>}
+                {params.row.sold ? <>{params.row.sold}</> : <>Available</>}
               </div>
             </Link>
           </div>
