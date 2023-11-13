@@ -41,10 +41,13 @@
   height: 70px;
 }
 
-.card-height {
-  height: 650;
-}
+/* .card-height {
+  height: 650px;
+} */
 
+.card-width {
+  max-width: 400px;
+}
 .contact-owner-button {
   bottom: 20px;
   right: 20px;

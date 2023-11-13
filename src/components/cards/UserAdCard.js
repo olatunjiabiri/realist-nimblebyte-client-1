@@ -21,7 +21,7 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
     }
   };
   return (
-    <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6">
+    <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6 card-width">
       <Link
         to={`/user/ad/${ad.slug}`}
         // onClick={handleClick}
@@ -38,8 +38,8 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
               style={{ height: "250px", objectFit: "cover" }}
             />
 
-            <div className="card-body">
-              <div className="card-body d-flex justify-content-between">
+            <div className="card-body ad-card-body">
+              <div className="d-flex justify-content-between">
                 <div className=" ">
                   <h3>
                     <span>&#8358;</span>
@@ -48,7 +48,7 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
                   </h3>
                 </div>
               </div>
-              <p className="card-text">{ad?.address}</p>
+              <p className="card-text address-height">{ad?.address}</p>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">
