@@ -121,7 +121,7 @@ const Navbar = () => {
           <br />
           Best,
           <br />
-          NimbleByte Team
+          NimbleCasa Team
         </div>
       </Modall>
       <nav
@@ -135,9 +135,9 @@ const Navbar = () => {
               <Link to={"/"} onClick={closeMobileMenu}>
                 <img
                   src="./nimblelogo2.png"
-                  alt="NimbleByte"
+                  alt="NimbleCasa"
                   height={50}
-                  width={50}
+                  width={70}
                 />
               </Link>
             </nav>

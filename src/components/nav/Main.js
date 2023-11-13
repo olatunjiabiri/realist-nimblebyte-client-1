@@ -86,7 +86,7 @@ export default function Main() {
               aria-current="page"
               to="/"
             >
-              Realist NimbleByte
+              NimbleCasa
             </NavLink>
           </nav>
         </div>

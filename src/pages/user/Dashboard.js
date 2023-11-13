@@ -63,7 +63,7 @@ export default function Dashboard() {
           <br />
           Best,
           <br />
-          NimbleByte Team
+          NimbleCasa Team
         </div>
       </Modall>
       <div
@@ -72,13 +72,18 @@ export default function Dashboard() {
       >
         {/* className={completed ? 'text-strike' : null} */}
         <div className="card shadow border-0 mt-5">
-          {(!auth?.user?.info?.isApproved &&
-            auth?.user?.role?.includes("Agent")) ||
-            (auth?.user?.role?.includes("Admin") && (
+          {!auth?.user?.info?.isApproved &&
+            auth?.user?.role?.includes("Agent") && (
               <div className="notice">
                 Your request to become an agent is pending approval
               </div>
-            ))}
+            )}
+          {!auth?.user?.info?.isApproved &&
+            auth?.user?.role?.includes("Admin") && (
+              <div className="notice">
+                Your request to become an agent is pending approval
+              </div>
+            )}
           {!agent ? (
             <div className="d-flex justify-content-center text-light align-items-center card-header-color">
               <div className="row">
@@ -88,7 +93,7 @@ export default function Dashboard() {
                     {auth.user?.firstName
                       ? auth.user?.firstName
                       : auth.user?.email?.split("@")[0]}
-                    , Welcome to Realist App
+                    , Welcome to NimbleCasa
                   </h2>
                 </div>
               </div>
