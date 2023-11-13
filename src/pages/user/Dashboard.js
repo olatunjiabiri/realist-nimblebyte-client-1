@@ -75,7 +75,9 @@ export default function Dashboard() {
           {(!auth?.user?.info?.isApproved &&
             auth?.user?.role?.includes("Agent")) ||
             (auth?.user?.role?.includes("Admin") && (
-              <div className="notice">Your request is pending approval</div>
+              <div className="notice">
+                Your request to become an agent is pending approval
+              </div>
             ))}
           {!agent ? (
             <div className="d-flex justify-content-center text-light align-items-center card-header-color">
