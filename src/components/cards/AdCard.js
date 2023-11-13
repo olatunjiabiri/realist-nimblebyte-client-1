@@ -37,7 +37,7 @@ export default function AdCard({ ad }) {
   }, [pathname]);
 
   return (
-    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-height">
+    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-width">
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <ContactSellerModal ad={ad} setIsOpen={setIsOpen} />
       </Modall>
