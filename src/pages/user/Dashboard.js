@@ -100,7 +100,7 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="">
-              {total > 0 && (
+              {total > 0 ? (
                 <div className="text-light ml-0 py-5 card-header-color">
                   <div className="row">
                     <div className="col-12 text-center">
@@ -108,6 +108,14 @@ export default function Dashboard() {
                         Listed Ads - Total {total}{" "}
                         {ads?.length > 1 ? "Ads" : "Ad"} found
                       </h1>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-light ml-0 py-2 card-header-color">
+                  <div className="row">
+                    <div className="col-12 text-center">
+                      <h1>You have not listed any ads yet!</h1>
                     </div>
                   </div>
                 </div>
@@ -119,14 +127,25 @@ export default function Dashboard() {
                   <div className="col-6 text-end"></div>
 
                   <div className="row d-flex justify-content-center">
-                    {ads?.map((ad) => (
-                      <UserAdCard
-                        setIsOpen={setIsOpen}
-                        approved={!auth?.user?.info?.isApproved}
-                        ad={ad}
-                        key={ad._id}
-                      />
-                    ))}
+                    {ads?.length > 0 ? (
+                      map((ad) => (
+                        <UserAdCard
+                          setIsOpen={setIsOpen}
+                          approved={!auth?.user?.info?.isApproved}
+                          ad={ad}
+                          key={ad._id}
+                        />
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <img
+                          src="./empty.svg"
+                          alt="Empty"
+                          height={400}
+                          width={400}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {ads?.length < total ? (
