@@ -63,7 +63,7 @@ export default function Dashboard() {
           <br />
           Best,
           <br />
-          NimbleByte Team
+          NimbleCasa Team
         </div>
       </Modall>
       <div
@@ -72,13 +72,18 @@ export default function Dashboard() {
       >
         {/* className={completed ? 'text-strike' : null} */}
         <div className="card shadow border-0 mt-5">
-          {(!auth?.user?.info?.isApproved &&
-            auth?.user?.role?.includes("Agent")) ||
-            (auth?.user?.role?.includes("Admin") && (
+          {!auth?.user?.info?.isApproved &&
+            auth?.user?.role?.includes("Agent") && (
               <div className="notice">
                 Your request to become an agent is pending approval
               </div>
-            ))}
+            )}
+          {!auth?.user?.info?.isApproved &&
+            auth?.user?.role?.includes("Admin") && (
+              <div className="notice">
+                Your request to become an agent is pending approval
+              </div>
+            )}
           {!agent ? (
             <div className="d-flex justify-content-center text-light align-items-center card-header-color">
               <div className="row">
@@ -88,14 +93,14 @@ export default function Dashboard() {
                     {auth.user?.firstName
                       ? auth.user?.firstName
                       : auth.user?.email?.split("@")[0]}
-                    , Welcome to Realist App
+                    , Welcome to NimbleCasa
                   </h2>
                 </div>
               </div>
             </div>
           ) : (
             <div className="">
-              {total > 0 && (
+              {total > 0 ? (
                 <div className="text-light ml-0 py-5 card-header-color">
                   <div className="row">
                     <div className="col-12 text-center">
@@ -103,6 +108,14 @@ export default function Dashboard() {
                         Listed Ads - Total {total}{" "}
                         {ads?.length > 1 ? "Ads" : "Ad"} found
                       </h1>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-light ml-0 py-2 card-header-color">
+                  <div className="row">
+                    <div className="col-12 text-center">
+                      <h1>You have not listed any ads yet!</h1>
                     </div>
                   </div>
                 </div>
@@ -114,14 +127,25 @@ export default function Dashboard() {
                   <div className="col-6 text-end"></div>
 
                   <div className="row d-flex justify-content-center">
-                    {ads?.map((ad) => (
-                      <UserAdCard
-                        setIsOpen={setIsOpen}
-                        approved={!auth?.user?.info?.isApproved}
-                        ad={ad}
-                        key={ad._id}
-                      />
-                    ))}
+                    {ads?.length > 0 ? (
+                      map((ad) => (
+                        <UserAdCard
+                          setIsOpen={setIsOpen}
+                          approved={!auth?.user?.info?.isApproved}
+                          ad={ad}
+                          key={ad._id}
+                        />
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <img
+                          src="./empty.svg"
+                          alt="Empty"
+                          height={400}
+                          width={400}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {ads?.length < total ? (
