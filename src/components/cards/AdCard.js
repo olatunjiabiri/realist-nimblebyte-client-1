@@ -45,7 +45,9 @@ export default function AdCard({ ad }) {
         <Badge.Ribbon
           text={`${ad?.type} for ${
             ad?.action === "Sell" ? "Sale" : "Rent"
-          }   |   ${ad?.sold}`}
+          }   |  ${
+            ad.sold === "Sold" && ad?.action === "Rent" ? "Rented" : ad?.sold
+          }`}
           // color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
           color={`${
             (ad.sold === "Sold" && "red") ||
