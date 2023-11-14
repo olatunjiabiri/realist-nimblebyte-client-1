@@ -38,7 +38,8 @@
 }
 
 .address-height {
-  height: 70px;
+  /* height: 70px; */
+  padding: 0.25rem 0rem 0.25rem;
 }
 
 /* .card-height {
