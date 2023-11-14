@@ -34,7 +34,7 @@ export default function Dashboard() {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${auth.user?.userId}/${page}/${perPage}`,
+        `/user-ads/${auth.user?.userId}/${page}/${perPage}`
       );
       // setAds(data.ads);
       // console.log("data", data);
@@ -128,7 +128,7 @@ export default function Dashboard() {
 
                   <div className="row d-flex justify-content-center">
                     {ads?.length > 0 ? (
-                      map((ad) => (
+                      ads?.map((ad) => (
                         <UserAdCard
                           setIsOpen={setIsOpen}
                           approved={!auth?.user?.info?.isApproved}
