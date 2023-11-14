@@ -4,54 +4,59 @@ import "./index.css";
 
 export default function Footer() {
   return (
-    <div className="container-fluid">
-      <div className="row align-items-left text-left p-4 bg-dark text-light pt-4 footer-word">
-        <div className="col-12 col-md-8">
-          <h4 className="mt-4">NimbleCasa - Buy, Sell or Rent Properties</h4>
-          <p className="mt-3">
-            &copy; {new Date().getFullYear()} All rights reserved
-          </p>
-        </div>
+    <div className="container-fluid align-items-left text-left p-4 bg-dark text-light pt-4 footer-word">
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-md-8">
+            <h4 className="mt-4">NimbleCasa - Buy, Sell or Rent Properties</h4>
+            <p className="mt-3">
+              &copy; {new Date().getFullYear()} All rights reserved
+            </p>
+          </div>
 
-        <div className="col-12 col-md-4 text-light footer-links">
-          <h4 className="mt-4">Quick Links</h4>
-          <div className="link footer-color" style={{ listStyleType: "none" }}>
-            <Link to="/">
-              <img
-                src="./home3.png"
-                className="footer-nav-img"
-                alt="Home"
-                height={35}
-                width={35}
-              />
-            </Link>
-            <Link to="/buy">
-              <img
-                src="./buy.png"
-                className=" footer-nav-img"
-                alt="buy"
-                height={35}
-                width={35}
-              />
-            </Link>
-            <Link to="/rent">
-              <img
-                src="./rent.png"
-                className=" footer-nav-img"
-                alt="rent"
-                height={35}
-                width={35}
-              />
-            </Link>
-            <Link to="/agents">
-              <img
-                src="./ouragents.png"
-                className=" footer-nav-img"
-                alt="ouragents"
-                height={35}
-                width={35}
-              />
-            </Link>
+          <div className="text-end col-12 col-md-4 text-light footer-links">
+            <h4 className="mt-4 q-link">Quick Links</h4>
+            <div
+              className="link footer-color"
+              style={{ listStyleType: "none" }}
+            >
+              <Link to="/">
+                <img
+                  src="./home3.png"
+                  className="footer-nav-img"
+                  alt="Home"
+                  height={35}
+                  width={35}
+                />
+              </Link>
+              <Link to="/buy">
+                <img
+                  src="./buy.png"
+                  className=" footer-nav-img"
+                  alt="buy"
+                  height={35}
+                  width={35}
+                />
+              </Link>
+              <Link to="/rent">
+                <img
+                  src="./rent.png"
+                  className=" footer-nav-img"
+                  alt="rent"
+                  height={35}
+                  width={35}
+                />
+              </Link>
+              <Link to="/agents">
+                <img
+                  src="./ouragents.png"
+                  className=" footer-nav-img"
+                  alt="ouragents"
+                  height={35}
+                  width={35}
+                />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
