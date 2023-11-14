@@ -46,7 +46,12 @@ export default function AdCard({ ad }) {
           text={`${ad?.type} for ${
             ad?.action === "Sell" ? "Sale" : "Rent"
           }   |   ${ad?.sold}`}
-          color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
+          // color={`${ad?.action === "Sell" ? "blue" : "blue"}`}
+          color={`${
+            (ad.sold === "Sold" && "red") ||
+            (ad.sold === "Available" && "blue") ||
+            (ad.sold === "Under Contract" && "gold")
+          }`}
         >
           <div className="card hoverable p-2 shadow-lg">
             {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
