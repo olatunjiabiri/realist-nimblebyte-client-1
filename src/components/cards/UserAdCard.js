@@ -74,7 +74,9 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
                     }`}
                     style={{ width: "150px" }}
                   >
-                    {ad.sold}
+                    {ad.sold === "Sold" && ad?.action === "Rent"
+                      ? "Rented"
+                      : ad?.sold}
                   </button>
                 </div>
               </div>

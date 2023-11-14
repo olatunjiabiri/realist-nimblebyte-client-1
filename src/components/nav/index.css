@@ -13,9 +13,19 @@ h-container {
   display: none;
 }
 
+.q-link {
+  display: flex;
+  justify-content: center;
+  padding-left: 8rem;
+}
+
 @media (max-width: 768px) {
   .menu-icon {
     display: block;
+  }
+
+  .q-link {
+    padding-left: 0px;
   }
 
   .h-menu-left {

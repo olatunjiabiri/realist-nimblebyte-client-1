@@ -29,6 +29,8 @@ export default function AdView() {
   const [ad, setAd] = useState({});
   const [isEmpty, setIsEmpty] = useState(false);
   const [related, setRelated] = useState([]);
+  const [soldRented, setSoldRented] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,7 +53,8 @@ export default function AdView() {
       const { data } = await axios.get(`/ad/${params.slug}`);
       if (data) {
         setAd(data?.ad);
-        setRelated(data?.related);
+        setSoldRented(data?.related.filter((r) => r.sold === "Sold"));
+        setRelated(data?.related.filter((r) => r.sold !== "Sold"));
         setLoading(false);
       } else {
         setIsEmpty(true);
@@ -82,7 +85,7 @@ export default function AdView() {
               <></>
             )}
           </div>
-        </div>,
+        </div>
       );
     }
     return tableRows;
@@ -276,16 +279,43 @@ export default function AdView() {
           </div>
 
           {/* related properties */}
-          <br />
-          <div className="container related-margin">
-            <h4 className="text-center mb-3">Related Properties</h4>
-            <hr />
-            <div className="row d-flex justify-content-center">
-              {related?.map((ad) => (
-                <AdCard key={ad._id} ad={ad} />
-              ))}
-            </div>
-          </div>
+          {related.length > 0 && (
+            <>
+              <br />
+              <div className="container related-margin">
+                <h4 className="text-center mb-3">
+                  Related {related.length > 1 ? "Properties" : "Property"}
+                </h4>
+                <hr />
+                <div className="row d-flex justify-content-center">
+                  {related?.map((ad) => (
+                    <AdCard key={ad._id} ad={ad} />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Recently sold/rented properties */}
+          {soldRented.length > 0 && (
+            <>
+              <br />
+              <div className="container related-margin">
+                <h4 className="text-center mb-3">
+                  Recently Sold/Rented{" "}
+                  {soldRented.length > 1 ? "Properties" : "Property"}
+                </h4>
+                <hr />
+                <div className="row d-flex justify-content-center">
+                  {soldRented?.map((ad) => (
+                    <AdCard key={ad._id} ad={ad} />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+          {/* <pre>{JSON.stringify(related, null, 4)} </pre>
+          <pre>{JSON.stringify(soldRented, null, 4)} </pre> */}
         </div>
       )}
     </div>
