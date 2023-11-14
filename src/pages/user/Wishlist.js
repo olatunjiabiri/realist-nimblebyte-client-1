@@ -35,13 +35,26 @@ export default function Wishlist() {
   return (
     <div className="container-fluid p-0">
       {!ads?.length ? (
-        <div className="d-flex justify-content-center text-light align-items-center card-header-color">
-          <div className="row">
-            <div className="col-12 text-center">
-              <h3>You have not liked any properties yet!</h3>
+        <>
+          <div className="d-flex justify-content-center text-light align-items-center card-header-color">
+            <div className="row">
+              <div className="col-12 text-center">
+                <h3>You have not liked any properties yet!</h3>
+              </div>
             </div>
           </div>
-        </div>
+          <div className="card-body p-4">
+            <div className="row pb-3">
+              <div className="col-6"></div>
+              <div className="col-6 text-end"></div>
+              <div className="row d-flex justify-content-center">
+                <div className="empty-state">
+                  <img src="./empty.svg" alt="Empty" height={400} width={400} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       ) : (
         <div className="container-fluid p-0">
           {/* <div className="row"> */}

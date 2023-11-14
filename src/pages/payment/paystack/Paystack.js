@@ -5,7 +5,6 @@ import "./Paystack.css";
 import axios from "axios";
 
 const Paystack = () => {
-
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
@@ -16,17 +15,20 @@ const Paystack = () => {
   const PayWithPayStack = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true)
-      const { data } = await axios.post(`${config.PAYMENT_API}/api/payments/initialize`, {
-        adId: param.adID,
-        amount: amount * 100
-      });
-      if(data.success){
+      setLoading(true);
+      const { data } = await axios.post(
+        `${config.PAYMENT_API}/api/payments/initialize`,
+        {
+          adId: param.adID,
+          amount: amount * 100,
+        },
+      );
+      if (data.success) {
         window.location.replace(data.responsePayload.authorizationUrl);
-        setLoading(false)
+        setLoading(false);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.error("Error initiating payment:", error);
     }
   };
@@ -34,7 +36,7 @@ const Paystack = () => {
   return (
     <>
       <div className="my-header text-center">
-        <h5>Paystack in Realist App</h5>
+        <h5>Paystack in NimbleCasa</h5>
       </div>
       <div className="container">
         <div className="row mt-5">
@@ -75,11 +77,13 @@ const Paystack = () => {
               </div>
               <div>
                 <button
-                  type="submit" onClick={PayWithPayStack}
-                  className={` ${ loading ? "disabled" : "" }`}>
+                  type="submit"
+                  onClick={PayWithPayStack}
+                  className={` ${loading ? "disabled" : ""}`}
+                >
                   {loading ? "Submitting..." : "Pay Now"}
                 </button>
-               
+
                 {/* <button type="submit" onClick={PayWithPayStack}>
                   Pay Now
                 </button> */}
