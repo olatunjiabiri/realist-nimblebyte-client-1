@@ -110,7 +110,7 @@ export default function Home() {
       </div>
 
       <div className="container pt-3">
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           {ads?.map((ad) => (
             <AdCard ad={ad} key={ad._id} />
           ))}
