@@ -327,7 +327,10 @@ export default function AdView() {
               <br />
               <div className="container related-margin">
                 <h4 className="text-center mb-3">
-                  Recently Sold/Rented{" "}
+                  Recently{" "}
+                  {soldRented?.map((a) =>
+                    a.action === "Rent" ? "Rented" : "Sold"
+                  )}{" "}
                   {soldRented.length > 1 ? "Properties" : "Property"}
                 </h4>
                 <hr />
