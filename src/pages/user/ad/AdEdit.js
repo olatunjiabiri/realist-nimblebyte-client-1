@@ -371,7 +371,10 @@ export default function AdEdit({ action, type }) {
                   checked={ad.sold === "Sold"}
                   onChange={() => setAd({ ...ad, sold: "Sold" })}
                 />
-                <span className="pl-3"> Sold</span>
+                <span className="pl-3">
+                  {" "}
+                  {ad?.action === "Rent" ? "Rented" : "Sold"}
+                </span>
               </label>
               <label
                 className={`radio-button ${

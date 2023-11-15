@@ -100,7 +100,19 @@ export default function AdCard({ ad }) {
                 )}
               </div>
 
-              <div className="card-text address-height">{ad?.address}</div>
+              {/* <div className="card-text address-height">{ad?.address}</div> */}
+              <div className="card-text address-height">
+                {ad?.googleMap?.map((r) => (
+                  <>
+                    {r.extra?.neighborhood ||
+                      r.administrativeLevels?.level2long}
+                    {", "}
+                    {r.city}
+                    {", "}
+                    {r.country}
+                  </>
+                ))}
+              </div>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">
@@ -123,6 +135,7 @@ export default function AdCard({ ad }) {
           </div>
         </Badge.Ribbon>
       </Link>
+      {/* <pre>{JSON.stringify(ad, null, 4)} </pre> */}
     </div>
   );
 }
