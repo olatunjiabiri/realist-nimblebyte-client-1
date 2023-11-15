@@ -172,7 +172,20 @@ export default function AdView() {
                     </span>
                     <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
                     <p className="adview-address mt-1">
-                      <span className="adview-address">{ad.address}</span>
+                      {/* <span className="adview-address">{ad.address}</span> */}
+
+                      <span className="adview-address">
+                        {ad?.googleMap?.map((r) => (
+                          <>
+                            {r.extra?.neighborhood ||
+                              r.administrativeLevels?.level2long}
+                            {", "}
+                            {r.city}
+                            {", "}
+                            {r.country}
+                          </>
+                        ))}
+                      </span>
                     </p>
 
                     <Link className="bg-white">
@@ -231,7 +244,19 @@ export default function AdView() {
                 </span>
                 <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
                 <p className="adview-address mt-1">
-                  <span className="adview-address">{ad.address}</span>
+                  {/* <span className="adview-address">{ad.address}</span> */}
+                  <span className="adview-address">
+                    {ad?.googleMap?.map((r) => (
+                      <>
+                        {r.extra?.neighborhood ||
+                          r.administrativeLevels?.level2long}
+                        {", "}
+                        {r.city}
+                        {", "}
+                        {r.country}
+                      </>
+                    ))}
+                  </span>
                 </p>
                 {auth.user === null ? (
                   <Link className="bg-white" to="/login">
