@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,11 +9,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import CurrencyInput from "react-currency-input-field";
 import { toast } from "react-toastify";
+import { Avatar } from "antd";
 
 import config from "../../../NewConfig";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import { useAuth } from "../../../context/auth";
 import "./index.css";
+import DynamicForm from "../../../components/uploader";
+import Modall from "../../../components/modal2/Modal";
 
 export default function AdEdit({ action, type }) {
   // context
@@ -55,6 +58,13 @@ export default function AdEdit({ action, type }) {
     features,
   });
   const [loaded, setLoaded] = useState(false);
+  const [formData, setFormData] = useState([
+    // { text: "Sitting room", image: null, blob: null },
+    // { text: "Bedroom", image: null, blob: null },
+    // { text: "Compound", image: null, blob: null },
+  ]);
+  const [isOpen, setIsOpen] = useState(false);
+  const fileRefs = useRef([]);
 
   // hooks
   const navigate = useNavigate();
@@ -75,6 +85,15 @@ export default function AdEdit({ action, type }) {
       const { data } = await axios.get(`/ad/${params.slug}`);
       //   console.log("single ad edit page => ", data);
       setAd(data?.ad);
+      setFormData(
+        data?.ad.photos.map((item) => {
+          return {
+            text: item.Key,
+            image: item.Location,
+            blob: null,
+          };
+        }),
+      );
       setLoaded(true);
     } catch (err) {
       console.log(err);
@@ -183,13 +202,38 @@ export default function AdEdit({ action, type }) {
 
   return (
     <div className="background-color">
+      <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <DynamicForm
+          formData={formData}
+          setFormData={setFormData}
+          fileRefs={fileRefs}
+          ad={ad}
+          setAd={setAd}
+          setIsOpen={setIsOpen}
+        />
+      </Modall>
       <div className="container py-5 ">
         <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
           <h1 className="text-dark text-center p-3">Update Ad</h1>
           <hr />
           <div className="mb-3 ">
             <div className="">
-              <ImageUpload ad={ad} setAd={setAd} />
+              {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+              <label
+                onClick={() => setIsOpen(true)}
+                className="btn btn-primary"
+              >
+                Upload Photos
+              </label>
+              {ad.photos?.map((file, index) => (
+                <Avatar
+                  key={index}
+                  src={file?.Location}
+                  shape="square"
+                  size="46"
+                  className="ml-2 m-2"
+                />
+              ))}
             </div>
             {loaded ? (
               <div className="mb-3 row">
@@ -371,7 +415,10 @@ export default function AdEdit({ action, type }) {
                   checked={ad.sold === "Sold"}
                   onChange={() => setAd({ ...ad, sold: "Sold" })}
                 />
-                <span className="pl-3"> Sold</span>
+                <span className="pl-3">
+                  {" "}
+                  {ad?.action === "Rent" ? "Rented" : "Sold"}
+                </span>
               </label>
               <label
                 className={`radio-button ${

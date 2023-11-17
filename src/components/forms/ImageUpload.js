@@ -36,7 +36,7 @@ export default function ImageUpload({ ad, setAd }) {
                   setAd({ ...ad, uploading: false });
                 }
               },
-              "base64"
+              "base64",
             );
           });
         });
