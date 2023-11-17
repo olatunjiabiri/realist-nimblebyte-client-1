@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
@@ -13,18 +13,29 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import { Avatar } from "antd";
 import { useAuth } from "../../context/auth";
 
 import "./index.css";
+import Uploader from "../uploader";
+import Modall from "../modal2/Modal";
+import DynamicForm from "../uploader";
 
 export default function AdForm({ action, type }) {
   // context
   const [auth, setAuth] = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   // state
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [feature, setFeature] = useState([]);
   const [features, setFeatures] = useState([]);
+  const [formData, setFormData] = useState([
+    { text: "Sitting room", image: null, blob: null },
+    { text: "Bedroom", image: null, blob: null },
+    { text: "Compound", image: null, blob: null },
+  ]);
+  const fileRefs = useRef([]);
   // hooks
   const navigate = useNavigate();
 
@@ -139,6 +150,16 @@ export default function AdForm({ action, type }) {
 
   return (
     <div>
+      <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <DynamicForm
+          formData={formData}
+          setFormData={setFormData}
+          fileRefs={fileRefs}
+          ad={ad}
+          setAd={setAd}
+          setIsOpen={setIsOpen}
+        />
+      </Modall>
       <div className="container contain">
         <div className="row">
           <form>
@@ -189,7 +210,23 @@ export default function AdForm({ action, type }) {
               </div>
 
               <div className="mb-3">
-                <ImageUpload ad={ad} setAd={setAd} />
+                {/* <div>Open modal</div> */}
+                {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+                <label
+                  onClick={() => setIsOpen(true)}
+                  className="btn btn-primary"
+                >
+                  Upload Photos
+                </label>
+                {ad.photos?.map((file, index) => (
+                  <Avatar
+                    key={index}
+                    src={file?.Location}
+                    shape="square"
+                    size="46"
+                    className="ml-2 m-2"
+                  />
+                ))}
               </div>
 
               <div className="mb-3 border-0 ">

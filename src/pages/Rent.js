@@ -31,15 +31,17 @@ export default function Rent() {
   };
 
   return (
-    <div>
-      <SearchForm navMenuProperty={true} />
-      <div className="container">
-        <div className="row d-flex justify-content-center">
-          {ads?.map((ad) => (
-            <AdCard ad={ad} key={ad._id} />
-          ))}
+    <AuthComponent>
+      <div>
+        <SearchForm navMenuProperty={true} />
+        <div className="container">
+          <div className="row d-flex justify-content-center">
+            {ads?.map((ad) => (
+              <AdCard ad={ad} key={ad._id} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </AuthComponent>
   );
 }
