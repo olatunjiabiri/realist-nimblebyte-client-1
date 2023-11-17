@@ -1,0 +1,76 @@
+/* DynamicForm.css */
+
+.dynamic-form {
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  padding: 0.5em 1rem;
+  max-height: 800px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.form-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-imager {
+  width: 600px;
+  height: 400px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+.add-row-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.add-row-btn:hover {
+  background-color: #45a049;
+}
+
+.dynamic-form-title {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+@media (max-width: 1500px) {
+  .dynamic-form {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    padding: 0 15px;
+  }
+
+  .form-imager {
+    width: 100%;
+    height: auto;
+  }
+}
