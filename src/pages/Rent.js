@@ -31,7 +31,7 @@ export default function Rent() {
   };
 
   return (
-    <AuthComponent>
+    <>
       <div>
         <SearchForm navMenuProperty={true} />
         <div className="container">
@@ -42,6 +42,6 @@ export default function Rent() {
           </div>
         </div>
       </div>
-    </AuthComponent>
+    </>
   );
 }
