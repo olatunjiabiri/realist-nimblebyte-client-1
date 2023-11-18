@@ -8,6 +8,7 @@ import AgentsMobileList from "../components/agentsList/AgentsMobileList";
 
 import config from "../NewConfig";
 import AgentSearchForm from "./../components/forms/AgentSearchForm";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
 import "./Agents.css";
 
@@ -84,7 +85,7 @@ export default function Agents() {
   }
 
   return (
-    <>
+    <LogoutMessage>
       {filteredAgents && (
         <div>
           <div>
@@ -127,6 +128,6 @@ export default function Agents() {
           {/* <pre>{JSON.stringify(agents, null, 4)} </pre> */}
         </div>
       )}
-    </>
+    </LogoutMessage>
   );
 }

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
 
 export default function LikeUnlike({ ad, size = null }) {
   // context
@@ -74,19 +75,21 @@ export default function LikeUnlike({ ad, size = null }) {
 
   return (
     <>
-      {auth.wishlist?.includes(ad?._id) ? (
-        <span>
-          <FcLike onClick={handleUnlike} className={`${size}  pointer`} />
-        </span>
-      ) : (
-        <span>
-          <FcLikePlaceholder
-            onClick={handleLike}
-            className={`${size} pointer`}
-          />
-        </span>
-      )}
-      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
+      <LogoutMessage>
+        {auth.wishlist?.includes(ad?._id) ? (
+          <span>
+            <FcLike onClick={handleUnlike} className={`${size}  pointer`} />
+          </span>
+        ) : (
+          <span>
+            <FcLikePlaceholder
+              onClick={handleLike}
+              className={`${size} pointer`}
+            />
+          </span>
+        )}
+        {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
+      </LogoutMessage>
     </>
   );
 }
