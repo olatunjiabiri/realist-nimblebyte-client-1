@@ -7,6 +7,7 @@ import config from "../../NewConfig";
 import { useAuth } from "../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import ProfileForm from "../../components/forms/profileForm/ProfileForm";
+import LogoutMessage from "../../components/misc/logoutMessage/LogoutMessage";
 
 export default function BeAgent() {
   const [pathURL, setPathURL] = useState();
@@ -18,9 +19,9 @@ export default function BeAgent() {
   // console.log("pathurl", pathURL);
 
   return (
-    <>
+    <LogoutMessage>
       <ProfileForm sourceURL={pathURL} />
       {/* <pre>{JSON.stringify(pathURL, null, 4)} </pre> */}
-    </>
+    </LogoutMessage>
   );
 }

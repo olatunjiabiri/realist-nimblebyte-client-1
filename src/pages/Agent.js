@@ -9,6 +9,7 @@ import ContactAgentForm from "../components/forms/contactAgentForm/ContactAgentF
 import config from "../NewConfig";
 import AgentAdsTable from "../components/agentAdsTable/AgentAdsTable";
 import AgentAdsMobileTable from "../components/agentAdsTable/AgentAdsMobileTable";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
 export default function Agent({ user }) {
   const theme = useTheme();
@@ -33,7 +34,7 @@ export default function Agent({ user }) {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${params.userId}/${page}/${perPage}`,
+        `/user-ads/${params.userId}/${page}/${perPage}`
       );
       // console.log("Ads data", data);
       setAds([data.ads]);
@@ -82,34 +83,36 @@ export default function Agent({ user }) {
 
   return (
     <div>
-      <div className="container pt-5" style={{ marginTop: "80px" }}>
-        <div className="row">
-          <div className="col-lg-7">
-            {agent && <AgentDetails agent={agent} />}
-          </div>
+      <LogoutMessage>
+        <div className="container pt-5" style={{ marginTop: "80px" }}>
+          <div className="row">
+            <div className="col-lg-7">
+              {agent && <AgentDetails agent={agent} />}
+            </div>
 
-          <div className="col-lg-5 agent-contact-f">
-            <ContactAgentForm agent={agent} />
+            <div className="col-lg-5 agent-contact-f">
+              <ContactAgentForm agent={agent} />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="container">
-        <h2 className="text-center pt-5 ads-listing">Recent Listings</h2>
-        <div className="row">
-          {ads.length > 0 ? (
-            <>
-              {isSmScreen ? (
-                <AgentAdsMobileTable ads={ads} />
-              ) : (
-                <AgentAdsTable ads={ads} />
-              )}
-            </>
-          ) : (
-            ""
-          )}
+        <div className="container">
+          <h2 className="text-center pt-5 ads-listing">Recent Listings</h2>
+          <div className="row">
+            {ads.length > 0 ? (
+              <>
+                {isSmScreen ? (
+                  <AgentAdsMobileTable ads={ads} />
+                ) : (
+                  <AgentAdsTable ads={ads} />
+                )}
+              </>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
-      </div>
+      </LogoutMessage>
       {/* <pre>{JSON.stringify(params.userId, null, 4)} </pre>
       <pre>{JSON.stringify(agent, null, 4)} </pre>
       <pre>{JSON.stringify(ads, null, 4)} </pre> */}

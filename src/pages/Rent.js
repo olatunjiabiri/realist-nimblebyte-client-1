@@ -3,6 +3,7 @@ import { useAuth } from "../context/auth";
 import axios from "axios";
 import AdCard from "../components/cards/AdCard";
 import SearchForm from "../components/forms/SearchForm";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
 export default function Rent() {
   // context
@@ -31,7 +32,7 @@ export default function Rent() {
   };
 
   return (
-    <>
+    <LogoutMessage>
       <div>
         <SearchForm navMenuProperty={true} />
         <div className="container">
@@ -42,6 +43,6 @@ export default function Rent() {
           </div>
         </div>
       </div>
-    </>
+    </LogoutMessage>
   );
 }
