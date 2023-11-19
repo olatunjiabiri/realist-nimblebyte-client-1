@@ -75,21 +75,21 @@ export default function LikeUnlike({ ad, size = null }) {
 
   return (
     <>
-      <LogoutMessage>
-        {auth.wishlist?.includes(ad?._id) ? (
-          <span>
-            <FcLike onClick={handleUnlike} className={`${size}  pointer`} />
-          </span>
-        ) : (
-          <span>
-            <FcLikePlaceholder
-              onClick={handleLike}
-              className={`${size} pointer`}
-            />
-          </span>
-        )}
-        {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
-      </LogoutMessage>
+      {/* <LogoutMessage> */}
+      {auth.wishlist?.includes(ad?._id) ? (
+        <span>
+          <FcLike onClick={handleUnlike} className={`${size}  pointer`} />
+        </span>
+      ) : (
+        <span>
+          <FcLikePlaceholder
+            onClick={handleLike}
+            className={`${size} pointer`}
+          />
+        </span>
+      )}
+      {/* <pre>{JSON.stringify(auth, null, 4)} </pre>  */}
+      {/* </LogoutMessage> */}
     </>
   );
 }
