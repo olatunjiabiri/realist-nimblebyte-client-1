@@ -7,6 +7,7 @@ import ProfileUpload from "../ProfileUpload";
 import config from "../../../NewConfig";
 import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
+import LogoutMessage from "../../misc/logoutMessage/LogoutMessage";
 
 export default function ProfileForm({ sourceURL }) {
   // console.log("sourceURL", sourceURL);
@@ -137,38 +138,39 @@ export default function ProfileForm({ sourceURL }) {
 
   return (
     <>
-      <div className="background-color">
-        <div className="container p-5">
-          {/* <Sidebar /> */}
-          <div className="container mt-5">
-            <div className="row mb-3">
-              <div className="border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
-                <h1 className="text-dark text-center p-3">
-                  {`${sourceURL ? "Agent Request Form" : "Update Profile"}`}
-                </h1>
-                <hr />
+      <LogoutMessage>
+        <div className="background-color">
+          <div className="container p-5">
+            {/* <Sidebar /> */}
+            <div className="container mt-5">
+              <div className="row mb-3">
+                <div className="border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
+                  <h1 className="text-dark text-center p-3">
+                    {`${sourceURL ? "Agent Request Form" : "Update Profile"}`}
+                  </h1>
+                  <hr />
 
-                {/* account Type Section */}
-                <div className="row mb-3">
-                  <label
-                    id="price"
-                    className="col-sm-5 mt-3 col-form-label adedit-label"
-                  >
-                    Account Type:
-                  </label>
-                  <div className="col-sm-7">
-                    <input
+                  {/* account Type Section */}
+                  <div className="row mb-3">
+                    <label
                       id="price"
-                      name="price"
-                      placeholder="Enter price"
-                      value={`${userType === "Buyer" ? "User" : "Agent"}`}
-                      className="form-control pl-3 mt-3 adedit-label"
-                      readOnly
-                    />
+                      className="col-sm-5 mt-3 col-form-label adedit-label"
+                    >
+                      Account Type:
+                    </label>
+                    <div className="col-sm-7">
+                      <input
+                        id="price"
+                        name="price"
+                        placeholder="Enter price"
+                        value={`${userType === "Buyer" ? "User" : "Agent"}`}
+                        className="form-control pl-3 mt-3 adedit-label"
+                        readOnly
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* <div className="form-group col-8 pb-1">
+                  {/* <div className="form-group col-8 pb-1">
                   {(userType === "Agent" || isAgent) && (
                     <ProfileUpload
                       photo={photo}
@@ -179,173 +181,174 @@ export default function ProfileForm({ sourceURL }) {
                   )}
                 </div> */}
 
-                <form onSubmit={handleSubmit}>
-                  {!sourceURL && userType === "Buyer" && (
-                    <>
-                      <div className="mb-3 mt-3 row">
-                        <label
-                          id="isAgent"
-                          className="col-sm-6 col-form-label adedit-label"
-                        >
-                          Do you want to be an Agent ?
-                        </label>
-                        <div className="col-sm-4 d-flex justify-content-between">
+                  <form onSubmit={handleSubmit}>
+                    {!sourceURL && userType === "Buyer" && (
+                      <>
+                        <div className="mb-3 mt-3 row">
                           <label
-                            className={`radio-button ${
-                              isAgent === false ? "selected" : ""
-                            }`}
+                            id="isAgent"
+                            className="col-sm-6 col-form-label adedit-label"
                           >
-                            <input
-                              className="input-style m-3 col-sm-3 col-form-label adedit-label"
-                              type="radio"
-                              name="isAgent"
-                              value={false}
-                              checked={isAgent === false}
-                              onChange={() => setIsAgent(false)}
-                            />
-                            <span className="pl-5"> No</span>
+                            Do you want to be an Agent ?
                           </label>
-                          <label
-                            className={`radio-button ${
-                              isAgent === true ? "selected" : ""
-                            }`}
-                          >
-                            <input
-                              className=" input-style m-3  col-sm-3 col-form-label adedit-label"
-                              type="radio"
-                              name="isAgent"
-                              value={true}
-                              checked={isAgent === true}
-                              onChange={() => {
-                                setIsAgent(true);
-                                // setUserType("Agent");
-                              }}
-                            />
-                            Yes
-                          </label>
+                          <div className="col-sm-4 d-flex justify-content-between">
+                            <label
+                              className={`radio-button ${
+                                isAgent === false ? "selected" : ""
+                              }`}
+                            >
+                              <input
+                                className="input-style m-3 col-sm-3 col-form-label adedit-label"
+                                type="radio"
+                                name="isAgent"
+                                value={false}
+                                checked={isAgent === false}
+                                onChange={() => setIsAgent(false)}
+                              />
+                              <span className="pl-5"> No</span>
+                            </label>
+                            <label
+                              className={`radio-button ${
+                                isAgent === true ? "selected" : ""
+                              }`}
+                            >
+                              <input
+                                className=" input-style m-3  col-sm-3 col-form-label adedit-label"
+                                type="radio"
+                                name="isAgent"
+                                value={true}
+                                checked={isAgent === true}
+                                onChange={() => {
+                                  setIsAgent(true);
+                                  // setUserType("Agent");
+                                }}
+                              />
+                              Yes
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  )}
-
-                  <div className="form-group col-8 pb-1">
-                    {(userType === "Agent" || isAgent || sourceURL) && (
-                      <ProfileUpload
-                        photo={photo}
-                        setPhoto={setPhoto}
-                        uploading={uploading}
-                        setUploading={setUploading}
-                      />
+                      </>
                     )}
-                  </div>
-                  {userType === "Agent" || isAgent || sourceURL ? (
-                    <>
-                      <input
-                        type="text"
-                        placeholder="Company name"
-                        className="form-control mb-3"
-                        value={company}
-                        onChange={(e) => setCompany(e.target.value)}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Registration number"
-                        className="form-control mb-3"
-                        value={reg_number}
-                        onChange={(e) => setReg_number(e.target.value)}
-                      />
-                    </>
-                  ) : (
-                    ""
-                  )}
 
-                  <input
-                    type="text"
-                    placeholder="Firstname"
-                    className="form-control mt-3 mb-3"
-                    value={firstName}
-                    onChange={(e) =>
-                      // setFirstName(slugify(e.target.value.toLowerCase()))
-                      setFirstName(e.target.value)
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="Lastname"
-                    className="form-control mb-3"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                  <input
-                    type="email"
-                    className="form-control mb-3"
-                    value={email}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    className="form-control mb-3"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Phone number"
-                    className="form-control mb-3"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-
-                  <textarea
-                    placeholder="Write something interesting about yourself.."
-                    className="form-control mb-3"
-                    value={aboutMe}
-                    onChange={(e) => setAboutMe(e.target.value)}
-                    maxLength={200}
-                  />
-                  {(userType === "Agent" || isAgent || sourceURL) && (
-                    <label className="alert alert-warning d-flex align-items-center">
-                      <span>
-                        <AiFillWarning
-                          className="bi flex-shrink-0 me-2"
-                          style={{ width: "24", height: "24" }}
+                    <div className="form-group col-8 pb-1">
+                      {(userType === "Agent" || isAgent || sourceURL) && (
+                        <ProfileUpload
+                          photo={photo}
+                          setPhoto={setPhoto}
+                          uploading={uploading}
+                          setUploading={setUploading}
                         />
-                      </span>{" "}
-                      You data will be reviewed by our legal department
-                    </label>
-                  )}
-
-                  <div className="d-flex justify-content-center">
+                      )}
+                    </div>
                     {userType === "Agent" || isAgent || sourceURL ? (
-                      <button
-                        className="btn btn-primary col-md-6 mt-3 mb-5"
-                        disabled={loading}
-                        onClick={() => {
-                          alert(
-                            "You Data will go through Verification Process."
-                          );
-                        }}
-                      >
-                        {loading ? "Processing" : "Update Profile"}
-                      </button>
+                      <>
+                        <input
+                          type="text"
+                          placeholder="Company name"
+                          className="form-control mb-3"
+                          value={company}
+                          onChange={(e) => setCompany(e.target.value)}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Registration number"
+                          className="form-control mb-3"
+                          value={reg_number}
+                          onChange={(e) => setReg_number(e.target.value)}
+                        />
+                      </>
                     ) : (
-                      <button
-                        className="btn btn-primary col-md-6 mt-3 mb-5"
-                        disabled={loading}
-                      >
-                        {loading ? "Processing" : "Update Profile"}
-                      </button>
+                      ""
                     )}
-                  </div>
-                </form>
+
+                    <input
+                      type="text"
+                      placeholder="Firstname"
+                      className="form-control mt-3 mb-3"
+                      value={firstName}
+                      onChange={(e) =>
+                        // setFirstName(slugify(e.target.value.toLowerCase()))
+                        setFirstName(e.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Lastname"
+                      className="form-control mb-3"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                    <input
+                      type="email"
+                      className="form-control mb-3"
+                      value={email}
+                      readOnly
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Address"
+                      className="form-control mb-3"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Phone number"
+                      className="form-control mb-3"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+
+                    <textarea
+                      placeholder="Write something interesting about yourself.."
+                      className="form-control mb-3"
+                      value={aboutMe}
+                      onChange={(e) => setAboutMe(e.target.value)}
+                      maxLength={200}
+                    />
+                    {(userType === "Agent" || isAgent || sourceURL) && (
+                      <label className="alert alert-warning d-flex align-items-center">
+                        <span>
+                          <AiFillWarning
+                            className="bi flex-shrink-0 me-2"
+                            style={{ width: "24", height: "24" }}
+                          />
+                        </span>{" "}
+                        You data will be reviewed by our legal department
+                      </label>
+                    )}
+
+                    <div className="d-flex justify-content-center">
+                      {userType === "Agent" || isAgent || sourceURL ? (
+                        <button
+                          className="btn btn-primary col-md-6 mt-3 mb-5"
+                          disabled={loading}
+                          onClick={() => {
+                            alert(
+                              "You Data will go through Verification Process."
+                            );
+                          }}
+                        >
+                          {loading ? "Processing" : "Update Profile"}
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-primary col-md-6 mt-3 mb-5"
+                          disabled={loading}
+                        >
+                          {loading ? "Processing" : "Update Profile"}
+                        </button>
+                      )}
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
+          {/* <pre>{JSON.stringify(isAgent, null, 4)} </pre> */}
         </div>
-        {/* <pre>{JSON.stringify(isAgent, null, 4)} </pre> */}
-      </div>
+      </LogoutMessage>
     </>
   );
 }

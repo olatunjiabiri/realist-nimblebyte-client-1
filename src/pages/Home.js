@@ -3,6 +3,7 @@ import { useAuth } from "../context/auth";
 import axios from "axios";
 import AdCard from "../components/cards/AdCard";
 import SearchForm from "../components/forms/SearchForm";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
 import { setKey, geocode, RequestType } from "react-geocode";
 
@@ -94,7 +95,7 @@ export default function Home() {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-
+      // console.log("data", data);
       //setAds((prevAds) => [...prevAds, ...data.ads]);
       setAds([...ads, ...data.ads]);
       setTotal(data.total);
@@ -105,37 +106,41 @@ export default function Home() {
 
   return (
     <div>
-      <div>
-        <SearchForm />
-      </div>
-
-      <div className="container pt-3">
-        <div className="row d-flex justify-content-center">
-          {ads?.map((ad) => (
-            <AdCard ad={ad} key={ad._id} />
-          ))}
+      <LogoutMessage>
+        <div>
+          <SearchForm />
         </div>
 
-        {ads?.length < total ? (
-          <div className="row">
-            <div className="col text-center mt-4 mb-4">
-              <button
-                disabled={loading}
-                className="btn btn-warning"
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page + 1);
-                }}
-              >
-                {loading ? "Loading..." : `${ads?.length} / ${total} Load more`}
-              </button>
-            </div>
+        <div className="container pt-3">
+          <div className="row d-flex justify-content-center">
+            {ads?.map((ad) => (
+              <AdCard ad={ad} key={ad._id} />
+            ))}
           </div>
-        ) : (
-          ""
-        )}
-      </div>
+
+          {ads?.length < total ? (
+            <div className="row">
+              <div className="col text-center mt-4 mb-4">
+                <button
+                  disabled={loading}
+                  className="btn btn-warning"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(page + 1);
+                  }}
+                >
+                  {loading
+                    ? "Loading..."
+                    : `${ads?.length} / ${total} Load more`}
+                </button>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      </LogoutMessage>
       {/* <pre>{JSON.stringify(cLocation, null, 4)} </pre> */}
     </div>
   );

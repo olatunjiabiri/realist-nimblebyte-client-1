@@ -17,6 +17,7 @@ import { useAuth } from "../../../context/auth";
 import "./index.css";
 import DynamicForm from "../../../components/uploader";
 import Modall from "../../../components/modal2/Modal";
+import LogoutMessage from "../../../components/misc/logoutMessage/LogoutMessage";
 
 export default function AdEdit({ action, type }) {
   // context
@@ -92,7 +93,7 @@ export default function AdEdit({ action, type }) {
             image: item.Location,
             blob: null,
           };
-        }),
+        })
       );
       setLoaded(true);
     } catch (err) {
@@ -213,339 +214,354 @@ export default function AdEdit({ action, type }) {
         />
       </Modall>
       <div className="container py-5 ">
-        <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
-          <h1 className="text-dark text-center p-3">Update Ad</h1>
-          <hr />
-          <div className="mb-3 ">
-            <div className="">
-              {/* <ImageUpload ad={ad} setAd={setAd} /> */}
-              <label
-                onClick={() => setIsOpen(true)}
-                className="btn btn-primary"
-              >
-                Upload Photos
-              </label>
-              {ad.photos?.map((file, index) => (
-                <Avatar
-                  key={index}
-                  src={file?.Location}
-                  shape="square"
-                  size="46"
-                  className="ml-2 m-2"
-                />
-              ))}
+        <LogoutMessage>
+          <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
+            <h1 className="text-dark text-center p-3">Update Ad</h1>
+            <hr />
+            <div className="mb-3 ">
+              <div className="">
+                {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+                <label
+                  onClick={() => setIsOpen(true)}
+                  className="btn btn-primary"
+                >
+                  Upload Photos
+                </label>
+                {ad.photos?.map((file, index) => (
+                  <Avatar
+                    key={index}
+                    src={file?.Location}
+                    shape="square"
+                    size="46"
+                    className="ml-2 m-2"
+                  />
+                ))}
+              </div>
+              {loaded ? (
+                <div className="mb-3 row">
+                  <label
+                    id="address"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    Address
+                  </label>
+                  <div className="col-sm-9">
+                    <GooglePlacesAutocomplete
+                      apiKey={config.GOOGLE_PLACES_KEY}
+                      apiOptions="ng"
+                      selectProps={{
+                        defaultInputValue: ad?.address,
+                        placeholder: "Search for address..",
+                        onChange: ({ value }) => {
+                          setAd({ ...ad, address: value.description });
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
+
             {loaded ? (
               <div className="mb-3 row">
                 <label
-                  id="address"
+                  id="price"
                   className="col-sm-3 col-form-label adedit-label"
                 >
-                  Address
+                  Price
                 </label>
                 <div className="col-sm-9">
-                  <GooglePlacesAutocomplete
-                    apiKey={config.GOOGLE_PLACES_KEY}
-                    apiOptions="ng"
-                    selectProps={{
-                      defaultInputValue: ad?.address,
-                      placeholder: "Search for address..",
-                      onChange: ({ value }) => {
-                        setAd({ ...ad, address: value.description });
-                      },
-                    }}
+                  <CurrencyInput
+                    id="price"
+                    name="price"
+                    placeholder="Enter price"
+                    defaultValue={ad.price}
+                    className="form-control mb-3"
+                    onValueChange={(value) => setAd({ ...ad, price: value })}
                   />
                 </div>
               </div>
             ) : (
               ""
             )}
-          </div>
 
-          {loaded ? (
+            {ad.type === "House" ? (
+              <>
+                <div className="mb-3 row">
+                  <label
+                    id="bedrooms"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    No. of Bedrooms
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="number"
+                      min="0"
+                      id="bedrooms"
+                      name="bedrooms"
+                      className="form-control mb-3"
+                      placeholder="Enter how many bedrooms"
+                      value={ad.bedrooms}
+                      onChange={(e) =>
+                        setAd({ ...ad, bedrooms: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3 row">
+                  <label
+                    id="bathrooms"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    No. of Bathrooms
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="number"
+                      min="0"
+                      id="bathrooms"
+                      name="bathrooms"
+                      className="form-control mb-3"
+                      placeholder="Enter how many bathrooms"
+                      value={ad.bathrooms}
+                      onChange={(e) =>
+                        setAd({ ...ad, bathrooms: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3 row">
+                  <label
+                    id="carpark"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    No. of Carpark
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="number"
+                      min="0"
+                      id="carpark"
+                      name="carpark"
+                      className="form-control mb-3"
+                      placeholder="Enter how many carpark"
+                      value={ad.carpark}
+                      onChange={(e) =>
+                        setAd({ ...ad, carpark: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+
             <div className="mb-3 row">
               <label
-                id="price"
+                id="landsize"
                 className="col-sm-3 col-form-label adedit-label"
               >
-                Price
+                Land Size
               </label>
               <div className="col-sm-9">
-                <CurrencyInput
-                  id="price"
-                  name="price"
-                  placeholder="Enter price"
-                  defaultValue={ad.price}
+                <input
+                  type="text"
                   className="form-control mb-3"
-                  onValueChange={(value) => setAd({ ...ad, price: value })}
+                  id="landSize"
+                  name="landSize"
+                  placeholder="Size of land"
+                  value={ad.landsize}
+                  onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
               </div>
             </div>
-          ) : (
-            ""
-          )}
 
-          {ad.type === "House" ? (
-            <>
-              <div className="mb-3 row">
-                <label
-                  id="bedrooms"
-                  className="col-sm-3 col-form-label adedit-label"
-                >
-                  No. of Bedrooms
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    type="number"
-                    min="0"
-                    id="bedrooms"
-                    name="bedrooms"
-                    className="form-control mb-3"
-                    placeholder="Enter how many bedrooms"
-                    value={ad.bedrooms}
-                    onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="mb-3 row">
-                <label
-                  id="bathrooms"
-                  className="col-sm-3 col-form-label adedit-label"
-                >
-                  No. of Bathrooms
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    type="number"
-                    min="0"
-                    id="bathrooms"
-                    name="bathrooms"
-                    className="form-control mb-3"
-                    placeholder="Enter how many bathrooms"
-                    value={ad.bathrooms}
-                    onChange={(e) =>
-                      setAd({ ...ad, bathrooms: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="mb-3 row">
-                <label
-                  id="carpark"
-                  className="col-sm-3 col-form-label adedit-label"
-                >
-                  No. of Carpark
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    type="number"
-                    min="0"
-                    id="carpark"
-                    name="carpark"
-                    className="form-control mb-3"
-                    placeholder="Enter how many carpark"
-                    value={ad.carpark}
-                    onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
-                  />
-                </div>
-              </div>
-            </>
-          ) : (
-            ""
-          )}
-
-          <div className="mb-3 row">
-            <label
-              id="landsize"
-              className="col-sm-3 col-form-label adedit-label"
-            >
-              Land Size
-            </label>
-            <div className="col-sm-9">
-              <input
-                type="text"
-                className="form-control mb-3"
-                id="landSize"
-                name="landSize"
-                placeholder="Size of land"
-                value={ad.landsize}
-                onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label
-              id="adStatus"
-              className="col-sm-3 col-form-label adedit-label"
-            >
-              Status
-            </label>
-            <div className="col-sm-9 d-flex justify-content-between">
-              {/* <div className="col-sm-9 d-flex"> */}
+            <div className="mb-3 row">
               <label
-                className={`radio-button ${
-                  ad.sold === "Available" ? "selected" : ""
-                }`}
+                id="adStatus"
+                className="col-sm-3 col-form-label adedit-label"
               >
-                <input
-                  className="input-style m-3 col col-form-label adedit-label"
-                  // defaultValue={"Available"}
-                  defaultChecked={ad.sold === "Available"}
-                  type="radio"
-                  name="adStatus"
-                  value={"Available"}
-                  checked={ad.sold === "Available"}
-                  onChange={() => setAd({ ...ad, sold: "Available" })}
-                />
-                <span className="pl-3"> Available</span>
+                Status
               </label>
+              <div className="col-sm-9 d-flex justify-content-between">
+                {/* <div className="col-sm-9 d-flex"> */}
+                <label
+                  className={`radio-button ${
+                    ad.sold === "Available" ? "selected" : ""
+                  }`}
+                >
+                  <input
+                    className="input-style m-3 col col-form-label adedit-label"
+                    // defaultValue={"Available"}
+                    defaultChecked={ad.sold === "Available"}
+                    type="radio"
+                    name="adStatus"
+                    value={"Available"}
+                    checked={ad.sold === "Available"}
+                    onChange={() => setAd({ ...ad, sold: "Available" })}
+                  />
+                  <span className="pl-3"> Available</span>
+                </label>
+                <label
+                  className={`radio-button ${
+                    ad.sold === "Sold" ? "selected" : ""
+                  }`}
+                >
+                  <input
+                    className="input-style m-2  col col-form-label adedit-label"
+                    type="radio"
+                    name="adStatus"
+                    value={"Sold"}
+                    checked={ad.sold === "Sold"}
+                    onChange={() => setAd({ ...ad, sold: "Sold" })}
+                  />
+                  <span className="pl-3">
+                    {" "}
+                    {ad?.action === "Rent" ? "Rented" : "Sold"}
+                  </span>
+                </label>
+                <label
+                  className={`radio-button ${
+                    ad.sold === "Under Contract" ? "selected" : ""
+                  }`}
+                >
+                  <input
+                    className="input-style m-2 col col-form-label adedit-label"
+                    type="radio"
+                    name="adStatus"
+                    value={"Under Contract"}
+                    checked={ad.sold === "Under Contract"}
+                    onChange={() => setAd({ ...ad, sold: "Under Contract" })}
+                  />
+                  Under Contract
+                  {/* <span className="pl-3"> Under Contract</span> */}
+                </label>
+              </div>
+            </div>
+
+            <div className="mb-3 row">
               <label
-                className={`radio-button ${
-                  ad.sold === "Sold" ? "selected" : ""
-                }`}
+                idr="title"
+                className="col-sm-3 col-form-label adedit-label"
               >
-                <input
-                  className="input-style m-2  col col-form-label adedit-label"
-                  type="radio"
-                  name="adStatus"
-                  value={"Sold"}
-                  checked={ad.sold === "Sold"}
-                  onChange={() => setAd({ ...ad, sold: "Sold" })}
-                />
-                <span className="pl-3">
-                  {" "}
-                  {ad?.action === "Rent" ? "Rented" : "Sold"}
-                </span>
+                Extra Features
               </label>
+
+              <div className="col-sm-9">
+                {features?.length > 0 ? (
+                  <>
+                    {" "}
+                    <FormControl sx={{ width: "100%", mb: 2 }}>
+                      <Select
+                        id="demo-multiple-checkbox"
+                        displayEmpty
+                        multiple
+                        value={ad.features}
+                        onChange={handleInputChange}
+                        renderValue={(selected) => {
+                          if (selected.length === 0) {
+                            return (
+                              <span form-control mb-3>
+                                Extra Features
+                              </span>
+                            );
+                          }
+
+                          return selected.join(", ");
+                        }}
+                        MenuProps={MenuProps}
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        {features.map((feat) => (
+                          <MenuItem key={feat.feature} value={feat.feature}>
+                            <Checkbox
+                              checked={ad.features.indexOf(feat.feature) > -1}
+                            />
+                            <ListItemText primary={feat.feature} />
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+
+            <div className="mb-3 row">
               <label
-                className={`radio-button ${
-                  ad.sold === "Under Contract" ? "selected" : ""
-                }`}
+                idr="title"
+                className="col-sm-3 col-form-label adedit-label"
               >
-                <input
-                  className="input-style m-2 col col-form-label adedit-label"
-                  type="radio"
-                  name="adStatus"
-                  value={"Under Contract"}
-                  checked={ad.sold === "Under Contract"}
-                  onChange={() => setAd({ ...ad, sold: "Under Contract" })}
-                />
-                Under Contract
-                {/* <span className="pl-3"> Under Contract</span> */}
+                Title
               </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  className="form-control mb-3"
+                  id="title"
+                  name="title"
+                  placeholder="Enter title"
+                  value={ad.title}
+                  onChange={(e) => setAd({ ...ad, title: e.target.value })}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="mb-3 row">
-            <label idr="title" className="col-sm-3 col-form-label adedit-label">
-              Extra Features
-            </label>
-
-            <div className="col-sm-9">
-              {features?.length > 0 ? (
-                <>
-                  {" "}
-                  <FormControl sx={{ width: "100%", mb: 2 }}>
-                    <Select
-                      id="demo-multiple-checkbox"
-                      displayEmpty
-                      multiple
-                      value={ad.features}
-                      onChange={handleInputChange}
-                      renderValue={(selected) => {
-                        if (selected.length === 0) {
-                          return (
-                            <span form-control mb-3>
-                              Extra Features
-                            </span>
-                          );
-                        }
-
-                        return selected.join(", ");
-                      }}
-                      MenuProps={MenuProps}
-                      inputProps={{ "aria-label": "Without label" }}
-                    >
-                      {features.map((feat) => (
-                        <MenuItem key={feat.feature} value={feat.feature}>
-                          <Checkbox
-                            checked={ad.features.indexOf(feat.feature) > -1}
-                          />
-                          <ListItemText primary={feat.feature} />
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label idr="title" className="col-sm-3 col-form-label adedit-label">
-              Title
-            </label>
-            <div className="col-sm-9">
-              <input
-                type="text"
-                className="form-control mb-3"
-                id="title"
-                name="title"
-                placeholder="Enter title"
-                value={ad.title}
-                onChange={(e) => setAd({ ...ad, title: e.target.value })}
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label
-              id="description"
-              className="col-sm-3 col-form-label adedit-label"
-            >
-              Description
-            </label>
-            <div className="col-sm-9">
-              <textarea
-                className="form-control mb-3"
+            <div className="mb-3 row">
+              <label
                 id="description"
-                name="description"
-                placeholder="Enter description"
-                value={ad.description}
-                onChange={(e) => setAd({ ...ad, description: e.target.value })}
-              />
+                className="col-sm-3 col-form-label adedit-label"
+              >
+                Description
+              </label>
+              <div className="col-sm-9">
+                <textarea
+                  className="form-control mb-3"
+                  id="description"
+                  name="description"
+                  placeholder="Enter description"
+                  value={ad.description}
+                  onChange={(e) =>
+                    setAd({ ...ad, description: e.target.value })
+                  }
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="d-flex justify-content-around">
-            <div className=" ">
-              <button
-                onClick={handleClick}
-                className={`btn btn-primary btn-lg mb-3 ${
-                  ad.loading ? "disabled" : ""
-                }`}
-              >
-                {ad.loading ? "Saving..." : "Update"}
-              </button>
-            </div>
-            <div className="">
-              <button
-                onClick={handleDelete}
-                className={`btn btn-danger btn-lg mb-3 ${
-                  delLoading ? "disabled" : ""
-                }`}
-              >
-                {delLoading ? "Deleting..." : "Delete"}
-              </button>
+            <div className="d-flex justify-content-around">
+              <div className=" ">
+                <button
+                  onClick={handleClick}
+                  className={`btn btn-primary btn-lg mb-3 ${
+                    ad.loading ? "disabled" : ""
+                  }`}
+                >
+                  {ad.loading ? "Saving..." : "Update"}
+                </button>
+              </div>
+              <div className="">
+                <button
+                  onClick={handleDelete}
+                  className={`btn btn-danger btn-lg mb-3 ${
+                    delLoading ? "disabled" : ""
+                  }`}
+                >
+                  {delLoading ? "Deleting..." : "Delete"}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </LogoutMessage>
       </div>
+
       {/* <pre>{JSON.stringify(ad, null, 4)}</pre>
       <pre>{JSON.stringify(ad.sold, null, 4)}</pre> */}
     </div>

@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { Avatar } from "antd";
 import { useAuth } from "../../context/auth";
+import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
 
 import "./index.css";
 import Uploader from "../uploader";
@@ -150,213 +151,221 @@ export default function AdForm({ action, type }) {
 
   return (
     <div>
-      <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-        <DynamicForm
-          formData={formData}
-          setFormData={setFormData}
-          fileRefs={fileRefs}
-          ad={ad}
-          setAd={setAd}
-          setIsOpen={setIsOpen}
-        />
-      </Modall>
-      <div className="container contain">
-        <div className="row">
-          <form>
-            <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
-              <h1 class="text-dark text-center p-3">
-                {" "}
-                Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"}{" "}
-              </h1>
-              <hr />
-
-              <div className="container-div d-flex justify-content-center">
-                <label
-                  className={`radio-button ${
-                    ad.type === "House" ? "selected" : ""
-                  }`}
-                >
-                  <input
-                    className="input-style m-2"
-                    type="radio"
-                    name="formType"
-                    value={"House"}
-                    checked={ad.type === "House"}
-                    onChange={() => {
-                      setAd({ ...ad, type: "House" });
-                      getFeature("House");
-                    }}
-                  />
-                  House
-                </label>
-                <label
-                  className={`radio-button ${
-                    ad.type === "Land" ? "selected" : ""
-                  }`}
-                >
-                  <input
-                    className="input-style m-2"
-                    type="radio"
-                    name="formType"
-                    value={"Land"}
-                    checked={ad.type === "Land"}
-                    onChange={() => {
-                      setAd({ ...ad, type: "Land" });
-                      getFeature("Land");
-                    }}
-                  />
-                  Land
-                </label>
-              </div>
-
-              <div className="mb-3">
-                {/* <div>Open modal</div> */}
-                {/* <ImageUpload ad={ad} setAd={setAd} /> */}
-                <label
-                  onClick={() => setIsOpen(true)}
-                  className="btn btn-primary"
-                >
-                  Upload Photos
-                </label>
-                {ad.photos?.map((file, index) => (
-                  <Avatar
-                    key={index}
-                    src={file?.Location}
-                    shape="square"
-                    size="46"
-                    className="ml-2 m-2"
-                  />
-                ))}
-              </div>
-
-              <div className="mb-3 border-0 ">
-                <GooglePlacesAutocomplete
-                  apiKey={config.GOOGLE_PLACES_KEY}
-                  apiOptions="ng"
-                  selectProps={{
-                    defaultInputValue: ad?.address,
-                    placeholder: "Search for address..",
-                    onChange: ({ value }) => {
-                      setAd({ ...ad, address: value.description });
-                    },
-                  }}
-                />
-              </div>
-              <div>
-                <CurrencyInput
-                  placeholder="Enter price"
-                  defaultValue={ad.price}
-                  className="form-control mb-3"
-                  onValueChange={(value) => setAd({ ...ad, price: value })}
-                />
-              </div>
-
-              {type === "House" && ad.type === "House" ? (
-                <>
-                  <input
-                    type="number"
-                    min="0"
-                    className="form-control mb-3"
-                    placeholder="Enter how many bedrooms"
-                    value={ad.bedrooms}
-                    onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    className="form-control mb-3"
-                    placeholder="Enter how many bathrooms"
-                    value={ad.bathrooms}
-                    onChange={(e) =>
-                      setAd({ ...ad, bathrooms: e.target.value })
-                    }
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    className="form-control mb-3"
-                    placeholder="Enter how many carparks"
-                    value={ad.carpark}
-                    onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
-                  />
-                </>
-              ) : (
-                ""
-              )}
-
-              <input
-                type="text"
-                className="form-control mb-3"
-                placeholder="Size of land"
-                value={ad.landsize}
-                onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
-              />
-              <input
-                type="text"
-                className="form-control mb-3"
-                placeholder="Enter title"
-                value={ad.title}
-                onChange={(e) => setAd({ ...ad, title: e.target.value })}
-              />
-              {features?.length > 0 ? (
-                <>
+      <LogoutMessage>
+        <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+          <DynamicForm
+            formData={formData}
+            setFormData={setFormData}
+            fileRefs={fileRefs}
+            ad={ad}
+            setAd={setAd}
+            setIsOpen={setIsOpen}
+          />
+        </Modall>
+        <div className="container contain">
+          <div className="row">
+            <form>
+              <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
+                <h1 class="text-dark text-center p-3">
                   {" "}
-                  <FormControl sx={{ width: "100%", mb: 2 }}>
-                    <Select
-                      id="demo-multiple-checkbox"
-                      displayEmpty
-                      multiple
-                      value={feature}
-                      onChange={handleInputChange}
-                      renderValue={(selected) => {
-                        if (selected.length === 0) {
-                          return (
-                            <span form-control mb-3>
-                              Extra Features
-                            </span>
-                          );
-                        }
+                  Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"}{" "}
+                </h1>
+                <hr />
 
-                        return selected.join(", ");
+                <div className="container-div d-flex justify-content-center">
+                  <label
+                    className={`radio-button ${
+                      ad.type === "House" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"House"}
+                      checked={ad.type === "House"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "House" });
+                        getFeature("House");
                       }}
-                      MenuProps={MenuProps}
-                      inputProps={{ "aria-label": "Without label" }}
-                    >
-                      {features.map((feat) => (
-                        <MenuItem key={feat.feature} value={feat.feature}>
-                          <Checkbox
-                            checked={feature.indexOf(feat.feature) > -1}
-                          />
-                          <ListItemText primary={feat.feature} />
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </>
-              ) : (
-                <></>
-              )}
-              <textarea
-                className="form-control mb-3"
-                placeholder="Enter description"
-                value={ad.description}
-                onChange={(e) => setAd({ ...ad, description: e.target.value })}
-              />
-              <div className="d-flex justify-content-center">
-                <button
-                  onClick={handleClick}
-                  type="button"
-                  className={`btn btn-primary col-4 m-3  ${
-                    ad.loading ? "disabled" : ""
-                  }`}
-                >
-                  {ad.loading ? "Saving..." : "Submit"}
-                </button>
+                    />
+                    House
+                  </label>
+                  <label
+                    className={`radio-button ${
+                      ad.type === "Land" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Land"}
+                      checked={ad.type === "Land"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Land" });
+                        getFeature("Land");
+                      }}
+                    />
+                    Land
+                  </label>
+                </div>
+
+                <div className="mb-3">
+                  {/* <div>Open modal</div> */}
+                  {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+                  <label
+                    onClick={() => setIsOpen(true)}
+                    className="btn btn-primary"
+                  >
+                    Upload Photos
+                  </label>
+                  {ad.photos?.map((file, index) => (
+                    <Avatar
+                      key={index}
+                      src={file?.Location}
+                      shape="square"
+                      size="46"
+                      className="ml-2 m-2"
+                    />
+                  ))}
+                </div>
+
+                <div className="mb-3 border-0 ">
+                  <GooglePlacesAutocomplete
+                    apiKey={config.GOOGLE_PLACES_KEY}
+                    apiOptions="ng"
+                    selectProps={{
+                      defaultInputValue: ad?.address,
+                      placeholder: "Search for address..",
+                      onChange: ({ value }) => {
+                        setAd({ ...ad, address: value.description });
+                      },
+                    }}
+                  />
+                </div>
+                <div>
+                  <CurrencyInput
+                    placeholder="Enter price"
+                    defaultValue={ad.price}
+                    className="form-control mb-3"
+                    onValueChange={(value) => setAd({ ...ad, price: value })}
+                  />
+                </div>
+
+                {type === "House" && ad.type === "House" ? (
+                  <>
+                    <input
+                      type="number"
+                      min="0"
+                      className="form-control mb-3"
+                      placeholder="Enter how many bedrooms"
+                      value={ad.bedrooms}
+                      onChange={(e) =>
+                        setAd({ ...ad, bedrooms: e.target.value })
+                      }
+                    />
+                    <input
+                      type="number"
+                      min="0"
+                      className="form-control mb-3"
+                      placeholder="Enter how many bathrooms"
+                      value={ad.bathrooms}
+                      onChange={(e) =>
+                        setAd({ ...ad, bathrooms: e.target.value })
+                      }
+                    />
+                    <input
+                      type="number"
+                      min="0"
+                      className="form-control mb-3"
+                      placeholder="Enter how many carparks"
+                      value={ad.carpark}
+                      onChange={(e) =>
+                        setAd({ ...ad, carpark: e.target.value })
+                      }
+                    />
+                  </>
+                ) : (
+                  ""
+                )}
+
+                <input
+                  type="text"
+                  className="form-control mb-3"
+                  placeholder="Size of land"
+                  value={ad.landsize}
+                  onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
+                />
+                <input
+                  type="text"
+                  className="form-control mb-3"
+                  placeholder="Enter title"
+                  value={ad.title}
+                  onChange={(e) => setAd({ ...ad, title: e.target.value })}
+                />
+                {features?.length > 0 ? (
+                  <>
+                    {" "}
+                    <FormControl sx={{ width: "100%", mb: 2 }}>
+                      <Select
+                        id="demo-multiple-checkbox"
+                        displayEmpty
+                        multiple
+                        value={feature}
+                        onChange={handleInputChange}
+                        renderValue={(selected) => {
+                          if (selected.length === 0) {
+                            return (
+                              <span form-control mb-3>
+                                Extra Features
+                              </span>
+                            );
+                          }
+
+                          return selected.join(", ");
+                        }}
+                        MenuProps={MenuProps}
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        {features.map((feat) => (
+                          <MenuItem key={feat.feature} value={feat.feature}>
+                            <Checkbox
+                              checked={feature.indexOf(feat.feature) > -1}
+                            />
+                            <ListItemText primary={feat.feature} />
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </>
+                ) : (
+                  <></>
+                )}
+                <textarea
+                  className="form-control mb-3"
+                  placeholder="Enter description"
+                  value={ad.description}
+                  onChange={(e) =>
+                    setAd({ ...ad, description: e.target.value })
+                  }
+                />
+                <div className="d-flex justify-content-center">
+                  <button
+                    onClick={handleClick}
+                    type="button"
+                    className={`btn btn-primary col-4 m-3  ${
+                      ad.loading ? "disabled" : ""
+                    }`}
+                  >
+                    {ad.loading ? "Saving..." : "Submit"}
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
+      </LogoutMessage>
       {/* <pre>{JSON.stringify(feature, null, 4)}</pre>
       <pre>{JSON.stringify(ad, null, 4)}</pre> */}
     </div>
