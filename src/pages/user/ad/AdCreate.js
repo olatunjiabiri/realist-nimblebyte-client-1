@@ -20,9 +20,7 @@ export default function AdCreate() {
 
   return (
     <div className="container">
-      <div
-        className="d-flex justify-content-center align-items-center vh-100"
-      >
+      <div className="d-flex justify-content-center align-items-center vh-100">
         <div className="col-lg-6 mx-2">
           <button
             onClick={handleSell}
