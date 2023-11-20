@@ -73,7 +73,7 @@ export default function AccountActivate() {
   const requestActivation = async () => {
     try {
       const response = await axios.get(
-        `${config.AUTH_API}/user/ConfirmEmail?token=${token}&userId=${userId}`,
+        `${config.AUTH_API}/user/confirmEmail?token=${token}&userId=${userId}`,
       );
 
       if (!response?.data?.success) {
