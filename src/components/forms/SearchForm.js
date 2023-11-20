@@ -17,29 +17,39 @@ export default function SearchForm({ navMenuProperty }) {
   const [purpose, setPurpose] = useState(true);
   const [propertyType, setPropertyType] = useState(true);
   const [price, setPrice] = useState(true);
-  const [filter, setFilter] = useState(true);
+  // const [filter, setFilter] = useState(true);
 
   // hooks
   const navigate = useNavigate();
 
   useEffect(() => {
     const path = window.location.pathname.split("/");
-    setPurpose(path[1] === "buy" ? "Buy" : path[1]);
-    search.action = path[1] === "buy" ? "Buy" : path[1];
-    setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
+
+    // setPurpose(path[1] === "buy" ? "Buy" : path[1]);
+    // search.action = path[1] === "buy" ? "Buy" : path[1];
+    if (path[1] === "buy") {
+      search.action = "Buy";
+    } else if (path[1] === "rent") {
+      search.action = "Rent";
+    } else search.action = "";
+    search.type = "";
+    (search.price = "All price"), //All price
+      (search.priceRange = [0, 1000000000000]),
+      setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
+    console.log("search2 >>>>", search);
   }, []);
 
   const handleSearch = async () => {
     setSearch({ ...search, loading: false });
 
-    // console.log("search options>>>>", search);
+    console.log("search options>>>>", search);
 
     try {
       const { results, page, price, ...rest } = search;
       // console.log("rest options>>>>", rest);
 
       const query = queryString.stringify(rest);
-      // console.log("query===>", query);
+      console.log("query===>", query);
 
       const { data } = await axios.get(`/search?${query}`);
 
@@ -54,6 +64,7 @@ export default function SearchForm({ navMenuProperty }) {
           results: data,
           page: window.location.pathname,
           loading: false,
+          action: "",
         }));
       }
     } catch (err) {
@@ -82,13 +93,14 @@ export default function SearchForm({ navMenuProperty }) {
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
                 selectProps={{
-                  defaultInputValue: localStorage.getItem("cLocation")
-                    ? localStorage.getItem("cLocation")
-                    : search?.address,
-                  placeholder: "Search for address..",
+                  // defaultInputValue: localStorage.getItem("cLocation")
+                  //   ? localStorage.getItem("cLocation")
+                  //   : search?.address,
+                  defaultInputValue: search?.address,
+                  placeholder: "Enter an address, city or location",
                   onChange: ({ value }) => {
                     setSearch({ ...search, address: value.description });
-                    setFilter(false);
+                    // setFilter(false);
                   },
                   onclick: () => {
                     this.set(null);
