@@ -119,8 +119,6 @@ const Navbar = () => {
           For any queries, feel free to contact us.
           <br />
           <br />
-          Best,
-          <br />
           NimbleCasa Team
         </div>
       </Modall>

@@ -305,7 +305,7 @@ export default function ProfileForm({ sourceURL }) {
                       className="form-control mb-3"
                       value={aboutMe}
                       onChange={(e) => setAboutMe(e.target.value)}
-                      maxLength={200}
+                      maxLength={5000}
                     />
                     {(userType === "Agent" || isAgent || sourceURL) && (
                       <label className="alert alert-warning d-flex align-items-center">
@@ -315,7 +315,7 @@ export default function ProfileForm({ sourceURL }) {
                             style={{ width: "24", height: "24" }}
                           />
                         </span>{" "}
-                        You data will be reviewed by our legal department
+                        Your data will be reviewed by our legal department
                       </label>
                     )}
 
