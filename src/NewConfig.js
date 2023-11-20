@@ -1,13 +1,9 @@
 const config = {
   API: "https://nimblecasa-uat-node-server.azurewebsites.net/api",
-  // "https://realist-node-backend.azurewebsites.net/api",
 
   AUTH_API: "https://nimblecasa-uat-auth-backend.azurewebsites.net",
-  // "https://realist-auth-backend.azurewebsites.net",
 
   PAYMENT_API: "https://nimblecasa-uat-payment-backend.azurewebsites.net",
-  //  "https://realist-payment-service.azurewebsites.net",
-  //  "https://localhost:7067",
 
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
