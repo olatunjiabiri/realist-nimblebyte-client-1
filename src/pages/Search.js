@@ -5,7 +5,6 @@ import AdCard from "../components//cards/AdCard";
 
 export default function Search() {
   const [search, setSearch] = useSearch();
-  const [searchFilters, setSearchFilters] = useState(false);
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
@@ -14,7 +13,6 @@ export default function Search() {
 
   return (
     <div>
-      {/* <h1 className="display-1 bg-primary text-light p-5">Search</h1> */}
       <SearchForm />
 
       <div className="container">
