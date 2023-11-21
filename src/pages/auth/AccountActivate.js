@@ -40,7 +40,7 @@ export default function AccountActivate() {
         {
           userId: auth.user.userId,
           role: "Buyer",
-        },
+        }
       );
 
       if (!data.success) {
@@ -53,10 +53,6 @@ export default function AccountActivate() {
         console.log("auth", auth);
 
         let fromLS = JSON.parse(localStorage.getItem("auth"));
-        // fromLS.user.role = { role: "Buyer" };
-
-        // fromLS.user.role.push("Agent");
-
         localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
         toast.success("Role Added");
@@ -64,7 +60,7 @@ export default function AccountActivate() {
     } catch (err) {
       console.log(err);
       toast.error(
-        "Something went wrong. Default Role cannot be assigned now. Try again.",
+        "Something went wrong. Default Role cannot be assigned now. Try again."
       );
       setLoading(false);
     }
@@ -73,7 +69,7 @@ export default function AccountActivate() {
   const requestActivation = async () => {
     try {
       const response = await axios.get(
-        `${config.AUTH_API}/user/ConfirmEmail?token=${token}&userId=${userId}`,
+        `${config.AUTH_API}/user/ConfirmEmail?token=${token}&userId=${userId}`
       );
 
       if (!response?.data?.success) {
@@ -82,13 +78,13 @@ export default function AccountActivate() {
       } else {
         console.log(response);
         // addDefaultRole();
-
         toast.success("Your email has been confirmed. Log in to NimbleCasa.");
         navigate("/login");
       }
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong. Try again.");
+      navigate("/register");
     }
   };
 
