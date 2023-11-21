@@ -29,20 +29,20 @@ export default function SearchForm({ navMenuProperty }) {
     (search.price = "All price"), //All price
       (search.priceRange = [0, 1000000000000]),
       setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
-    console.log("search2 >>>>", search);
+    // console.log("search2 >>>>", search);
   }, []);
 
   const handleSearch = async () => {
     setSearch({ ...search, loading: false });
 
-    console.log("search options>>>>", search);
+    // console.log("search options>>>>", search);
 
     try {
       const { results, page, price, ...rest } = search;
       // console.log("rest options>>>>", rest);
 
       const query = queryString.stringify(rest);
-      console.log("query===>", query);
+      // console.log("query===>", query);
 
       const { data } = await axios.get(`/search?${query}`);
 
