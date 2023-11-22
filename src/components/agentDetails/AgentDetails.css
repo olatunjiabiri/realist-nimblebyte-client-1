@@ -25,6 +25,14 @@
 
 .agt-info {
   padding: 0;
+  margin-top: 20px;
+}
+
+.agt-details {
+  flex: 0 0 33.3333333333333%;
+  /* max-width: 33.333333333333333%; */
+  max-width: 70%;
+  margin-right: 20px;
 }
 
 .agt-image {
@@ -92,21 +100,26 @@
     justify-content: center;
   }
 
+  .agt-details {
+    /* max-width: 33.333333333333333%; */
+    max-width: 100%;
+  }
+
   /* .agt-info {
         padding: 2.5rem 1rem 1rem;
     } */
 
   .agt-text1 {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 24px;
     line-height: 28px;
-    text-align: left;
+    text-align: center;
     /* padding-left: 2rem; */
   }
 
-  /* .agt-text2 { */
-  /*   padding-left: 2rem; */
-  /* } */
+  .agt-text2 {
+    text-align: center;
+  }
   .agt-address,
   .agt-about {
     padding: 0.5rem 1rem;
