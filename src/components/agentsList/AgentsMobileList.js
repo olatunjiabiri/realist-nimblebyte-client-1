@@ -11,6 +11,12 @@ const AgentsMobileList = ({ returnedAgents }) => {
   const [agent, setAgent] = useAgent();
   setAgent(returnedAgents);
 
+  const handleRowClick = (params) => {
+    navigate(`/agent/${params.row?.userId}`, {
+      state: params.row.userId,
+    });
+  };
+
   useEffect(() => {});
 
   console.log("returnedAgents>>", returnedAgents);
@@ -112,6 +118,7 @@ const AgentsMobileList = ({ returnedAgents }) => {
           className="datagrid"
           rows={returnedAgents}
           columns={userColumns}
+          onRowClick={handleRowClick}
           // rowHeight={200}
           getRowHeight={() => "auto"}
           getEstimatedRowHeight={() => 200}

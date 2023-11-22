@@ -1,5 +1,6 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import "./image-gallery.css";
 
 export const ImageGallery = ({
   photos,
@@ -12,7 +13,7 @@ export const ImageGallery = ({
   if (height == null && width == null) {
     return (
       <>
-        <div className="box">
+        <div className="box caro">
           <Carousel
             showArrows={true}
             showThumbs={showThumbs}
@@ -34,7 +35,7 @@ export const ImageGallery = ({
   } else {
     return (
       <>
-        <div className="box">
+        <div className="box caro">
           <Carousel
             showThumbs={showThumbs}
             showStatus={showStatus}
@@ -64,7 +65,7 @@ export const generatePhotosArray = (photos) => {
         src: p.Location,
         width: x,
         height: x,
-      })
+      }),
     );
     return arr;
   } else {
