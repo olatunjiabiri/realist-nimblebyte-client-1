@@ -12,7 +12,7 @@ export default function ProfileUpload({
 }) {
   // context
   const [auth, setAuth] = useAuth();
-  console.log("photo", photo);
+  // console.log("photo", photo);
 
   const handleUpload = async (e) => {
     try {
