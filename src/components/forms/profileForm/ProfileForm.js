@@ -42,7 +42,7 @@ export default function ProfileForm({ sourceURL }) {
       setAddress(auth.user?.address);
       setPhone(auth.user?.phone);
       setAboutMe(auth.user?.description);
-      setPhoto(auth.user?.photo);
+      setPhoto(auth.user?.photo || "");
       setReg_number(auth.user?.info?.regNumber);
       setRoles(auth?.user?.role);
     }
@@ -106,6 +106,7 @@ export default function ProfileForm({ sourceURL }) {
             description: aboutMe,
             registrationNumber: reg_number || "",
             roles: roles,
+            photo,
           }
         );
 
@@ -237,6 +238,7 @@ export default function ProfileForm({ sourceURL }) {
                           setPhoto={setPhoto}
                           uploading={uploading}
                           setUploading={setUploading}
+                          label={auth?.user?.userId}
                         />
                       )}
                     </div>
@@ -346,7 +348,7 @@ export default function ProfileForm({ sourceURL }) {
               </div>
             </div>
           </div>
-          {/* <pre>{JSON.stringify(isAgent, null, 4)} </pre> */}
+          {/* <pre>{JSON.stringify(photo, null, 4)} </pre> */}
         </div>
       </LogoutMessage>
     </>
