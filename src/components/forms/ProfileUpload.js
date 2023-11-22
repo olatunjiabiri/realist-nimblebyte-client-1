@@ -8,9 +8,11 @@ export default function ProfileUpload({
   setPhoto,
   uploading,
   setUploading,
+  label,
 }) {
   // context
   const [auth, setAuth] = useAuth();
+  // console.log("photo", photo);
 
   const handleUpload = async (e) => {
     try {
@@ -32,8 +34,10 @@ export default function ProfileUpload({
               try {
                 const { data } = await axios.post("/upload-image", {
                   image: uri,
+                  label,
                 });
-                setPhoto(data);
+                // console.log("data photo", data.Location);
+                setPhoto(data.Location);
                 setUploading(false);
               } catch (err) {
                 console.log(err);
@@ -78,9 +82,9 @@ export default function ProfileUpload({
           hidden
         />
       </label>
-      {photo?.Location ? (
+      {photo ? (
         <Avatar
-          src={photo.Location}
+          src={photo}
           shape="square"
           size="46"
           className="mx-2 mb-4"

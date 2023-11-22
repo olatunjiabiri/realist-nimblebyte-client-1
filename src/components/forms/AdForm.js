@@ -9,8 +9,6 @@ import { toast } from "react-toastify";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { Avatar } from "antd";
@@ -169,6 +167,7 @@ export default function AdForm({ action, type }) {
 
           // const adId = { adID: data.ad._id };
           // navigate("/payment/paystack/paystack", { state: adId });
+          navigate("/dashboard");
         }
       }
     } catch (err) {
