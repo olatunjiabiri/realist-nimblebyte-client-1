@@ -81,7 +81,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
             className="d-flex row justify-content-evenly col-lg-8 agent-search-controls-container"
           >
             <div className="agent-search-title text-white">
-              Contact an Agent to Sell or Lease your property
+              Contact an Agent to Sell or Lease your Property
             </div>
             <input
               type="search"
