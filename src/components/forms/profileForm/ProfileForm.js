@@ -326,7 +326,7 @@ export default function ProfileForm({ sourceURL }) {
                           disabled={loading}
                           onClick={() => {
                             alert(
-                              "You Data will go through Verification Process."
+                              "Your data will go through verification process."
                             );
                           }}
                         >

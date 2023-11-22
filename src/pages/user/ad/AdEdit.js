@@ -39,6 +39,20 @@ export default function AdEdit({ action, type }) {
       },
     },
   };
+  const [selectOptions, setSelectOptions] = useState([
+    "Flat",
+    "Bungalows",
+    "Duplex",
+    "Terrace Duplex",
+    "Semi-detached Duplex",
+    "Fully-detached Duplex",
+    "Mansion",
+    "Apartment/Condos",
+    "Maisonette",
+    "Pent-house",
+    "Thatched/Traditional houses",
+  ]);
+
   // state
   const [ad, setAd] = useState({
     _id: "",
@@ -57,6 +71,7 @@ export default function AdEdit({ action, type }) {
     type,
     action,
     features,
+    houseType: "",
   });
   const [loaded, setLoaded] = useState(false);
   const [formData, setFormData] = useState([
@@ -106,6 +121,11 @@ export default function AdEdit({ action, type }) {
       getFeature(ad.type);
     }
   }, [ad.type]);
+
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setAd({ ...ad, houseType: value });
+  };
 
   const handleInputChange = (event) => {
     const {
@@ -262,6 +282,46 @@ export default function AdEdit({ action, type }) {
               ) : (
                 ""
               )}
+            </div>
+
+            <div className="mb-3 row">
+              <label
+                idr="title"
+                className="col-sm-3 col-form-label adedit-label"
+              >
+                Select House Type
+              </label>
+
+              <div className="col-sm-9">
+                {ad.type === "House" && (
+                  <FormControl sx={{ width: "100%", mb: 2 }}>
+                    <Select
+                      SelectDisplayProps={{
+                        style: { paddingTop: 8, paddingBottom: 8 },
+                      }}
+                      displayEmpty
+                      value={ad.houseType}
+                      onChange={handleSelectChange}
+                      inputProps={{ "aria-label": "Without label" }}
+                      sx={{
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        fontSize: "1em",
+                        appearance: "auto",
+                      }}
+                    >
+                      <MenuItem value="" disabled>
+                        Select House Type
+                      </MenuItem>
+                      {selectOptions.map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+              </div>
             </div>
 
             {loaded ? (

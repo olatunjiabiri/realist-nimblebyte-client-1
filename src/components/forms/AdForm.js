@@ -36,6 +36,21 @@ export default function AdForm({ action, type }) {
     { text: "Bedroom", image: null, blob: null },
     { text: "Compound", image: null, blob: null },
   ]);
+
+  const [selectOptions, setSelectOptions] = useState([
+    "Flat",
+    "Bungalows",
+    "Duplex",
+    "Terrace Duplex",
+    "Semi-detached Duplex",
+    "Fully-detached Duplex",
+    "Mansion",
+    "Apartment/Condos",
+    "Maisonette",
+    "Pent-house",
+    "Thatched/Traditional houses",
+  ]);
+
   const fileRefs = useRef([]);
   // hooks
   const navigate = useNavigate();
@@ -67,6 +82,7 @@ export default function AdForm({ action, type }) {
     action,
     postedBy: auth.user.userId,
     features,
+    houseType: "",
   });
 
   useEffect(() => {
@@ -80,6 +96,18 @@ export default function AdForm({ action, type }) {
       getFeature(ad.type);
     }
   }, [ad.type]);
+
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    // setHouseType(value);
+    setAd({ ...ad, houseType: value });
+  };
+
+  // const handleFieldClick = () => {
+  //   setSelectOptions(
+  //     selectOptions.filter((option) => option !== "Select House Type")
+  //   );
+  // };
 
   const handleInputChange = (event) => {
     const {
@@ -139,8 +167,8 @@ export default function AdForm({ action, type }) {
 
           setAd({ ...ad, loading: false });
 
-          const adId = { adID: data.ad._id };
-          navigate("/payment/paystack/paystack", { state: adId });
+          // const adId = { adID: data.ad._id };
+          // navigate("/payment/paystack/paystack", { state: adId });
         }
       }
     } catch (err) {
@@ -244,6 +272,40 @@ export default function AdForm({ action, type }) {
                     }}
                   />
                 </div>
+
+                {ad.type === "House" && (
+                  <FormControl sx={{ width: "100%", mb: 2 }}>
+                    <Select
+                      SelectDisplayProps={{
+                        style: { paddingTop: 8, paddingBottom: 8 },
+                      }}
+                      displayEmpty
+                      value={ad.houseType}
+                      onChange={handleSelectChange}
+                      // onClick={handleFieldClick}
+                      inputProps={{ "aria-label": "Without label" }}
+                      sx={{
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        fontSize: "1em",
+                        appearance: "auto",
+                        // paddingLeft: "0.5em",
+                      }}
+                    >
+                      <MenuItem value="" disabled>
+                        Select House Type
+                      </MenuItem>
+                      {selectOptions.map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+
+              
+
                 <div>
                   <CurrencyInput
                     placeholder="Enter price"
@@ -304,11 +366,15 @@ export default function AdForm({ action, type }) {
                   value={ad.title}
                   onChange={(e) => setAd({ ...ad, title: e.target.value })}
                 />
+
                 {features?.length > 0 ? (
                   <>
                     {" "}
                     <FormControl sx={{ width: "100%", mb: 2 }}>
                       <Select
+                        SelectDisplayProps={{
+                          style: { paddingTop: 8, paddingBottom: 8 },
+                        }}
                         id="demo-multiple-checkbox"
                         displayEmpty
                         multiple
@@ -366,8 +432,8 @@ export default function AdForm({ action, type }) {
           </div>
         </div>
       </LogoutMessage>
-      {/* <pre>{JSON.stringify(feature, null, 4)}</pre>
-      <pre>{JSON.stringify(ad, null, 4)}</pre> */}
+      {/* <pre>{JSON.stringify(ad.houseType, null, 4)}</pre> */}
+      {/* <pre>{JSON.stringify(ad, null, 4)}</pre> */}
     </div>
   );
 }
