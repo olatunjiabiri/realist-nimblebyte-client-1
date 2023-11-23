@@ -20,7 +20,7 @@ const AgentDetails = ({ agent }) => {
           {/* </div> */}
         </div>
 
-        <div className="col-md-8 col-sm-12 agt-info">
+        <div className="agt-info">
           <p className="agt-text1">
             {" "}
             {agent?.applicationUser?.firstName?.toUpperCase()}{" "}
