@@ -30,8 +30,8 @@ const Map = (props) => {
   // console.log(ad);
   //   6.5244° N, 3.3792° E
   const center = {
-    lat: parseFloat(ad?.location?.coordinates[1]),
-    lng: parseFloat(ad?.location?.coordinates[0]),
+    lat: parseFloat(ad?.landmarkLocation?.coordinates[1]),
+    lng: parseFloat(ad?.landmarkLocation?.coordinates[0]),
   };
 
   return (
@@ -43,7 +43,7 @@ const Map = (props) => {
         center={center}
         zoom={11}
       >
-        ad?.location?.coordinates?.length && (
+        ad?.landmarkLocation?.coordinates?.length && (
         <Marker
           key={ad._id}
           position={center}
@@ -94,8 +94,8 @@ const Map = (props) => {
             key={r?._id}
             icon={"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
             position={{
-              lat: parseFloat(r?.location?.coordinates[1]),
-              lng: parseFloat(r?.location?.coordinates[0]),
+              lat: parseFloat(r?.landmarkLocation?.coordinates[1]),
+              lng: parseFloat(r?.landmarkLocation?.coordinates[0]),
             }}
             zindex={110}
             onClick={() => handleActiveMarker(r._id)}
@@ -111,7 +111,7 @@ const Map = (props) => {
                   <Link
                     className="text-decoration-none"
                     to={`/ad/${r.slug}`}
-                    onClick={() => window.location.reloadPage()}
+                    onClick={() => window.landmarkLocation.reloadPage()}
                   >
                     <Avatar
                       src={r?.photos[0].Location}
