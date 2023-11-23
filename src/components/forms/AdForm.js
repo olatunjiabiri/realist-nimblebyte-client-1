@@ -173,10 +173,11 @@ export default function AdForm({ action, type }) {
 
           // const adId = { adID: data.ad._id };
           // navigate("/payment/paystack/paystack", { state: adId });
+          navigate(`/adview/${ad.houseType}`);
           navigate("/dashboard");
         }
       }
-      navigate(`/adview/${ad.houseType}`);
+      
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
@@ -301,6 +302,39 @@ export default function AdForm({ action, type }) {
                     }}
                   />
                 </div>
+
+
+                {ad.type === "House" && (
+                  <FormControl sx={{ width: "100%", mb: 2 }}>
+                    <Select
+                      SelectDisplayProps={{
+                        style: { paddingTop: 8, paddingBottom: 8 },
+                      }}
+                      displayEmpty
+                      value={ad.houseType}
+                      onChange={handleSelectChange}
+                      inputProps={{ "aria-label": "Without label" }}
+                      sx={{
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        fontSize: "1em",
+                        appearance: "auto",
+                      }}
+                    >
+                      <MenuItem value="" disabled>
+                        Select House Type
+                      </MenuItem>
+                      {selectOptions.map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+             
+
+
 
                 {type === "House" && ad.type === "House" ? (
                   <>

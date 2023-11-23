@@ -23,6 +23,8 @@ import "./AdView.css";
 import { TiMediaRecord } from "react-icons/ti";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
+import { BsFillHousesFill } from "react-icons/bs";
+
 dayjs.extend(relativeTime);
 
 export default function AdView() {
@@ -39,7 +41,7 @@ export default function AdView() {
 
   // hooks
   const params = useParams();
-  const houseType = params.slug;
+  const houseType = params.houseType;
 
   useEffect(() => {
     if (params?.slug) fetchAd();
@@ -178,7 +180,7 @@ export default function AdView() {
                         <AdFeatures ad={ad} />
                       </span>
                       <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
-                      <p className="adview-address mt-1">
+                      <p className="adview-address mt-1 mb-0">
                         {/* <span className="adview-address">{ad.address}</span> */}
 
                         <span className="adview-address">
@@ -195,9 +197,49 @@ export default function AdView() {
                         </span>
                       </p>
 
-                      <div>
-                        <h2>{houseType}</h2>
+                      <div className="align-items-center mb-3 mt-0">
+                        <BsFillHousesFill /> {ad.houseType}
                       </div>
+
+                      {/* <div className="row align-items-center mb-3 mt-0">
+                        <div className="col-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            className="bi bi-houses-fill"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.51 2.51 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354z" />
+                            <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708z" />
+                          </svg>
+                        </div>
+                        <div className="col-5">
+                          <h6 className="mb-0">{ad.houseType}</h6>
+                        </div>
+
+                        Landmark
+
+                        <div className="col-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-geo-fill"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"
+                            />
+                          </svg>
+                        </div>
+                        <div className="col-5">
+                          <h6 className="mb-0">{ad.houseType}</h6>
+                        </div>
+                      </div> */}
 
                       <Link className="bg-white">
                         <button
@@ -254,7 +296,7 @@ export default function AdView() {
                     <AdFeatures ad={ad} />
                   </span>
                   <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
-                  <p className="adview-address mt-1">
+                  <p className="adview-address mt-1 mb-0">
                     {/* <span className="adview-address">{ad.address}</span> */}
                     <span className="adview-address">
                       {ad?.googleMap?.map((r) => (
@@ -269,6 +311,11 @@ export default function AdView() {
                       ))}
                     </span>
                   </p>
+
+                  <div className="align-items-center mb-3 mt-0">
+                    <BsFillHousesFill /> {ad.houseType}
+                  </div>
+
                   {auth.user === null ? (
                     <Link className="bg-white" to="/login">
                       <button
