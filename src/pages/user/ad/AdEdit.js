@@ -46,6 +46,7 @@ export default function AdEdit({ action, type }) {
     uploading: false,
     price: "",
     address: "",
+    landmark: "",
     bedrooms: "",
     bathrooms: "",
     carpark: "",
@@ -137,6 +138,9 @@ export default function AdEdit({ action, type }) {
         return;
       } else if (!ad.address) {
         toast.error("Address is required");
+        return;
+      } else if (!ad.landmark) {
+        toast.error("landmark Address/location is required");
         return;
       } else if (!ad.price) {
         toast.error("Price is required");
@@ -251,7 +255,7 @@ export default function AdEdit({ action, type }) {
                       apiOptions="ng"
                       selectProps={{
                         defaultInputValue: ad?.address,
-                        placeholder: "Search for address..",
+                        placeholder: "Property address/location..",
                         onChange: ({ value }) => {
                           setAd({ ...ad, address: value.description });
                         },
@@ -265,24 +269,47 @@ export default function AdEdit({ action, type }) {
             </div>
 
             {loaded ? (
-              <div className="mb-3 row">
-                <label
-                  id="price"
-                  className="col-sm-3 col-form-label adedit-label"
-                >
-                  Price
-                </label>
-                <div className="col-sm-9">
-                  <CurrencyInput
+              <>
+                <div className="mb-3 row">
+                  <label
                     id="price"
-                    name="price"
-                    placeholder="Enter price"
-                    defaultValue={ad.price}
-                    className="form-control mb-3"
-                    onValueChange={(value) => setAd({ ...ad, price: value })}
-                  />
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    Price
+                  </label>
+                  <div className="col-sm-9">
+                    <CurrencyInput
+                      id="price"
+                      name="price"
+                      placeholder="Enter price"
+                      defaultValue={ad.price}
+                      className="form-control mb-3"
+                      onValueChange={(value) => setAd({ ...ad, price: value })}
+                    />
+                  </div>
                 </div>
-              </div>
+                <div className="mb-3 row">
+                  <label
+                    id="address"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    Landmark Location
+                  </label>
+                  <div className="col-sm-9">
+                    <GooglePlacesAutocomplete
+                      apiKey={config.GOOGLE_PLACES_KEY}
+                      apiOptions="ng"
+                      selectProps={{
+                        defaultInputValue: ad?.landmark,
+                        placeholder: "Landmark address/location..",
+                        onChange: ({ value }) => {
+                          setAd({ ...ad, landmark: value.description });
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
             ) : (
               ""
             )}
