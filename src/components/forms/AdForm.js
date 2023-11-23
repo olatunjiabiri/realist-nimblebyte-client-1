@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
-import ImageUpload from "./ImageUpload";
+// import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ import { useAuth } from "../../context/auth";
 import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
 
 import "./index.css";
-import Uploader from "../uploader";
+// import Uploader from "../uploader";
 import Modall from "../modal2/Modal";
 import DynamicForm from "../uploader";
 
@@ -69,6 +69,7 @@ export default function AdForm({ action, type }) {
     uploading: false,
     price: "",
     address: "",
+    landmark: "",
     bedrooms: "",
     bathrooms: "",
     carpark: "",
@@ -138,6 +139,9 @@ export default function AdForm({ action, type }) {
       } else if (!ad.address) {
         toast.error("Address is required");
         return;
+      } else if (!ad.landmark) {
+        toast.error("Landmark location is required");
+        return;
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
@@ -161,6 +165,7 @@ export default function AdForm({ action, type }) {
           // const fromLS = JSON.parse(localStorage.getItem("auth"));
           // fromLS.user = data.user;
           // localStorage.setItem("auth", JSON.stringify(fromLS));
+          // console.log("ads>>", data);
 
           toast.success("Ad created successfully");
 
@@ -266,7 +271,7 @@ export default function AdForm({ action, type }) {
                     apiOptions="ng"
                     selectProps={{
                       defaultInputValue: ad?.address,
-                      placeholder: "Search for address..",
+                      placeholder: "Property address/location..",
                       onChange: ({ value }) => {
                         setAd({ ...ad, address: value.description });
                       },
@@ -274,43 +279,26 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-                {ad.type === "House" && (
-                  <FormControl sx={{ width: "100%", mb: 2 }}>
-                    <Select
-                      SelectDisplayProps={{
-                        style: { paddingTop: 8, paddingBottom: 8 },
-                      }}
-                      displayEmpty
-                      value={ad.houseType}
-                      onChange={handleSelectChange}
-                      inputProps={{ "aria-label": "Without label" }}
-                      sx={{
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        fontSize: "1em",
-                        appearance: "auto",
-                      }}
-                    >
-                      <MenuItem value="" disabled>
-                        Select House Type
-                      </MenuItem>
-                      {selectOptions.map((option, index) => (
-                        <MenuItem key={index} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
-
-              
-
                 <div>
                   <CurrencyInput
                     placeholder="Enter price"
                     defaultValue={ad.price}
                     className="form-control mb-3"
                     onValueChange={(value) => setAd({ ...ad, price: value })}
+                  />
+                </div>
+
+                <div className="mb-3 border-0 ">
+                  <GooglePlacesAutocomplete
+                    apiKey={config.GOOGLE_PLACES_KEY}
+                    apiOptions="ng"
+                    selectProps={{
+                      defaultInputValue: ad?.landmark,
+                      placeholder: "Landmark address/location",
+                      onChange: ({ value }) => {
+                        setAd({ ...ad, landmark: value.description });
+                      },
+                    }}
                   />
                 </div>
 
