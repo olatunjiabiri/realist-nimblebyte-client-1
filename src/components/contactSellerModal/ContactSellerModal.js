@@ -8,6 +8,7 @@ import "./ContactSellerModal.css";
 import { useAuth } from "../../context/auth";
 import config from "../../NewConfig";
 import { contactSellerFormSchema } from "../../../src/validations";
+import { GoogleMap } from "@react-google-maps/api";
 
 const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   // context
@@ -25,19 +26,19 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
     setMessage(
       `Hi, I am interested in the property located at ${
         ad?.address || ""
-      }.  Thanks`,
+      }.  Thanks`
     );
   }, [ad?.address]);
 
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`,
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
       );
       setAgent(
         data?.responsePayload.filter((a) => {
           return a.userId === ad?.postedBy;
-        }),
+        })
       );
       // setLoading(false);
     } catch (err) {
@@ -63,10 +64,10 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
           enquirerName: name,
           enquirerPhone: phone,
           propertyAddress: ad.address,
-        },
+        }
       );
 
-      console.log("response>>>", response);
+      // console.log("ad.address>>>", ad);
       toast.success("Your enquiry has been sent to the agent");
       setLoading(false);
       setIsOpen(false);
@@ -91,7 +92,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       phone: auth?.user?.phone || "",
       email: auth?.user?.email || "",
       message: `Hi, I am interested in the property located at ${
-        ad?.address || ""
+        ad?.googleMap[0].city || ad?.googleMap[0].country || ""
       }.  Thanks`,
     },
     validationSchema: contactSellerFormSchema,
