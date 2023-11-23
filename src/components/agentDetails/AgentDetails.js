@@ -38,12 +38,12 @@ const AgentDetails = ({ agent }) => {
           </p>
         </div>
       </div>
-      <div className="agt-address col-md-8 col-sm-12 ">
+      <div className="agt-address">
         <p className="agt-add">
           {agent?.applicationUser?.address ?? "#address"}
         </p>
       </div>
-      <div className="agt-about col-md-8 col-sm-12 ">
+      <div className="agt-about">
         <h3> About me</h3>
         <p className="agt-add">
           {agent?.applicationUser?.description ?? "#description"}
