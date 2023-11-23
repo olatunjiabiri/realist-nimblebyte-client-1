@@ -108,9 +108,9 @@ const Navbar = () => {
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <p className="header-modal">Request Pending Approval</p>
         <div className="info-modal">
-          Dear {auth?.user?.lastName},
+          {/* Dear{auth?.user?.lastName},
           <br />
-          <br />
+          <br /> */}
           Your application to become an agent is under review. We typically
           process requests within 1-3 business days. You will receive an email
           once a decision is made.

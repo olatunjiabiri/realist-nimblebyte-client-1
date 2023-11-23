@@ -8,7 +8,8 @@ export default function Footer() {
       <div className="container">
         <div className="footer-row row">
           <div className="col-12 col-md-8 footer-word1">
-            <h4 className="mt-4">NimbleCasa - Buy, Sell or Rent Properties</h4>
+            <h4 className="mt-4">NimbleCasa - Real Estate, The Right Way</h4>
+            {/* <h4 className="mt-4">NimbleCasa - Buy, Sell or Rent Properties</h4> */}
             <p className="mt-3">
               &copy; {new Date().getFullYear()} All rights reserved
             </p>
