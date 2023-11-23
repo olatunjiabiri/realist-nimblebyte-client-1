@@ -74,7 +74,7 @@ export default function AccountActivate() {
 
       if (!response?.data?.success) {
         toast.error(response?.data?.message);
-        // navigate("/login");
+        navigate("/login");
       } else {
         console.log(response);
         // addDefaultRole();
