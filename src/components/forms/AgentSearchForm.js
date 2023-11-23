@@ -9,13 +9,13 @@ import "./AgentSearchForm.css";
 export default function AgentSearchForm({ parentCallback, agents }) {
   // const [currentLocation, setCurrentLocation] = useCurrentLocation();
   const [currentLocation, setCurrentLocation] = useState(
-    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : "",
   );
 
   // const [specialty, setSpecialty] = useState(true);
   const [agentName, setAgentName] = useState("");
   const [agentLocation, setAgentLocation] = useState(
-    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : "",
   );
   const [loading, setLoading] = useState(true);
   const [filteredAgents, setFilteredAgents] = useState([]);
@@ -38,7 +38,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
               .includes(agentName.toLowerCase()) ||
             agent.applicationUser.lastName
               ?.toLowerCase()
-              .includes(agentName.toLowerCase()))
+              .includes(agentName.toLowerCase())),
       );
       setFilteredAgents(filtered);
 
@@ -57,7 +57,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
     <>
       <div className="searchForm-container pt-5">
         <div
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex justify-content-center align-items-center position-relative"
           style={{
             backgroundImage: "url(/image-resize.jpg)",
             backgroundSize: "cover",
@@ -67,8 +67,22 @@ export default function AgentSearchForm({ parentCallback, agents }) {
             width: "100%",
           }}
         >
-          <div className="d-flex row justify-content-evenly col-lg-8 agent-search-controls-container">
-            <div className="agent-search-title">Find an Agent</div>
+          {" "}
+          <div
+            className="position-absolute top-0 start-0 w-100 h-100"
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the alpha value to control darkness
+            }}
+          />
+          <div
+            style={{
+              zIndex: "100",
+            }}
+            className="d-flex row justify-content-evenly col-lg-8 agent-search-controls-container"
+          >
+            <div className="agent-search-title text-white">
+              Contact an Agent to Sell or Lease your Property
+            </div>
             <input
               type="search"
               className="form-control pl-1 py-2 col text-center rounded-pill mx-2 my-1"

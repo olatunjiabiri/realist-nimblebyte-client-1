@@ -5,7 +5,7 @@
   margin: auto;
   background-color: white;
   padding: 0.5em 1rem;
-  max-height: 800px;
+  max-height: 500px;
   overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

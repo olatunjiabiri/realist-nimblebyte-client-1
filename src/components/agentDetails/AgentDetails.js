@@ -8,19 +8,19 @@ const AgentDetails = ({ agent }) => {
   // console.log(agent);
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-4 col-sm-12 agt-left-c agt-details">
+      <div className="box-row">
+        <div className="agt-left-c agt-details">
           {/* <div className="agt-image"> */}
           <img
             className="agt-image"
-            src={agent?.applicationUser.photo}
+            src={agent?.applicationUser.photo ?? "./nimblelogo2.png"}
             alt=""
             style={{ height: "250px", objectFit: "cover" }}
           />
           {/* </div> */}
         </div>
 
-        <div className="col-md-8 col-sm-12 agt-info text-center">
+        <div className="col-md-8 col-sm-12 agt-info">
           <p className="agt-text1">
             {" "}
             {agent?.applicationUser?.firstName?.toUpperCase()}{" "}
@@ -37,17 +37,17 @@ const AgentDetails = ({ agent }) => {
             {agent?.registrationNumber ?? "#Registration No."}
           </p>
         </div>
-        <div className="agt-address col-md-8 col-sm-12 ">
-          <p className="agt-add">
-            {agent?.applicationUser?.address ?? "#address"}
-          </p>
-        </div>
-        <div className="agt-about col-md-8 col-sm-12 ">
-          <h3> About me</h3>
-          <p className="agt-add">
-            {agent?.applicationUser?.description ?? "#description"}
-          </p>
-        </div>
+      </div>
+      <div className="agt-address col-md-8 col-sm-12 ">
+        <p className="agt-add">
+          {agent?.applicationUser?.address ?? "#address"}
+        </p>
+      </div>
+      <div className="agt-about col-md-8 col-sm-12 ">
+        <h3> About me</h3>
+        <p className="agt-add">
+          {agent?.applicationUser?.description ?? "#description"}
+        </p>
       </div>
     </div>
   );
