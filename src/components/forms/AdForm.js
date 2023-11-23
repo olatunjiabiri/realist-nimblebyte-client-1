@@ -4,7 +4,7 @@ import config from "../../NewConfig";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
@@ -107,6 +107,7 @@ export default function AdForm({ action, type }) {
   //   );
   // };
 
+
   const handleInputChange = (event) => {
     const {
       target: { value },
@@ -170,6 +171,7 @@ export default function AdForm({ action, type }) {
           navigate("/dashboard");
         }
       }
+      navigate(`/adview/${ad.houseType}`);
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
@@ -281,14 +283,12 @@ export default function AdForm({ action, type }) {
                       displayEmpty
                       value={ad.houseType}
                       onChange={handleSelectChange}
-                      // onClick={handleFieldClick}
                       inputProps={{ "aria-label": "Without label" }}
                       sx={{
                         border: "1px solid #ccc",
                         borderRadius: "4px",
                         fontSize: "1em",
                         appearance: "auto",
-                        // paddingLeft: "0.5em",
                       }}
                     >
                       <MenuItem value="" disabled>

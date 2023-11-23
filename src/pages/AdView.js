@@ -39,6 +39,7 @@ export default function AdView() {
 
   // hooks
   const params = useParams();
+  const houseType = params.slug;
 
   useEffect(() => {
     if (params?.slug) fetchAd();
@@ -193,6 +194,10 @@ export default function AdView() {
                           ))}
                         </span>
                       </p>
+
+                      <div>
+                        <h2>{houseType}</h2>
+                      </div>
 
                       <Link className="bg-white">
                         <button
