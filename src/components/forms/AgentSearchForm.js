@@ -85,7 +85,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
             </div>
             <input
               type="search"
-              className="form-control pl-1 py-2 col text-center rounded-pill mx-2 my-1"
+              className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
               aria-label="form-control"
               id="address"
               value={agentLocation}
@@ -95,7 +95,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
 
             <input
               type="search"
-              className="form-control pl-1 py-2 col text-center rounded-pill mx-2 my-1"
+              className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
               aria-label="form-control"
               id="agentName"
               value={agentName}
@@ -120,7 +120,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
             <div className="d-grid col mx-2 my-1 text-center">
               <button
                 onClick={() => handleSearch()}
-                className="btn btn-warning rounded-pill"
+                className="btn btn-sm btn-warning rounded-pill"
               >
                 Search
               </button>
