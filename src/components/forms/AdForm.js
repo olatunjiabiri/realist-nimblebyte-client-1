@@ -14,6 +14,7 @@ import FormControl from "@mui/material/FormControl";
 import { Avatar } from "antd";
 import { useAuth } from "../../context/auth";
 import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
+import { houseType } from "../../helpers/houseType";
 
 import "./index.css";
 // import Uploader from "../uploader";
@@ -35,19 +36,7 @@ export default function AdForm({ action, type }) {
     { text: "Compound", image: null, blob: null },
   ]);
 
-  const [selectOptions, setSelectOptions] = useState([
-    "Flat",
-    "Bungalows",
-    "Duplex",
-    "Terrace Duplex",
-    "Semi-detached Duplex",
-    "Fully-detached Duplex",
-    "Mansion",
-    "Apartment/Condos",
-    "Maisonette",
-    "Pent-house",
-    "Thatched/Traditional houses",
-  ]);
+  const [selectOptions, setSelectOptions] = useState(houseType);
 
   const fileRefs = useRef([]);
   // hooks
@@ -107,7 +96,6 @@ export default function AdForm({ action, type }) {
   //     selectOptions.filter((option) => option !== "Select House Type")
   //   );
   // };
-
 
   const handleInputChange = (event) => {
     const {
@@ -173,11 +161,10 @@ export default function AdForm({ action, type }) {
 
           // const adId = { adID: data.ad._id };
           // navigate("/payment/paystack/paystack", { state: adId });
-          navigate(`/adview/${ad.houseType}`);
+          // navigate(`/adview/${ad.houseType}`);
           navigate("/dashboard");
         }
       }
-      
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
@@ -303,7 +290,6 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-
                 {ad.type === "House" && (
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
@@ -332,9 +318,6 @@ export default function AdForm({ action, type }) {
                     </Select>
                   </FormControl>
                 )}
-             
-
-
 
                 {type === "House" && ad.type === "House" ? (
                   <>

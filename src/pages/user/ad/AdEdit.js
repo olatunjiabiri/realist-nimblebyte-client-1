@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import CurrencyInput from "react-currency-input-field";
 import { toast } from "react-toastify";
 import { Avatar } from "antd";
+import { houseType } from "../../../helpers/houseType";
 
 import config from "../../../NewConfig";
 import ImageUpload from "../../../components/forms/ImageUpload";
@@ -39,19 +40,7 @@ export default function AdEdit({ action, type }) {
       },
     },
   };
-  const [selectOptions, setSelectOptions] = useState([
-    "Flat",
-    "Bungalows",
-    "Duplex",
-    "Terrace Duplex",
-    "Semi-detached Duplex",
-    "Fully-detached Duplex",
-    "Mansion",
-    "Apartment/Condos",
-    "Maisonette",
-    "Pent-house",
-    "Thatched/Traditional houses",
-  ]);
+  const [selectOptions, setSelectOptions] = useState(houseType);
 
   // state
   const [ad, setAd] = useState({
