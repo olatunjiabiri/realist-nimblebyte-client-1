@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 import { useAgent } from "../../context/agent";
 
@@ -8,12 +8,20 @@ import "./AgentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 
 const AgentsMobileList = ({ returnedAgents }) => {
+  const navigate = useNavigate();
+
   const [agent, setAgent] = useAgent();
   setAgent(returnedAgents);
 
+  const handleRowClick = (params) => {
+    navigate(`/agent/${params.row?.userId}`, {
+      state: params.row.userId,
+    });
+  };
+
   useEffect(() => {});
 
-  console.log("returnedAgents>>", returnedAgents);
+  // console.log("returnedAgents>>", returnedAgents);
 
   const userColumns = [
     {
@@ -112,6 +120,7 @@ const AgentsMobileList = ({ returnedAgents }) => {
           className="datagrid"
           rows={returnedAgents}
           columns={userColumns}
+          onRowClick={handleRowClick}
           // rowHeight={200}
           getRowHeight={() => "auto"}
           getEstimatedRowHeight={() => 200}

@@ -34,10 +34,9 @@ export default function Agent({ user }) {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${params.userId}/${page}/${perPage}`
+        `/user-ads/${params.userId}/${page}/${perPage}`,
       );
-      // console.log("Ads data", data);
-      setAds([data.ads]);
+      setAds([...data.ads]);
       setTotal(data.total);
       setLoading(false);
     } catch (err) {
@@ -52,10 +51,9 @@ export default function Agent({ user }) {
       // );
 
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Agent/agent?userId=${params.userId}`
+        `${config.AUTH_API}/api/Agent/agent?userId=${params.userId}`,
       );
 
-      console.log("agent data>>", data);
       setAgent(data);
       // setAgents(data.responsePayload);
       // setAgent(
@@ -97,7 +95,9 @@ export default function Agent({ user }) {
         </div>
 
         <div className="container">
-          <h2 className="text-center pt-5 ads-listing">Recent Listings</h2>
+          <h2 className="text-center pt-5 ads-listing">
+            {ads.length < 1 && "No"} Recent Listings
+          </h2>
           <div className="row">
             {ads.length > 0 ? (
               <>
@@ -108,7 +108,16 @@ export default function Agent({ user }) {
                 )}
               </>
             ) : (
-              ""
+              <div className="row d-flex justify-content-center">
+                <div className="empty-state">
+                  <img
+                    src="../../empty.svg"
+                    alt="Empty"
+                    height={400}
+                    width={400}
+                  />
+                </div>
+              </div>
             )}
           </div>
         </div>

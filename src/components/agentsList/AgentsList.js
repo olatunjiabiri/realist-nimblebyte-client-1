@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 
 import "./AgentsList.css";
@@ -9,6 +9,13 @@ import { DataGrid } from "@mui/x-data-grid";
 const AgentsList = ({ returnedAgents }) => {
   // console.log("returnedAgents", returnedAgents);
   useEffect(() => {});
+  const navigate = useNavigate();
+
+  const handleRowClick = (params) => {
+    navigate(`/agent/${params.row?.userId}`, {
+      state: params.row.userId,
+    });
+  };
 
   const userColumns = [
     {
@@ -42,18 +49,18 @@ const AgentsList = ({ returnedAgents }) => {
       renderCell: (params) => {
         return (
           <div className="">
-            <Link
+            <div
               className="link"
-              to={{
-                pathname: `/agent/${params.row?.userId}`,
-                state: params.row.userId,
-              }}
+              // to={{
+              //   pathname: `/agent/${params.row?.userId}`,
+              //   state: params.row.userId,
+              // }}
             >
               <p className="agent-text1">
                 {params.row.applicationUser.firstName}, &nbsp;{" "}
                 {params.row.applicationUser.lastName}
               </p>
-            </Link>
+            </div>
 
             <p className="agent-text2">
               {params.row.applicationUser.company ?? "#Company"}
@@ -122,9 +129,10 @@ const AgentsList = ({ returnedAgents }) => {
           rowSpacing={5}
           // sx={{ p: 3 }}
           getRowId={(row) => row.userId}
-          className="datagrid"
+          className="datagrid custom-data-grid"
           rows={returnedAgents}
           columns={userColumns}
+          onRowClick={handleRowClick}
           // rowHeight={200}
           getRowHeight={() => "auto"}
           getEstimatedRowHeight={() => 200}

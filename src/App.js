@@ -13,6 +13,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Paystack from "./pages/payment/paystack/Paystack";
 
+import PrivacyPolicy from "./documents/PrivacyPolicy";
+import TermsofUse from "../src/documents/TermsofUse";
+import BuyerTermsandConditions from "../src/documents/BuyerTermsandConditions";
+import SellerTermsandConditions from "../src/documents/SellerTermsandConditions";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -88,11 +93,20 @@ function App() {
                   theme="light"
                 />
                 <Routes>
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/terms-of-use" element={<TermsofUse />} />
+                  <Route
+                    path="/buyer-terms"
+                    element={<BuyerTermsandConditions />}
+                  />
+                  <Route
+                    path="/seller-terms"
+                    element={<SellerTermsandConditions />}
+                  />
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/reset-password" element={<PasswordReset />} />
-
                   <Route
                     path="/auth/account-activate"
                     element={<AccountActivate />}
@@ -116,7 +130,6 @@ function App() {
                   <Route path="user/payment" element={<Payment />} />
                   <Route path="user/completion" element={<Completion />} />
                   <Route path="user/checkout" element={<CheckoutForm />} />
-
                   <Route path="/" element={<PrivateRoute />}>
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="ad/create" element={<AdCreate />} />
@@ -154,16 +167,13 @@ function App() {
                     <Route path="user/enquiries" element={<Enquiries />} />
                     {/* <Route path="user/payment" element={<Payment />} /> */}
                   </Route>
-
                   <Route path="/ad/:slug" element={<AdView />} />
                   <Route path="/agents" element={<Agents />} />
                   <Route path="/agent/:userId" element={<Agent />} />
-
                   <Route path="/buy" element={<Buy />} />
                   <Route path="/rent" element={<Rent />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/contact-us" element={<ContactUs />} />
-
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
                 <Footer />

@@ -37,7 +37,7 @@ const LogoutMessage = ({ children }) => {
 
       if (decodedToken.exp && currentTime > decodedToken.exp) {
         // Token has expired
-        toast.success(" Your session has expired. Please log in again.");
+        toast.warn("Your session has expired. Please log in again.");
         setToken(null);
         setAuth({ user: null, token: "" });
         localStorage.removeItem("auth");
