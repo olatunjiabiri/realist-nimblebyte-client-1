@@ -13,6 +13,7 @@ const DynamicForm = ({
 }) => {
   const [formCompleted, setFormCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     console.log("formdata", formData);
@@ -60,6 +61,82 @@ const DynamicForm = ({
     }
   };
 
+  // const handleConfirm = async () => {
+  //   if (formData.length === 0) {
+  //     setIsOpen(false);
+  //     return;
+  //   }
+  //
+  //   try {
+  //     setLoading(true);
+  //     const files = formData;
+  //     console.log("files", files);
+  //     if (files?.length) {
+  //       setAd((prev) => ({ ...prev, uploading: true }));
+  //
+  //       // Use Promise.all to wait for all image uploads to complete
+  //       const uploadedPhotos = await Promise.all(
+  //         files.map((file) => {
+  //           if (file.blob === null) {
+  //             return {
+  //               Key: file.text,
+  //               Location: file.image,
+  //             };
+  //           }
+  //
+  //           return new Promise(async (resolve) => {
+  //             Resizer.imageFileResizer(
+  //               file.blob,
+  //               1080,
+  //               720,
+  //               "JPEG",
+  //               100,
+  //               0,
+  //               async (uri) => {
+  //                 try {
+  //                   const { data } = await axios.post("/upload-image", {
+  //                     image: uri,
+  //                     label: file.text,
+  //                   });
+  //                   resolve(data);
+  //                 } catch (err) {
+  //                   console.log(err);
+  //                   resolve(null);
+  //                 }
+  //               },
+  //               "base64",
+  //             );
+  //           });
+  //         }),
+  //       );
+  //
+  //       // Remove null entries (failed uploads) and filter out duplicates
+  //       const filteredPhotos = uploadedPhotos.filter(Boolean);
+  //       const uniquePhotos = Array.from(
+  //         new Set([
+  //           ...ad.photos.map((photo) => photo.Location),
+  //           ...filteredPhotos.map((photo) => photo.Location),
+  //         ]),
+  //       ).map((location) =>
+  //         filteredPhotos.find((photo) => photo.Location === location),
+  //       );
+  //
+  //       setAd((prev) => ({
+  //         ...prev,
+  //         photos: uniquePhotos,
+  //         uploading: false,
+  //       }));
+  //
+  //       setLoading(false);
+  //       setIsOpen(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setAd((prev) => ({ ...prev, uploading: false }));
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleConfirm = async () => {
     if (formData.length === 0) {
       setIsOpen(false);
@@ -69,13 +146,12 @@ const DynamicForm = ({
     try {
       setLoading(true);
       const files = formData;
-      console.log("files", files);
+
       if (files?.length) {
         setAd((prev) => ({ ...prev, uploading: true }));
 
-        // Use Promise.all to wait for all image uploads to complete
         const uploadedPhotos = await Promise.all(
-          files.map((file) => {
+          files.map(async (file) => {
             if (file.blob === null) {
               return {
                 Key: file.text,
@@ -84,27 +160,36 @@ const DynamicForm = ({
             }
 
             return new Promise(async (resolve) => {
-              Resizer.imageFileResizer(
-                file.blob,
-                1080,
-                720,
-                "JPEG",
-                100,
-                0,
-                async (uri) => {
-                  try {
-                    const { data } = await axios.post("/upload-image", {
-                      image: uri,
-                      label: file.text,
-                    });
-                    resolve(data);
-                  } catch (err) {
-                    console.log(err);
-                    resolve(null);
-                  }
-                },
-                "base64",
-              );
+              const image = new Image();
+              image.src = URL.createObjectURL(file.blob);
+
+              image.onload = async () => {
+                const canvas = canvasRef.current;
+                const context = canvas.getContext("2d");
+                const newWidth = 1080;
+                const newHeight = 720;
+                // const newWidth = 600;
+                // const newHeight = 300;
+
+                // Resize the image using canvas
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                context.drawImage(image, 0, 0, newWidth, newHeight);
+
+                // Convert the canvas content back to base64
+                const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
+
+                try {
+                  const { data } = await axios.post("/upload-image", {
+                    image: resizedImage,
+                    label: file.text,
+                  });
+                  resolve(data);
+                } catch (err) {
+                  console.log(err);
+                  resolve(null);
+                }
+              };
             });
           }),
         );
@@ -161,6 +246,7 @@ const DynamicForm = ({
 
   return (
     <div className="dynamic-form">
+      <canvas ref={canvasRef} style={{ display: "none" }} />
       <p className="dynamic-form-title">Upload Photos</p>
       {formData.map((row, index) => (
         <div key={index} className="form-row">
