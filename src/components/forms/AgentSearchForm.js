@@ -9,13 +9,13 @@ import "./AgentSearchForm.css";
 export default function AgentSearchForm({ parentCallback, agents }) {
   // const [currentLocation, setCurrentLocation] = useCurrentLocation();
   const [currentLocation, setCurrentLocation] = useState(
-    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : "",
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
   );
 
   // const [specialty, setSpecialty] = useState(true);
   const [agentName, setAgentName] = useState("");
   const [agentLocation, setAgentLocation] = useState(
-    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : "",
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
   );
   const [loading, setLoading] = useState(true);
   const [filteredAgents, setFilteredAgents] = useState([]);
@@ -38,7 +38,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
               .includes(agentName.toLowerCase()) ||
             agent.applicationUser.lastName
               ?.toLowerCase()
-              .includes(agentName.toLowerCase())),
+              .includes(agentName.toLowerCase()))
       );
       setFilteredAgents(filtered);
 
@@ -83,27 +83,29 @@ export default function AgentSearchForm({ parentCallback, agents }) {
             <div className="agent-search-title text-white">
               Contact an Agent to Sell or Lease your Property
             </div>
-            <input
-              type="search"
-              className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
-              aria-label="form-control"
-              id="address"
-              value={agentLocation}
-              placeholder="Agent Location"
-              onChange={(e) => setAgentLocation(e.target.value)}
-            />
 
-            <input
-              type="search"
-              className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
-              aria-label="form-control"
-              id="agentName"
-              value={agentName}
-              placeholder="Agent Name"
-              onChange={(e) => setAgentName(e.target.value)}
-            />
+            <div className="search-buttons">
+              <input
+                type="search"
+                className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
+                aria-label="form-control"
+                id="address"
+                value={agentLocation}
+                placeholder="Agent Location"
+                onChange={(e) => setAgentLocation(e.target.value)}
+              />
 
-            {/* <select
+              <input
+                type="search"
+                className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
+                aria-label="form-control"
+                id="agentName"
+                value={agentName}
+                placeholder="Agent Name"
+                onChange={(e) => setAgentName(e.target.value)}
+              />
+
+              {/* <select
               className="form-select pl-1 col text-center rounded-pill mx-2 my-1"
               aria-label="form-select select-options"
               onChange={(e) => setSpecialty(e.target.value)}
@@ -117,13 +119,17 @@ export default function AgentSearchForm({ parentCallback, agents }) {
                 </option>
               ))}
             </select> */}
-            <div className="d-grid col mx-2 my-1 text-center">
-              <button
-                onClick={() => handleSearch()}
-                className="btn btn-sm btn-warning rounded-pill"
+              <div
+                // className="d-grid col mx-2 my-1 text-center"
+                className=" btn btn-sm btn-warning form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
               >
-                Search
-              </button>
+                <button
+                  onClick={() => handleSearch()}
+                  className="btn btn-sm btn-warning rounded-pill"
+                >
+                  Search
+                </button>
+              </div>
             </div>
             {/* <pre>{JSON.stringify(search, null, 4)}</pre> */}
           </div>
