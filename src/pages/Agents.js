@@ -84,9 +84,6 @@ export default function Agents() {
     );
   }
 
-  console.log("fitlered agents", filteredAgents);
-  console.log("agents", agents);
-
   return (
     <LogoutMessage>
       {filteredAgents && (

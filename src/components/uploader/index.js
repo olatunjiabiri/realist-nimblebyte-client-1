@@ -146,7 +146,6 @@ const DynamicForm = ({
     try {
       setLoading(true);
       const files = formData;
-      console.log("files", files);
 
       if (files?.length) {
         setAd((prev) => ({ ...prev, uploading: true }));

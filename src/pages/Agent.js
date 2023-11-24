@@ -36,7 +36,6 @@ export default function Agent({ user }) {
       const { data } = await axios.get(
         `/user-ads/${params.userId}/${page}/${perPage}`,
       );
-      console.log("Ads data", data);
       setAds([...data.ads]);
       setTotal(data.total);
       setLoading(false);
@@ -55,7 +54,6 @@ export default function Agent({ user }) {
         `${config.AUTH_API}/api/Agent/agent?userId=${params.userId}`,
       );
 
-      console.log("agent data>>", data);
       setAgent(data);
       // setAgents(data.responsePayload);
       // setAgent(
@@ -69,8 +67,6 @@ export default function Agent({ user }) {
       setLoading(false);
     }
   };
-
-  console.log("listens", ads);
 
   if (loading) {
     return (
