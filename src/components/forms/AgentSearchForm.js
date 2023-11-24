@@ -57,7 +57,7 @@ export default function AgentSearchForm({ parentCallback, agents }) {
     <>
       <div className="searchForm-container pt-5">
         <div
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex justify-content-center align-items-center position-relative"
           style={{
             backgroundImage: "url(/image-resize.jpg)",
             backgroundSize: "cover",
@@ -67,29 +67,45 @@ export default function AgentSearchForm({ parentCallback, agents }) {
             width: "100%",
           }}
         >
-          <div className="d-flex row justify-content-evenly col-lg-8 agent-search-controls-container">
-            <div className="agent-search-title">Find an Agent</div>
-            <input
-              type="search"
-              className="form-control pl-1 py-2 col text-center rounded-pill mx-2 my-1"
-              aria-label="form-control"
-              id="address"
-              value={agentLocation}
-              placeholder="Agent Location"
-              onChange={(e) => setAgentLocation(e.target.value)}
-            />
+          {" "}
+          <div
+            className="position-absolute top-0 start-0 w-100 h-100"
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the alpha value to control darkness
+            }}
+          />
+          <div
+            style={{
+              zIndex: "100",
+            }}
+            className="d-flex row justify-content-evenly col-lg-8 agent-search-controls-container"
+          >
+            <div className="agent-search-title text-white">
+              Contact an Agent to Sell or Lease your Property
+            </div>
 
-            <input
-              type="search"
-              className="form-control pl-1 py-2 col text-center rounded-pill mx-2 my-1"
-              aria-label="form-control"
-              id="agentName"
-              value={agentName}
-              placeholder="Agent Name"
-              onChange={(e) => setAgentName(e.target.value)}
-            />
+            <div className="search-buttons">
+              <input
+                type="search"
+                className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
+                aria-label="form-control"
+                id="address"
+                value={agentLocation}
+                placeholder="Agent Location"
+                onChange={(e) => setAgentLocation(e.target.value)}
+              />
 
-            {/* <select
+              <input
+                type="search"
+                className="form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
+                aria-label="form-control"
+                id="agentName"
+                value={agentName}
+                placeholder="Agent Name"
+                onChange={(e) => setAgentName(e.target.value)}
+              />
+
+              {/* <select
               className="form-select pl-1 col text-center rounded-pill mx-2 my-1"
               aria-label="form-select select-options"
               onChange={(e) => setSpecialty(e.target.value)}
@@ -103,13 +119,17 @@ export default function AgentSearchForm({ parentCallback, agents }) {
                 </option>
               ))}
             </select> */}
-            <div className="d-grid col mx-2 my-1 text-center">
-              <button
-                onClick={() => handleSearch()}
-                className="btn btn-warning rounded-pill"
+              <div
+                // className="d-grid col mx-2 my-1 text-center"
+                className=" btn btn-sm btn-warning form-control form-control-sm pl-1 py-2 col text-center rounded-pill mx-2 my-1"
               >
-                Search
-              </button>
+                <button
+                  onClick={() => handleSearch()}
+                  className="btn btn-sm btn-warning rounded-pill"
+                >
+                  Search
+                </button>
+              </div>
             </div>
             {/* <pre>{JSON.stringify(search, null, 4)}</pre> */}
           </div>
