@@ -50,6 +50,8 @@ export default function Register() {
       <div className="row">
         <div className="col-md-4 offset-md-4">
           <form onSubmit={handleSubmit}>
+            <div className="h3 mb-4 text-center">Create an Account</div>
+
             <input
               type="text"
               placeholder="Enter your email"
@@ -72,6 +74,14 @@ export default function Register() {
               {loading ? "Waiting..." : "Register"}
             </button>
           </form>
+          <div className="d-flex justify-content-between">
+            <Link className="text-primary" to="#">
+              Terms of use
+            </Link>
+            <Link className="text-primary" to="#">
+              Privacy Policy
+            </Link>
+          </div>
           <div className="mt-3 text-grey-600">
             Already have an account?{" "}
             <span>
