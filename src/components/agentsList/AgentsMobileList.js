@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 import { useAgent } from "../../context/agent";
 
@@ -8,6 +8,8 @@ import "./AgentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 
 const AgentsMobileList = ({ returnedAgents }) => {
+  const navigate = useNavigate();
+
   const [agent, setAgent] = useAgent();
   setAgent(returnedAgents);
 
@@ -19,7 +21,7 @@ const AgentsMobileList = ({ returnedAgents }) => {
 
   useEffect(() => {});
 
-  console.log("returnedAgents>>", returnedAgents);
+  // console.log("returnedAgents>>", returnedAgents);
 
   const userColumns = [
     {
