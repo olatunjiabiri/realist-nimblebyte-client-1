@@ -64,7 +64,7 @@ export const generatePhotosArray = (photos) => {
         src: p.Location,
         width: x,
         height: x,
-      })
+      }),
     );
     return arr;
   } else {
