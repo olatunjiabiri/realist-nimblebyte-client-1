@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import ContentWrapper from "../components/contentWrapper/ContentWrapper";
+import Checkbox from "@mui/material/Checkbox";
 
 import config from "../NewConfig";
 
@@ -12,8 +13,13 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checked, setChecked] = React.useState(false);
   // hooks
   const navigate = useNavigate();
+
+  const handleTermsandPolicyCheck = (event) => {
+    setChecked(event.target.checked);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,18 +76,36 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button disabled={loading} className="btn btn-primary col-12 mb-4">
+            <div className="mb-3 text-center">
+              <Checkbox
+                checked={checked}
+                onChange={handleTermsandPolicyCheck}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              By clicking Register you agree to the{" "}
+              <Link className="text-primary" to="#">
+                Terms of use
+              </Link>{" "}
+              and{" "}
+              <Link className="text-primary" to="#">
+                Privacy Policy
+              </Link>
+            </div>
+            <button
+              disabled={!checked || loading}
+              className="btn btn-primary col-12 mb-4"
+            >
               {loading ? "Waiting..." : "Register"}
             </button>
           </form>
-          <div className="d-flex justify-content-between">
+          {/* <div className="d-flex justify-content-between">
             <Link className="text-primary" to="#">
               Terms of use
             </Link>
             <Link className="text-primary" to="#">
               Privacy Policy
             </Link>
-          </div>
+          </div> */}
           <div className="mt-3 text-grey-600">
             Already have an account?{" "}
             <span>
