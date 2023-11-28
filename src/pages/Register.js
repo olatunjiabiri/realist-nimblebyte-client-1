@@ -14,6 +14,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(false);
+
   // hooks
   const navigate = useNavigate();
 
@@ -83,11 +84,11 @@ export default function Register() {
                 inputProps={{ "aria-label": "controlled" }}
               />
               By clicking Register you agree to the{" "}
-              <Link className="text-primary" to="#">
+              <Link className="text-primary" to="/terms-of-use">
                 Terms of use
               </Link>{" "}
               and{" "}
-              <Link className="text-primary" to="#">
+              <Link className="text-primary" to="/privacy-policy">
                 Privacy Policy
               </Link>
             </div>
@@ -98,14 +99,7 @@ export default function Register() {
               {loading ? "Waiting..." : "Register"}
             </button>
           </form>
-          {/* <div className="d-flex justify-content-between">
-            <Link className="text-primary" to="#">
-              Terms of use
-            </Link>
-            <Link className="text-primary" to="#">
-              Privacy Policy
-            </Link>
-          </div> */}
+
           <div className="mt-3 text-grey-600">
             Already have an account?{" "}
             <span>
