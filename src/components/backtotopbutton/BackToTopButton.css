@@ -1,18 +1,51 @@
 .back-to-top-button {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    background-color: #007bff; 
-    color: #fff;
-    border: none;
+    right: 25px;
+    background-color: #fff; 
+    color: #007bff;
+    border: 2px solid #007bff;
     border-radius: 50%;
     padding: 10px 15px;
     cursor: pointer;
-    font-size: 16px;
-    z-index: 1000;
+    font-size: 1rem;
+    font-weight: 400;
+    z-index: 20;
+    animation: movebtn 3s ease-in-out infinite;
+    transition: all .5s ease-in-out;
+    height: 50px;
+    width: 50px;
+    line-height: 1.5;
   }
   
   .back-to-top-button:hover {
-    background-color: #0056b3;
+    background-color: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+    animation: none;
   }
+
+  @keyframes movebtn {
+    0%{
+      transform: translateY(0px);
+    }
+    25%{
+      transform: translateY(20px);
+    }
+    50%{
+      transform: translateY(0px);
+    }
+    75%{
+      transform: translateY(-20px);
+    }
+    100%{
+      transform: translateY(0px);
+    }
+  }
+
   
+  
+    /* cursor: pointer;
+   
+    transition: all .5s ease-in-out;
+     */
