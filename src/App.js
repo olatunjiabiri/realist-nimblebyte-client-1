@@ -13,6 +13,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Paystack from "./pages/payment/paystack/Paystack";
 
+import PrivacyPolicy from "./documents/PrivacyPolicy";
+import TermsofUse from "../src/documents/TermsofUse";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -88,6 +90,9 @@ function App() {
                   theme="light"
                 />
                 <Routes>
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/terms-of-use" element={<TermsofUse />} />
+
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
