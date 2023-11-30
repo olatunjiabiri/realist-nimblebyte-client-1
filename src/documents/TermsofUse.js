@@ -15,7 +15,7 @@ const TermsofUse = () => {
   };
   return (
     // <div >
-    <div className="container-fluid my-5 p-5">
+    <div className="container-fluid my-5 p-3">
       <div className="h1 text-center p-header ">
         TERMS AND CONDITIONS FOR USE OF PLATFORMS{" "}
       </div>
