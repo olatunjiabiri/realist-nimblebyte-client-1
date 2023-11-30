@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./index.css";
 
 const SellerTermsandConditions = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleBackButton = () => {
     navigate(-1);
