@@ -193,6 +193,14 @@ const Navbar = () => {
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
+                to="/contactagents"
+                onClick={closeMobileMenu}
+              >
+                Sell2
+              </NavLink>
+              <NavLink
+                className="nav-item nav-link"
+                aria-current="page"
                 to="/contact-us"
                 onClick={closeMobileMenu}
               >
