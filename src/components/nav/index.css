@@ -19,6 +19,17 @@ h-container {
 }
 
 @media (max-width: 768px) {
+
+  .footer-word1{
+    order: 3;
+  }
+  .footer-links{
+    order: 1;
+  }
+  .footer-info{
+    order: 1;
+  }
+
   .menu-icon {
     display: block;
   }
@@ -82,6 +93,16 @@ h-container {
 
   .link.footer-color a {
     margin: 5px;
+  }
+
+  .footer-word1{
+    order: 3;
+  }
+  .footer-links{
+    order: 1;
+  }
+  .footer-info{
+    order: 1;
   }
 }
 
