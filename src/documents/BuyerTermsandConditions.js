@@ -6,11 +6,11 @@ const BuyerTermsandConditions = ({ setIsOpen1 }) => {
   const navigate = useNavigate();
 
   const handleBackButton = () => {
-    navigate(-1);
+    setIsOpen1(false);
   };
 
   return (
-    <div className="container-fluid my-5 p-5">
+    <div className="container my-5 px-3 ">
       <div>
         <div className="h1 mb-3 text-center p-header ">
           PROPERTY BUYER TERMS AND CONDITIONS

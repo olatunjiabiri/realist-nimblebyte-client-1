@@ -42,18 +42,6 @@
   z-index: 50000;
 }
 
-.modal-content {
-  /* padding-top: 2rem; */
-  display: flex;
-  align-items: center;
-  position: fixed;
-  background: #fff;
-  width: 435px;
-  /* height: 680px; */
-  border-radius: 20px;
-  overflow: auto;
-}
-
 .contact-owner-button {
   bottom: 20px;
   right: 20px;
@@ -74,14 +62,7 @@
     padding: 0;
   }
 
-  .modal-content {
-    width: 90%;
-    /* height: 80%; */
-    /* 610px */
-    /* padding: 0; */
-  }
-
-  .property-image {
+   .property-image {
     /* border-radius: 20px;  */
     width: 80vw;
     /* width: 250px; */

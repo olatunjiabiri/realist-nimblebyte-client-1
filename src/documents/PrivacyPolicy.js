@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
     navigate("/register");
   };
   return (
-    <div className="container-fluid my-5 p-5">
+    <div className="container-fluid my-5 p-1">
       <div className="h1 text-center p-header ">PRIVACY POLICY</div>
       <div>
         <p>
