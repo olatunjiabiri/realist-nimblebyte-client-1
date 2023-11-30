@@ -16,6 +16,8 @@ import Paystack from "./pages/payment/paystack/Paystack";
 import PrivacyPolicy from "./documents/PrivacyPolicy";
 import TermsofUse from "../src/documents/TermsofUse";
 import BuyerTermsandConditions from "../src/documents/BuyerTermsandConditions";
+import SellerTermsandConditions from "../src/documents/SellerTermsandConditions";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -97,7 +99,10 @@ function App() {
                     path="/buyer-terms"
                     element={<BuyerTermsandConditions />}
                   />
-                  ;
+                  <Route
+                    path="/seller-terms"
+                    element={<SellerTermsandConditions />}
+                  />
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
