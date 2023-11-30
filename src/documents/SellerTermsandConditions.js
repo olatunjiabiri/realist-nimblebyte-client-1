@@ -16,7 +16,7 @@ const SellerTermsandConditions = () => {
   };
 
   return (
-    <div className="container my-5 p-5">
+    <div className="container my-5 p-3">
       <div>
         <div className="h1 mb-3 text-center p-header ">
           PROPERTY OWNER’S TERMS AND CONDITIONS
