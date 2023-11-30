@@ -11,7 +11,7 @@ const SellerTermsandConditions = () => {
   };
 
   return (
-    <div className="container-fluid my-5 p-5">
+    <div className="container my-5 p-5">
       <div>
         <div className="h1 mb-3 text-center p-header ">
           PROPERTY OWNER’S TERMS AND CONDITIONS
@@ -33,7 +33,6 @@ const SellerTermsandConditions = () => {
         </div>
         <div className="h3 my-3 py-3 text-center p-header ">
           REGISTERING AN ACCOUNT.
-          <hr />
         </div>
         <p className="list-heading">1.0 &ensp; PROFILE CREATION </p>
         <p>
