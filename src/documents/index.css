@@ -1,0 +1,30 @@
+.lower-alpha {
+    list-style-type: lower-alpha;
+}
+
+.lower-roman{
+    list-style-type: lower-roman;
+  }
+
+ .list-heading {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .p-header {
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 767px) {
+
+    .list-heading {
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .p-header {
+        font-size: 20px;
+        font-weight: 600;
+      }
+  }
