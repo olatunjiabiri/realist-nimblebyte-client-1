@@ -1,18 +1,24 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+
 import "./index.css";
 
 const BuyerTermsandConditions = ({ setIsOpen1 }) => {
-  const navigate = useNavigate();
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleBackButton = () => {
-    navigate(-1);
+    setIsOpen1(false);
   };
 
   return (
-    <div className="container-fluid my-5 p-5">
+    <div className="container my-5 px-3 ">
       <div>
-        <div className="h1 mb-3 text-center p-header ">
+        <div
+          className="h1 mb-3 text-center"
+          style={{ marginTop: "0px", fontSize: "28px", fontWeight: 600 }}
+        >
           PROPERTY BUYER TERMS AND CONDITIONS
         </div>
         <p>
@@ -30,7 +36,7 @@ const BuyerTermsandConditions = ({ setIsOpen1 }) => {
           </italic>
         </p>
         <div className="h2 mb-3 text-center p-header ">
-          REGISTERING AN ACCOUNT.
+          REGISTERING AN ACCOUNT
         </div>
         <p className="list-heading">1.0&ensp;PROFILE CREATION</p>
         <p>
