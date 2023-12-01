@@ -133,7 +133,7 @@ const AgentAdsTable = ({ ads }) => {
             },
           }}
           autoHeight
-          {...ads[0]}
+          {...ads}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },

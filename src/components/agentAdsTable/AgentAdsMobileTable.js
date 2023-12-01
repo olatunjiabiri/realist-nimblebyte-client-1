@@ -11,7 +11,7 @@ const AgentAdsTable = ({ ads }) => {
   const [agent, setAgent] = useState([]);
 
   useEffect(() => {
-    setAgent(ads[0]);
+    setAgent(ads);
   }, []);
 
   // console.log("ads>>", ads[0]);
@@ -79,11 +79,11 @@ const AgentAdsTable = ({ ads }) => {
           rowSpacing={3}
           getRowId={(row) => row._id}
           className="datagrid"
-          rows={ads[0]}
+          rows={ads}
           columns={userColumns}
           // rowHeight={150}
           autoHeight
-          {...ads[0]}
+          {...ads}
           getRowHeight={() => "auto"}
           getEstimatedRowHeight={() => 200}
           sx={{
