@@ -185,19 +185,19 @@ const Navbar = () => {
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
-                to="/agents"
+                to="/contactagents"
                 onClick={closeMobileMenu}
               >
                 Sell
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
-                to="/contactagents"
+                to="/agents"
                 onClick={closeMobileMenu}
               >
                 Sell2
-              </NavLink>
+              </NavLink> */}
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
