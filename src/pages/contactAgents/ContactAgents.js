@@ -1,17 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./ContactAgents.css"; // Create a CSS file for ContactAgents component styling
+import "./ContactAgents.css";
 
 const ContactAgents = () => {
-  const navigate = useNavigate();
 
   return (
-    <div className="full-screen-container ">
-      <div className="container-fluid my-5 p-5 h-100">
+    <div className="container-fluid my-5 p-5 h-100">
         <div className="row h-100">
-          <div className="col-lg-6 d-flex align-items-center justify-content-center">
-            <div className="p-4 pt-5 text-justify">
+          <div className="col-lg-6 d-flex">
+            <div className="p-4 pt-5">
               <h4 className="tittle">
                 Contact an Agent to Sell or Lease your Property
               </h4>
@@ -47,7 +45,6 @@ const ContactAgents = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
