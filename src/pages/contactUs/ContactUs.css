@@ -13,7 +13,23 @@
   width: 100%;
   background: white;
 }
+.radio-button{
+  display: inline-flex;
+  align-items: center;
+  margin-right: 16px; 
+  cursor: pointer;
+  /* margin-left: 8px; */
+}
 
+.radio-label {
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 8px;
+} 
+
+.radio-span {
+  margin-left: 8px; /* Adjust the space between radio button and label text */
+}
 
 .contact-form-title {
   color: #4b4d4e;
