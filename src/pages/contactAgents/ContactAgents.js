@@ -1,13 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ContactAgents.css";
 
 const ContactAgents = () => {
 
   return (
-    <div className="container-fluid my-5 p-5 h-100">
-        <div className="row h-100">
+    <div className="container-fluid my-5 p-5">
+        <div className="row">
           <div className="col-lg-6 d-flex">
             <div className="p-4 pt-5">
               <h4 className="tittle">
