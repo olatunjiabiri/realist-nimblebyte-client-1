@@ -35,6 +35,8 @@ import UpdateProfile from "./pages/user/UpdateProfile";
 import BeAgent from "./pages/user/BeAgent";
 import ContactUs from "./pages/contactUs/ContactUs";
 
+import ContactAgents from "./pages/contactAgents/ContactAgents";
+
 // import Settings from "./pages/user/Settings";
 import UpdatePassword from "./pages/user/UpdatePassword";
 
@@ -163,6 +165,8 @@ function App() {
                   <Route path="/rent" element={<Rent />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/contact-us" element={<ContactUs />} />
+                  <Route path="/contactagents" element={<ContactAgents />} />
+
 
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
