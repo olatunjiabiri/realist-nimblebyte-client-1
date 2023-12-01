@@ -27,13 +27,14 @@
 
 .modal-content {
   padding: 1rem 0;
-  /* width: 100%; */
-  /* height: 70%; */
-  /* background-color: #282c34; */
-  /* color: #fff; */
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
+  display: flex;
+  align-items: center;
+  position: fixed;
+  background: #fff;
+  width: 435px;
+  height: 680px;
+  /* border-radius: 20px; */
+  overflow: auto;
   font-size: 1rem;
 }
 
@@ -49,6 +50,8 @@
 @media (max-width: 767px) {
   .modal-content {
     width: 90%;
+    border-radius: 20px;
+
     /* height: 80%; */
     /* padding: 0; */
   }
@@ -64,5 +67,10 @@
   .close-btn {
     top: 40px;
     right: 30px;
+  }
+
+  .modal-content {
+    width: 90%;
+    border-radius: 20px;
   }
 }
