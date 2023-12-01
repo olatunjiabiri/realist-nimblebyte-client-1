@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./index.css";
@@ -6,12 +6,17 @@ import "./index.css";
 const SellerTermsandConditions = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleBackButton = () => {
     navigate(-1);
   };
 
   return (
-    <div className="container my-5 p-5">
+    <div className="container my-5 p-3">
       <div>
         <div className="h1 mb-3 text-center p-header ">
           PROPERTY OWNER’S TERMS AND CONDITIONS

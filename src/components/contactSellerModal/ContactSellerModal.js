@@ -10,7 +10,8 @@ import "./ContactSellerModal.css";
 import { useAuth } from "../../context/auth";
 import config from "../../NewConfig";
 import { contactSellerFormSchema } from "../../../src/validations";
-import { GoogleMap } from "@react-google-maps/api";
+import BuyerTermsandConditions from "../../documents/BuyerTermsandConditions";
+import Modall from "../modal/Modal";
 
 const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   // context
@@ -22,6 +23,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
 
   const [agent, setAgent] = useState("");
   const [checked, setChecked] = React.useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
 
   const handleTermsandPolicyCheck = (event) => {
     setChecked(event.target.checked);
@@ -108,6 +110,9 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
 
   return (
     <>
+      <Modall handleClose={() => setIsOpen1(false)} isOpen={isOpen1}>
+        <BuyerTermsandConditions setIsOpen1={setIsOpen1} />
+      </Modall>
       {ad && (
         <div>
           <form className="contact-modal" onSubmit={handleSubmit}>
@@ -193,14 +198,18 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
               onBlur={handleBlur}
               autoFocus={true}
             ></textarea>
-            <div className="mb-3 text-center">
+            <div className="mb-1 text-center terms-text">
               <Checkbox
                 checked={checked}
                 onChange={handleTermsandPolicyCheck}
                 inputProps={{ "aria-label": "controlled" }}
               />
               By submitting this form I agree to the{" "}
-              <Link className="text-primary" to="/buyer-terms">
+              <Link
+                className="text-primary"
+                // to="/buyer-terms"
+                onClick={() => setIsOpen1(true)}
+              >
                 Terms of Use
               </Link>{" "}
             </div>
