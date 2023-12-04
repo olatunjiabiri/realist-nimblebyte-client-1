@@ -15,13 +15,23 @@ import config from "../../NewConfig";
 const ContactUs = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
-
+ 
   // state
   const [loading, setLoading] = useState(false);
   // console.log("subject", auth.user);
 
   const onSubmit = async (values, actions) => {
-    const { contactName, email, message, phone, subject, propertyType, propertySubtype, enquiryType, location } = values;
+    const {
+      contactName,
+      email,
+      message,
+      phone,
+      subject,
+      propertyType,
+      propertySubtype,
+      enquiryType,
+      location,
+    } = values;
 
     try {
       // console.log(email, password);
@@ -227,15 +237,44 @@ const ContactUs = () => {
 
                         {/* Additional fields for Enquiry */}
                         <div className="form-group">
-                          <input
-                            type="text"
-                            name="propertyType"
-                            className="form-control mb-2"
-                            placeholder="Property Type"
-                            value={values.propertyType}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
+                          <select
+                             name="propertyType"
+                             className="form-select form-select-lg f-select"
+                             value={values.propertyType}
+                             onChange={handleChange}                       
+                          >
+                            <option value="">Select Property Type</option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Commercial"}
+                            >
+                              Commercial
+                            </option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Industrial"}
+                            >
+                              Industrial
+                            </option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Short-Let"}
+                            >
+                              Short-Let
+                            </option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"House"}
+                            >
+                              House
+                            </option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Land"}
+                            >
+                              Land
+                            </option>
+                          </select>
                         </div>
 
                         <div className="form-group mt-4">
@@ -267,24 +306,24 @@ const ContactUs = () => {
                     {/* Hide Message field for Enquiry */}
                     {values.subject !== "Enquiry" && (
                       <div className="form-group mt-4">
-                       <textarea
-                        className="form-control mb-2"
-                        placeholder="Write your message"
-                        cols={10}
-                        rows={5}
-                        name="message"
-                        value={values.message}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {errors.message && touched.message && (
-                        <p className="mt-0 text-danger">
-                          <small>
-                            {" "}
-                            <div> {errors.message}</div>
-                          </small>
-                        </p>
-                      )}
+                        <textarea
+                          className="form-control mb-2"
+                          placeholder="Write your message"
+                          cols={10}
+                          rows={5}
+                          name="message"
+                          value={values.message}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        {errors.message && touched.message && (
+                          <p className="mt-0 text-danger">
+                            <small>
+                              {" "}
+                              <div> {errors.message}</div>
+                            </small>
+                          </p>
+                        )}
                       </div>
                     )}
                     <div className="mt-4">
