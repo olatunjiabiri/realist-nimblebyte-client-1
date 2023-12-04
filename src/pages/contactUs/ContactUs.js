@@ -31,6 +31,7 @@ const ContactUs = () => {
       propertySubtype,
       enquiryType,
       location,
+      adminEmail,
     } = values;
 
     try {
@@ -208,7 +209,7 @@ const ContactUs = () => {
                     {/* Conditionally render fields for Enquiry */}
                     {values.subject === "Enquiry" && (
                       <>
-                        <div className="form-group">
+                        <div className="form-group mt-2">
                           <div className="radio-button m-2">
                             <label className="radio-label">
                               <input
