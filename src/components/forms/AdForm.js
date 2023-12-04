@@ -141,7 +141,7 @@ export default function AdForm({ action, type }) {
         toast.error("Price is required");
         return;
       } else if (!ad.title) {
-        toast.error("Title is required");
+        toast.error(" Property Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
