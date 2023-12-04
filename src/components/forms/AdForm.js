@@ -12,6 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { Avatar } from "antd";
+
 import { useAuth } from "../../context/auth";
 import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
 import { houseType } from "../../helpers/houseType";
@@ -26,6 +27,8 @@ export default function AdForm({ action, type }) {
   const [auth, setAuth] = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   // state
+  const [checked, setChecked] = React.useState(false);
+
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [feature, setFeature] = useState([]);
@@ -84,6 +87,10 @@ export default function AdForm({ action, type }) {
       getFeature(ad.type);
     }
   }, [ad.type]);
+
+  const handleTermsandPolicyCheck = (event) => {
+    setChecked(event.target.checked);
+  };
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -420,8 +427,20 @@ export default function AdForm({ action, type }) {
                     setAd({ ...ad, description: e.target.value })
                   }
                 />
+                <div className="mb-3 text-center">
+                  <Checkbox
+                    checked={checked}
+                    onChange={handleTermsandPolicyCheck}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                  By submitting this form I agree to the{" "}
+                  <Link className="text-primary" to="/seller-terms">
+                    Terms of Use
+                  </Link>{" "}
+                </div>
                 <div className="d-flex justify-content-center">
                   <button
+                    disabled={!checked || loading}
                     onClick={handleClick}
                     type="button"
                     className={`btn btn-primary col-4 m-3  ${

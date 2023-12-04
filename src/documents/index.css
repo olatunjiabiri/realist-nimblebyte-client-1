@@ -12,19 +12,19 @@
   }
 
   .p-header {
-    font-size: 30px;
+    font-size: 28px;
+    margin-top: 50px;
     font-weight: 600;
   }
 
-  @media (max-width: 767px) {
-
+   @media (max-width: 767px) {
     .list-heading {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 500;
       }
 
       .p-header {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
       }
   }
