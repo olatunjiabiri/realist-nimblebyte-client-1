@@ -15,7 +15,7 @@ import config from "../../NewConfig";
 const ContactUs = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
- 
+
   // state
   const [loading, setLoading] = useState(false);
   // console.log("subject", auth.user);
@@ -31,7 +31,6 @@ const ContactUs = () => {
       propertySubtype,
       enquiryType,
       location,
-      adminEmail,
     } = values;
 
     try {
@@ -50,6 +49,8 @@ const ContactUs = () => {
           EnquiryType: enquiryType,
           PropertySubtype: propertySubtype,
           Location: location,
+          EmailReceiver: config.AdminEmail,
+          Action: "",
         }
       );
 
@@ -239,10 +240,10 @@ const ContactUs = () => {
                         {/* Additional fields for Enquiry */}
                         <div className="form-group">
                           <select
-                             name="propertyType"
-                             className="form-select form-select-lg f-select"
-                             value={values.propertyType}
-                             onChange={handleChange}                       
+                            name="propertyType"
+                            className="form-select form-select-lg f-select"
+                            value={values.propertyType}
+                            onChange={handleChange}
                           >
                             <option value="">Select Property Type</option>
                             <option
