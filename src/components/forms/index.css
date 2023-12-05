@@ -4,6 +4,10 @@
   overflow: hidden;
 }
 
+.property-type-controls {
+ width: 100% 
+}
+
 .filter-container {
   width: 40%;
   height: 290px;
@@ -43,7 +47,6 @@
 
 /* Style for selected radio button */
 .selected {
-  /* color: green; */
   font-weight: bold;
 }
 
@@ -63,6 +66,10 @@
   .contain {
     padding: 2rem 0;
   }
+
+  .property-type-controls {
+    width: 90%;
+  }
   /* .filter-container {
         width: 50%;
         height: 400px ;
@@ -75,8 +82,11 @@
   .contain {
     padding: 2rem 0;
   }
+
+  .property-type-controls {
+   
+    width: 90%;
+  }
 }
 
-/* .search-bar-container {
-    height: 1500; width: "70%"
-} */
+
