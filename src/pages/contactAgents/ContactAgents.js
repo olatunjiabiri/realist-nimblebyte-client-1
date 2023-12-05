@@ -10,7 +10,7 @@ const ContactAgents = () => {
           <div className="p-4 pt-5">
             <h4 className="title">
               <span className="bold-text">
-                Contact our Agent to Sell or Lease your Property
+                Contact Us to Sell or Lease your Property
               </span>
             </h4>
             <h2 className="second-title">Property Owner?</h2>
