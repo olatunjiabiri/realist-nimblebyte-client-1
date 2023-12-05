@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./ContactAgents.css";
 
 const ContactAgents = () => {
@@ -9,7 +10,7 @@ const ContactAgents = () => {
           <div className="p-4 pt-5">
             <h4 className="title">
               <span className="bold-text">
-                Contact an Agent to Sell or Lease your Property
+                Contact our Agent to Sell or Lease your Property
               </span>
             </h4>
             <h2 className="second-title">Property Owner?</h2>
@@ -28,10 +29,9 @@ const ContactAgents = () => {
               </p>
               <p>
                 If this sounds like you, Kindly reach out to us{" "}
-                <a className="here-link" href="*">
+                <Link className="here-link" to="/contact-us">
                   here
-                </a>
-                .
+                </Link>
               </p>
             </div>
           </div>

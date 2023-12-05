@@ -176,7 +176,7 @@ function App() {
                   <Route path="/rent" element={<Rent />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/contact-us" element={<ContactUs />} />
-                  <Route path="/contactagents" element={<ContactAgents />} />
+                  <Route path="/contact-agents" element={<ContactAgents />} />
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
                 <Footer />
