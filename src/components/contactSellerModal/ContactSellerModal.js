@@ -17,7 +17,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -31,13 +31,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
 
   useEffect(() => {
     fetchAgents();
-
-    setMessage(
-      `Hi, I am interested in the property located at ${
-        ad?.address || ""
-      }.  Thanks`
-    );
-  }, [ad?.address]);
+  }, []);
 
   const fetchAgents = async () => {
     try {
@@ -73,6 +67,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
           enquirerName: name,
           enquirerPhone: phone,
           propertyAddress: ad.address,
+          adminEmail: config.AdminEmail,
         }
       );
 
@@ -100,8 +95,8 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       name: auth?.user?.firstName || "",
       phone: auth?.user?.phone || "",
       email: auth?.user?.email || "",
-      message: `Hi, I am interested in the property located at ${
-        ad?.googleMap[0].city || ad?.googleMap[0].country || ""
+      message: `Hi, I am interested in the property located at 2 ${
+        ad?.googleMap[0]?.city || ad?.googleMap[0]?.country || ""
       }.  Thanks`,
     },
     validationSchema: contactSellerFormSchema,

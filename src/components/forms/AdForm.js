@@ -141,7 +141,7 @@ export default function AdForm({ action, type }) {
         toast.error("Price is required");
         return;
       } else if (!ad.title) {
-        toast.error("Title is required");
+        toast.error(" Property Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -201,9 +201,14 @@ export default function AdForm({ action, type }) {
                 </h1>
                 <hr />
 
-                <div className="container-div d-flex justify-content-center">
+                {/* <div className="d-flex justify-content-center property-type-controls"> */}
+
+                <div className=" row d-flex property-type-controls">
+                  <label id="formType" className="col-form-label adedit-label">
+                    Property Type:
+                  </label>
                   <label
-                    className={`radio-button ${
+                    className={` col radio-button ${
                       ad.type === "House" ? "selected" : ""
                     }`}
                   >
@@ -220,8 +225,9 @@ export default function AdForm({ action, type }) {
                     />
                     House
                   </label>
+
                   <label
-                    className={`radio-button ${
+                    className={` col radio-button ${
                       ad.type === "Land" ? "selected" : ""
                     }`}
                   >
@@ -237,6 +243,63 @@ export default function AdForm({ action, type }) {
                       }}
                     />
                     Land
+                  </label>
+
+                  <label
+                    className={` col radio-button ${
+                      ad.type === "Shortlet" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Shortlet"}
+                      checked={ad.type === "Shortlet"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Shortlet" });
+                        getFeature("Shortlet");
+                      }}
+                    />
+                    Shortlet
+                  </label>
+
+                  <label
+                    className={` col radio-button ${
+                      ad.type === "Commercial" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Commercial"}
+                      checked={ad.type === "Commercial"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Commercial" });
+                        getFeature("Commercial");
+                      }}
+                    />
+                    Commercial
+                  </label>
+
+                  <label
+                    className={` col radio-button ${
+                      ad.type === "Industrial" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Industrial"}
+                      checked={ad.type === "Industrial"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Industrial" });
+                        getFeature("Industrial");
+                      }}
+                    />
+                    Industrial
                   </label>
                 </div>
 
@@ -297,7 +360,7 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-                {ad.type === "House" && (
+                {(ad.type === "House" || ad.type === "Shortlet") && (
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
                       SelectDisplayProps={{
@@ -315,7 +378,7 @@ export default function AdForm({ action, type }) {
                       }}
                     >
                       <MenuItem value="" disabled>
-                        Select House Type
+                        Select {ad.type} Type
                       </MenuItem>
                       {selectOptions.map((option, index) => (
                         <MenuItem key={index} value={option}>
