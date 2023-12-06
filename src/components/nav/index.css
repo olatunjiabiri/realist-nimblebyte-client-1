@@ -18,6 +18,12 @@ h-container {
   text-align: start;
 }
 
+.footer--pin {
+  position: relative;
+  left: 0;
+  bottom: 0;
+}
+
 @media (max-width: 768px) {
 
   .footer-word1{
