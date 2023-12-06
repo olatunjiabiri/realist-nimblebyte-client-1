@@ -382,7 +382,7 @@ export default function AdForm({ action, type }) {
                       }}
                     >
                       <MenuItem value="" disabled>
-                        Select {ad.type} Type
+                        Select {ad.type} type
                       </MenuItem>
                       {selectOptions.map((option, index) => (
                         <MenuItem key={index} value={option}>
@@ -468,7 +468,7 @@ export default function AdForm({ action, type }) {
                           if (selected.length === 0) {
                             return (
                               <span form-control mb-3>
-                                Extra Features
+                                Select extra features
                               </span>
                             );
                           }
