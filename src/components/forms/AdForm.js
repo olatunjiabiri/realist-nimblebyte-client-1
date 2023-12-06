@@ -364,7 +364,11 @@ export default function AdForm({ action, type }) {
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
                       SelectDisplayProps={{
-                        style: { paddingTop: 8, paddingBottom: 8 },
+                        style: {
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                          color: "gray",
+                        },
                       }}
                       displayEmpty
                       value={ad.houseType}
@@ -449,7 +453,11 @@ export default function AdForm({ action, type }) {
                     <FormControl sx={{ width: "100%", mb: 2 }}>
                       <Select
                         SelectDisplayProps={{
-                          style: { paddingTop: 8, paddingBottom: 8 },
+                          style: {
+                            paddingTop: 8,
+                            paddingBottom: 8,
+                            color: "gray",
+                          },
                         }}
                         id="demo-multiple-checkbox"
                         displayEmpty
