@@ -8,6 +8,10 @@
   pointer-events: none;
 }
 
+.content-container {
+  min-height: calc(100vh - 240px);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -37,3 +41,16 @@
     transform: rotate(360deg);
   }
 }
+
+
+@media (min-width: 1024px) and (min-height: 1366px) and (orientation: landscape) {
+  .content-container {
+    min-height: calc(100vh - 350px);
+  }
+}
+
+/* @media (min-width: 1024px) {
+  .content-container {
+    min-height: calc(100vh - 290px);
+  }
+} */

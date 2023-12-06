@@ -61,6 +61,7 @@ import BackToTop from "./components/backtotopbutton/BackToTop";
 import ContactSeller from "./components/forms/ContactSeller";
 import PaystackVerifyPayment from "./pages/payment/paystack/paystack-verification/paystackVerifyPayment";
 import ContentWrapper from "./components/contentWrapper/ContentWrapper";
+import "./App.css";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -94,7 +95,7 @@ function App() {
                   pauseOnHover
                   theme="light"
                 />
-                <Routes>
+                <Routes className="content-container">
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms-of-use" element={<TermsofUse />} />
                   <Route
