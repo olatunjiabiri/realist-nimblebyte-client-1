@@ -4,7 +4,7 @@ import "./ContactAgents.css";
 
 const ContactAgents = () => {
   return (
-    <div className="container my-5 p-5">
+    <div className="container my-5 p-5 content-container">
       <div className="row">
         <div className="col-lg-6 word">
           <div className="p-4 pt-5">
