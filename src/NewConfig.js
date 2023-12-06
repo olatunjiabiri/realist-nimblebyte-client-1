@@ -1,4 +1,5 @@
 const config = {
+  AdminEmail: "information@nimble-byte.com",
   API:
     // process.env.NODE_ENV === "production"
     //   ? "http://localhost:8000/api" :
