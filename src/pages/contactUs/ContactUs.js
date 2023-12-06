@@ -112,7 +112,7 @@ const ContactUs = () => {
     <>
       {/* <ContentWrapper> */}
       <LogoutMessage>
-        <div className="background-color">
+        <div className="background-color content-container">
           <div className="container mt-5 p-5">
             <div className="row">
               <div className="col-md-6 offset-md-3">

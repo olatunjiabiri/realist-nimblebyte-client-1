@@ -140,7 +140,7 @@ export default function ProfileForm({ sourceURL }) {
   return (
     <>
       <LogoutMessage>
-        <div className="background-color">
+        <div className="background-color content-container">
           <div className="container p-5">
             {/* <Sidebar /> */}
             <div className="container mt-5">

@@ -140,7 +140,7 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
-      } else if (!ad.title) {
+      } else if (ad.action === "Sell" && !ad.title) {
         toast.error(" Property Title is required");
         return;
       } else if (!ad.description) {
@@ -364,7 +364,11 @@ export default function AdForm({ action, type }) {
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
                       SelectDisplayProps={{
-                        style: { paddingTop: 8, paddingBottom: 8 },
+                        style: {
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                          color: "gray",
+                        },
                       }}
                       displayEmpty
                       value={ad.houseType}
@@ -378,7 +382,7 @@ export default function AdForm({ action, type }) {
                       }}
                     >
                       <MenuItem value="" disabled>
-                        Select {ad.type} Type
+                        Select {ad.type} type
                       </MenuItem>
                       {selectOptions.map((option, index) => (
                         <MenuItem key={index} value={option}>
@@ -433,13 +437,15 @@ export default function AdForm({ action, type }) {
                   value={ad.landsize}
                   onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
-                <input
-                  type="text"
-                  className="form-control mb-3"
-                  placeholder="Enter title"
-                  value={ad.title}
-                  onChange={(e) => setAd({ ...ad, title: e.target.value })}
-                />
+                {ad.action === "Sell" && (
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    placeholder="Enter property title e.g. C of O, Survey Plan"
+                    value={ad.title}
+                    onChange={(e) => setAd({ ...ad, title: e.target.value })}
+                  />
+                )}
 
                 {features?.length > 0 ? (
                   <>
@@ -447,7 +453,11 @@ export default function AdForm({ action, type }) {
                     <FormControl sx={{ width: "100%", mb: 2 }}>
                       <Select
                         SelectDisplayProps={{
-                          style: { paddingTop: 8, paddingBottom: 8 },
+                          style: {
+                            paddingTop: 8,
+                            paddingBottom: 8,
+                            color: "gray",
+                          },
                         }}
                         id="demo-multiple-checkbox"
                         displayEmpty
@@ -458,7 +468,7 @@ export default function AdForm({ action, type }) {
                           if (selected.length === 0) {
                             return (
                               <span form-control mb-3>
-                                Extra Features
+                                Select extra features
                               </span>
                             );
                           }
