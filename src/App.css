@@ -49,8 +49,8 @@
   }
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   .content-container {
     min-height: calc(100vh - 290px);
   }
-}
+} */
