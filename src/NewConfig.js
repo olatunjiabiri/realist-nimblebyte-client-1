@@ -1,24 +1,11 @@
 const config = {
   AdminEmail: "information@nimble-byte.com",
-<<<<<<< HEAD
   API: "https://nimblecasa-uat-node-server.azurewebsites.net/api",
   // "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API: "https://nimblecasa-uat-auth-backend.azurewebsites.net",
   // "https://realist-auth-backend.azurewebsites.net",
   PAYMENT_API: "https://nimblecasa-uat-payment-backend-api.azurewebsites.net",
   //  "https://realist-payment-service.azurewebsites.net",
-=======
-  API:
-    // process.env.NODE_ENV === "production"
-    //   ? "http://localhost:8000/api" :
-    "https://realist-node-backend.azurewebsites.net/api",
-  AUTH_API:
-    // process.env.NODE_ENV === "production"
-    //"https://localhost:7298",
-    // "https://authbackendservice.azurewebsites.net",
-    "https://realist-auth-backend.azurewebsites.net",
-  PAYMENT_API: "https://realist-payment-service.azurewebsites.net",
->>>>>>> 048f7d882bc2064dec1567f2af13bf9dc08e1aad
   //  "https://localhost:7067",
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
   GOOGLE_MAPS_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",
