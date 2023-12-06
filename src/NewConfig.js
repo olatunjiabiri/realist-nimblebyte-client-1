@@ -1,4 +1,5 @@
 const config = {
+  AdminEmail: "information@nimble-byte.com",
   API: "https://nimblecasa-uat-node-server.azurewebsites.net/api",
   // "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API: "https://nimblecasa-uat-auth-backend.azurewebsites.net",
