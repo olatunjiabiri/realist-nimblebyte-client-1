@@ -95,7 +95,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       name: auth?.user?.firstName || "",
       phone: auth?.user?.phone || "",
       email: auth?.user?.email || "",
-      message: `Hi, I am interested in the property located at 2 ${
+      message: `Hi, I am interested in the property located at ${
         ad?.googleMap[0]?.city || ad?.googleMap[0]?.country || ""
       }.  Thanks`,
     },
