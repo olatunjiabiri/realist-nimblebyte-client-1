@@ -56,6 +56,7 @@ import BackToTop from "./components/backtotopbutton/BackToTop";
 import ContactSeller from "./components/forms/ContactSeller";
 import PaystackVerifyPayment from "./pages/payment/paystack/paystack-verification/paystackVerifyPayment";
 import ContentWrapper from "./components/contentWrapper/ContentWrapper";
+import DocumentManager from "./pages/user/DocumentManager";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -136,6 +137,10 @@ function App() {
                     />
                     <Route path="ad/create/rent/land" element={<RentLand />} />
                     <Route path="user/profile" element={<UpdateProfile />} />
+                    <Route
+                      path="user/document-manager"
+                      element={<DocumentManager />}
+                    />
                     <Route path="user/be-agent" element={<BeAgent />} />
 
                     <Route

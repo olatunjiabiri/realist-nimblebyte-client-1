@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ import config from "../../../NewConfig";
 import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import LogoutMessage from "../../misc/logoutMessage/LogoutMessage";
+import DocumentForm from "../../documentUploader";
+import Modall from "../../modal2/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileForm({ sourceURL }) {
   // console.log("sourceURL", sourceURL);
@@ -31,7 +34,7 @@ export default function ProfileForm({ sourceURL }) {
   const [roles, setRoles] = useState([]);
 
   // hook
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (auth.user) {
@@ -107,7 +110,7 @@ export default function ProfileForm({ sourceURL }) {
             registrationNumber: reg_number || "",
             roles: roles,
             photo,
-          }
+          },
         );
 
         if (!data.success) {
@@ -137,9 +140,44 @@ export default function ProfileForm({ sourceURL }) {
     }
   };
 
+  const [formData, setFormData] = useState([
+    { text: "Passport photo ID", image: null, blob: null },
+    { text: "Proof of identification", image: null, blob: null },
+    { text: "CAC certification", image: null, blob: null },
+  ]);
+  const [isOpen, setIsOpen] = useState(false);
+  const fileRefs = useRef([]);
+
+  const [passportPhoto, setPassportPhoto] = useState(null);
+  const [proofOfIdentification, setProofOfIdentification] = useState(null);
+  const [proofType, setProofType] = useState("");
+  const [cacCertification, setCacCertification] = useState(null);
+  const [error, setError] = useState("");
+  const [proofTypeError, setProofTypeError] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
   return (
     <>
       <LogoutMessage>
+        <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+          <DocumentForm
+            setIsOpen={setIsOpen}
+            passportPhoto={passportPhoto}
+            setPassportPhoto={setPassportPhoto}
+            proofOfIdentification={proofOfIdentification}
+            setProofOfIdentification={setProofOfIdentification}
+            proofType={proofType}
+            setProofType={setProofType}
+            cacCertification={cacCertification}
+            setCacCertification={setCacCertification}
+            error={error}
+            setError={setError}
+            proofTypeError={proofTypeError}
+            setProofTypeError={setProofTypeError}
+            uploadedFiles={uploadedFiles}
+            setUploadedFiles={setUploadedFiles}
+          />
+        </Modall>
         <div className="background-color">
           <div className="container p-5">
             {/* <Sidebar /> */}
@@ -230,7 +268,6 @@ export default function ProfileForm({ sourceURL }) {
                         </div>
                       </>
                     )}
-
                     <div className="form-group col-8 pb-1">
                       {(userType === "Agent" || isAgent || sourceURL) && (
                         <ProfileUpload
@@ -242,6 +279,27 @@ export default function ProfileForm({ sourceURL }) {
                         />
                       )}
                     </div>
+                    {/* <div className="form-group col-8 pb-1"> */}
+                    {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
+                    {/*     <label */}
+                    {/*       onClick={() => setIsOpen(true)} */}
+                    {/*       className="btn btn-primary" */}
+                    {/*     > */}
+                    {/*       Upload Documents */}
+                    {/*     </label> */}
+                    {/*   )} */}
+                    {/*   {uploadedFiles.length > 0 && ( */}
+                    {/*     <> */}
+                    {/*       <div>Uploaded documents</div> */}
+                    {/*       {uploadedFiles.map((file) => ( */}
+                    {/*         <p className="text-success"> */}
+                    {/*           {/* Uploaded Documents: {uploadedFiles.join(", ")} */}
+                    {/*           {file} */}
+                    {/*         </p> */}
+                    {/*       ))} */}
+                    {/*     </> */}
+                    {/*   )} */}
+                    {/* </div> */}
                     {userType === "Agent" || isAgent || sourceURL ? (
                       <>
                         <input
@@ -262,7 +320,6 @@ export default function ProfileForm({ sourceURL }) {
                     ) : (
                       ""
                     )}
-
                     <input
                       type="text"
                       placeholder="Firstname"
@@ -286,7 +343,6 @@ export default function ProfileForm({ sourceURL }) {
                       value={email}
                       readOnly
                     />
-
                     <input
                       type="text"
                       placeholder="Address"
@@ -301,7 +357,6 @@ export default function ProfileForm({ sourceURL }) {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
-
                     <textarea
                       placeholder="Write something interesting about yourself.."
                       className="form-control mb-3"
@@ -320,7 +375,6 @@ export default function ProfileForm({ sourceURL }) {
                         Your data will be reviewed by our legal department
                       </label>
                     )}
-
                     <div className="d-flex justify-content-center">
                       {userType === "Agent" || isAgent || sourceURL ? (
                         <button
@@ -328,7 +382,7 @@ export default function ProfileForm({ sourceURL }) {
                           disabled={loading}
                           onClick={() => {
                             alert(
-                              "Your data will go through verification process."
+                              "Your data will go through verification process.",
                             );
                           }}
                         >
@@ -343,6 +397,12 @@ export default function ProfileForm({ sourceURL }) {
                         </button>
                       )}
                     </div>
+                    <button
+                      className="btn btn-primary col-md-6 mt-3 mb-5"
+                      onClick={() => navigate("/user/document-manager")}
+                    >
+                      Next
+                    </button>
                   </form>
                 </div>
               </div>
