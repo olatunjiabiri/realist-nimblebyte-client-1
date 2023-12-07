@@ -19,10 +19,10 @@ export default function Wishlist() {
     fetchAds();
   }, [auth.wishlist]);
 
-  // useEffect(() => {
-  //   // Scroll to the top of the page when the component mounts
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const fetchAds = async () => {
     try {

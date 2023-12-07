@@ -5,10 +5,10 @@ import "./ContactAgents.css";
 
 const ContactAgents = () => {
 
-  // useEffect(() => {
-  //   // Scroll to the top of the page when the component mounts
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="container my-5 p-5 content-container">
