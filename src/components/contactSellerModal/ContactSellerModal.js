@@ -3,32 +3,35 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
+import Checkbox from "@mui/material/Checkbox";
+import { Link } from "react-router-dom";
 
 import "./ContactSellerModal.css";
 import { useAuth } from "../../context/auth";
 import config from "../../NewConfig";
 import { contactSellerFormSchema } from "../../../src/validations";
-import { GoogleMap } from "@react-google-maps/api";
+import BuyerTermsandConditions from "../../documents/BuyerTermsandConditions";
+import Modall from "../modal/Modal";
 
 const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
 
   const [agent, setAgent] = useState("");
+  const [checked, setChecked] = React.useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
+
+  const handleTermsandPolicyCheck = (event) => {
+    setChecked(event.target.checked);
+  };
 
   useEffect(() => {
     fetchAgents();
-
-    setMessage(
-      `Hi, I am interested in the property located at ${
-        ad?.address || ""
-      }.  Thanks`
-    );
-  }, [ad?.address]);
+  }, []);
 
   const fetchAgents = async () => {
     try {
@@ -64,6 +67,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
           enquirerName: name,
           enquirerPhone: phone,
           propertyAddress: ad.address,
+          adminEmail: config.AdminEmail,
         }
       );
 
@@ -91,8 +95,8 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       name: auth?.user?.firstName || "",
       phone: auth?.user?.phone || "",
       email: auth?.user?.email || "",
-      message: `Hi, I am interested in the property located at ${
-        ad?.googleMap[0].city || ad?.googleMap[0].country || ""
+      message: `Hi, I am interested in the property located at 2 ${
+        ad?.googleMap[0]?.city || ad?.googleMap[0]?.country || ""
       }.  Thanks`,
     },
     validationSchema: contactSellerFormSchema,
@@ -101,6 +105,9 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
 
   return (
     <>
+      <Modall handleClose={() => setIsOpen1(false)} isOpen={isOpen1}>
+        <BuyerTermsandConditions setIsOpen1={setIsOpen1} />
+      </Modall>
       {ad && (
         <div>
           <form className="contact-modal" onSubmit={handleSubmit}>
@@ -186,12 +193,27 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
               onBlur={handleBlur}
               autoFocus={true}
             ></textarea>
+            <div className="mb-1 text-center terms-text">
+              <Checkbox
+                checked={checked}
+                onChange={handleTermsandPolicyCheck}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              By submitting this form I agree to the{" "}
+              <Link
+                className="text-primary"
+                // to="/buyer-terms"
+                onClick={() => setIsOpen1(true)}
+              >
+                Terms of Use
+              </Link>{" "}
+            </div>
 
             <button
               // onClick={handleSubmit}
               type="submit"
               className="btn btn-primary mt-4 mb-5 contact-modal-btn"
-              disabled={loading}
+              disabled={!checked || loading}
             >
               {isSubmitting ? "Please wait" : "Send Enquiry"}
             </button>

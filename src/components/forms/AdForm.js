@@ -12,6 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { Avatar } from "antd";
+
 import { useAuth } from "../../context/auth";
 import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
 import { houseType } from "../../helpers/houseType";
@@ -26,6 +27,8 @@ export default function AdForm({ action, type }) {
   const [auth, setAuth] = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   // state
+  const [checked, setChecked] = React.useState(false);
+
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [feature, setFeature] = useState([]);
@@ -85,6 +88,10 @@ export default function AdForm({ action, type }) {
     }
   }, [ad.type]);
 
+  const handleTermsandPolicyCheck = (event) => {
+    setChecked(event.target.checked);
+  };
+
   const handleSelectChange = (event) => {
     const value = event.target.value;
     // setHouseType(value);
@@ -133,8 +140,8 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
-      } else if (!ad.title) {
-        toast.error("Title is required");
+      } else if (ad.action === "Sell" && !ad.title) {
+        toast.error(" Property Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -194,9 +201,14 @@ export default function AdForm({ action, type }) {
                 </h1>
                 <hr />
 
-                <div className="container-div d-flex justify-content-center">
+                {/* <div className="d-flex justify-content-center property-type-controls"> */}
+
+                <div className=" row d-flex property-type-controls">
+                  <label id="formType" className="col-form-label adedit-label">
+                    Property Type:
+                  </label>
                   <label
-                    className={`radio-button ${
+                    className={` col radio-button ${
                       ad.type === "House" ? "selected" : ""
                     }`}
                   >
@@ -213,8 +225,9 @@ export default function AdForm({ action, type }) {
                     />
                     House
                   </label>
+
                   <label
-                    className={`radio-button ${
+                    className={` col radio-button ${
                       ad.type === "Land" ? "selected" : ""
                     }`}
                   >
@@ -230,6 +243,63 @@ export default function AdForm({ action, type }) {
                       }}
                     />
                     Land
+                  </label>
+
+                  <label
+                    className={` col radio-button ${
+                      ad.type === "Shortlet" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Shortlet"}
+                      checked={ad.type === "Shortlet"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Shortlet" });
+                        getFeature("Shortlet");
+                      }}
+                    />
+                    Shortlet
+                  </label>
+
+                  <label
+                    className={` col radio-button ${
+                      ad.type === "Commercial" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Commercial"}
+                      checked={ad.type === "Commercial"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Commercial" });
+                        getFeature("Commercial");
+                      }}
+                    />
+                    Commercial
+                  </label>
+
+                  <label
+                    className={` col radio-button ${
+                      ad.type === "Industrial" ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      className="input-style m-2"
+                      type="radio"
+                      name="formType"
+                      value={"Industrial"}
+                      checked={ad.type === "Industrial"}
+                      onChange={() => {
+                        setAd({ ...ad, type: "Industrial" });
+                        getFeature("Industrial");
+                      }}
+                    />
+                    Industrial
                   </label>
                 </div>
 
@@ -290,11 +360,15 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-                {ad.type === "House" && (
+                {(ad.type === "House" || ad.type === "Shortlet") && (
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
                       SelectDisplayProps={{
-                        style: { paddingTop: 8, paddingBottom: 8 },
+                        style: {
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                          color: "gray",
+                        },
                       }}
                       displayEmpty
                       value={ad.houseType}
@@ -308,7 +382,7 @@ export default function AdForm({ action, type }) {
                       }}
                     >
                       <MenuItem value="" disabled>
-                        Select House Type
+                        Select {ad.type} type
                       </MenuItem>
                       {selectOptions.map((option, index) => (
                         <MenuItem key={index} value={option}>
@@ -363,13 +437,15 @@ export default function AdForm({ action, type }) {
                   value={ad.landsize}
                   onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
-                <input
-                  type="text"
-                  className="form-control mb-3"
-                  placeholder="Enter title"
-                  value={ad.title}
-                  onChange={(e) => setAd({ ...ad, title: e.target.value })}
-                />
+                {ad.action === "Sell" && (
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    placeholder="Enter property title e.g. C of O, Survey Plan"
+                    value={ad.title}
+                    onChange={(e) => setAd({ ...ad, title: e.target.value })}
+                  />
+                )}
 
                 {features?.length > 0 ? (
                   <>
@@ -377,7 +453,11 @@ export default function AdForm({ action, type }) {
                     <FormControl sx={{ width: "100%", mb: 2 }}>
                       <Select
                         SelectDisplayProps={{
-                          style: { paddingTop: 8, paddingBottom: 8 },
+                          style: {
+                            paddingTop: 8,
+                            paddingBottom: 8,
+                            color: "gray",
+                          },
                         }}
                         id="demo-multiple-checkbox"
                         displayEmpty
@@ -388,7 +468,7 @@ export default function AdForm({ action, type }) {
                           if (selected.length === 0) {
                             return (
                               <span form-control mb-3>
-                                Extra Features
+                                Select extra features
                               </span>
                             );
                           }
@@ -420,8 +500,20 @@ export default function AdForm({ action, type }) {
                     setAd({ ...ad, description: e.target.value })
                   }
                 />
+                <div className="mb-3 text-center">
+                  <Checkbox
+                    checked={checked}
+                    onChange={handleTermsandPolicyCheck}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                  By submitting this form I agree to the{" "}
+                  <Link className="text-primary" to="/seller-terms">
+                    Terms of Use
+                  </Link>{" "}
+                </div>
                 <div className="d-flex justify-content-center">
                   <button
+                    disabled={!checked || loading}
                     onClick={handleClick}
                     type="button"
                     className={`btn btn-primary col-4 m-3  ${

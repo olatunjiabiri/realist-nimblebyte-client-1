@@ -159,26 +159,7 @@ export default function ProfileForm({ sourceURL }) {
   return (
     <>
       <LogoutMessage>
-        <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-          <DocumentForm
-            setIsOpen={setIsOpen}
-            passportPhoto={passportPhoto}
-            setPassportPhoto={setPassportPhoto}
-            proofOfIdentification={proofOfIdentification}
-            setProofOfIdentification={setProofOfIdentification}
-            proofType={proofType}
-            setProofType={setProofType}
-            cacCertification={cacCertification}
-            setCacCertification={setCacCertification}
-            error={error}
-            setError={setError}
-            proofTypeError={proofTypeError}
-            setProofTypeError={setProofTypeError}
-            uploadedFiles={uploadedFiles}
-            setUploadedFiles={setUploadedFiles}
-          />
-        </Modall>
-        <div className="background-color">
+        <div className="background-color content-container">
           <div className="container p-5">
             {/* <Sidebar /> */}
             <div className="container mt-5">

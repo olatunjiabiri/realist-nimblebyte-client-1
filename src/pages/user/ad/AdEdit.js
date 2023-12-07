@@ -276,17 +276,16 @@ export default function AdEdit({ action, type }) {
                 ""
               )}
             </div>
+            {(ad.type === "House" || ad.type === "Shortlet") && (
+              <div className="mb-3 row">
+                <label
+                  idr="title"
+                  className="col-sm-3 col-form-label adedit-label"
+                >
+                  Select {ad.type} Type
+                </label>
 
-            <div className="mb-3 row">
-              <label
-                idr="title"
-                className="col-sm-3 col-form-label adedit-label"
-              >
-                Select House Type
-              </label>
-
-              <div className="col-sm-9">
-                {ad.type === "House" && (
+                <div className="col-sm-9">
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
                       SelectDisplayProps={{
@@ -304,7 +303,7 @@ export default function AdEdit({ action, type }) {
                       }}
                     >
                       <MenuItem value="" disabled>
-                        Select House Type
+                        Select {ad.type} Type
                       </MenuItem>
                       {selectOptions.map((option, index) => (
                         <MenuItem key={index} value={option}>
@@ -313,9 +312,9 @@ export default function AdEdit({ action, type }) {
                       ))}
                     </Select>
                   </FormControl>
-                )}
+                </div>
               </div>
-            </div>
+            )}
 
             {loaded ? (
               <>
