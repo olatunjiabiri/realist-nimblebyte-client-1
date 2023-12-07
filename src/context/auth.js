@@ -1,4 +1,4 @@
-import React,{ useState, createContext, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import axios from "axios";
 import config from "../NewConfig";
 
@@ -8,8 +8,7 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     wishlist: [],
     user: null,
-    token: ""
-   
+    token: "",
   });
 
   useEffect(() => {
@@ -20,6 +19,8 @@ const AuthProvider = ({ children }) => {
   // configure axios
   axios.defaults.baseURL = config.API;
   axios.defaults.headers.common["Authorization"] = auth?.token;
+  axios.defaults.headers.common["clave-de-proteccion"] = config.APIS_PROTECT;
+
   axios.defaults.headers.common["Id"] = auth?.user?.email;
   // axios.defaults.headers.common["refresh_token"] = auth?.refreshToken;
 

@@ -4,7 +4,7 @@ import "./index.css";
 
 export default function Footer() {
   return (
-    <div className="container-fluid align-items-left text-left p-4 bg-dark text-light pt-4 footer-word">
+    <div className="container-fluid align-items-left text-left p-4 bg-dark text-light pt-4 footer-word footer--pin">
       <div className="container">
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-5">
           <div className="col col-lg-6 col-md-12 footer-word1">
@@ -66,10 +66,10 @@ export default function Footer() {
                 <a href="#">FAQS</a>
               </li>
               <li>
-              <Link to="/terms-of-use"> TERMS OF USE </Link>
+                <Link to="/terms-of-use"> TERMS OF USE </Link>
               </li>
               <li>
-              <Link to="/privacy-policy">PRIVACY POLICY</Link>
+                <Link to="/privacy-policy">PRIVACY POLICY</Link>
               </li>
             </ul>
           </div>
