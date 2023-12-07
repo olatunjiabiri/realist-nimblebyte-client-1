@@ -16,8 +16,8 @@ const DynamicForm = ({
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    console.log("formdata", formData);
-    console.log("ad", ad);
+    // console.log("formdata", formData);
+    // console.log("ad", ad);
 
     // Check if all fields are filled
     const allFieldsFilled = formData.every((row) => row.text && row.image);
@@ -181,17 +181,18 @@ const DynamicForm = ({
 
                 try {
                   const { data } = await axios.post("/upload-image", {
-                    image: resizedImage,
+                    file: resizedImage,
                     label: file.text,
                   });
                   resolve(data);
+                  // console.log("data>>", data);
                 } catch (err) {
                   console.log(err);
                   resolve(null);
                 }
               };
             });
-          }),
+          })
         );
 
         // Remove null entries (failed uploads) and filter out duplicates
@@ -200,9 +201,9 @@ const DynamicForm = ({
           new Set([
             ...ad.photos.map((photo) => photo.Location),
             ...filteredPhotos.map((photo) => photo.Location),
-          ]),
+          ])
         ).map((location) =>
-          filteredPhotos.find((photo) => photo.Location === location),
+          filteredPhotos.find((photo) => photo.Location === location)
         );
 
         setAd((prev) => ({
