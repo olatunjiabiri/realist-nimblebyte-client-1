@@ -19,6 +19,11 @@ export default function Wishlist() {
     fetchAds();
   }, [auth.wishlist]);
 
+  // useEffect(() => {
+  //   // Scroll to the top of the page when the component mounts
+  //   window.scrollTo(0, 0);
+  // }, []);
+
   const fetchAds = async () => {
     try {
       // const { data } = await axios.post("/wishlist", { adId: ad._id, userId: auth?.user?.userId});
@@ -32,10 +37,6 @@ export default function Wishlist() {
     }
   };
 
-  useEffect(() => {
-    // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="container-fluid p-0">
