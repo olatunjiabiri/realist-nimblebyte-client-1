@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ContactAgents.css";
 
+useEffect(() => {
+  // Scroll to the top of the page when the component mounts
+  window.scrollTo(0, 0);
+}, []);
+
 const ContactAgents = () => {
   return (
     <div className="container my-5 p-5 content-container">
