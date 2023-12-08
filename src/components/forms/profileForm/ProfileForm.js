@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ import config from "../../../NewConfig";
 import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import LogoutMessage from "../../misc/logoutMessage/LogoutMessage";
+import DocumentForm from "../../documentUploader";
+import Modall from "../../modal2/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileForm({ sourceURL }) {
   // console.log("sourceURL", sourceURL);
@@ -31,7 +34,7 @@ export default function ProfileForm({ sourceURL }) {
   const [roles, setRoles] = useState([]);
 
   // hook
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (auth.user) {
@@ -63,10 +66,7 @@ export default function ProfileForm({ sourceURL }) {
     e.preventDefault();
 
     try {
-      if ((userType === "Agent" || isAgent || sourceURL) && !photo) {
-        toast.error("Photo is required");
-        return;
-      } else if ((userType === "Agent" || isAgent || sourceURL) && !company) {
+      if ((userType === "Agent" || isAgent || sourceURL) && !company) {
         toast.error("Company name is required");
         return;
       } else if (
@@ -98,6 +98,28 @@ export default function ProfileForm({ sourceURL }) {
         }
         setLoading(true);
         // console.log("Roles", roles);
+
+        if (userType === "Agent" || isAgent || sourceURL) {
+          localStorage.setItem(
+            "profile",
+            JSON.stringify({
+              userId: auth?.user?.userId,
+              firstName,
+              lastName,
+              email,
+              company,
+              address,
+              phone,
+              description: aboutMe,
+              registrationNumber: reg_number || "",
+              roles: roles,
+              photo,
+            }),
+          );
+
+          navigate("/user/document-manager");
+          return;
+        }
         const { data } = await axios.post(
           `${config.AUTH_API}/user/updateProfile`,
           {
@@ -112,7 +134,7 @@ export default function ProfileForm({ sourceURL }) {
             registrationNumber: reg_number || "",
             roles: roles,
             photo,
-          }
+          },
         );
 
         if (!data.success) {
@@ -141,6 +163,22 @@ export default function ProfileForm({ sourceURL }) {
       setLoading(false);
     }
   };
+
+  const [formData, setFormData] = useState([
+    { text: "Passport photo ID", image: null, blob: null },
+    { text: "Proof of identification", image: null, blob: null },
+    { text: "CAC certification", image: null, blob: null },
+  ]);
+  const [isOpen, setIsOpen] = useState(false);
+  const fileRefs = useRef([]);
+
+  const [passportPhoto, setPassportPhoto] = useState(null);
+  const [proofOfIdentification, setProofOfIdentification] = useState(null);
+  const [proofType, setProofType] = useState("");
+  const [cacCertification, setCacCertification] = useState(null);
+  const [error, setError] = useState("");
+  const [proofTypeError, setProofTypeError] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   return (
     <>
@@ -235,18 +273,38 @@ export default function ProfileForm({ sourceURL }) {
                         </div>
                       </>
                     )}
-
-                    <div className="form-group col-8 pb-1">
-                      {(userType === "Agent" || isAgent || sourceURL) && (
-                        <ProfileUpload
-                          photo={photo}
-                          setPhoto={setPhoto}
-                          uploading={uploading}
-                          setUploading={setUploading}
-                          label={auth?.user?.userId}
-                        />
-                      )}
-                    </div>
+                    {/* <div className="form-group col-8 pb-1"> */}
+                    {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
+                    {/*     <ProfileUpload */}
+                    {/*       photo={photo} */}
+                    {/*       setPhoto={setPhoto} */}
+                    {/*       uploading={uploading} */}
+                    {/*       setUploading={setUploading} */}
+                    {/*       label={auth?.user?.userId} */}
+                    {/*     /> */}
+                    {/*   )} */}
+                    {/* </div> */}
+                    {/* <div className="form-group col-8 pb-1"> */}
+                    {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
+                    {/*     <label */}
+                    {/*       onClick={() => setIsOpen(true)} */}
+                    {/*       className="btn btn-primary" */}
+                    {/*     > */}
+                    {/*       Upload Documents */}
+                    {/*     </label> */}
+                    {/*   )} */}
+                    {/*   {uploadedFiles.length > 0 && ( */}
+                    {/*     <> */}
+                    {/*       <div>Uploaded documents</div> */}
+                    {/*       {uploadedFiles.map((file) => ( */}
+                    {/*         <p className="text-success"> */}
+                    {/*           {/* Uploaded Documents: {uploadedFiles.join(", ")} */}
+                    {/*           {file} */}
+                    {/*         </p> */}
+                    {/*       ))} */}
+                    {/*     </> */}
+                    {/*   )} */}
+                    {/* </div> */}
                     {userType === "Agent" || isAgent || sourceURL ? (
                       <>
                         <input
@@ -267,7 +325,6 @@ export default function ProfileForm({ sourceURL }) {
                     ) : (
                       ""
                     )}
-
                     <input
                       type="text"
                       placeholder="Firstname"
@@ -291,7 +348,6 @@ export default function ProfileForm({ sourceURL }) {
                       value={email}
                       readOnly
                     />
-
                     <input
                       type="text"
                       placeholder="Address"
@@ -306,7 +362,6 @@ export default function ProfileForm({ sourceURL }) {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
-
                     <textarea
                       placeholder="Write something interesting about yourself.."
                       className="form-control mb-3"
@@ -325,19 +380,18 @@ export default function ProfileForm({ sourceURL }) {
                         Your data will be reviewed by our legal department
                       </label>
                     )}
-
                     <div className="d-flex justify-content-center">
                       {userType === "Agent" || isAgent || sourceURL ? (
                         <button
                           className="btn btn-primary col-md-6 mt-3 mb-5"
                           disabled={loading}
-                          onClick={() => {
-                            alert(
-                              "Your data will go through verification process."
-                            );
-                          }}
+                          // onClick={() => {
+                          //   alert(
+                          //     "Your data will go through verification process.",
+                          //   );
+                          // }}
                         >
-                          {loading ? "Processing" : "Update Profile"}
+                          {loading ? "Processing" : "Next"}
                         </button>
                       ) : (
                         <button

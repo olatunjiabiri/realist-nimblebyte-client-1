@@ -33,7 +33,7 @@ export default function ProfileUpload({
             async (uri) => {
               try {
                 const { data } = await axios.post("/upload-image", {
-                  image: uri,
+                  file: uri,
                   label,
                 });
                 // console.log("data photo", data.Location);
@@ -44,7 +44,7 @@ export default function ProfileUpload({
                 setUploading(false);
               }
             },
-            "base64"
+            "base64",
           );
         });
       }

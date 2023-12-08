@@ -23,7 +23,7 @@ export default function ImageUpload({ ad, setAd }) {
               async (uri) => {
                 try {
                   const { data } = await axios.post("/upload-image", {
-                    image: uri,
+                    file: uri,
                   });
                   setAd((prev) => ({
                     ...prev,
