@@ -80,7 +80,7 @@ const DocumentForm = ({
             async (uri) => {
               try {
                 const { data } = await axios.post("/upload-image", {
-                  image: uri,
+                  file: uri,
                   label,
                 });
                 resolve(data);

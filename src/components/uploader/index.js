@@ -181,7 +181,7 @@ const DynamicForm = ({
 
                 try {
                   const { data } = await axios.post("/upload-image", {
-                    image: resizedImage,
+                    file: resizedImage,
                     label: file.text,
                   });
                   resolve(data);
