@@ -48,7 +48,7 @@ export default function ProfileUpload({
                 setUploading(false);
               }
             },
-            "base64"
+            "base64",
           );
         });
       }
