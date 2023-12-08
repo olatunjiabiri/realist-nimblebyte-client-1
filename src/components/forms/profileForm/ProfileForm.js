@@ -57,6 +57,11 @@ export default function ProfileForm({ sourceURL }) {
     }
   }, [auth?.user?.role]);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
