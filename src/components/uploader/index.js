@@ -278,7 +278,7 @@ const DynamicForm = ({
             <>
               <input
                 type="file"
-                className="input-style m-2"
+                className="input-style input-style1 m-2"
                 accept="image/*"
                 style={{ display: "none" }}
                 ref={(ref) => (fileRefs.current[index] = ref)}
