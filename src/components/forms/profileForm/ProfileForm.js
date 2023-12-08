@@ -66,10 +66,7 @@ export default function ProfileForm({ sourceURL }) {
     e.preventDefault();
 
     try {
-      if ((userType === "Agent" || isAgent || sourceURL) && !photo) {
-        toast.error("Photo is required");
-        return;
-      } else if ((userType === "Agent" || isAgent || sourceURL) && !company) {
+      if ((userType === "Agent" || isAgent || sourceURL) && !company) {
         toast.error("Company name is required");
         return;
       } else if (
@@ -276,17 +273,17 @@ export default function ProfileForm({ sourceURL }) {
                         </div>
                       </>
                     )}
-                    <div className="form-group col-8 pb-1">
-                      {(userType === "Agent" || isAgent || sourceURL) && (
-                        <ProfileUpload
-                          photo={photo}
-                          setPhoto={setPhoto}
-                          uploading={uploading}
-                          setUploading={setUploading}
-                          label={auth?.user?.userId}
-                        />
-                      )}
-                    </div>
+                    {/* <div className="form-group col-8 pb-1"> */}
+                    {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
+                    {/*     <ProfileUpload */}
+                    {/*       photo={photo} */}
+                    {/*       setPhoto={setPhoto} */}
+                    {/*       uploading={uploading} */}
+                    {/*       setUploading={setUploading} */}
+                    {/*       label={auth?.user?.userId} */}
+                    {/*     /> */}
+                    {/*   )} */}
+                    {/* </div> */}
                     {/* <div className="form-group col-8 pb-1"> */}
                     {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
                     {/*     <label */}
