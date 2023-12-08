@@ -96,6 +96,28 @@ export default function ProfileForm({ sourceURL }) {
         }
         setLoading(true);
         // console.log("Roles", roles);
+
+        if (userType === "Agent" || isAgent || sourceURL) {
+          localStorage.setItem(
+            "profile",
+            JSON.stringify({
+              userId: auth?.user?.userId,
+              firstName,
+              lastName,
+              email,
+              company,
+              address,
+              phone,
+              description: aboutMe,
+              registrationNumber: reg_number || "",
+              roles: roles,
+              photo,
+            }),
+          );
+
+          navigate("/user/document-manager");
+          return;
+        }
         const { data } = await axios.post(
           `${config.AUTH_API}/user/updateProfile`,
           {
@@ -361,13 +383,13 @@ export default function ProfileForm({ sourceURL }) {
                         <button
                           className="btn btn-primary col-md-6 mt-3 mb-5"
                           disabled={loading}
-                          onClick={() => {
-                            alert(
-                              "Your data will go through verification process.",
-                            );
-                          }}
+                          // onClick={() => {
+                          //   alert(
+                          //     "Your data will go through verification process.",
+                          //   );
+                          // }}
                         >
-                          {loading ? "Processing" : "Update Profile"}
+                          {loading ? "Processing" : "Next"}
                         </button>
                       ) : (
                         <button
@@ -378,12 +400,6 @@ export default function ProfileForm({ sourceURL }) {
                         </button>
                       )}
                     </div>
-                    <button
-                      className="btn btn-primary col-md-6 mt-3 mb-5"
-                      onClick={() => navigate("/user/document-manager")}
-                    >
-                      Next
-                    </button>
                   </form>
                 </div>
               </div>

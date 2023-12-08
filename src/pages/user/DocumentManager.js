@@ -4,32 +4,129 @@ import Resizer from "react-image-file-resizer";
 import { DataGrid } from "@mui/x-data-grid";
 import { FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import config from "../../NewConfig";
+import { toast } from "react-toastify";
+import { useAuth } from "../../context/auth";
 
 const DocumentManager = () => {
   const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [error, setError] = useState("");
   const [proofType, setProofType] = useState("");
-  const [passportPhoto, setPassportPhoto] = useState(null);
-  const [proofOfIdentification, setProofOfIdentification] = useState(null);
-  const [cacCertification, setCacCertification] = useState(null);
-  const [currentProofType, setCurrentProofType] = useState("Drivers License"); // New state
   const [fileRows, setFileRows] = useState([]);
 
   const [isProofTypeSelected, setIsProofTypeSelected] = useState(false);
   const [selectedProofType, setSelectedProofType] = useState("");
   const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
+
+  console.log("auth ", auth);
 
   const handleViewDocument = (document) => {
     console.log("document", document);
-    const documentURL = document?.Location;
+    const documentURL = document?.Location || document?.Key;
     window.open(documentURL, "_blank");
   };
+  // const handleViewDocument = async (document) => {
+  //   try {
+  //     const response = await fetch(document?.Location || document?.Key);
+  //     const blob = await response.blob();
+  //     console.log("response", response);
+  //     console.log("blob", blob);
+  //     const blobUrl = window.URL.createObjectURL(blob);
+  //     window.open(blobUrl, "_blank");
+  //   } catch (error) {
+  //     console.error("Error opening document:", error);
+  //   }
+  // };
+
+  function determineStatus(agentDocuments, id) {
+    const document = agentDocuments.find((doc) => doc.documentTypeId === id);
+
+    if (!document) {
+      return ""; // or some default status if appropriate
+    }
+
+    const { approvalStatus, documentUrl, comment } = document;
+
+    switch (true) {
+      case approvalStatus:
+        return "Approved";
+      case documentUrl && !comment:
+        return "Pending";
+      case documentUrl && comment:
+        return "Declined";
+      default:
+        return ""; // Default case if none of the above conditions are met
+    }
+  }
 
   const handleConfirmDocuments = async () => {
     try {
-      // Your existing logic for confirming documents
+      // Build the agentDocuments array based on uploaded files
+      const agentDocuments = fileRows.map((row) => ({
+        documentTypeId: row.documentType, // Set the appropriate documentTypeId
+        documentUrl: row.document?.Location || row.document.Key || "", // Use the document URL if available
+        documentName: row.id === 1 ? "identification" : row.fileName || "", // Use the fileName as the documentName
+      }));
+      // Check if all three statuses are "Submitted"
+      const allSubmitted = fileRows.some((row) => row.document.Key === "");
+
+      if (allSubmitted) {
+        // If any status is not "Submitted", show an error message and return
+        toast.warn("Please submit all required documents.");
+        return;
+      }
+
+      const profile = JSON.parse(localStorage.getItem("profile"));
+
+      setLoading(true);
+
+      console.log("final result", {
+        ...profile,
+        agentDocuments,
+      });
+
+      // console.log("Roles", roles);
+      const { data } = await axios.post(
+        `${config.AUTH_API}/user/updateProfile`,
+        {
+          ...profile,
+          agentDocuments,
+        },
+      );
+
+      if (!data.success) {
+        toast.error(data.message);
+        setLoading(false);
+      } else {
+        const data1 = {
+          ...auth.user,
+          userId: auth.user.userId,
+          agentDocuments: data.responsePayload.agentDocuments,
+        };
+
+        // console.log("data1", data1);
+        setAuth({
+          ...auth,
+          user: data.responsePayload,
+          agentDocuments: data.responsePayload.agentDocuments,
+        });
+
+        let fromLS = JSON.parse(localStorage.getItem("auth"));
+        fromLS.user = data1;
+        localStorage.setItem("auth", JSON.stringify(fromLS));
+        setLoading(false);
+
+        // console.log("data storage", localStorage.getItem("auth"));
+
+        toast.success("Profile updated");
+
+        // reload page on redirect
+        window.location.href = "/";
+      }
     } catch (err) {
+      toast.error("Something went wrong. Try again.");
       console.error(err);
       setLoading(false);
     }
@@ -107,7 +204,7 @@ const DocumentManager = () => {
       headerClassName: "datatableTitle",
       width: 300,
       renderCell: (params) => (
-        <div className="form-control ">{params.row.fileName}</div>
+        <div className="btn p-0">{params.row.fileName}</div>
       ),
     },
     {
@@ -116,18 +213,18 @@ const DocumentManager = () => {
       headerName: "Upload",
       width: 320,
       renderCell: (params) => (
-        <div className="form-control">{params.row.upload}</div>
+        <div className="btn p-0">{params.row.upload}</div>
       ),
     },
     {
       field: "document",
       headerName: "Document",
       headerClassName: "datatableTitle",
-      width: 350,
+      width: 250,
       renderCell: (params) => (
         <div
           onClick={() => handleViewDocument(params.row.document)}
-          className="frm-control"
+          className="btn p-0"
           style={{
             textDecoration: params.row.document.Key && "underline",
             color: params.row.document.Key && "#007BFF",
@@ -143,43 +240,25 @@ const DocumentManager = () => {
       headerClassName: "datatableTitle",
       headerName: "Status",
       width: 150,
+      renderCell: (params) => (
+        <div className="btn p-0">{params.row.status}</div>
+      ),
+    },
+    {
+      field: "Comment",
+      headerClassName: "datatableTitle",
+      headerName: "Comment",
+      width: 400,
+      renderCell: (params) => (
+        <div className="btn p-0">{params.row.comment}</div>
+      ),
     },
   ];
-
-  // useEffect(() => {
-  //   // Update the fileRows when proofType changes
-  //   setFileRows((prevRows) =>
-  //     prevRows.map((row) => {
-  //       if (row.id === 2) {
-  //         return {
-  //           ...row,
-  //           upload: (
-  //             <input
-  //               type="file"
-  //               className="form-control"
-  //               accept="image/*, application/pdf"
-  //               onChange={(e) =>
-  //                 handleUpload(
-  //                   e.target.files[0],
-  //                   `Proof of Identification - ${proofType}`,
-  //                   2,
-  //                   proofType,
-  //                 )
-  //               }
-  //             />
-  //           ),
-  //         };
-  //       }
-  //       return row;
-  //     }),
-  //   );
-  // }, [proofType]);
-  //
 
   useEffect(() => {
     setFileRows((prevRows) =>
       prevRows.map((row) => {
-        if (row.id === 2) {
+        if (row.id === 1) {
           return {
             ...row,
             upload: (
@@ -192,7 +271,7 @@ const DocumentManager = () => {
                   handleUpload(
                     e.target.files[0],
                     `Proof of Identification - ${proofType}`,
-                    2,
+                    1,
                     proofType,
                   )
                 }
@@ -206,111 +285,226 @@ const DocumentManager = () => {
   }, [proofType, isProofTypeSelected]);
 
   useEffect(() => {
-    setFileRows([
-      {
-        id: 1,
-        fileName: "Passport photo",
-        upload: (
-          <input
-            type="file"
-            className="form-control"
-            accept="image/*"
-            onChange={(e) =>
-              handleUpload(
-                e.target.files[0],
-                "Passport Photo Identification",
-                1,
-              )
-            }
-          />
-        ),
-        document: "",
-        status: "",
-      },
-      {
-        id: 2,
-        fileName: (
-          <div
-            style={{ display: "flex", alignItems: "center" }}
-            className="dropdown"
-          >
-            {/* <p */}
-            {/*   style={{ marginBottom: 0, marginRight: 5 }} */}
-            {/*   className="frm-label" */}
-            {/* > */}
-            {/*   Proof of Identification */}
-            {/* </p> */}
-
-            <select
-              className="btn btn-light"
-              onChange={(e) => {
-                handleProofTypeChange(e);
-                setSelectedProofType(e.target.value);
-              }}
-              value={selectedProofType}
+    if (auth.user.agentDocuments) {
+      setFileRows([
+        {
+          id: 1,
+          documentType: 1,
+          fileName: (
+            <div
+              style={{ display: "flex", alignItems: "center" }}
+              className="dropdown"
             >
-              <option value="" disabled hidden>
-                Select proof of identification
-              </option>
-              <option value="Drivers Licence">Drivers licence</option>
-              <option value="International Passport">
-                International Passport
-              </option>
-              <option value="NIN">NIN</option>
-              <option value="Permanent voters card">
-                Permanent voters card
-              </option>
-            </select>
-          </div>
-        ),
-        upload: (
-          <input
-            type="file"
-            className="form-control"
-            accept="image/*, application/pdf"
-            onChange={(e) =>
-              handleUpload(
-                e.target.files[0],
-                `Proof of Identification - ${proofType}`,
-                2,
-                proofType,
-              )
-            }
-          />
-        ),
-        document: "",
-        status: "",
-      },
-      {
-        id: 3,
-        fileName: "CAC certificate",
-        upload: (
-          <input
-            type="file"
-            className="form-control"
-            accept="image/*, application/pdf"
-            onChange={(e) =>
-              handleUpload(e.target.files[0], "CAC Certification", 3)
-            }
-          />
-        ),
-        document: "",
-        status: "",
-      },
-    ]);
-  }, []);
+              <select
+                className="btn btn-light"
+                onChange={(e) => {
+                  handleProofTypeChange(e);
+                  setSelectedProofType(e.target.value);
+                }}
+                value={selectedProofType}
+              >
+                <option value="" disabled hidden>
+                  Select proof of identification
+                </option>
+                <option value="Drivers Licence">Drivers licence</option>
+                <option value="International Passport">
+                  International Passport
+                </option>
+                <option value="NIN">NIN</option>
+                <option value="Permanent voters card">
+                  Permanent voters card
+                </option>
+              </select>
+            </div>
+          ),
+          upload: (
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*, application/pdf"
+              onChange={(e) =>
+                handleUpload(
+                  e.target.files[0],
+                  `Proof of Identification - ${proofType}`,
+                  1,
+                  proofType,
+                )
+              }
+            />
+          ),
+          document: {
+            Key:
+              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
+                ?.documentUrl || "",
+          },
+          status: determineStatus(auth.user.agentDocuments, 1),
+          comment:
+            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
+              ?.comment || "",
+        },
+        {
+          id: 2,
+          fileName: "Passport photo",
+          documentType: 3,
+          upload: (
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*"
+              onChange={(e) =>
+                handleUpload(
+                  e.target.files[0],
+                  "Passport Photo Identification",
+                  2,
+                )
+              }
+            />
+          ),
+          document: {
+            Key:
+              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
+                ?.documentUrl || "",
+          },
+          status: determineStatus(auth.user.agentDocuments, 3),
+          comment:
+            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
+              ?.comment || "",
+        },
+        {
+          id: 3,
+          documentType: 2,
+          fileName: "CAC certificate",
+          upload: (
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*, application/pdf"
+              onChange={(e) =>
+                handleUpload(e.target.files[0], "CAC Certification", 3)
+              }
+            />
+          ),
+          document: {
+            Key:
+              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
+                ?.documentUrl || "",
+          },
+          status: determineStatus(auth.user.agentDocuments, 2),
+        },
+      ]);
+    } else {
+      // Default values when auth.user.agentDocuments is null
+      setFileRows([
+        {
+          id: 1,
+          documentType: 1,
+          fileName: (
+            <div
+              style={{ display: "flex", alignItems: "center" }}
+              className="dropdown"
+            >
+              <select
+                className="btn btn-light"
+                onChange={(e) => {
+                  handleProofTypeChange(e);
+                  setSelectedProofType(e.target.value);
+                }}
+                value={selectedProofType}
+              >
+                <option value="" disabled hidden>
+                  Select proof of identification
+                </option>
+                <option value="Drivers Licence">Drivers licence</option>
+                <option value="International Passport">
+                  International Passport
+                </option>
+                <option value="NIN">NIN</option>
+                <option value="Permanent voters card">
+                  Permanent voters card
+                </option>
+              </select>
+            </div>
+          ),
+          upload: (
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*, application/pdf"
+              onChange={(e) =>
+                handleUpload(
+                  e.target.files[0],
+                  `Proof of Identification - ${proofType}`,
+                  1,
+                  proofType,
+                )
+              }
+            />
+          ),
+          document: {
+            Key: "",
+          },
+          status: "",
+          comment: "",
+        },
+        {
+          id: 2,
+          fileName: "Passport photo",
+          documentType: 3,
+          upload: (
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*"
+              onChange={(e) =>
+                handleUpload(
+                  e.target.files[0],
+                  "Passport Photo Identification",
+                  2,
+                )
+              }
+            />
+          ),
+          document: {
+            Key: "",
+          },
+          status: "",
+          comment: "",
+        },
+        {
+          id: 3,
+          documentType: 2,
+          fileName: "CAC certificate",
+          upload: (
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*, application/pdf"
+              onChange={(e) =>
+                handleUpload(e.target.files[0], "CAC Certification", 3)
+              }
+            />
+          ),
+          document: {
+            Key: "",
+          },
+          status: "",
+          comment: "",
+        },
+      ]);
+    }
+  }, [auth.user.agentDocuments, selectedProofType]);
 
   useEffect(() => {
     setFileRows((prevRows) =>
       prevRows.map((row) => {
-        if (row.id === 2) {
+        if (row.id === 1) {
           // Check if the document already exists for the row
           if (row.document.Key) {
             // Re-upload the existing document with the new proof type
             handleUpload(
               row.document, // Pass the existing document
               `Proof of Identification - ${selectedProofType}`,
-              2,
+              1,
               selectedProofType,
             );
           }
@@ -344,6 +538,7 @@ const DocumentManager = () => {
                 </select>
               </div>
             ),
+            documentType: 1,
             upload: isProofTypeSelected ? (
               <input
                 type="file"
@@ -353,13 +548,13 @@ const DocumentManager = () => {
                   handleUpload(
                     e.target.files[0],
                     `Proof of Identification - ${selectedProofType}`,
-                    2,
+                    1,
                     selectedProofType,
                   )
                 }
               />
             ) : (
-              <div className="form-control text-danger">
+              <div className="frm-control text-danger">
                 Please select an identification type
               </div>
             ),
@@ -380,17 +575,23 @@ const DocumentManager = () => {
           return;
         }
 
+        console.log("I got called by culprit", file);
+        if (!(file instanceof File)) {
+          console.log("I got called inside by culprit", rowId);
+          return;
+        }
+
         setLoading(true);
         setFileRows((prevRows) =>
           prevRows.map((row) =>
             row.id === rowId ? { ...row, status: "Uploading" } : row,
           ),
         );
-
+        console.log("I got called by culprit", rowId);
         //upload document
         const uploadedPhoto = await uploadImage(
           file,
-          rowId === 2
+          rowId === 1
             ? `Proof of Identification - ${selectedProofType}`
             : label,
         );
@@ -454,6 +655,7 @@ const DocumentManager = () => {
       <div style={{ marginTop: "100px", padding: "20px 40px" }}>
         <h1 className="label mb-4">Document manager</h1>
         <DataGrid className="mb-4" rows={fileRows} columns={fileColumns} />
+        <p>{error}</p>
         <div
           style={{
             width: "100%",
@@ -474,7 +676,7 @@ const DocumentManager = () => {
             className="btn btn-primary"
             onClick={handleConfirmDocuments}
           >
-            Submit And Update Profile
+            {loading ? "Processing" : "Submit And Update Profile"}
           </button>
         </div>
       </div>

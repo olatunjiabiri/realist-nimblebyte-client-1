@@ -4,8 +4,8 @@ const config = {
   APIS_PROTECT: "Fm2dT0GzyUa_Q_6KxMTzNwELPcEVcHOUqyjd0yn0LJqA",
   API:
     // process.env.NODE_ENV === "production"
-    // "http://localhost:8000/api",
-    "https://realist-node-backend.azurewebsites.net/api",
+    "http://localhost:8000/api",
+  // "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API:
     // process.env.NODE_ENV === "production"
     //"https://localhost:7298",
