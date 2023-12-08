@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { Avatar } from "antd";
@@ -12,7 +13,9 @@ export default function ProfileUpload({
 }) {
   // context
   const [auth, setAuth] = useAuth();
-  // console.log("photo", photo);
+  console.log("photo", photo);
+
+  const [result, setResult] = useState({});
 
   const handleUpload = async (e) => {
     try {
@@ -33,18 +36,19 @@ export default function ProfileUpload({
             async (uri) => {
               try {
                 const { data } = await axios.post("/upload-image", {
-                  image: uri,
+                  file: uri,
                   label,
                 });
                 // console.log("data photo", data.Location);
                 setPhoto(data.Location);
+                setResult(data);
                 setUploading(false);
               } catch (err) {
                 console.log(err);
                 setUploading(false);
               }
             },
-            "base64"
+            "base64",
           );
         });
       }
@@ -55,11 +59,13 @@ export default function ProfileUpload({
   };
 
   const handleDelete = async (file) => {
+    // console.log("file>>>", file);
     const answer = window.confirm("Delete image?");
     if (!answer) return;
     setUploading(true);
+
     try {
-      const { data } = await axios.post("/remove-image", photo);
+      const { data } = await axios.post("/remove-image", file);
       if (data?.ok) {
         setPhoto(null);
         setUploading(false);
@@ -88,7 +94,7 @@ export default function ProfileUpload({
           shape="square"
           size="46"
           className="mx-2 mb-4"
-          onClick={() => handleDelete()}
+          onClick={() => handleDelete(result)}
         />
       ) : (
         ""

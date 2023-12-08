@@ -61,7 +61,7 @@ import BackToTop from "./components/backtotopbutton/BackToTop";
 import ContactSeller from "./components/forms/ContactSeller";
 import PaystackVerifyPayment from "./pages/payment/paystack/paystack-verification/paystackVerifyPayment";
 import ContentWrapper from "./components/contentWrapper/ContentWrapper";
-import "./App.css";
+import DocumentManager from "./pages/user/DocumentManager";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -147,6 +147,10 @@ function App() {
                     />
                     <Route path="ad/create/rent/land" element={<RentLand />} />
                     <Route path="user/profile" element={<UpdateProfile />} />
+                    <Route
+                      path="user/document-manager"
+                      element={<DocumentManager />}
+                    />
                     <Route path="user/be-agent" element={<BeAgent />} />
 
                     <Route
@@ -165,12 +169,12 @@ function App() {
                       element={<UpdatePassword />}
                     />
 
-                    <Route path="user/ad/:slug" element={<AdEdit />} />
+                    <Route path="user/ad/:id" element={<AdEdit />} />
                     <Route path="user/wishlist" element={<Wishlist />} />
                     <Route path="user/enquiries" element={<Enquiries />} />
                     {/* <Route path="user/payment" element={<Payment />} /> */}
                   </Route>
-                  <Route path="/ad/:slug" element={<AdView />} />
+                  <Route path="/ad/:id" element={<AdView />} />
                   <Route path="/agents" element={<Agents />} />
                   <Route path="/agent/:userId" element={<Agent />} />
                   <Route path="/buy" element={<Buy />} />
