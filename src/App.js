@@ -165,7 +165,7 @@ function App() {
                       element={<UpdatePassword />}
                     />
 
-                    <Route path="user/ad/:slug" element={<AdEdit />} />
+                    <Route path="user/ad/:id" element={<AdEdit />} />
                     <Route path="user/wishlist" element={<Wishlist />} />
                     <Route path="user/enquiries" element={<Enquiries />} />
                     {/* <Route path="user/payment" element={<Payment />} /> */}
