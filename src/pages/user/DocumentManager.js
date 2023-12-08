@@ -20,7 +20,7 @@ const DocumentManager = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
 
-  console.log("auth ", auth);
+  // console.log("auth ", auth);
 
   const handleViewDocument = (document) => {
     console.log("document", document);
