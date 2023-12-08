@@ -169,12 +169,12 @@ function App() {
                       element={<UpdatePassword />}
                     />
 
-                    <Route path="user/ad/:slug" element={<AdEdit />} />
+                    <Route path="user/ad/:id" element={<AdEdit />} />
                     <Route path="user/wishlist" element={<Wishlist />} />
                     <Route path="user/enquiries" element={<Enquiries />} />
                     {/* <Route path="user/payment" element={<Payment />} /> */}
                   </Route>
-                  <Route path="/ad/:slug" element={<AdView />} />
+                  <Route path="/ad/:id" element={<AdView />} />
                   <Route path="/agents" element={<Agents />} />
                   <Route path="/agent/:userId" element={<Agent />} />
                   <Route path="/buy" element={<Buy />} />

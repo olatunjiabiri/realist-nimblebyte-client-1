@@ -114,7 +114,7 @@ export default function ProfileForm({ sourceURL }) {
               registrationNumber: reg_number || "",
               roles: roles,
               photo,
-            }),
+            })
           );
 
           navigate("/user/document-manager");
@@ -134,7 +134,7 @@ export default function ProfileForm({ sourceURL }) {
             registrationNumber: reg_number || "",
             roles: roles,
             photo,
-          },
+          }
         );
 
         if (!data.success) {
@@ -197,16 +197,16 @@ export default function ProfileForm({ sourceURL }) {
                   {/* account Type Section */}
                   <div className="row mb-3">
                     <label
-                      id="price"
+                      id="userType"
                       className="col-sm-5 mt-3 col-form-label adedit-label"
                     >
                       Account Type:
                     </label>
                     <div className="col-sm-7">
                       <input
-                        id="price"
-                        name="price"
-                        placeholder="Enter price"
+                        id="userType"
+                        name="userType"
+                        // placeholder="Enter price"
                         value={`${userType === "Buyer" ? "User" : "Agent"}`}
                         className="form-control pl-3 mt-3 adedit-label"
                         readOnly

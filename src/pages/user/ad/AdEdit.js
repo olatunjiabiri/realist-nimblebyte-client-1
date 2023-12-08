@@ -77,10 +77,10 @@ export default function AdEdit({ action, type }) {
   const params = useParams();
 
   useEffect(() => {
-    if (params?.slug) {
+    if (params?.id) {
       fetchAd();
     }
-  }, [params?.slug]);
+  }, [params?.id]);
 
   useEffect(() => {
     setUserId(auth.user?.userId);
@@ -88,7 +88,7 @@ export default function AdEdit({ action, type }) {
 
   const fetchAd = async () => {
     try {
-      const { data } = await axios.get(`/ad/${params.slug}`);
+      const { data } = await axios.get(`/ad/${params.id}`);
       //   console.log("single ad edit page => ", data);
       setAd(data?.ad);
       setFormData(

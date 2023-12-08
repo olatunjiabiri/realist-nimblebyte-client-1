@@ -41,7 +41,7 @@ export default function AdCard({ ad }) {
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <ContactSellerModal ad={ad} setIsOpen={setIsOpen} />
       </Modall>
-      <Link className="link" to={`/ad/${ad.slug}`}>
+      <Link className="link" to={`/ad/${ad._id}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${
             ad?.action === "Sell" ? "Sale" : "Rent"

@@ -15,7 +15,7 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
 
     // Check if the modal should be opened
     if (approved) {
-      navigate(`/user/ad/${ad.slug}`);
+      navigate(`/user/ad/${ad._id}`);
     } else {
       setIsOpen(true);
     }
@@ -23,7 +23,7 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
   return (
     <div className="col-lg-4 p-4 gx-4 gy-4 col-md-6 card-width">
       <Link
-        to={`/user/ad/${ad.slug}`}
+        to={`/user/ad/${ad._id}`}
         // onClick={handleClick}
         className="text-decoration-none"
       >

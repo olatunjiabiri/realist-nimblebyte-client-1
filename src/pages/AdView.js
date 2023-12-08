@@ -44,8 +44,8 @@ export default function AdView() {
   const houseType = params.houseType;
 
   useEffect(() => {
-    if (params?.slug) fetchAd();
-  }, [params?.slug]);
+    if (params?.id) fetchAd();
+  }, [params?.id]);
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
@@ -54,7 +54,7 @@ export default function AdView() {
 
   const fetchAd = async () => {
     try {
-      const { data } = await axios.get(`/ad/${params.slug}`);
+      const { data } = await axios.get(`/ad/${params.id}`);
       if (data) {
         setAd(data?.ad);
         setSoldRented(data?.related.filter((r) => r.sold === "Sold"));
@@ -259,10 +259,10 @@ export default function AdView() {
                       <span>
                         <h5>Overview</h5>
                       </span>
-                      <span>{ad.description}</span>
+                      <span>{ad?.description}</span>
 
                       {/* features */}
-                      {ad.features.length > 0 ? (
+                      {ad?.features?.length > 0 ? (
                         <>
                           <hr />
                           <span>
