@@ -51,6 +51,8 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   };
 
   const onSubmit = async (values, actions) => {
+    console.log("values>>", values);
+    console.log("agent", agent);
     const { name, email, message, phone } = values;
 
     setLoading(true);
@@ -58,15 +60,17 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       const response = await axios.post(
         `${config.AUTH_API}/api/ContactSeller`,
         {
-          adId: ad?._id,
+          adId: ad?._id || "",
           message,
-          sellerEmail: agent[0].email.toString() || "",
+          sellerEmail: agent[0]?.email.toString() || "",
           enquirerEmail: email,
-          propertyPageUrl: `https://realistclientapp2.azurewebsites.net/ad/${ad?.slug}`,
-          sellerName: agent[0].firstName || "",
+          propertyPageUrl:
+            `https://nimblecasa-uat-client-app.azurewebsites.net/ad/${ad?._id}` ||
+            "",
+          sellerName: agent[0]?.firstName || "",
           enquirerName: name,
           enquirerPhone: phone,
-          propertyAddress: ad.address,
+          propertyAddress: ad?.address || "",
           adminEmail: config.AdminEmail,
         }
       );
