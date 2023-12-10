@@ -54,7 +54,7 @@ const ContactUs = () => {
           EnquiryType: enquiryType,
           PropertySubtype: propertySubtype,
           Location: location,
-          EmailReceiver: config.AdminEmail,
+          EmailReceiver: config.AdminEmail || "",
           Action: "",
         }
       );
