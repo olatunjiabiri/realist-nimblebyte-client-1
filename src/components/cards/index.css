@@ -38,7 +38,7 @@
 }
 
 .address-height {
-  height: 40px; /*70px */
+  max-height: 60px;   /*70px */
   padding: 0.25rem 0rem 0.25rem;
 }
 
