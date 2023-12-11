@@ -107,7 +107,7 @@ export default function Footer() {
                   width={30}
                 />
               </Link>
-              <Link to="/agents">
+              <Link to="/contact-agents">
                 <img
                   src="./ouragents.png"
                   className=" footer-nav-img"
