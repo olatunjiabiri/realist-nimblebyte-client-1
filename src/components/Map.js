@@ -60,7 +60,7 @@ const Map = (props) => {
               <div className="ml-1 mt-2 map-info-window">
                 <Link
                   className="text-decoration-none"
-                  to={`/ad/${ad.slug}`}
+                  to={`/ad/${ad._id}`}
                   onClick={() => {}}
                 >
                   <Avatar
@@ -110,7 +110,7 @@ const Map = (props) => {
                 <div className="ml-1 mt-2 map-info-window">
                   <Link
                     className="text-decoration-none"
-                    to={`/ad/${r.slug}`}
+                    to={`/ad/${r._id}`}
                     onClick={() => window.landmarkLocation.reloadPage()}
                   >
                     <Avatar

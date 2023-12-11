@@ -17,7 +17,7 @@ export default function LikeUnlike({ ad, size = null }) {
     try {
       if (auth.user === null) {
         navigate("/login", {
-          state: `/ad/${ad.slug}`,
+          state: `/ad/${ad._id}`,
         });
         return;
       }
