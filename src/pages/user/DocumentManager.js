@@ -23,7 +23,7 @@ const DocumentManager = () => {
   // console.log("auth ", auth);
 
   const handleViewDocument = (document) => {
-    console.log("document", document);
+    // console.log("document", document);
     const documentURL = document?.Location || document?.Key;
     window.open(documentURL, "_blank");
   };
@@ -48,7 +48,7 @@ const DocumentManager = () => {
     }
 
     const { approvalStatus, documentUrl, comment } = document;
-    console.log("comment", comment);
+    // console.log("comment", comment);
 
     switch (true) {
       case approvalStatus:
@@ -83,10 +83,10 @@ const DocumentManager = () => {
 
       setLoading(true);
 
-      console.log("final result", {
-        ...profile,
-        agentDocuments,
-      });
+      // console.log("final result", {
+      //   ...profile,
+      //   agentDocuments,
+      // });
 
       // console.log("Roles", roles);
       const { data } = await axios.post(
@@ -122,7 +122,7 @@ const DocumentManager = () => {
         // console.log("data storage", localStorage.getItem("auth"));
 
         toast.success("Profile updated");
- 
+
         // reload page on redirect
         window.location.href = "/";
       }
@@ -571,17 +571,16 @@ const DocumentManager = () => {
 
   const handleUpload = useCallback(
     async (file, label, rowId, selectedProofType) => {
-      console.log("proof type0", selectedProofType);
-      console.log("main proof type", proofType);
+      // console.log("proof type0", selectedProofType);
+      // console.log("main proof type", proofType);
       try {
         if (!file) {
           setError(`Please upload ${label}`);
           return;
         }
 
-        console.log("I got called by culprit", file);
+        // console.log("I got called by culprit", file);
         if (!(file instanceof File)) {
-          console.log("I got called inside by culprit", rowId);
           return;
         }
 
@@ -591,7 +590,7 @@ const DocumentManager = () => {
             row.id === rowId ? { ...row, status: "Uploading" } : row,
           ),
         );
-        console.log("I got called by culprit", rowId);
+        // console.log("I got called by culprit", rowId);
         //upload document
         const uploadedPhoto = await uploadImage(
           file,
@@ -601,7 +600,7 @@ const DocumentManager = () => {
         );
 
         setLoading(false);
-        console.log("uploadedPhoto", uploadedPhoto);
+        // console.log("uploadedPhoto", uploadedPhoto);
 
         if (uploadedPhoto.error) {
           return setFileRows((prevRows) =>
