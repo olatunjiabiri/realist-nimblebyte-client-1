@@ -48,14 +48,15 @@ const DocumentManager = () => {
     }
 
     const { approvalStatus, documentUrl, comment } = document;
+    console.log("comment", comment);
 
     switch (true) {
       case approvalStatus:
         return "Approved";
       case documentUrl && !comment:
         return "Pending";
-      case documentUrl && comment:
-        return "Declined";
+      case documentUrl && comment && !approvalStatus:
+        return "Rejected";
       default:
         return ""; // Default case if none of the above conditions are met
     }
@@ -123,7 +124,7 @@ const DocumentManager = () => {
         toast.success("Profile updated");
 
         // reload page on redirect
-        window.location.href = "/";
+        // window.location.href = "/";
       }
     } catch (err) {
       toast.error("Something went wrong. Try again.");
@@ -390,6 +391,9 @@ const DocumentManager = () => {
                 ?.documentUrl || "",
           },
           status: determineStatus(auth.user.agentDocuments, 2),
+          comment:
+            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
+              ?.comment || "",
         },
       ]);
     } else {
@@ -624,7 +628,7 @@ const DocumentManager = () => {
                     ...row,
                     document: uploadedPhoto,
                     status: "Not Submitted",
-                    // Add the new proof type to the row
+                    comment: "",
                     proofType: selectedProofType,
                   }
                 : row,
