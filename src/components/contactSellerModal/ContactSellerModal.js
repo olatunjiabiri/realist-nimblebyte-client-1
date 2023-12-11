@@ -64,14 +64,12 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
           message,
           sellerEmail: agent[0]?.email.toString() || "",
           enquirerEmail: email,
-          propertyPageUrl:
-            `https://nimblecasa-uat-client-app.azurewebsites.net/ad/${ad?._id}` ||
-            "",
+          propertyPageUrl: `${config.CLIENT_BASE_URL}/ad/${ad?._id}` || "",
           sellerName: agent[0]?.firstName || "",
           enquirerName: name,
           enquirerPhone: phone,
           propertyAddress: ad?.address || "",
-          adminEmail: config.AdminEmail,
+          adminEmail: config.AdminEmail || "",
         }
       );
 
