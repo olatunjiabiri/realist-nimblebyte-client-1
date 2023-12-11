@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
   axios.defaults.baseURL = config.API;
   axios.defaults.headers.common["Authorization"] = auth?.token;
   axios.defaults.headers.common["clave-de-proteccion"] = config.APIS_PROTECT;
-  axios.defaults.headers.common["ApiKey"] = config.AUTH_API_KEy;
+  axios.defaults.headers.common["ApiKey"] = config.AUTH_API_KEY;
 
   axios.defaults.headers.common["Id"] = auth?.user?.email;
   // axios.defaults.headers.common["refresh_token"] = auth?.refreshToken;
