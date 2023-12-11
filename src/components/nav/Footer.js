@@ -91,7 +91,7 @@ export default function Footer() {
               </Link>
               <Link to="/buy">
                 <img
-                  src="./buy.png"
+                  src="https://nimblecasauatstorage.blob.core.windows.net/buy-icon/Buy.png"
                   className=" footer-nav-img"
                   alt="buy"
                   height={30}
