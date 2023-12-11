@@ -23,7 +23,7 @@ const DocumentManager = () => {
   // console.log("auth ", auth);
 
   const handleViewDocument = (document) => {
-    console.log("document", document);
+    // console.log("document", document);
     const documentURL = document?.Location || document?.Key;
     window.open(documentURL, "_blank");
   };
@@ -48,14 +48,15 @@ const DocumentManager = () => {
     }
 
     const { approvalStatus, documentUrl, comment } = document;
+    // console.log("comment", comment);
 
     switch (true) {
       case approvalStatus:
         return "Approved";
       case documentUrl && !comment:
         return "Pending";
-      case documentUrl && comment:
-        return "Declined";
+      case documentUrl && comment && !approvalStatus:
+        return "Rejected";
       default:
         return ""; // Default case if none of the above conditions are met
     }
@@ -82,10 +83,10 @@ const DocumentManager = () => {
 
       setLoading(true);
 
-      console.log("final result", {
-        ...profile,
-        agentDocuments,
-      });
+      // console.log("final result", {
+      //   ...profile,
+      //   agentDocuments,
+      // });
 
       // console.log("Roles", roles);
       const { data } = await axios.post(
@@ -390,6 +391,9 @@ const DocumentManager = () => {
                 ?.documentUrl || "",
           },
           status: determineStatus(auth.user.agentDocuments, 2),
+          comment:
+            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
+              ?.comment || "",
         },
       ]);
     } else {
@@ -567,17 +571,16 @@ const DocumentManager = () => {
 
   const handleUpload = useCallback(
     async (file, label, rowId, selectedProofType) => {
-      console.log("proof type0", selectedProofType);
-      console.log("main proof type", proofType);
+      // console.log("proof type0", selectedProofType);
+      // console.log("main proof type", proofType);
       try {
         if (!file) {
           setError(`Please upload ${label}`);
           return;
         }
 
-        console.log("I got called by culprit", file);
+        // console.log("I got called by culprit", file);
         if (!(file instanceof File)) {
-          console.log("I got called inside by culprit", rowId);
           return;
         }
 
@@ -587,7 +590,7 @@ const DocumentManager = () => {
             row.id === rowId ? { ...row, status: "Uploading" } : row,
           ),
         );
-        console.log("I got called by culprit", rowId);
+        // console.log("I got called by culprit", rowId);
         //upload document
         const uploadedPhoto = await uploadImage(
           file,
@@ -597,7 +600,7 @@ const DocumentManager = () => {
         );
 
         setLoading(false);
-        console.log("uploadedPhoto", uploadedPhoto);
+        // console.log("uploadedPhoto", uploadedPhoto);
 
         if (uploadedPhoto.error) {
           return setFileRows((prevRows) =>
@@ -624,7 +627,7 @@ const DocumentManager = () => {
                     ...row,
                     document: uploadedPhoto,
                     status: "Not Submitted",
-                    // Add the new proof type to the row
+                    comment: "",
                     proofType: selectedProofType,
                   }
                 : row,
