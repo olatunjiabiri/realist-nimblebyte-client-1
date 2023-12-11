@@ -122,9 +122,9 @@ const DocumentManager = () => {
         // console.log("data storage", localStorage.getItem("auth"));
 
         toast.success("Profile updated");
-
+ 
         // reload page on redirect
-        // window.location.href = "/";
+        window.location.href = "/";
       }
     } catch (err) {
       toast.error("Something went wrong. Try again.");
