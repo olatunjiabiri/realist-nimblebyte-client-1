@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { DataGrid } from "@mui/x-data-grid";
-import { FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import config from "../../NewConfig";
 import { toast } from "react-toastify";
