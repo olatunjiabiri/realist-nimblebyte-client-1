@@ -17,39 +17,62 @@ export default function SearchForm({ navMenuProperty }) {
   // hooks
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const path = window.location.pathname.split("/");
+  const path = window.location.pathname.split("/");
 
+  useEffect(() => {
+    if (!path[1]) {
+      setSearch({
+        address: "",
+        action: "", //Buy
+        type: "", //House
+        price: "All price", //All price
+        priceRange: [0, 1000000000000],
+      });
+      return;
+    }
     if (path[1] === "buy") {
       search.action = "Buy";
-    } else if (path[1] === "rent") {
+      search.address = "";
+      search.type = "Property Type";
+      search.price = "All price"; //All price
+      search.priceRange = [0, 1000000000000];
+      return;
+    }
+    if (path[1] === "rent") {
       search.action = "Rent";
-    } else search.action = "";
-    search.type = "";
-    (search.price = "All price"), //All price
-      (search.priceRange = [0, 1000000000000]),
-      setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
+      search.address = "";
+      search.type = "Property Type";
+      search.price = "All price"; //All price
+      search.priceRange = [0, 1000000000000];
+      return;
+    }
+    // search.action = "";
+    // search.type = "";
+    // (search.price = "All price"), //All price
+    //   (search.priceRange = [0, 1000000000000]),
+    setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
     // console.log("search2 >>>>", search);
   }, []);
 
   const handleSearch = async () => {
-    setSearch({ ...search, loading: false });
+    setSearch((prev) => ({ ...prev, loading: false }));
 
     // console.log("search options>>>>", search);
 
     try {
       const { results, page, price, ...rest } = search;
-      // console.log("rest options>>>>", rest);
 
       const query = queryString.stringify(rest);
-      // console.log("query===>", query);
 
       const { data } = await axios.get(`/search?${query}`);
 
-      // console.log("data===>", data);
-
       if (search?.page !== "/search") {
-        setSearch((prev) => ({ ...prev, results: data, loading: false }));
+        setSearch((prev) => ({
+          ...prev,
+          results: data,
+          page: window.location.pathname,
+          loading: false,
+        }));
         navigate("/search");
       } else {
         setSearch((prev) => ({
@@ -57,7 +80,7 @@ export default function SearchForm({ navMenuProperty }) {
           results: data,
           page: window.location.pathname,
           loading: false,
-          action: "",
+          // action: "",
         }));
       }
     } catch (err) {
@@ -89,6 +112,7 @@ export default function SearchForm({ navMenuProperty }) {
                   // defaultInputValue: localStorage.getItem("cLocation")
                   //   ? localStorage.getItem("cLocation")
                   //   : search?.address,
+                  // inputValue: search?.address,
                   defaultInputValue: search?.address,
                   placeholder: "Enter an address, city or location",
                   onChange: ({ value }) => {
@@ -109,6 +133,7 @@ export default function SearchForm({ navMenuProperty }) {
                     <select
                       className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                       aria-label="form-select select-options"
+                      value={search.action}
                       onChange={(e) => {
                         setSearch({
                           ...search,
@@ -117,14 +142,12 @@ export default function SearchForm({ navMenuProperty }) {
                         });
                       }}
                     >
-                      <option selected disabled>
-                        Purpose
-                      </option>
                       {action.map((item) => (
                         <option
+                          selected={item.selected}
                           className="optgroup"
                           key={item._id}
-                          value={item.name}
+                          value={item.value}
                         >
                           {item.name}
                         </option>
@@ -137,6 +160,7 @@ export default function SearchForm({ navMenuProperty }) {
                   <select
                     className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                     aria-label="form-select select-options"
+                    value={search.type}
                     onChange={(e) => {
                       setSearch({
                         ...search,
@@ -145,14 +169,15 @@ export default function SearchForm({ navMenuProperty }) {
                       });
                     }}
                   >
-                    <option selected disabled>
-                      Property Type
-                    </option>
+                    {/* <option selected disabled> */}
+                    {/*   Property Type */}
+                    {/* </option> */}
                     {type.map((item) => (
                       <option
                         className="optgroup"
+                        selected={item.selected}
                         key={item._id}
-                        value={item.name}
+                        value={item.value}
                       >
                         {item.name}
                       </option>
@@ -163,6 +188,7 @@ export default function SearchForm({ navMenuProperty }) {
                       <select
                         className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                         aria-label="form-select select-options"
+                        value={search.price}
                         onChange={(e) => {
                           setSearch({
                             ...search,
@@ -192,6 +218,7 @@ export default function SearchForm({ navMenuProperty }) {
                       <select
                         className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                         aria-label="form-select select-options"
+                        value={search.price}
                         onChange={(e) => {
                           setSearch({
                             ...search,
