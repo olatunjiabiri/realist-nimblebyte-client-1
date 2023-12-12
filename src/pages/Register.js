@@ -8,6 +8,9 @@ import Checkbox from "@mui/material/Checkbox";
 
 import config from "../NewConfig";
 
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import "./Login.css";
+
 export default function Register() {
   // state
   const [email, setEmail] = useState("");
@@ -15,8 +18,14 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(false);
 
+  const [visible, setVisible] = useState(false);
+
   // hooks
   const navigate = useNavigate();
+
+  const toggle = () => {
+    setVisible(!visible);
+  };
 
   const handleTermsandPolicyCheck = (event) => {
     setChecked(event.target.checked);
@@ -68,15 +77,19 @@ export default function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="form-control mb-4"
-              required
-              autoFocus
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type={visible ? "text" : "password"}
+                placeholder="Enter your password"
+                className="form-control mb-4"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span className="password-toggle" onClick={toggle}>
+                {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </span>
+            </div>
             <div className="mb-3 text-center">
               <Checkbox
                 checked={checked}
