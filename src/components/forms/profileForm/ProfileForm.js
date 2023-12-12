@@ -134,6 +134,7 @@ export default function ProfileForm({ sourceURL }) {
             registrationNumber: reg_number || "",
             roles: roles,
             photo,
+            agentDocuments: [],
           }
         );
 
