@@ -40,7 +40,7 @@ export default function Dashboard() {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${auth.user?.userId}/${page}/${perPage}`
+        `/user-ads/${auth.user?.userId}/${page}/${perPage}`,
       );
       // setAds(data.ads);
       // console.log("data", data);
@@ -74,11 +74,11 @@ export default function Dashboard() {
           </div>
         </Modall>
         <div
-          className="container-fluid pt-5 background-color"
+          className="container-fluid background-color"
           style={{ minHeight: "700px" }}
         >
           {/* className={completed ? 'text-strike' : null} */}
-          <div className="card shadow border-0 mt-5">
+          <div className="card shadow border-0 mt-2">
             {!auth?.user?.info?.isApproved &&
               auth?.user?.role?.includes("Agent") && (
                 <div className="notice">
