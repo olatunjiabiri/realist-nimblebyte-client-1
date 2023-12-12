@@ -138,7 +138,6 @@ const Navbar = () => {
                   style={{
                     position: "absolute",
                     top: "-10px",
-                    // left: 0
                   }}
                   src="./nimblelogo2.png"
                   alt="NimbleCasa"

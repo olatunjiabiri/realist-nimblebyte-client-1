@@ -74,7 +74,7 @@ export default function Dashboard() {
           </div>
         </Modall>
         <div
-          className="container-flui background-color"
+          className="container-fluid background-color"
           style={{ minHeight: "700px" }}
         >
           {/* className={completed ? 'text-strike' : null} */}
