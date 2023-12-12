@@ -1,10 +1,8 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ContactAgents.css";
 
-
 const ContactAgents = () => {
-
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
@@ -40,6 +38,13 @@ const ContactAgents = () => {
                   here
                 </Link>
               </p>
+            </div>
+            <div className="d-flex justify-content-center">
+              <Link className="" to="/contact-us">
+                <button type="button" className="contact-us-button">
+                  Contact Us
+                </button>
+              </Link>
             </div>
           </div>
         </div>
