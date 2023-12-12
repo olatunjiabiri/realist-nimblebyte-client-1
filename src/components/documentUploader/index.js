@@ -233,7 +233,8 @@ const DocumentForm = ({
           </button>
         )}
       </div>
-      {error && <p className="text-danger">{error}</p>}
+      {error && <p className="text-danger">{error}
+      </p>}
       {uploadedFiles.length > 0 && (
         <p className="text-success">
           Uploaded Files: {uploadedFiles.join(", ")}

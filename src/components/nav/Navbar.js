@@ -125,6 +125,9 @@ const Navbar = () => {
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
         id="custom-nav"
+        style={{
+          position: "relative",
+        }}
         ref={navbarRef}
       >
         <div className="container">
@@ -132,10 +135,15 @@ const Navbar = () => {
             <nav className="nav lead">
               <Link to={"/"} onClick={closeMobileMenu}>
                 <img
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    // left: 0
+                  }}
                   src="./nimblelogo2.png"
                   alt="NimbleCasa"
-                  height={50}
-                  width={70}
+                  height={80}
+                  width={130}
                 />
               </Link>
             </nav>

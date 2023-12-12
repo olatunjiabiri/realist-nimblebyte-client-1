@@ -68,7 +68,7 @@ export default function SearchForm({ navMenuProperty }) {
 
   return (
     <>
-      <div className="searchForm-container pt-5">
+      <div className="searchForm-container">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -168,7 +168,7 @@ export default function SearchForm({ navMenuProperty }) {
                             ...search,
                             price: e.target.value,
                             priceRange: sellPrices.find(
-                              (item) => item.name === e.target.value
+                              (item) => item.name === e.target.value,
                             ).array,
                           });
                         }}
@@ -197,7 +197,7 @@ export default function SearchForm({ navMenuProperty }) {
                             ...search,
                             price: e.target.value,
                             priceRange: rentPrices.find(
-                              (item) => item.name === e.target.value
+                              (item) => item.name === e.target.value,
                             ).array,
                           });
                         }}
