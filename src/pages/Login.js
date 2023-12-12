@@ -8,6 +8,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import config from "./../NewConfig";
 import ContentWrapper from "../components/contentWrapper/ContentWrapper";
 
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+
+import "./Login.css";
+
 export default function Login() {
   // context
   const [auth, setAuth] = useAuth();
@@ -15,9 +19,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [visible, setVisible] = useState(false);
   // hooks
   const navigate = useNavigate();
   const location = useLocation();
+
+  const toggle = () => {
+    setVisible(!visible);
+  };
 
   const fetchUserWishlists = async (user) => {
     const { userId } = user;
@@ -97,7 +107,8 @@ export default function Login() {
             break;
           case 401:
           case 417:
-            toast.error(err.response.data.message); //wrong password
+            toast.error("Invalid Credential."); // Incorrect password
+            //  toast.error(err.response.data.message); //wrong password
             break;
           default:
           // code block
@@ -130,15 +141,20 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="form-control mb-4"
-              required
-              autoFocus
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type={visible ? "text" : "password"}
+                placeholder="Enter your password"
+                className="form-control mb-4"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span className="password-toggle" onClick={toggle}>
+                {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </span>
+            </div>
+
             <button disabled={loading} className="btn btn-primary col-12 mb-4">
               {loading ? "Waiting..." : "Login"}
             </button>
