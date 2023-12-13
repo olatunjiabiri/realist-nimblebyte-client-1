@@ -255,7 +255,7 @@ const DynamicForm = ({
             type="text"
             value={row.text}
             className="form-control"
-            placeholder="Enter text"
+            placeholder="Enter photo name"
             onChange={(e) => handleTextChange(index, e.target.value)}
           />
           <div style={{ width: "40px" }} />
@@ -292,18 +292,18 @@ const DynamicForm = ({
                 }}
               >
                 <button
-                  className="btn btn-success"
+                  className="btn btn-success image-upload-modal-buttons "
                   onClick={() => handleFileButtonClick(index)}
                 >
                   Upload
                 </button>
                 <div style={{ width: "5px" }} />
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-danger image-upload-modal-buttons "
                   type="button"
                   onClick={() => handleRemoveRow(index)}
                 >
-                  X
+                  Delete
                 </button>
               </div>
             </>
@@ -314,44 +314,34 @@ const DynamicForm = ({
       {/* <div */}
       {/*   style={{ position: "relative", width: "100%", backgroundColor: "red" }} */}
       {/* > */}
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          backgroundColor: "white",
-          alignItems: "center",
-          position: "sticky",
-          padding: "15px 10px 15px",
-          bottom: "-10px",
-          left: 0,
-        }}
-      >
+      <div className="image-upload-modal-button">
         <button
           type="button"
           onClick={handleAddRow}
-          className="btn btn-secondary"
+          className="btn btn-secondary image-upload-modal-buttons "
         >
-          Add new row
+          Add new photo
         </button>
-        <div style={{ display: "flex" }}>
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
-            className="btn btn-danger"
-          >
-            Cancel
-          </button>
-          <div style={{ width: "10px" }} />
-          <button
-            type="button"
-            onClick={handleConfirm}
-            className={`btn btn-primary ${formCompleted ? "" : "disabled"}`}
-            disabled={!formCompleted || loading}
-          >
-            {loading ? "Uploading Images" : "Confirm images"}
-          </button>
-        </div>
+        {/* <div style={{ display: "flex" }}> */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(false)}
+          className="btn btn-danger image-upload-modal-buttons cancel-button"
+        >
+          Cancel
+        </button>
+        {/* <div style={{ width: "10px" }} /> */}
+        <button
+          type="button"
+          onClick={handleConfirm}
+          className={`btn btn-primary ${
+            formCompleted ? "" : "disabled"
+          } image-upload-modal-buttons`}
+          disabled={!formCompleted || loading}
+        >
+          {loading ? "Uploading Images" : "Confirm images"}
+        </button>
+        {/* </div> */}
       </div>
       {/* </div> */}
     </div>
