@@ -56,7 +56,7 @@ const ContactUs = () => {
           Location: location,
           EmailReceiver: config.AdminEmail || "",
           Action: "",
-        },
+        }
       );
 
       // console.log("response>>>", response);
@@ -335,8 +335,13 @@ const ContactUs = () => {
                     )}
                     <div className="mt-4">
                       <button
-                        className="contact-button w-100 btn btn-color"
-                        disabled={loading}
+                        className="contact-button w-100 btn btn-primary"
+                        disabled={
+                          loading ||
+                          !values.contactName ||
+                          !values.email ||
+                          !values.phone
+                        }
                       >
                         {isSubmitting ? "Loading" : "Submit"}
                       </button>
