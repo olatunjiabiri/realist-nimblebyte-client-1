@@ -183,36 +183,36 @@ export default function SearchForm({ navMenuProperty }) {
                       </option>
                     ))}
                   </select>
-                  {/* {search.action === "Buy" ? ( */}
-                  <>
-                    <select
-                      className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                      aria-label="form-select select-options"
-                      value={search.price}
-                      onChange={(e) => {
-                        setSearch({
-                          ...search,
-                          price: e.target.value,
-                          priceRange: Prices.find(
-                            (item) => item.name === e.target.value
-                          ).array,
-                        });
-                      }}
-                    >
-                      {/* <option selected disabled>
+                  {/* {search.action === "Buy" ? (
+                  <> */}
+                  <select
+                    className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                    aria-label="form-select select-options"
+                    value={search.price}
+                    onChange={(e) => {
+                      setSearch({
+                        ...search,
+                        price: e.target.value,
+                        priceRange: Prices.find(
+                          (item) => item.name === e.target.value
+                        ).array,
+                      });
+                    }}
+                  >
+                    {/* <option selected disabled>
                           Price
                         </option> */}
-                      {Prices.map((item) => (
-                        <option
-                          className="optgroup"
-                          key={item._id}
-                          value={item.name}
-                        >
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
-                  </>
+                    {Prices.map((item) => (
+                      <option
+                        className="optgroup"
+                        key={item._id}
+                        value={item.name}
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                  {/* </> */}
                   {/* ) : (
                     <>
                       <select
