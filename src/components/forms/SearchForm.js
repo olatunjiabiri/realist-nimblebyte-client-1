@@ -194,14 +194,14 @@ export default function SearchForm({ navMenuProperty }) {
                             ...search,
                             price: e.target.value,
                             priceRange: sellPrices.find(
-                              (item) => item.name === e.target.value,
+                              (item) => item.name === e.target.value
                             ).array,
                           });
                         }}
                       >
-                        <option selected disabled>
+                        {/* <option selected disabled>
                           Price
-                        </option>
+                        </option> */}
                         {sellPrices.map((item) => (
                           <option
                             className="optgroup"
@@ -224,14 +224,14 @@ export default function SearchForm({ navMenuProperty }) {
                             ...search,
                             price: e.target.value,
                             priceRange: rentPrices.find(
-                              (item) => item.name === e.target.value,
+                              (item) => item.name === e.target.value
                             ).array,
                           });
                         }}
                       >
-                        <option selected disabled>
+                        {/* <option selected disabled>
                           Price
-                        </option>
+                        </option> */}
                         {rentPrices.map((item) => (
                           <option
                             className="optgroup"
