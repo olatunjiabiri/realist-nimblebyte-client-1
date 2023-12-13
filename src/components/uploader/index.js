@@ -295,7 +295,7 @@ const DynamicForm = ({
                   className="btn btn-success image-upload-modal-buttons "
                   onClick={() => handleFileButtonClick(index)}
                 >
-                  Upload
+                  {row.image ? "Change" : "Upload"}
                 </button>
                 <div style={{ width: "5px" }} />
                 <button
