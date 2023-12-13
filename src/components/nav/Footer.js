@@ -62,9 +62,9 @@ export default function Footer() {
           <div className="col col-lg-3 col-md-6 footer-info">
             <h4 className="mt-4">Information</h4>
             <ul className="social-doc">
-              <li>
+              {/* <li>
                 <a href="#">FAQS</a>
-              </li>
+              </li> */}
               <li>
                 <Link to="/terms-of-use"> TERMS OF USE </Link>
               </li>

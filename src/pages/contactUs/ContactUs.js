@@ -56,7 +56,7 @@ const ContactUs = () => {
           Location: location,
           EmailReceiver: config.AdminEmail || "",
           Action: "",
-        }
+        },
       );
 
       // console.log("response>>>", response);
@@ -118,7 +118,7 @@ const ContactUs = () => {
       {/* <ContentWrapper> */}
       <LogoutMessage>
         <div className="background-color content-container">
-          <div className="container mt-5 p-5">
+          <div className="container p-5">
             <div className="row">
               <div className="col-md-6 offset-md-3">
                 <div className="bd-1 contact-us-container contact-bd-color">
