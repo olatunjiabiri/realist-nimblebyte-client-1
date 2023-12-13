@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../NewConfig";
-import { sellPrices, rentPrices } from "../../helpers/priceList";
+import { Prices } from "../../helpers/priceList";
 import { action, type } from "../../helpers/actionTypeList";
 
 import queryString from "query-string";
@@ -183,37 +183,37 @@ export default function SearchForm({ navMenuProperty }) {
                       </option>
                     ))}
                   </select>
-                  {search.action === "Buy" ? (
-                    <>
-                      <select
-                        className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                        aria-label="form-select select-options"
-                        value={search.price}
-                        onChange={(e) => {
-                          setSearch({
-                            ...search,
-                            price: e.target.value,
-                            priceRange: sellPrices.find(
-                              (item) => item.name === e.target.value
-                            ).array,
-                          });
-                        }}
-                      >
-                        {/* <option selected disabled>
+                  {/* {search.action === "Buy" ? ( */}
+                  <>
+                    <select
+                      className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                      aria-label="form-select select-options"
+                      value={search.price}
+                      onChange={(e) => {
+                        setSearch({
+                          ...search,
+                          price: e.target.value,
+                          priceRange: Prices.find(
+                            (item) => item.name === e.target.value
+                          ).array,
+                        });
+                      }}
+                    >
+                      {/* <option selected disabled>
                           Price
                         </option> */}
-                        {sellPrices.map((item) => (
-                          <option
-                            className="optgroup"
-                            key={item._id}
-                            value={item.name}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                    </>
-                  ) : (
+                      {Prices.map((item) => (
+                        <option
+                          className="optgroup"
+                          key={item._id}
+                          value={item.name}
+                        >
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                  {/* ) : (
                     <>
                       <select
                         className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
@@ -229,9 +229,9 @@ export default function SearchForm({ navMenuProperty }) {
                           });
                         }}
                       >
-                        {/* <option selected disabled>
+                        <option selected disabled>
                           Price
-                        </option> */}
+                        </option>
                         {rentPrices.map((item) => (
                           <option
                             className="optgroup"
@@ -243,7 +243,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ))}
                       </select>
                     </>
-                  )}
+                  )} */}
                 </>
               </div>
             </div>
