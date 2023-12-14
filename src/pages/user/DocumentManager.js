@@ -265,6 +265,11 @@ const DocumentManager = () => {
               <input
                 type="file"
                 className="form-control"
+                disabled={
+                  auth.user.agentDocuments.find(
+                    (doc) => doc.documentTypeId === 1,
+                  )?.approvalStatus
+                }
                 accept="image/*, application/pdf"
                 onChange={(e) =>
                   isProofTypeSelected &&
@@ -297,6 +302,11 @@ const DocumentManager = () => {
             >
               <select
                 className="btn btn-light"
+                disabled={
+                  auth.user.agentDocuments.find(
+                    (doc) => doc.documentTypeId === 1,
+                  )?.approvalStatus
+                }
                 onChange={(e) => {
                   handleProofTypeChange(e);
                   setSelectedProofType(e.target.value);
@@ -322,6 +332,10 @@ const DocumentManager = () => {
               type="file"
               className="form-control"
               accept="image/*, application/pdf"
+              disabled={
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
+                  ?.approvalStatus
+              }
               onChange={(e) =>
                 handleUpload(
                   e.target.files[0],
@@ -350,6 +364,10 @@ const DocumentManager = () => {
             <input
               type="file"
               className="form-control"
+              disabled={
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
+                  ?.approvalStatus
+              }
               accept="image/*"
               onChange={(e) =>
                 handleUpload(
@@ -378,6 +396,10 @@ const DocumentManager = () => {
             <input
               type="file"
               className="form-control"
+              disabled={
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
+                  ?.approvalStatus
+              }
               accept="image/*, application/pdf"
               onChange={(e) =>
                 handleUpload(e.target.files[0], "CAC Certification", 3)
@@ -408,6 +430,11 @@ const DocumentManager = () => {
             >
               <select
                 className="btn btn-light"
+                disabled={
+                  auth.user.agentDocuments.find(
+                    (doc) => doc.documentTypeId === 1,
+                  )?.approvalStatus
+                }
                 onChange={(e) => {
                   handleProofTypeChange(e);
                   setSelectedProofType(e.target.value);
@@ -521,6 +548,11 @@ const DocumentManager = () => {
               >
                 <select
                   className="btn btn-light"
+                  disabled={
+                    auth.user.agentDocuments.find(
+                      (doc) => doc.documentTypeId === 1,
+                    )?.approvalStatus
+                  }
                   onChange={(e) => {
                     handleProofTypeChange(e);
                     setSelectedProofType(e.target.value);
@@ -558,7 +590,11 @@ const DocumentManager = () => {
               />
             ) : (
               <div className="frm-control text-danger">
-                Please select an identification type
+                {auth.user.agentDocuments.find(
+                  (doc) => doc.documentTypeId === 1,
+                )?.approvalStatus
+                  ? "Document is Approved"
+                  : "Please, select an identification type"}
               </div>
             ),
           };
