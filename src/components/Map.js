@@ -33,7 +33,6 @@ const Map = (props) => {
     lat: parseFloat(ad?.landmarkLocation?.coordinates[0]),
     lng: parseFloat(ad?.landmarkLocation?.coordinates[1]),
   };
-  console.log("center>>>>", center);
 
   return (
     <div className="d-flex">
