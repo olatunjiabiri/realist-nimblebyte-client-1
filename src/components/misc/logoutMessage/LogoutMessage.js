@@ -49,7 +49,7 @@ const LogoutMessage = ({ children }) => {
   };
 
   return (
-    <div>
+    <div className="content-container">
       {/* Conditionally render the main content or the logout message based on the token */}
       {!token && (
         <div>

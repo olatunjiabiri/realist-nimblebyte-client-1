@@ -16,16 +16,16 @@ export default function Search() {
       <SearchForm />
 
       <div className="container">
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           {search.results?.length > 0 ? (
             <>
-              <div className="col-md-12 text-center p-5">
+              <div className="col-md-12 text-center p-3">
                 <button className="btn btn-info disabled">
                   <b>Found {search.results?.length} results</b>
                 </button>
               </div>
 
-              <div className="row">
+              <div className="row d-flex justify-content-center">
                 {search?.results?.map((item) => (
                   <AdCard ad={item} key={item._id} />
                 ))}
