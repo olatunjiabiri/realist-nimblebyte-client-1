@@ -30,9 +30,10 @@ const Map = (props) => {
   // console.log(ad);
   //   6.5244° N, 3.3792° E
   const center = {
-    lat: parseFloat(ad?.landmarkLocation?.coordinates[1]),
-    lng: parseFloat(ad?.landmarkLocation?.coordinates[0]),
+    lat: parseFloat(ad?.landmarkLocation?.coordinates[0]),
+    lng: parseFloat(ad?.landmarkLocation?.coordinates[1]),
   };
+  console.log("center>>>>", center);
 
   return (
     <div className="d-flex">
@@ -94,8 +95,8 @@ const Map = (props) => {
             key={r?._id}
             icon={"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
             position={{
-              lat: parseFloat(r?.landmarkLocation?.coordinates[1]),
-              lng: parseFloat(r?.landmarkLocation?.coordinates[0]),
+              lat: parseFloat(r?.landmarkLocation?.coordinates[0]),
+              lng: parseFloat(r?.landmarkLocation?.coordinates[1]),
             }}
             zindex={110}
             onClick={() => handleActiveMarker(r._id)}
