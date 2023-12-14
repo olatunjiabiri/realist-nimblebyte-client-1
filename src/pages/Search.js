@@ -25,7 +25,7 @@ export default function Search() {
                 </button>
               </div>
 
-              <div className="row d-flex">
+              <div className="row d-flex justify-content-center">
                 {search?.results?.map((item) => (
                   <AdCard ad={item} key={item._id} />
                 ))}
