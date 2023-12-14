@@ -34,9 +34,9 @@ const ContactAgents = () => {
               </p>
               <p>
                 If this sounds like you, Kindly reach out to us{" "}
-                <Link className="here-link" to="/contact-us">
+                {/* <Link className="here-link" to="/contact-us">
                   here
-                </Link>
+                </Link> */}
               </p>
             </div>
             <div className="d-flex justify-content-center">

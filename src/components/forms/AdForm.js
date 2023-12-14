@@ -339,7 +339,7 @@ export default function AdForm({ action, type }) {
 
                 <div>
                   <CurrencyInput
-                    placeholder="Enter price"
+                    placeholder="Enter price in Naira"
                     defaultValue={ad.price}
                     className="form-control mb-3"
                     onValueChange={(value) => setAd({ ...ad, price: value })}
@@ -399,7 +399,7 @@ export default function AdForm({ action, type }) {
                       type="number"
                       min="0"
                       className="form-control mb-3"
-                      placeholder="Enter how many bedrooms"
+                      placeholder="Enter number of bedrooms"
                       value={ad.bedrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bedrooms: e.target.value })
@@ -409,7 +409,7 @@ export default function AdForm({ action, type }) {
                       type="number"
                       min="0"
                       className="form-control mb-3"
-                      placeholder="Enter how many bathrooms"
+                      placeholder="Enter number of bathrooms"
                       value={ad.bathrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bathrooms: e.target.value })
@@ -419,7 +419,7 @@ export default function AdForm({ action, type }) {
                       type="number"
                       min="0"
                       className="form-control mb-3"
-                      placeholder="Enter how many carparks"
+                      placeholder="Enter number of carparks"
                       value={ad.carpark}
                       onChange={(e) =>
                         setAd({ ...ad, carpark: e.target.value })
