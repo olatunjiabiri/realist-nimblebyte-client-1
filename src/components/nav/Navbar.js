@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import { useData } from "../../context/adData";
+
 import { useNavigate } from "react-router-dom";
 import Modall from "../modal/Modal";
 // import useSelection from "antd/es/table/hooks/useSelection";
@@ -9,6 +11,8 @@ import Modall from "../modal/Modal";
 const Navbar = () => {
   // context
   const [auth, setAuth] = useAuth();
+  const [ddata, setDdata] = useData();
+
   // hooks
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
@@ -55,8 +59,11 @@ const Navbar = () => {
 
   const logout = () => {
     setAuth({ user: null, token: "" });
+    setDdata({ adData: null });
+
     localStorage.removeItem("auth");
     localStorage.removeItem("cLocation");
+    localStorage.removeItem("adData");
 
     navigate("/login");
   };

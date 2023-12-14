@@ -14,6 +14,8 @@ import FormControl from "@mui/material/FormControl";
 import { Avatar } from "antd";
 
 import { useAuth } from "../../context/auth";
+import { useData } from "../../context/adData";
+
 import LogoutMessage from "../misc/logoutMessage/LogoutMessage";
 import { houseType } from "../../helpers/houseType";
 
@@ -25,6 +27,7 @@ import DynamicForm from "../uploader";
 export default function AdForm({ action, type }) {
   // context
   const [auth, setAuth] = useAuth();
+  const [ddata, setDdata] = useData();
   const [isOpen, setIsOpen] = useState(false);
   // state
   const [checked, setChecked] = React.useState(false);
@@ -56,29 +59,43 @@ export default function AdForm({ action, type }) {
     },
   };
 
+  // console.log("addata>>>>", ddata);
   const [ad, setAd] = useState({
-    photos: [],
+    photos: ddata.photos || [],
     uploading: false,
-    price: "",
-    address: "",
-    landmark: "",
-    bedrooms: "",
-    bathrooms: "",
-    carpark: "",
-    landsize: "",
-    title: "",
-    description: "",
+    price: ddata.price || "",
+    address: ddata.address || "",
+    landmark: ddata.landmark || "",
+    bedrooms: ddata.bedrooms || "",
+    bathrooms: ddata.bathrooms || "",
+    carpark: ddata.carpark || "",
+    landsize: ddata.landsize || "",
+    title: ddata.title || "",
+    description: ddata.description || "",
     loading: false,
-    type,
-    action,
+    type: ddata.type || type,
+    action: ddata.action || action,
     postedBy: auth.user.userId,
-    features,
-    houseType: "",
+    features: ddata.features || features,
+    houseType: ddata.houseType || "",
   });
+
+  useEffect(() => {
+    if (ad) {
+      setDdata(ad);
+    }
+  }, [ad]);
 
   useEffect(() => {
     if (auth.user) {
       setRole(auth.user?.role);
+    }
+    if (ddata.features) {
+      setFeatures(ddata.features);
+    } else {
+      if (ad.type) {
+        getFeature(ad.type);
+      }
     }
   }, []);
 
@@ -114,7 +131,7 @@ export default function AdForm({ action, type }) {
 
   const getFeature = async (type) => {
     setLoading(true);
-    setFeatures([]);
+    setFeatures(ddata.features);
     const { data } = await axios.get(`${config.API}/adFeature/${type}`);
     if (!data) {
       setLoading(false);
@@ -163,6 +180,9 @@ export default function AdForm({ action, type }) {
           // console.log("ads>>", data);
 
           toast.success("Ad created successfully");
+
+          setDdata({ adData: null });
+          localStorage.removeItem("adData");
 
           setAd({ ...ad, loading: false });
 
@@ -481,7 +501,11 @@ export default function AdForm({ action, type }) {
                         {features.map((feat) => (
                           <MenuItem key={feat.feature} value={feat.feature}>
                             <Checkbox
-                              checked={feature.indexOf(feat.feature) > -1}
+                              checked={
+                                ddata.features
+                                  ? ddata.features.indexOf(feat.feature) > -1
+                                  : feature.indexOf(feat.feature) > -1
+                              }
                             />
                             <ListItemText primary={feat.feature} />
                           </MenuItem>
