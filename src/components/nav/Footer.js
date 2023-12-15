@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-5">
           <div className="col col-lg-6 col-md-12 footer-word1">
             <h4 className="mt-4">NimbleCasa - Real Estate, The Right Way</h4>
-            <ul className="social-links">
+            <ul className="social-links pt-2">
               <li>
                 <a href="https://www.instagram.com" target="_blank">
                   <svg
@@ -54,8 +54,8 @@ export default function Footer() {
               </li>
             </ul>
             {/* <h4 className="mt-4">NimbleCasa - Buy, Sell or Rent Properties</h4> */}
-            <p className="mt-3">
-              &copy; {new Date().getFullYear()} All rights reserved
+            <p>
+              &copy; {new Date().getFullYear()}. A product of <a className="NimbleByteLink" href="https://nimble-byte.com/" target="_blank">Nimble-Byte</a> 
             </p>
           </div>
 
@@ -119,9 +119,9 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="row d-flex justify-content-center pt-2 nimblebyte ">
+        {/* <div className="row d-flex justify-content-center pt-2 nimblebyte ">
           A product of Nimble-Byte
-        </div>
+        </div> */}
       </div>
     </div>
   );
