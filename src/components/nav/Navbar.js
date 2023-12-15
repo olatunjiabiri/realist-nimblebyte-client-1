@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import { useData } from "../../context/adData";
+
 import { useNavigate } from "react-router-dom";
 import Modall from "../modal/Modal";
 // import useSelection from "antd/es/table/hooks/useSelection";
@@ -9,6 +11,8 @@ import Modall from "../modal/Modal";
 const Navbar = () => {
   // context
   const [auth, setAuth] = useAuth();
+  const [ddata, setDdata] = useData();
+
   // hooks
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
@@ -55,8 +59,13 @@ const Navbar = () => {
 
   const logout = () => {
     setAuth({ user: null, token: "" });
+    setDdata({ adData: null });
+
     localStorage.removeItem("auth");
     localStorage.removeItem("cLocation");
+    localStorage.removeItem("adData");
+    localStorage.removeItem("profileFormData");
+    localStorage.removeItem("profile");
 
     navigate("/login");
   };
@@ -108,9 +117,9 @@ const Navbar = () => {
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <p className="header-modal">Request Pending Approval</p>
         <div className="info-modal">
-          Dear {auth?.user?.lastName},
+          {/* Dear{auth?.user?.lastName},
           <br />
-          <br />
+          <br /> */}
           Your application to become an agent is under review. We typically
           process requests within 1-3 business days. You will receive an email
           once a decision is made.
@@ -119,14 +128,15 @@ const Navbar = () => {
           For any queries, feel free to contact us.
           <br />
           <br />
-          Best,
-          <br />
           NimbleCasa Team
         </div>
       </Modall>
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
         id="custom-nav"
+        style={{
+          position: "relative",
+        }}
         ref={navbarRef}
       >
         <div className="container">
@@ -134,10 +144,14 @@ const Navbar = () => {
             <nav className="nav lead">
               <Link to={"/"} onClick={closeMobileMenu}>
                 <img
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                  }}
                   src="./nimblelogo2.png"
                   alt="NimbleCasa"
-                  height={50}
-                  width={70}
+                  height={80}
+                  width={130}
                 />
               </Link>
             </nav>
@@ -187,11 +201,19 @@ const Navbar = () => {
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
-                to="/agents"
+                to="/contact-agents"
                 onClick={closeMobileMenu}
               >
                 Sell
               </NavLink>
+              {/* <NavLink
+                className="nav-item nav-link"
+                aria-current="page"
+                to="/agents"
+                onClick={closeMobileMenu}
+              >
+                Sell2
+              </NavLink> */}
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"

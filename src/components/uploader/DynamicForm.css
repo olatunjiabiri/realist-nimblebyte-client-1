@@ -5,7 +5,7 @@
   margin: auto;
   background-color: white;
   padding: 0.5em 1rem;
-  max-height: 800px;
+  max-height: 500px;
   overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -58,6 +58,38 @@ input {
   font-weight: bold;
   padding: 5px;
 }
+
+.image-upload-modal-button {
+  display: flex;
+  width: 100%;
+  justify-content:space-around;
+  background-color: white;
+  align-items: center;
+  position: sticky;
+  padding: 15px 10px 15px;
+  bottom: -10px;
+  left: 0;
+}
+.image-upload-modal-buttons {
+  width: 150px
+}
+
+@media (max-width: 767px) {
+  .image-upload-modal-buttons {
+    width: 80px; 
+    font-size: 12px;
+  }
+
+  .image-upload-modal-button {
+    padding-bottom: 8px;
+  }
+
+.cancel-button {
+  padding: 15px 1px;
+}
+
+}
+
 
 @media (max-width: 1500px) {
   .dynamic-form {

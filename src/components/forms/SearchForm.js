@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../NewConfig";
-import { sellPrices, rentPrices } from "../../helpers/priceList";
+import { Prices } from "../../helpers/priceList";
 import { action, type } from "../../helpers/actionTypeList";
 
 import queryString from "query-string";
@@ -14,39 +14,65 @@ export default function SearchForm({ navMenuProperty }) {
   // context
   const [search, setSearch] = useSearch();
 
-  const [purpose, setPurpose] = useState(true);
-  const [propertyType, setPropertyType] = useState(true);
-  const [price, setPrice] = useState(true);
-  const [filter, setFilter] = useState(true);
-
   // hooks
   const navigate = useNavigate();
 
+  const path = window.location.pathname.split("/");
+
   useEffect(() => {
-    const path = window.location.pathname.split("/");
-    setPurpose(path[1] === "buy" ? "Buy" : path[1]);
-    search.action = path[1] === "buy" ? "Buy" : path[1];
+    if (!path[1]) {
+      setSearch({
+        address: "",
+        action: "", //Buy
+        type: "", //House
+        price: "All Prices", //All price
+        priceRange: [0, 1000000000000],
+      });
+      return;
+    }
+    if (path[1] === "buy") {
+      search.action = "Buy";
+      search.address = "";
+      search.type = "Property Type";
+      search.price = "All Prices"; //All price
+      search.priceRange = [0, 1000000000000];
+      return;
+    }
+    if (path[1] === "rent") {
+      search.action = "Rent";
+      search.address = "";
+      search.type = "Property Type";
+      search.price = "All Prices"; //All price
+      search.priceRange = [0, 1000000000000];
+      return;
+    }
+    // search.action = "";
+    // search.type = "";
+    // (search.price = "All price"), //All price
+    //   (search.priceRange = [0, 1000000000000]),
     setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
+    // console.log("search2 >>>>", search);
   }, []);
 
   const handleSearch = async () => {
-    setSearch({ ...search, loading: false });
+    setSearch((prev) => ({ ...prev, loading: false }));
 
     // console.log("search options>>>>", search);
 
     try {
       const { results, page, price, ...rest } = search;
-      // console.log("rest options>>>>", rest);
 
       const query = queryString.stringify(rest);
-      // console.log("query===>", query);
 
       const { data } = await axios.get(`/search?${query}`);
 
-      // console.log("data===>", data);
-
       if (search?.page !== "/search") {
-        setSearch((prev) => ({ ...prev, results: data, loading: false }));
+        setSearch((prev) => ({
+          ...prev,
+          results: data,
+          page: window.location.pathname,
+          loading: false,
+        }));
         navigate("/search");
       } else {
         setSearch((prev) => ({
@@ -54,6 +80,7 @@ export default function SearchForm({ navMenuProperty }) {
           results: data,
           page: window.location.pathname,
           loading: false,
+          // action: "",
         }));
       }
     } catch (err) {
@@ -64,7 +91,7 @@ export default function SearchForm({ navMenuProperty }) {
 
   return (
     <>
-      <div className="searchForm-container pt-5">
+      <div className="searchForm-container">
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
@@ -82,13 +109,15 @@ export default function SearchForm({ navMenuProperty }) {
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
                 selectProps={{
-                  defaultInputValue: localStorage.getItem("cLocation")
-                    ? localStorage.getItem("cLocation")
-                    : search?.address,
-                  placeholder: "Search for address..",
+                  // defaultInputValue: localStorage.getItem("cLocation")
+                  //   ? localStorage.getItem("cLocation")
+                  //   : search?.address,
+                  // inputValue: search?.address,
+                  defaultInputValue: search?.address,
+                  placeholder: "Enter an address, city or location",
                   onChange: ({ value }) => {
                     setSearch({ ...search, address: value.description });
-                    setFilter(false);
+                    // setFilter(false);
                   },
                   onclick: () => {
                     this.set(null);
@@ -104,23 +133,21 @@ export default function SearchForm({ navMenuProperty }) {
                     <select
                       className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                       aria-label="form-select select-options"
+                      value={search.action}
                       onChange={(e) => {
                         setSearch({
                           ...search,
                           action: e.target.value,
                           price: "",
                         });
-                        setPropertyType(false);
                       }}
                     >
-                      <option selected disabled>
-                        Purpose
-                      </option>
                       {action.map((item) => (
                         <option
+                          selected={item.selected}
                           className="optgroup"
                           key={item._id}
-                          value={item.name}
+                          value={item.value}
                         >
                           {item.name}
                         </option>
@@ -133,7 +160,7 @@ export default function SearchForm({ navMenuProperty }) {
                   <select
                     className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                     aria-label="form-select select-options"
-                    // disabled={filter}
+                    value={search.type}
                     onChange={(e) => {
                       setSearch({
                         ...search,
@@ -142,10 +169,40 @@ export default function SearchForm({ navMenuProperty }) {
                       });
                     }}
                   >
-                    <option selected disabled>
-                      Property Type
-                    </option>
+                    {/* <option selected disabled> */}
+                    {/*   Property Type */}
+                    {/* </option> */}
                     {type.map((item) => (
+                      <option
+                        className="optgroup"
+                        selected={item.selected}
+                        key={item._id}
+                        value={item.value}
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                  {/* {search.action === "Buy" ? (
+                  <> */}
+                  <select
+                    className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                    aria-label="form-select select-options"
+                    value={search.price}
+                    onChange={(e) => {
+                      setSearch({
+                        ...search,
+                        price: e.target.value,
+                        priceRange: Prices.find(
+                          (item) => item.name === e.target.value
+                        ).array,
+                      });
+                    }}
+                  >
+                    {/* <option selected disabled>
+                          Price
+                        </option> */}
+                    {Prices.map((item) => (
                       <option
                         className="optgroup"
                         key={item._id}
@@ -155,42 +212,13 @@ export default function SearchForm({ navMenuProperty }) {
                       </option>
                     ))}
                   </select>
-                  {search.action === "Buy" ? (
+                  {/* </> */}
+                  {/* ) : (
                     <>
                       <select
                         className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
                         aria-label="form-select select-options"
-                        // disabled={filter}
-                        onChange={(e) => {
-                          setSearch({
-                            ...search,
-                            price: e.target.value,
-                            priceRange: sellPrices.find(
-                              (item) => item.name === e.target.value
-                            ).array,
-                          });
-                        }}
-                      >
-                        <option selected disabled>
-                          Price
-                        </option>
-                        {sellPrices.map((item) => (
-                          <option
-                            className="optgroup"
-                            key={item._id}
-                            value={item.name}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                    </>
-                  ) : (
-                    <>
-                      <select
-                        className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                        aria-label="form-select select-options"
-                        // disabled={filter}
+                        value={search.price}
                         onChange={(e) => {
                           setSearch({
                             ...search,
@@ -215,7 +243,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ))}
                       </select>
                     </>
-                  )}
+                  )} */}
                 </>
               </div>
             </div>

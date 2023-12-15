@@ -20,6 +20,11 @@
     flex-direction: row;
 }
 
+.search-buttons{
+    display: flex;
+    align-content: center;
+}
+
 @media screen and (max-width:640) {
     .filter-options{
         display: none
@@ -33,11 +38,38 @@
     .agent-search-controls-container {
         flex-direction: column;
     }
+
+    .agent-search-title {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+    }
   
+    .search-buttons {
+        flex-direction: column;
+        display: flex;
+        width: 75%;
+    }
   }
 
   @media (max-width: 768px) {
     .agent-search-controls-container {
-        flex-direction: column;
+        /* flex-direction: column; */
         }
+
+    .agent-search-title {
+        font-size: 24px;
+       text-align: center;
+    }
+    .search-buttons {
+        flex-direction: column;
+        display: flex;
+        width: 75%;
+    }
+
+    .btn-group {
+        display: flex;
+        margin: 0%;
+        flex-direction: column;
+      }
  }

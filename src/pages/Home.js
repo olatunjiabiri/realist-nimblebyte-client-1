@@ -29,13 +29,13 @@ export default function Home() {
     if (auth.user === null) {
       auth.token = "";
     }
-    setSearch((prev) => ({
-      ...prev,
-      address: localStorage.getItem("cLocation")
-        ? localStorage.getItem("cLocation")
-        : search?.address,
-      loading: false,
-    }));
+    // setSearch((prev) => ({
+    //   ...prev,
+    //   address: localStorage.getItem("cLocation")
+    //     ? localStorage.getItem("cLocation")
+    //     : search?.address,
+    //   loading: false,
+    // }));
 
     fetchAds();
   }, []);
@@ -60,7 +60,7 @@ export default function Home() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      }
+      },
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;

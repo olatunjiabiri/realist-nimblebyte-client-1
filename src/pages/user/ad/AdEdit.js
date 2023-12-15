@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import CurrencyInput from "react-currency-input-field";
 import { toast } from "react-toastify";
 import { Avatar } from "antd";
+import { houseType } from "../../../helpers/houseType";
 
 import config from "../../../NewConfig";
 import ImageUpload from "../../../components/forms/ImageUpload";
@@ -39,6 +40,8 @@ export default function AdEdit({ action, type }) {
       },
     },
   };
+  const [selectOptions, setSelectOptions] = useState(houseType);
+
   // state
   const [ad, setAd] = useState({
     _id: "",
@@ -46,6 +49,7 @@ export default function AdEdit({ action, type }) {
     uploading: false,
     price: "",
     address: "",
+    landmark: "",
     bedrooms: "",
     bathrooms: "",
     carpark: "",
@@ -57,6 +61,7 @@ export default function AdEdit({ action, type }) {
     type,
     action,
     features,
+    houseType: "",
   });
   const [loaded, setLoaded] = useState(false);
   const [formData, setFormData] = useState([
@@ -72,10 +77,10 @@ export default function AdEdit({ action, type }) {
   const params = useParams();
 
   useEffect(() => {
-    if (params?.slug) {
+    if (params?.id) {
       fetchAd();
     }
-  }, [params?.slug]);
+  }, [params?.id]);
 
   useEffect(() => {
     setUserId(auth.user?.userId);
@@ -83,7 +88,7 @@ export default function AdEdit({ action, type }) {
 
   const fetchAd = async () => {
     try {
-      const { data } = await axios.get(`/ad/${params.slug}`);
+      const { data } = await axios.get(`/ad/${params.id}`);
       //   console.log("single ad edit page => ", data);
       setAd(data?.ad);
       setFormData(
@@ -106,6 +111,11 @@ export default function AdEdit({ action, type }) {
       getFeature(ad.type);
     }
   }, [ad.type]);
+
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setAd({ ...ad, houseType: value });
+  };
 
   const handleInputChange = (event) => {
     const {
@@ -137,6 +147,9 @@ export default function AdEdit({ action, type }) {
         return;
       } else if (!ad.address) {
         toast.error("Address is required");
+        return;
+      } else if (!ad.landmark) {
+        toast.error("landmark Address/location is required");
         return;
       } else if (!ad.price) {
         toast.error("Price is required");
@@ -251,7 +264,7 @@ export default function AdEdit({ action, type }) {
                       apiOptions="ng"
                       selectProps={{
                         defaultInputValue: ad?.address,
-                        placeholder: "Search for address..",
+                        placeholder: "Property address/location..",
                         onChange: ({ value }) => {
                           setAd({ ...ad, address: value.description });
                         },
@@ -264,25 +277,107 @@ export default function AdEdit({ action, type }) {
               )}
             </div>
 
-            {loaded ? (
+            <div className="row mb-3">
+              <label
+                id="propertyType"
+                className="col-sm-3 col-form-label adedit-label"
+              >
+                Property Type:
+              </label>
+              <div className="col-sm-9">
+                <input
+                  id="propertyType"
+                  name="propertyType"
+                  value={ad.type}
+                  className="form-control mb-3"
+                  // className="form-control pl-3 mt-3 adedit-label"
+                  readOnly
+                />
+              </div>
+            </div>
+            {/* {(ad.type === "House" || ad.type === "Shortlet") && ( */}
+            {ad.type === "House" && (
               <div className="mb-3 row">
                 <label
-                  id="price"
+                  idr="title"
                   className="col-sm-3 col-form-label adedit-label"
                 >
-                  Price
+                  Select {ad.type} Type
                 </label>
+
                 <div className="col-sm-9">
-                  <CurrencyInput
-                    id="price"
-                    name="price"
-                    placeholder="Enter price"
-                    defaultValue={ad.price}
-                    className="form-control mb-3"
-                    onValueChange={(value) => setAd({ ...ad, price: value })}
-                  />
+                  <FormControl sx={{ width: "100%", mb: 2 }}>
+                    <Select
+                      SelectDisplayProps={{
+                        style: { paddingTop: 8, paddingBottom: 8 },
+                      }}
+                      displayEmpty
+                      value={ad.houseType}
+                      onChange={handleSelectChange}
+                      inputProps={{ "aria-label": "Without label" }}
+                      sx={{
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        fontSize: "1em",
+                        appearance: "auto",
+                      }}
+                    >
+                      <MenuItem value="" disabled>
+                        Select {ad.type} Type
+                      </MenuItem>
+                      {selectOptions.map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
+            )}
+
+            {loaded ? (
+              <>
+                <div className="mb-3 row">
+                  <label
+                    id="price"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    Price
+                  </label>
+                  <div className="col-sm-9">
+                    <CurrencyInput
+                      id="price"
+                      name="price"
+                      placeholder="Enter price"
+                      defaultValue={ad.price}
+                      className="form-control mb-3"
+                      onValueChange={(value) => setAd({ ...ad, price: value })}
+                    />
+                  </div>
+                </div>
+                <div className="mb-3 row">
+                  <label
+                    id="address"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    Landmark Location
+                  </label>
+                  <div className="col-sm-9">
+                    <GooglePlacesAutocomplete
+                      apiKey={config.GOOGLE_PLACES_KEY}
+                      apiOptions="ng"
+                      selectProps={{
+                        defaultInputValue: ad?.landmark,
+                        placeholder: "Landmark address/location..",
+                        onChange: ({ value }) => {
+                          setAd({ ...ad, landmark: value.description });
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
             ) : (
               ""
             )}
@@ -445,16 +540,16 @@ export default function AdEdit({ action, type }) {
               </div>
             </div>
 
-            <div className="mb-3 row">
-              <label
-                idr="title"
-                className="col-sm-3 col-form-label adedit-label"
-              >
-                Extra Features
-              </label>
+            {features?.length > 0 && (
+              <div className="mb-3 row">
+                <label
+                  idr="title"
+                  className="col-sm-3 col-form-label adedit-label"
+                >
+                  Extra Features
+                </label>
 
-              <div className="col-sm-9">
-                {features?.length > 0 ? (
+                <div className="col-sm-9">
                   <>
                     {" "}
                     <FormControl sx={{ width: "100%", mb: 2 }}>
@@ -489,11 +584,9 @@ export default function AdEdit({ action, type }) {
                       </Select>
                     </FormControl>
                   </>
-                ) : (
-                  <></>
-                )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="mb-3 row">
               <label

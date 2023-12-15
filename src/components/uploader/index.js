@@ -13,10 +13,11 @@ const DynamicForm = ({
 }) => {
   const [formCompleted, setFormCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    console.log("formdata", formData);
-    console.log("ad", ad);
+    // console.log("formdata", formData);
+    // console.log("ad", ad);
 
     // Check if all fields are filled
     const allFieldsFilled = formData.every((row) => row.text && row.image);
@@ -60,6 +61,82 @@ const DynamicForm = ({
     }
   };
 
+  // const handleConfirm = async () => {
+  //   if (formData.length === 0) {
+  //     setIsOpen(false);
+  //     return;
+  //   }
+  //
+  //   try {
+  //     setLoading(true);
+  //     const files = formData;
+  //     console.log("files", files);
+  //     if (files?.length) {
+  //       setAd((prev) => ({ ...prev, uploading: true }));
+  //
+  //       // Use Promise.all to wait for all image uploads to complete
+  //       const uploadedPhotos = await Promise.all(
+  //         files.map((file) => {
+  //           if (file.blob === null) {
+  //             return {
+  //               Key: file.text,
+  //               Location: file.image,
+  //             };
+  //           }
+  //
+  //           return new Promise(async (resolve) => {
+  //             Resizer.imageFileResizer(
+  //               file.blob,
+  //               1080,
+  //               720,
+  //               "JPEG",
+  //               100,
+  //               0,
+  //               async (uri) => {
+  //                 try {
+  //                   const { data } = await axios.post("/upload-image", {
+  //                     image: uri,
+  //                     label: file.text,
+  //                   });
+  //                   resolve(data);
+  //                 } catch (err) {
+  //                   console.log(err);
+  //                   resolve(null);
+  //                 }
+  //               },
+  //               "base64",
+  //             );
+  //           });
+  //         }),
+  //       );
+  //
+  //       // Remove null entries (failed uploads) and filter out duplicates
+  //       const filteredPhotos = uploadedPhotos.filter(Boolean);
+  //       const uniquePhotos = Array.from(
+  //         new Set([
+  //           ...ad.photos.map((photo) => photo.Location),
+  //           ...filteredPhotos.map((photo) => photo.Location),
+  //         ]),
+  //       ).map((location) =>
+  //         filteredPhotos.find((photo) => photo.Location === location),
+  //       );
+  //
+  //       setAd((prev) => ({
+  //         ...prev,
+  //         photos: uniquePhotos,
+  //         uploading: false,
+  //       }));
+  //
+  //       setLoading(false);
+  //       setIsOpen(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setAd((prev) => ({ ...prev, uploading: false }));
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleConfirm = async () => {
     if (formData.length === 0) {
       setIsOpen(false);
@@ -69,13 +146,12 @@ const DynamicForm = ({
     try {
       setLoading(true);
       const files = formData;
-      console.log("files", files);
+
       if (files?.length) {
         setAd((prev) => ({ ...prev, uploading: true }));
 
-        // Use Promise.all to wait for all image uploads to complete
         const uploadedPhotos = await Promise.all(
-          files.map((file) => {
+          files.map(async (file) => {
             if (file.blob === null) {
               return {
                 Key: file.text,
@@ -84,29 +160,39 @@ const DynamicForm = ({
             }
 
             return new Promise(async (resolve) => {
-              Resizer.imageFileResizer(
-                file.blob,
-                1080,
-                720,
-                "JPEG",
-                100,
-                0,
-                async (uri) => {
-                  try {
-                    const { data } = await axios.post("/upload-image", {
-                      image: uri,
-                      label: file.text,
-                    });
-                    resolve(data);
-                  } catch (err) {
-                    console.log(err);
-                    resolve(null);
-                  }
-                },
-                "base64",
-              );
+              const image = new Image();
+              image.src = URL.createObjectURL(file.blob);
+
+              image.onload = async () => {
+                const canvas = canvasRef.current;
+                const context = canvas.getContext("2d");
+                const newWidth = 1080;
+                const newHeight = 720;
+                // const newWidth = 600;
+                // const newHeight = 300;
+
+                // Resize the image using canvas
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                context.drawImage(image, 0, 0, newWidth, newHeight);
+
+                // Convert the canvas content back to base64
+                const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
+
+                try {
+                  const { data } = await axios.post("/upload-image", {
+                    file: resizedImage,
+                    label: file.text,
+                  });
+                  resolve(data);
+                  // console.log("data>>", data);
+                } catch (err) {
+                  console.log(err);
+                  resolve(null);
+                }
+              };
             });
-          }),
+          })
         );
 
         // Remove null entries (failed uploads) and filter out duplicates
@@ -115,9 +201,9 @@ const DynamicForm = ({
           new Set([
             ...ad.photos.map((photo) => photo.Location),
             ...filteredPhotos.map((photo) => photo.Location),
-          ]),
+          ])
         ).map((location) =>
-          filteredPhotos.find((photo) => photo.Location === location),
+          filteredPhotos.find((photo) => photo.Location === location)
         );
 
         setAd((prev) => ({
@@ -161,6 +247,7 @@ const DynamicForm = ({
 
   return (
     <div className="dynamic-form">
+      <canvas ref={canvasRef} style={{ display: "none" }} />
       <p className="dynamic-form-title">Upload Photos</p>
       {formData.map((row, index) => (
         <div key={index} className="form-row">
@@ -168,7 +255,7 @@ const DynamicForm = ({
             type="text"
             value={row.text}
             className="form-control"
-            placeholder="Enter text"
+            placeholder="Enter photo name"
             onChange={(e) => handleTextChange(index, e.target.value)}
           />
           <div style={{ width: "40px" }} />
@@ -191,7 +278,7 @@ const DynamicForm = ({
             <>
               <input
                 type="file"
-                className="input-style m-2"
+                className="input-style input-style1 m-2"
                 accept="image/*"
                 style={{ display: "none" }}
                 ref={(ref) => (fileRefs.current[index] = ref)}
@@ -205,18 +292,18 @@ const DynamicForm = ({
                 }}
               >
                 <button
-                  className="btn btn-success"
+                  className="btn btn-success image-upload-modal-buttons "
                   onClick={() => handleFileButtonClick(index)}
                 >
-                  Upload
+                  {row.image ? "Change" : "Upload"}
                 </button>
                 <div style={{ width: "5px" }} />
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-danger image-upload-modal-buttons "
                   type="button"
                   onClick={() => handleRemoveRow(index)}
                 >
-                  X
+                  Delete
                 </button>
               </div>
             </>
@@ -227,44 +314,34 @@ const DynamicForm = ({
       {/* <div */}
       {/*   style={{ position: "relative", width: "100%", backgroundColor: "red" }} */}
       {/* > */}
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          backgroundColor: "white",
-          alignItems: "center",
-          position: "sticky",
-          padding: "15px 10px 15px",
-          bottom: "-10px",
-          left: 0,
-        }}
-      >
+      <div className="image-upload-modal-button">
         <button
           type="button"
           onClick={handleAddRow}
-          className="btn btn-secondary"
+          className="btn btn-secondary image-upload-modal-buttons "
         >
-          Add new row
+          Add new photo
         </button>
-        <div style={{ display: "flex" }}>
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
-            className="btn btn-danger"
-          >
-            Cancel
-          </button>
-          <div style={{ width: "10px" }} />
-          <button
-            type="button"
-            onClick={handleConfirm}
-            className={`btn btn-primary ${formCompleted ? "" : "disabled"}`}
-            disabled={!formCompleted || loading}
-          >
-            {loading ? "Uploading Images" : "Confirm images"}
-          </button>
-        </div>
+        {/* <div style={{ display: "flex" }}> */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(false)}
+          className="btn btn-danger image-upload-modal-buttons cancel-button"
+        >
+          Cancel
+        </button>
+        {/* <div style={{ width: "10px" }} /> */}
+        <button
+          type="button"
+          onClick={handleConfirm}
+          className={`btn btn-primary ${
+            formCompleted ? "" : "disabled"
+          } image-upload-modal-buttons`}
+          disabled={!formCompleted || loading}
+        >
+          {loading ? "Uploading Images" : "Confirm images"}
+        </button>
+        {/* </div> */}
       </div>
       {/* </div> */}
     </div>

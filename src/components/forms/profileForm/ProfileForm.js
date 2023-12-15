@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
@@ -8,20 +8,15 @@ import config from "../../../NewConfig";
 import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import LogoutMessage from "../../misc/logoutMessage/LogoutMessage";
+import DocumentForm from "../../documentUploader";
+import Modall from "../../modal2/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileForm({ sourceURL }) {
   // console.log("sourceURL", sourceURL);
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
-  const [reg_number, setReg_number] = useState("");
   const [userType, setUserType] = useState("Buyer");
 
   const [loading, setLoading] = useState(false);
@@ -29,22 +24,72 @@ export default function ProfileForm({ sourceURL }) {
   const [uploading, setUploading] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
   const [roles, setRoles] = useState([]);
+  const [profileData, setProfileData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    address: "",
+    phone: "",
+    aboutMe: "",
+    reg_number: "",
+  });
 
   // hook
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (auth.user) {
-      setFirstName(auth.user?.firstName);
-      setLastName(auth.user?.lastName);
-      setEmail(auth.user?.email);
-      setCompany(auth.user?.company);
-      setAddress(auth.user?.address);
-      setPhone(auth.user?.phone);
-      setAboutMe(auth.user?.description);
-      setPhoto(auth.user?.photo);
-      setReg_number(auth.user?.info?.regNumber);
+      setPhoto(auth.user?.photo || "");
       setRoles(auth?.user?.role);
+    }
+  }, []);
+
+  // Function to update form field and save to localStorage
+  const updateFormField = (fieldName, value) => {
+    const updatedFormData = { ...formData, [fieldName]: value };
+    setProfileData((prev) => ({ ...prev, ...updatedFormData }));
+    setFormData(updatedFormData);
+    localStorage.setItem("profileFormData", JSON.stringify(updatedFormData));
+  };
+
+  // Initialize form state from localStorage
+  useEffect(() => {
+    const storedFormData = JSON.parse(localStorage.getItem("profileFormData"));
+    if (storedFormData || auth?.user) {
+      setProfileData((prev) => ({
+        ...prev,
+        firstName: storedFormData?.firstName || auth?.user?.firstName || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        lastName: storedFormData?.lastName || auth?.user?.lastName || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        email: storedFormData?.email || auth?.user?.email || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        company: storedFormData?.company || auth?.user?.company || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        address: storedFormData?.address || auth?.user?.address || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        phone: storedFormData?.phone || auth?.user?.phone || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        aboutMe: storedFormData?.aboutMe || auth?.user?.description || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        reg_number:
+          storedFormData?.reg_number || auth?.user?.info?.regNumber || "",
+      }));
     }
   }, []);
 
@@ -54,35 +99,43 @@ export default function ProfileForm({ sourceURL }) {
     }
   }, [auth?.user?.role]);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if ((userType === "Agent" || isAgent || sourceURL) && !photo) {
-        toast.error("Photo is required");
-        return;
-      } else if ((userType === "Agent" || isAgent || sourceURL) && !company) {
+      if (
+        (userType === "Agent" || isAgent || sourceURL) &&
+        !profileData?.company
+      ) {
         toast.error("Company name is required");
         return;
       } else if (
         (userType === "Agent" || isAgent || sourceURL) &&
-        !reg_number
+        !profileData.reg_number
       ) {
         toast.error("Registration No. is required");
         return;
-      } else if (!firstName) {
+      } else if (!profileData.firstName) {
         toast.error("FirstName is required");
         return;
-      } else if (!lastName) {
+      } else if (!profileData.lastName) {
         toast.error("Lastname is required");
         return;
-      } else if (!address) {
+      } else if (!profileData.address) {
         toast.error("Address is required");
         return;
-      } else if (!phone) {
+      } else if (!profileData.phone) {
         toast.error("Phone No. is required");
         return;
-      } else if ((userType === "Agent" || isAgent || sourceURL) && !aboutMe) {
+      } else if (
+        (userType === "Agent" || isAgent || sourceURL) &&
+        !profileData.aboutMe
+      ) {
         toast.error("Brief Profile is required");
         return;
       } else {
@@ -93,20 +146,44 @@ export default function ProfileForm({ sourceURL }) {
         }
         setLoading(true);
         // console.log("Roles", roles);
+
+        if (userType === "Agent" || isAgent || sourceURL) {
+          localStorage.setItem(
+            "profile",
+            JSON.stringify({
+              userId: auth?.user?.userId,
+              firstName: profileData.firstName,
+              lastName: profileData.lastName,
+              email: profileData.email,
+              company: profileData.company,
+              address: profileData.address,
+              phone: profileData.phone,
+              description: profileData.aboutMe,
+              registrationNumber: profileData.reg_number || "",
+              roles: roles,
+              photo,
+            }),
+          );
+
+          navigate("/user/document-manager");
+          return;
+        }
         const { data } = await axios.post(
           `${config.AUTH_API}/user/updateProfile`,
           {
             userId: auth?.user?.userId,
-            firstName,
-            lastName,
-            email,
-            company,
-            address,
-            phone,
-            description: aboutMe,
-            registrationNumber: reg_number || "",
+            firstName: profileData.firstName,
+            lastName: profileData.lastName,
+            email: profileData.email,
+            company: profileData.company,
+            address: profileData.address,
+            phone: profileData.phone,
+            description: profileData.aboutMe,
+            registrationNumber: profileData.reg_number || "",
             roles: roles,
-          }
+            photo,
+            agentDocuments: [],
+          },
         );
 
         if (!data.success) {
@@ -136,10 +213,16 @@ export default function ProfileForm({ sourceURL }) {
     }
   };
 
+  const [formData, setFormData] = useState([
+    { text: "Passport photo ID", image: null, blob: null },
+    { text: "Proof of identification", image: null, blob: null },
+    { text: "CAC certification", image: null, blob: null },
+  ]);
+
   return (
     <>
       <LogoutMessage>
-        <div className="background-color">
+        <div className="background-color content-container">
           <div className="container p-5">
             {/* <Sidebar /> */}
             <div className="container mt-5">
@@ -153,16 +236,16 @@ export default function ProfileForm({ sourceURL }) {
                   {/* account Type Section */}
                   <div className="row mb-3">
                     <label
-                      id="price"
+                      id="userType"
                       className="col-sm-5 mt-3 col-form-label adedit-label"
                     >
                       Account Type:
                     </label>
                     <div className="col-sm-7">
                       <input
-                        id="price"
-                        name="price"
-                        placeholder="Enter price"
+                        id="userType"
+                        name="userType"
+                        // placeholder="Enter price"
                         value={`${userType === "Buyer" ? "User" : "Agent"}`}
                         className="form-control pl-3 mt-3 adedit-label"
                         readOnly
@@ -229,83 +312,110 @@ export default function ProfileForm({ sourceURL }) {
                         </div>
                       </>
                     )}
-
-                    <div className="form-group col-8 pb-1">
-                      {(userType === "Agent" || isAgent || sourceURL) && (
-                        <ProfileUpload
-                          photo={photo}
-                          setPhoto={setPhoto}
-                          uploading={uploading}
-                          setUploading={setUploading}
-                        />
-                      )}
-                    </div>
+                    {/* <div className="form-group col-8 pb-1"> */}
+                    {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
+                    {/*     <ProfileUpload */}
+                    {/*       photo={photo} */}
+                    {/*       setPhoto={setPhoto} */}
+                    {/*       uploading={uploading} */}
+                    {/*       setUploading={setUploading} */}
+                    {/*       label={auth?.user?.userId} */}
+                    {/*     /> */}
+                    {/*   )} */}
+                    {/* </div> */}
+                    {/* <div className="form-group col-8 pb-1"> */}
+                    {/*   {(userType === "Agent" || isAgent || sourceURL) && ( */}
+                    {/*     <label */}
+                    {/*       onClick={() => setIsOpen(true)} */}
+                    {/*       className="btn btn-primary" */}
+                    {/*     > */}
+                    {/*       Upload Documents */}
+                    {/*     </label> */}
+                    {/*   )} */}
+                    {/*   {uploadedFiles.length > 0 && ( */}
+                    {/*     <> */}
+                    {/*       <div>Uploaded documents</div> */}
+                    {/*       {uploadedFiles.map((file) => ( */}
+                    {/*         <p className="text-success"> */}
+                    {/*           {/* Uploaded Documents: {uploadedFiles.join(", ")} */}
+                    {/*           {file} */}
+                    {/*         </p> */}
+                    {/*       ))} */}
+                    {/*     </> */}
+                    {/*   )} */}
+                    {/* </div> */}
                     {userType === "Agent" || isAgent || sourceURL ? (
                       <>
                         <input
                           type="text"
                           placeholder="Company name"
                           className="form-control mb-3"
-                          value={company}
-                          onChange={(e) => setCompany(e.target.value)}
+                          value={profileData.company}
+                          onChange={(e) =>
+                            updateFormField("company", e.target.value)
+                          }
                         />
                         <input
                           type="text"
                           placeholder="Registration number"
                           className="form-control mb-3"
-                          value={reg_number}
-                          onChange={(e) => setReg_number(e.target.value)}
+                          value={profileData.reg_number}
+                          onChange={(e) =>
+                            updateFormField("reg_number", e.target.value)
+                          }
                         />
                       </>
                     ) : (
                       ""
                     )}
-
                     <input
                       type="text"
                       placeholder="Firstname"
                       className="form-control mt-3 mb-3"
-                      value={firstName}
+                      value={profileData.firstName}
                       onChange={(e) =>
-                        // setFirstName(slugify(e.target.value.toLowerCase()))
-                        setFirstName(e.target.value)
+                        updateFormField("firstName", e.target.value)
                       }
                     />
                     <input
                       type="text"
                       placeholder="Lastname"
                       className="form-control mb-3"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      value={profileData.lastName}
+                      onChange={(e) =>
+                        updateFormField("lastName", e.target.value)
+                      }
                     />
                     <input
                       type="email"
                       className="form-control mb-3"
-                      value={email}
+                      value={profileData.email}
                       readOnly
                     />
-
                     <input
                       type="text"
                       placeholder="Address"
                       className="form-control mb-3"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      value={profileData.address}
+                      onChange={(e) =>
+                        updateFormField("address", e.target.value)
+                      }
                     />
                     <input
                       type="text"
                       placeholder="Phone number"
                       className="form-control mb-3"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      value={profileData.phone}
+                      onChange={(e) => updateFormField("phone", e.target.value)}
                     />
-
                     <textarea
                       placeholder="Write something interesting about yourself.."
                       className="form-control mb-3"
-                      value={aboutMe}
-                      onChange={(e) => setAboutMe(e.target.value)}
-                      maxLength={200}
+                      value={profileData.aboutMe}
+                      onChange={(e) =>
+                        updateFormField("aboutMe", e.target.value)
+                      }
+                      maxLength={5000}
                     />
                     {(userType === "Agent" || isAgent || sourceURL) && (
                       <label className="alert alert-warning d-flex align-items-center">
@@ -315,22 +425,16 @@ export default function ProfileForm({ sourceURL }) {
                             style={{ width: "24", height: "24" }}
                           />
                         </span>{" "}
-                        You data will be reviewed by our legal department
+                        Your data will be reviewed by our legal department
                       </label>
                     )}
-
                     <div className="d-flex justify-content-center">
                       {userType === "Agent" || isAgent || sourceURL ? (
                         <button
                           className="btn btn-primary col-md-6 mt-3 mb-5"
                           disabled={loading}
-                          onClick={() => {
-                            alert(
-                              "You Data will go through Verification Process."
-                            );
-                          }}
                         >
-                          {loading ? "Processing" : "Update Profile"}
+                          {loading ? "Processing" : "Next"}
                         </button>
                       ) : (
                         <button
@@ -346,7 +450,7 @@ export default function ProfileForm({ sourceURL }) {
               </div>
             </div>
           </div>
-          {/* <pre>{JSON.stringify(isAgent, null, 4)} </pre> */}
+          {/* <pre>{JSON.stringify(photo, null, 4)} </pre> */}
         </div>
       </LogoutMessage>
     </>

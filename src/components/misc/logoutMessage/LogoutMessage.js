@@ -37,10 +37,12 @@ const LogoutMessage = ({ children }) => {
 
       if (decodedToken.exp && currentTime > decodedToken.exp) {
         // Token has expired
-        toast.success(" Your session has expired. Please log in again.");
+        toast.warn("Your session has expired. Please log in again.");
         setToken(null);
         setAuth({ user: null, token: "" });
         localStorage.removeItem("auth");
+        localStorage.removeItem("profileFormData");
+        localStorage.removeItem("profile");
         navigate("/login", {
           state: `/`,
         });
@@ -49,7 +51,7 @@ const LogoutMessage = ({ children }) => {
   };
 
   return (
-    <div>
+    <div className="content-container">
       {/* Conditionally render the main content or the logout message based on the token */}
       {!token && (
         <div>

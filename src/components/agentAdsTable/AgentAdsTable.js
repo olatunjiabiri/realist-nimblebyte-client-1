@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import millify from "millify";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./AgentAdsTable.css";
 
@@ -9,10 +9,15 @@ import { DataGrid } from "@mui/x-data-grid";
 
 const AgentAdsTable = ({ ads }) => {
   const [agent, setAgent] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setAgent(ads[0]);
+    setAgent(ads);
   }, []);
+
+  const handleRowClick = (params) => {
+    navigate(`/ad/${params.row.slug}`);
+  };
 
   // console.log("ads>>", ads[0]);
 
@@ -43,9 +48,9 @@ const AgentAdsTable = ({ ads }) => {
       renderCell: (params) => {
         return (
           <div className="">
-            <Link className="link" to={`/ad/${params.row.slug}`}>
+            <div className="link">
               <p className="agent-text2">{params.row.address}</p>
-            </Link>
+            </div>
           </div>
         );
       },
@@ -110,10 +115,11 @@ const AgentAdsTable = ({ ads }) => {
           rowSpacing={3}
           getRowId={(row) => row._id}
           className="datagrid"
-          rows={ads[0]}
+          rows={ads}
           columns={userColumns}
           // rowHeight={150}
           getRowHeight={() => "auto"}
+          onRowClick={handleRowClick}
           getEstimatedRowHeight={() => 200}
           sx={{
             "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
@@ -127,7 +133,7 @@ const AgentAdsTable = ({ ads }) => {
             },
           }}
           autoHeight
-          {...ads[0]}
+          {...ads}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },

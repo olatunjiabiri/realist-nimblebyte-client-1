@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -20,8 +20,23 @@ const ContactUs = () => {
   const [loading, setLoading] = useState(false);
   // console.log("subject", auth.user);
 
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   const onSubmit = async (values, actions) => {
-    const { contactName, email, message, phone, subject } = values;
+    const {
+      contactName,
+      email,
+      message,
+      phone,
+      subject,
+      propertyType,
+      propertySubtype,
+      enquiryType,
+      location,
+    } = values;
 
     try {
       // console.log(email, password);
@@ -35,6 +50,12 @@ const ContactUs = () => {
           Phone: phone,
           Message: message,
           Subject: subject,
+          PropertyType: propertyType,
+          EnquiryType: enquiryType,
+          PropertySubtype: propertySubtype,
+          Location: location,
+          EmailReceiver: config.AdminEmail || "",
+          Action: "",
         }
       );
 
@@ -63,6 +84,7 @@ const ContactUs = () => {
     handleChange,
     touched,
     handleSubmit,
+    setFieldValue,
   } = useFormik({
     initialValues: {
       contactName: auth?.user?.firstName || "",
@@ -70,17 +92,33 @@ const ContactUs = () => {
       phone: auth?.user?.phone || "",
       message: "",
       subject: "Enquiry",
+      enquiryType: "",
+      propertyType: "",
+      propertySubtype: "",
+      location: "",
     },
     validationSchema: contactUsSchema,
     onSubmit,
   });
 
+  //Function to handle subject change
+  const handleSubjectChange = (e) => {
+    const selectedSubject = e.target.value;
+    setFieldValue("subject", selectedSubject);
+
+    // Reset other fields when subject changes
+    setFieldValue("enquiryType", "");
+    setFieldValue("propertyType", "");
+    setFieldValue("propertySubtype", "");
+    setFieldValue("location", "");
+  };
+
   return (
     <>
       {/* <ContentWrapper> */}
       <LogoutMessage>
-        <div className="background-color">
-          <div className="container mt-5 p-5">
+        <div className="background-color content-container">
+          <div className="container p-5">
             <div className="row">
               <div className="col-md-6 offset-md-3">
                 <div className="bd-1 contact-us-container contact-bd-color">
@@ -91,11 +129,6 @@ const ContactUs = () => {
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-group mt-4">
-                      {/* <label for="name" className="control-label form-label1">
-              {" "}
-              Name{" "}
-            </label> */}
-
                       <input
                         type="text"
                         className="form-control mb-2"
@@ -116,7 +149,6 @@ const ContactUs = () => {
                       )}
                     </div>
                     <div className="form-group mt-4">
-                      {/* <label className="control-label form-label1"> Email </label> */}
                       <input
                         type="email"
                         className="form-control mb-2"
@@ -136,7 +168,6 @@ const ContactUs = () => {
                       )}
                     </div>
                     <div className="form-group mt-4">
-                      {/* <label className="control-label form-label1"> Phone </label> */}
                       <input
                         type="tel"
                         name="phone"
@@ -155,12 +186,14 @@ const ContactUs = () => {
                         </p>
                       )}
                     </div>
-
                     <div className="form-group mt-4">
                       <select
                         // autoFocus
                         placeholder="Select Message type"
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          handleChange(e);
+                          handleSubjectChange(e);
+                        }}
                         name="subject"
                         className="form-select form-select-lg f-select"
                       >
@@ -179,35 +212,136 @@ const ContactUs = () => {
                       </select>
                     </div>
 
-                    <div className="form-group mt-4">
-                      {/* <label className="form-label">
-              {" "}
-              Message <span className="text-muted">(optional)</span>
-            </label> */}
-                      <textarea
-                        className="form-control mb-2"
-                        placeholder="Write your message"
-                        cols={10}
-                        rows={5}
-                        name="message"
-                        value={values.message}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        // onChange={(e) => setMessage(e.target.value)}
-                      />
-                      {errors.message && touched.message && (
-                        <p className="mt-0 text-danger">
-                          <small>
-                            {" "}
-                            <div> {errors.message}</div>
-                          </small>
-                        </p>
-                      )}
-                    </div>
+                    {/* Conditionally render fields for Enquiry */}
+                    {values.subject === "Enquiry" && (
+                      <>
+                        <div className="form-group mt-2">
+                          <div className="radio-button m-2">
+                            <label className="radio-label">
+                              <input
+                                type="radio"
+                                name="enquiryType"
+                                value="Sell"
+                                checked={values.enquiryType === "Sell"}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              />
+                              <span className="radio-span">Sell</span>
+                            </label>
+                            <label className="radio-label">
+                              <input
+                                type="radio"
+                                name="enquiryType"
+                                value="Lease"
+                                checked={values.enquiryType === "Lease"}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              />
+                              <span className="radio-span">Lease</span>
+                            </label>
+                          </div>
+                        </div>
+
+                        {/* Additional fields for Enquiry */}
+                        <div className="form-group">
+                          <select
+                            name="propertyType"
+                            className="form-select form-select-lg f-select"
+                            value={values.propertyType}
+                            onChange={handleChange}
+                          >
+                            <option value="">Select Property Type</option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Commercial"}
+                            >
+                              Commercial
+                            </option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Industrial"}
+                            >
+                              Industrial
+                            </option>
+                            {/* <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Short-Let"}
+                            >
+                              Short-Let
+                            </option> */}
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"House"}
+                            >
+                              House
+                            </option>
+                            <option
+                              className="form-select-lg mb-3 f-select"
+                              value={"Land"}
+                            >
+                              Land
+                            </option>
+                          </select>
+                        </div>
+
+                        <div className="form-group mt-4">
+                          <input
+                            type="text"
+                            name="propertySubtype"
+                            className="form-control mb-2"
+                            placeholder="Property Sub-type"
+                            value={values.propertySubtype}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+                        </div>
+
+                        <div className="form-group mt-4">
+                          <input
+                            type="text"
+                            name="location"
+                            className="form-control mb-2"
+                            placeholder="Location"
+                            value={values.location}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+                        </div>
+                      </>
+                    )}
+
+                    {/* Hide Message field for Enquiry */}
+                    {values.subject !== "Enquiry" && (
+                      <div className="form-group mt-4">
+                        <textarea
+                          className="form-control mb-2"
+                          placeholder="Write your message"
+                          cols={10}
+                          rows={5}
+                          name="message"
+                          value={values.message}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        {errors.message && touched.message && (
+                          <p className="mt-0 text-danger">
+                            <small>
+                              {" "}
+                              <div> {errors.message}</div>
+                            </small>
+                          </p>
+                        )}
+                      </div>
+                    )}
                     <div className="mt-4">
                       <button
-                        className="contact-button w-100 btn btn-color"
-                        disabled={loading}
+                        className="contact-button w-100 btn btn-primary"
+                        disabled={
+                          loading ||
+                          !values.contactName ||
+                          !values.email ||
+                          !values.phone
+                        }
                       >
                         {isSubmitting ? "Loading" : "Submit"}
                       </button>

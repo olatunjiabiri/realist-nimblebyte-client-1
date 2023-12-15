@@ -3,41 +3,45 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
+import Checkbox from "@mui/material/Checkbox";
+import { Link } from "react-router-dom";
 
 import "./ContactSellerModal.css";
 import { useAuth } from "../../context/auth";
 import config from "../../NewConfig";
 import { contactSellerFormSchema } from "../../../src/validations";
+import BuyerTermsandConditions from "../../documents/BuyerTermsandConditions";
+import Modall from "../modal/Modal";
 
 const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
 
   const [agent, setAgent] = useState("");
+  const [checked, setChecked] = React.useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
+
+  const handleTermsandPolicyCheck = (event) => {
+    setChecked(event.target.checked);
+  };
 
   useEffect(() => {
     fetchAgents();
-
-    setMessage(
-      `Hi, I am interested in the property located at ${
-        ad?.address || ""
-      }.  Thanks`,
-    );
-  }, [ad?.address]);
+  }, []);
 
   const fetchAgents = async () => {
     try {
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`,
+        `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
       );
       setAgent(
         data?.responsePayload.filter((a) => {
           return a.userId === ad?.postedBy;
-        }),
+        })
       );
       // setLoading(false);
     } catch (err) {
@@ -47,6 +51,8 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   };
 
   const onSubmit = async (values, actions) => {
+    console.log("values>>", values);
+    console.log("agent", agent);
     const { name, email, message, phone } = values;
 
     setLoading(true);
@@ -54,19 +60,20 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       const response = await axios.post(
         `${config.AUTH_API}/api/ContactSeller`,
         {
-          adId: ad?._id,
+          adId: ad?._id || "",
           message,
-          sellerEmail: agent[0].email.toString() || "",
+          sellerEmail: agent[0]?.email.toString() || "",
           enquirerEmail: email,
-          propertyPageUrl: `https://realistclientapp2.azurewebsites.net/ad/${ad?.slug}`,
-          sellerName: agent[0].firstName || "",
+          propertyPageUrl: `${config.CLIENT_BASE_URL}/ad/${ad?._id}` || "",
+          sellerName: agent[0]?.firstName || "",
           enquirerName: name,
           enquirerPhone: phone,
-          propertyAddress: ad.address,
-        },
+          propertyAddress: ad?.address || "",
+          adminEmail: config.AdminEmail || "",
+        }
       );
 
-      console.log("response>>>", response);
+      // console.log("ad.address>>>", ad);
       toast.success("Your enquiry has been sent to the agent");
       setLoading(false);
       setIsOpen(false);
@@ -91,7 +98,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       phone: auth?.user?.phone || "",
       email: auth?.user?.email || "",
       message: `Hi, I am interested in the property located at ${
-        ad?.address || ""
+        ad?.googleMap[0]?.city || ad?.googleMap[0]?.country || ""
       }.  Thanks`,
     },
     validationSchema: contactSellerFormSchema,
@@ -100,6 +107,9 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
 
   return (
     <>
+      <Modall handleClose={() => setIsOpen1(false)} isOpen={isOpen1}>
+        <BuyerTermsandConditions setIsOpen1={setIsOpen1} />
+      </Modall>
       {ad && (
         <div>
           <form className="contact-modal" onSubmit={handleSubmit}>
@@ -185,12 +195,27 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
               onBlur={handleBlur}
               autoFocus={true}
             ></textarea>
+            <div className="mb-1 text-center terms-text">
+              <Checkbox
+                checked={checked}
+                onChange={handleTermsandPolicyCheck}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              By submitting this form I agree to the{" "}
+              <Link
+                className="text-primary"
+                // to="/buyer-terms"
+                onClick={() => setIsOpen1(true)}
+              >
+                Terms of Use
+              </Link>{" "}
+            </div>
 
             <button
               // onClick={handleSubmit}
               type="submit"
               className="btn btn-primary mt-4 mb-5 contact-modal-btn"
-              disabled={loading}
+              disabled={!checked || loading}
             >
               {isSubmitting ? "Please wait" : "Send Enquiry"}
             </button>

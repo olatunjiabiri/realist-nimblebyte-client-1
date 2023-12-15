@@ -17,7 +17,7 @@ export default function Agents() {
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [currentLocation, setCurrentLocation] = useState(
-    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : "",
   );
 
   // state
@@ -48,7 +48,7 @@ export default function Agents() {
       //   `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
       // );
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Agent/agents?page=${page}&size=${size}`
+        `${config.AUTH_API}/api/Agent/agents?page=${page}&size=${size}`,
       );
       // setAgents(data.responsePayload);
       setAgents(data);
@@ -61,7 +61,7 @@ export default function Agents() {
           agent.isApproved &&
           agent.applicationUser.address
             ?.toLowerCase()
-            .includes(currentLocation?.toLowerCase())
+            .includes(currentLocation?.toLowerCase()),
       );
       // console.log("afiltered", afiltered);
 
@@ -94,6 +94,16 @@ export default function Agents() {
               agents={agents}
               agentLocation={currentLocation}
             />
+            {agents.length < 1 && (
+              <div
+                style={{ width: "100%" }}
+                className="text-light ml-0 py-2 card-header-color"
+              >
+                <div className="col-12 text-center">
+                  <h1>No Agents found!</h1>
+                </div>
+              </div>
+            )}
           </div>
           <div className="container">
             <div className="row">
@@ -105,7 +115,7 @@ export default function Agents() {
                     <AgentsList returnedAgents={filteredAgents} />
                   )}
                 </>
-              ) : (
+              ) : agents.length > 0 ? (
                 // <div className="d-flex justify-content-center align-items-center vh-100 agents-page-init-load">
                 <>
                   {isSmScreen ? (
@@ -118,6 +128,10 @@ export default function Agents() {
                     />
                   )}
                 </>
+              ) : (
+                <div className="empty-state">
+                  <img src="./empty.svg" alt="Empty" height={400} width={400} />
+                </div>
               )}
               {/* {agents?.map((agent) => (
             <UserCard user={agent} key={agent.userId} />

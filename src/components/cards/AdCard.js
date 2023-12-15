@@ -25,6 +25,8 @@ export default function AdCard({ ad }) {
   const [isOpen, setIsOpen] = useState(false);
   const [auth, setAuth] = useAuth();
 
+  const [adAddress, setAdAddress] = useState();
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -200;
@@ -36,12 +38,26 @@ export default function AdCard({ ad }) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  useEffect(() => {
+    ad?.googleMap?.map((r) =>
+      setAdAddress(
+        (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
+          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+              r.country
+            }`
+          : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+              r.city
+            }, ${r.country}`
+      )
+    );
+  }, []);
+
   return (
     <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-width">
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <ContactSellerModal ad={ad} setIsOpen={setIsOpen} />
       </Modall>
-      <Link className="link" to={`/ad/${ad.slug}`}>
+      <Link className="link" to={`/ad/${ad._id}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${
             ad?.action === "Sell" ? "Sale" : "Rent"
@@ -101,18 +117,7 @@ export default function AdCard({ ad }) {
               </div>
 
               {/* <div className="card-text address-height">{ad?.address}</div> */}
-              <div className="card-text address-height">
-                {ad?.googleMap?.map((r) => (
-                  <>
-                    {r.extra?.neighborhood ||
-                      r.administrativeLevels?.level2long}
-                    {", "}
-                    {r.city}
-                    {", "}
-                    {r.country}
-                  </>
-                ))}
-              </div>
+              <div className="card-text address-height">{adAddress}</div>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">

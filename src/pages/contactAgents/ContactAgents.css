@@ -1,0 +1,60 @@
+.bold-text {
+    font-weight: bold;
+  }
+
+.second-title {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.here-link {
+  text-decoration: none;
+  color: red;
+}
+
+.img-fluid {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-word p {
+  padding: 5px;
+}
+
+.contact-us-button {
+  width: 150px;
+  color: white;
+  background-color: #2695ED;
+  border-color: #2695ED;
+  border-radius: 15px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.contact-us-button:hover {
+  color: #fff;
+  background-color: #e2770d;
+  border-color: #e2770d;
+
+
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .word {
+    height: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .image{
+    padding: 0px;
+    margin: auto;
+  }
+}
