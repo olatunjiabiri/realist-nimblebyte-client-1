@@ -119,6 +119,9 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        <div className="row d-flex justify-content-center pt-2 nimblebyte">
+          A product of Nimble-Byte
+        </div>
       </div>
     </div>
   );
