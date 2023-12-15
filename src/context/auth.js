@@ -17,8 +17,14 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   // configure axios
+  // Set the authorization header for all requests
+  if (authToken) {
+    config.headers.Authorization = `Bearer ${authToken}`;
+  }
+
   axios.defaults.baseURL = config.API;
-  axios.defaults.headers.common["Authorization"] = auth?.token;
+  axios.defaults.headers.Authorization = `Bearer ${auth?.token}`;
+  // axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
   axios.defaults.headers.common["clave-de-proteccion"] = config.APIS_PROTECT;
   axios.defaults.headers.common["ApiKey"] = config.AUTH_API_KEY;
 
