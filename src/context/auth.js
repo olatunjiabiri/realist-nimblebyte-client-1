@@ -18,10 +18,6 @@ const AuthProvider = ({ children }) => {
 
   // configure axios
   // Set the authorization header for all requests
-  if (authToken) {
-    config.headers.Authorization = `Bearer ${authToken}`;
-  }
-
   axios.defaults.baseURL = config.API;
   axios.defaults.headers.Authorization = `Bearer ${auth?.token}`;
   // axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
