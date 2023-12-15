@@ -54,19 +54,19 @@ export default function AdView() {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    ad?.googleMap?.map((r) =>
-      setAdAddress(
-        (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
-          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.country
-            }`
-          : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.city
-            }, ${r.country}`
-      )
-    );
-  }, []);
+  // useEffect(() => {
+  //   ad?.googleMap?.map((r) =>
+  //     setAdAddress(
+  //       (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
+  //         ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+  //             r.country
+  //           }`
+  //         : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+  //             r.city
+  //           }, ${r.country}`
+  //     )
+  //   );
+  // }, []);
 
   const fetchAd = async () => {
     try {
@@ -200,7 +200,17 @@ export default function AdView() {
                       <p className="adview-address mt-1 mb-0">
                         {/* <span className="adview-address">{ad.address}</span> */}
 
-                        <span className="adview-address">{adAddress}</span>
+                        {/* <span className="adview-address">{adAddress}</span> */}
+                        {ad?.googleMap?.map((r) => (
+                          <>
+                            {r.extra?.neighborhood ||
+                              r.administrativeLevels?.level2long}
+                            {", "}
+                            {r.city}
+                            {", "}
+                            {r.country}
+                          </>
+                        ))}
                       </p>
 
                       <div className="align-items-center mb-3 mt-0">
