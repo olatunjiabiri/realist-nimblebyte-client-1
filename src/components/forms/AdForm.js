@@ -265,7 +265,7 @@ export default function AdForm({ action, type }) {
                     Land
                   </label>
 
-                  <label
+                  {/* <label
                     className={` col radio-button ${
                       ad.type === "Shortlet" ? "selected" : ""
                     }`}
@@ -282,7 +282,7 @@ export default function AdForm({ action, type }) {
                       }}
                     />
                     Shortlet
-                  </label>
+                  </label> */}
 
                   <label
                     className={` col radio-button ${
@@ -380,7 +380,8 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-                {(ad.type === "House" || ad.type === "Shortlet") && (
+                {/* {(ad.type === "House" || ad.type === "Shortlet") && ( */}
+                {ad.type === "House" && (
                   <FormControl sx={{ width: "100%", mb: 2 }}>
                     <Select
                       SelectDisplayProps={{

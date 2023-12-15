@@ -25,7 +25,7 @@ export default function SearchForm({ navMenuProperty }) {
         address: "",
         action: "", //Buy
         type: "", //House
-        price: "All price", //All price
+        price: "All Prices", //All price
         priceRange: [0, 1000000000000],
       });
       return;
@@ -34,7 +34,7 @@ export default function SearchForm({ navMenuProperty }) {
       search.action = "Buy";
       search.address = "";
       search.type = "Property Type";
-      search.price = "All price"; //All price
+      search.price = "All Prices"; //All price
       search.priceRange = [0, 1000000000000];
       return;
     }
@@ -42,7 +42,7 @@ export default function SearchForm({ navMenuProperty }) {
       search.action = "Rent";
       search.address = "";
       search.type = "Property Type";
-      search.price = "All price"; //All price
+      search.price = "All Prices"; //All price
       search.priceRange = [0, 1000000000000];
       return;
     }
