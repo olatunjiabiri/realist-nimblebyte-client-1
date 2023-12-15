@@ -25,6 +25,8 @@ export default function AdCard({ ad }) {
   const [isOpen, setIsOpen] = useState(false);
   const [auth, setAuth] = useAuth();
 
+  const [adAddress, setAdAddress] = useState();
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -200;
@@ -35,6 +37,20 @@ export default function AdCard({ ad }) {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    ad?.googleMap?.map((r) =>
+      setAdAddress(
+        (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
+          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+              r.country
+            }`
+          : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+              r.city
+            }, ${r.country}`
+      )
+    );
+  }, []);
 
   return (
     <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-width">
@@ -101,18 +117,7 @@ export default function AdCard({ ad }) {
               </div>
 
               {/* <div className="card-text address-height">{ad?.address}</div> */}
-              <div className="card-text address-height">
-                {ad?.googleMap?.map((r) => (
-                  <>
-                    {r.extra?.neighborhood ||
-                      r.administrativeLevels?.level2long}
-                    {", "}
-                    {r.city}
-                    {", "}
-                    {r.country}
-                  </>
-                ))}
-              </div>
+              <div className="card-text address-height">{adAddress}</div>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">

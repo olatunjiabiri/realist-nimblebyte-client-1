@@ -11,8 +11,9 @@ import { Link } from "react-router-dom";
 import relativeTime from "dayjs/plugin/relativeTime";
 import millify from "millify";
 import dayjs from "dayjs";
-import AdFeatures from "../components/cards/AdFeatures";
 
+import AdFeatures from "../components/cards/AdFeatures";
+import { formatNumber } from "../helpers/ad";
 import LikeUnlike from "../components/misc/LikeUnlike";
 import MapCard from "../components/cards/MapCard";
 import AdCard from "../components/cards/AdCard";
@@ -33,6 +34,7 @@ export default function AdView() {
   const [isEmpty, setIsEmpty] = useState(false);
   const [related, setRelated] = useState([]);
   const [soldRented, setSoldRented] = useState([]);
+  const [adAddress, setAdAddress] = useState();
 
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +52,20 @@ export default function AdView() {
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    ad?.googleMap?.map((r) =>
+      setAdAddress(
+        (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
+          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+              r.country
+            }`
+          : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
+              r.city
+            }, ${r.country}`
+      )
+    );
   }, []);
 
   const fetchAd = async () => {
@@ -149,12 +165,12 @@ export default function AdView() {
                         Save
                       </span>
 
-                      <span>
+                      {/* <span>
                         {<FiShare ad={ad} className="h5 pointer share-icon" />}
                       </span>
                       <span className="save display-icon-description">
                         Share
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -173,7 +189,8 @@ export default function AdView() {
                       <h3 className="mt-3 h2 adview-feature adview-feature-price">
                         {" "}
                         <span>&#8358;</span>
-                        {millify(ad?.price)}
+                        {formatNumber(ad?.price)}
+                        {/* {millify(ad?.price)} */}
                       </h3>
                       <span>
                         {" "}
@@ -183,18 +200,7 @@ export default function AdView() {
                       <p className="adview-address mt-1 mb-0">
                         {/* <span className="adview-address">{ad.address}</span> */}
 
-                        <span className="adview-address">
-                          {ad?.googleMap?.map((r) => (
-                            <>
-                              {r.extra?.neighborhood ||
-                                r.administrativeLevels?.level2long}
-                              {", "}
-                              {r.city}
-                              {", "}
-                              {r.country}
-                            </>
-                          ))}
-                        </span>
+                        <span className="adview-address">{adAddress}</span>
                       </p>
 
                       <div className="align-items-center mb-3 mt-0">
