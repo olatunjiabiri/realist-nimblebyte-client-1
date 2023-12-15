@@ -40,7 +40,8 @@ const DocumentManager = () => {
   // };
 
   function determineStatus(agentDocuments, id) {
-    const document = agentDocuments.find((doc) => doc.documentTypeId === id);
+    const document =
+      agentDocuments && agentDocuments.find((doc) => doc.documentTypeId === id);
 
     if (!document) {
       return ""; // or some default status if appropriate
@@ -266,7 +267,8 @@ const DocumentManager = () => {
                 type="file"
                 className="form-control"
                 disabled={
-                  auth.user.agentDocuments.find(
+                  auth.user?.agentDocuments &&
+                  auth.user?.agentDocuments?.find(
                     (doc) => doc.documentTypeId === 1,
                   )?.approvalStatus
                 }
@@ -303,7 +305,8 @@ const DocumentManager = () => {
               <select
                 className="btn btn-light"
                 disabled={
-                  auth.user.agentDocuments.find(
+                  auth.user?.agentDocuments &&
+                  auth.user?.agentDocuments?.find(
                     (doc) => doc.documentTypeId === 1,
                   )?.approvalStatus
                 }
@@ -333,8 +336,10 @@ const DocumentManager = () => {
               className="form-control"
               accept="image/*, application/pdf"
               disabled={
-                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
-                  ?.approvalStatus
+                auth.user?.agentDocuments &&
+                auth.user?.agentDocuments?.find(
+                  (doc) => doc.documentTypeId === 1,
+                )?.approvalStatus
               }
               onChange={(e) =>
                 handleUpload(
@@ -348,13 +353,17 @@ const DocumentManager = () => {
           ),
           document: {
             Key:
-              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
-                ?.documentUrl || "",
+              (auth.user?.agentDocuments &&
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
+                  ?.documentUrl) ||
+              "",
           },
           status: determineStatus(auth.user.agentDocuments, 1),
           comment:
-            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
-              ?.comment || "",
+            (auth.user?.agentDocuments &&
+              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
+                ?.comment) ||
+            "",
         },
         {
           id: 2,
@@ -365,8 +374,10 @@ const DocumentManager = () => {
               type="file"
               className="form-control"
               disabled={
-                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
-                  ?.approvalStatus
+                auth.user?.agentDocuments &&
+                auth.user?.agentDocuments?.find(
+                  (doc) => doc.documentTypeId === 3,
+                )?.approvalStatus
               }
               accept="image/*"
               onChange={(e) =>
@@ -380,13 +391,17 @@ const DocumentManager = () => {
           ),
           document: {
             Key:
-              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
-                ?.documentUrl || "",
+              (auth.user?.agentDocuments &&
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
+                  ?.documentUrl) ||
+              "",
           },
           status: determineStatus(auth.user.agentDocuments, 3),
           comment:
-            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
-              ?.comment || "",
+            (auth.user?.agentDocuments &&
+              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 3)
+                ?.comment) ||
+            "",
         },
         {
           id: 3,
@@ -397,8 +412,10 @@ const DocumentManager = () => {
               type="file"
               className="form-control"
               disabled={
-                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
-                  ?.approvalStatus
+                auth.user?.agentDocuments &&
+                auth.user?.agentDocuments?.find(
+                  (doc) => doc.documentTypeId === 2,
+                )?.approvalStatus
               }
               accept="image/*, application/pdf"
               onChange={(e) =>
@@ -408,13 +425,17 @@ const DocumentManager = () => {
           ),
           document: {
             Key:
-              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
-                ?.documentUrl || "",
+              (auth.user?.agentDocuments &&
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
+                  ?.documentUrl) ||
+              "",
           },
           status: determineStatus(auth.user.agentDocuments, 2),
           comment:
-            auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
-              ?.comment || "",
+            (auth.user?.agentDocuments &&
+              auth.user.agentDocuments.find((doc) => doc.documentTypeId === 2)
+                ?.comment) ||
+            "",
         },
       ]);
     } else {
@@ -431,7 +452,8 @@ const DocumentManager = () => {
               <select
                 className="btn btn-light"
                 disabled={
-                  auth.user.agentDocuments.find(
+                  auth.user?.agentDocuments &&
+                  auth.user?.agentDocuments?.find(
                     (doc) => doc.documentTypeId === 1,
                   )?.approvalStatus
                 }
@@ -549,7 +571,8 @@ const DocumentManager = () => {
                 <select
                   className="btn btn-light"
                   disabled={
-                    auth.user.agentDocuments.find(
+                    auth.user?.agentDocuments &&
+                    auth.user?.agentDocuments?.find(
                       (doc) => doc.documentTypeId === 1,
                     )?.approvalStatus
                   }
@@ -590,9 +613,9 @@ const DocumentManager = () => {
               />
             ) : (
               <div className="frm-control text-danger">
-                {auth.user.agentDocuments.find(
-                  (doc) => doc.documentTypeId === 1,
-                )?.approvalStatus
+                {auth.user?.agentDocuments &&
+                auth.user.agentDocuments.find((doc) => doc.documentTypeId === 1)
+                  ?.approvalStatus
                   ? "Document is Approved"
                   : "Please, select an identification type"}
               </div>
