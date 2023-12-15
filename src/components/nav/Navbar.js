@@ -64,6 +64,8 @@ const Navbar = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("cLocation");
     localStorage.removeItem("adData");
+    localStorage.removeItem("profileFormData");
+    localStorage.removeItem("profile");
 
     navigate("/login");
   };
