@@ -1,7 +1,7 @@
 const Prices = [
   {
     _id: 0,
-    name: "All price",
+    name: "All Prices",
     array: [0, 1000000000],
   },
   {
@@ -44,7 +44,7 @@ const Prices = [
 const sellPrices = [
   {
     _id: 0,
-    name: "All price",
+    name: "All Prices",
     array: [0, 1000000000],
   },
   {
@@ -72,7 +72,7 @@ const sellPrices = [
 const rentPrices = [
   {
     _id: 0,
-    name: "All price",
+    name: "All Prices",
     array: [0, 1000000000],
   },
   {

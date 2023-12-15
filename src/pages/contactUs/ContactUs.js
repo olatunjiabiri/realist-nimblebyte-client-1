@@ -263,12 +263,12 @@ const ContactUs = () => {
                             >
                               Industrial
                             </option>
-                            <option
+                            {/* <option
                               className="form-select-lg mb-3 f-select"
                               value={"Short-Let"}
                             >
                               Short-Let
-                            </option>
+                            </option> */}
                             <option
                               className="form-select-lg mb-3 f-select"
                               value={"House"}
