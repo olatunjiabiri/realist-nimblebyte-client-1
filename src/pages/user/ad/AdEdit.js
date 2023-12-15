@@ -276,7 +276,27 @@ export default function AdEdit({ action, type }) {
                 ""
               )}
             </div>
-            {(ad.type === "House" || ad.type === "Shortlet") && (
+
+            <div className="row mb-3">
+              <label
+                id="propertyType"
+                className="col-sm-3 col-form-label adedit-label"
+              >
+                Property Type:
+              </label>
+              <div className="col-sm-9">
+                <input
+                  id="propertyType"
+                  name="propertyType"
+                  value={ad.type}
+                  className="form-control mb-3"
+                  // className="form-control pl-3 mt-3 adedit-label"
+                  readOnly
+                />
+              </div>
+            </div>
+            {/* {(ad.type === "House" || ad.type === "Shortlet") && ( */}
+            {ad.type === "House" && (
               <div className="mb-3 row">
                 <label
                   idr="title"
@@ -520,16 +540,16 @@ export default function AdEdit({ action, type }) {
               </div>
             </div>
 
-            <div className="mb-3 row">
-              <label
-                idr="title"
-                className="col-sm-3 col-form-label adedit-label"
-              >
-                Extra Features
-              </label>
+            {features?.length > 0 && (
+              <div className="mb-3 row">
+                <label
+                  idr="title"
+                  className="col-sm-3 col-form-label adedit-label"
+                >
+                  Extra Features
+                </label>
 
-              <div className="col-sm-9">
-                {features?.length > 0 ? (
+                <div className="col-sm-9">
                   <>
                     {" "}
                     <FormControl sx={{ width: "100%", mb: 2 }}>
@@ -564,11 +584,9 @@ export default function AdEdit({ action, type }) {
                       </Select>
                     </FormControl>
                   </>
-                ) : (
-                  <></>
-                )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="mb-3 row">
               <label
