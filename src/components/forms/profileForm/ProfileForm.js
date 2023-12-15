@@ -17,14 +17,6 @@ export default function ProfileForm({ sourceURL }) {
   // context
   const [auth, setAuth] = useAuth();
   // state
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
-  const [reg_number, setReg_number] = useState("");
   const [userType, setUserType] = useState("Buyer");
 
   const [loading, setLoading] = useState(false);
@@ -32,22 +24,72 @@ export default function ProfileForm({ sourceURL }) {
   const [uploading, setUploading] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
   const [roles, setRoles] = useState([]);
+  const [profileData, setProfileData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    address: "",
+    phone: "",
+    aboutMe: "",
+    reg_number: "",
+  });
 
   // hook
   const navigate = useNavigate();
 
   useEffect(() => {
     if (auth.user) {
-      setFirstName(auth.user?.firstName);
-      setLastName(auth.user?.lastName);
-      setEmail(auth.user?.email);
-      setCompany(auth.user?.company);
-      setAddress(auth.user?.address);
-      setPhone(auth.user?.phone);
-      setAboutMe(auth.user?.description);
       setPhoto(auth.user?.photo || "");
-      setReg_number(auth.user?.info?.regNumber);
       setRoles(auth?.user?.role);
+    }
+  }, []);
+
+  // Function to update form field and save to localStorage
+  const updateFormField = (fieldName, value) => {
+    const updatedFormData = { ...formData, [fieldName]: value };
+    setProfileData((prev) => ({ ...prev, ...updatedFormData }));
+    setFormData(updatedFormData);
+    localStorage.setItem("profileFormData", JSON.stringify(updatedFormData));
+  };
+
+  // Initialize form state from localStorage
+  useEffect(() => {
+    const storedFormData = JSON.parse(localStorage.getItem("profileFormData"));
+    if (storedFormData || auth?.user) {
+      setProfileData((prev) => ({
+        ...prev,
+        firstName: storedFormData?.firstName || auth?.user?.firstName || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        lastName: storedFormData?.lastName || auth?.user?.lastName || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        email: storedFormData?.email || auth?.user?.email || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        company: storedFormData?.company || auth?.user?.company || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        address: storedFormData?.address || auth?.user?.address || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        phone: storedFormData?.phone || auth?.user?.phone || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        aboutMe: storedFormData?.aboutMe || auth?.user?.description || "",
+      }));
+      setProfileData((prev) => ({
+        ...prev,
+        reg_number:
+          storedFormData?.reg_number || auth?.user?.info?.regNumber || "",
+      }));
     }
   }, []);
 
@@ -66,28 +108,34 @@ export default function ProfileForm({ sourceURL }) {
     e.preventDefault();
 
     try {
-      if ((userType === "Agent" || isAgent || sourceURL) && !company) {
+      if (
+        (userType === "Agent" || isAgent || sourceURL) &&
+        !profileData?.company
+      ) {
         toast.error("Company name is required");
         return;
       } else if (
         (userType === "Agent" || isAgent || sourceURL) &&
-        !reg_number
+        !profileData.reg_number
       ) {
         toast.error("Registration No. is required");
         return;
-      } else if (!firstName) {
+      } else if (!profileData.firstName) {
         toast.error("FirstName is required");
         return;
-      } else if (!lastName) {
+      } else if (!profileData.lastName) {
         toast.error("Lastname is required");
         return;
-      } else if (!address) {
+      } else if (!profileData.address) {
         toast.error("Address is required");
         return;
-      } else if (!phone) {
+      } else if (!profileData.phone) {
         toast.error("Phone No. is required");
         return;
-      } else if ((userType === "Agent" || isAgent || sourceURL) && !aboutMe) {
+      } else if (
+        (userType === "Agent" || isAgent || sourceURL) &&
+        !profileData.aboutMe
+      ) {
         toast.error("Brief Profile is required");
         return;
       } else {
@@ -104,17 +152,17 @@ export default function ProfileForm({ sourceURL }) {
             "profile",
             JSON.stringify({
               userId: auth?.user?.userId,
-              firstName,
-              lastName,
-              email,
-              company,
-              address,
-              phone,
-              description: aboutMe,
-              registrationNumber: reg_number || "",
+              firstName: profileData.firstName,
+              lastName: profileData.lastName,
+              email: profileData.email,
+              company: profileData.company,
+              address: profileData.address,
+              phone: profileData.phone,
+              description: profileData.aboutMe,
+              registrationNumber: profileData.reg_number || "",
               roles: roles,
               photo,
-            })
+            }),
           );
 
           navigate("/user/document-manager");
@@ -124,18 +172,18 @@ export default function ProfileForm({ sourceURL }) {
           `${config.AUTH_API}/user/updateProfile`,
           {
             userId: auth?.user?.userId,
-            firstName,
-            lastName,
-            email,
-            company,
-            address,
-            phone,
-            description: aboutMe,
-            registrationNumber: reg_number || "",
+            firstName: profileData.firstName,
+            lastName: profileData.lastName,
+            email: profileData.email,
+            company: profileData.company,
+            address: profileData.address,
+            phone: profileData.phone,
+            description: profileData.aboutMe,
+            registrationNumber: profileData.reg_number || "",
             roles: roles,
             photo,
             agentDocuments: [],
-          }
+          },
         );
 
         if (!data.success) {
@@ -170,16 +218,6 @@ export default function ProfileForm({ sourceURL }) {
     { text: "Proof of identification", image: null, blob: null },
     { text: "CAC certification", image: null, blob: null },
   ]);
-  const [isOpen, setIsOpen] = useState(false);
-  const fileRefs = useRef([]);
-
-  const [passportPhoto, setPassportPhoto] = useState(null);
-  const [proofOfIdentification, setProofOfIdentification] = useState(null);
-  const [proofType, setProofType] = useState("");
-  const [cacCertification, setCacCertification] = useState(null);
-  const [error, setError] = useState("");
-  const [proofTypeError, setProofTypeError] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   return (
     <>
@@ -312,15 +350,19 @@ export default function ProfileForm({ sourceURL }) {
                           type="text"
                           placeholder="Company name"
                           className="form-control mb-3"
-                          value={company}
-                          onChange={(e) => setCompany(e.target.value)}
+                          value={profileData.company}
+                          onChange={(e) =>
+                            updateFormField("company", e.target.value)
+                          }
                         />
                         <input
                           type="text"
                           placeholder="Registration number"
                           className="form-control mb-3"
-                          value={reg_number}
-                          onChange={(e) => setReg_number(e.target.value)}
+                          value={profileData.reg_number}
+                          onChange={(e) =>
+                            updateFormField("reg_number", e.target.value)
+                          }
                         />
                       </>
                     ) : (
@@ -330,44 +372,49 @@ export default function ProfileForm({ sourceURL }) {
                       type="text"
                       placeholder="Firstname"
                       className="form-control mt-3 mb-3"
-                      value={firstName}
+                      value={profileData.firstName}
                       onChange={(e) =>
-                        // setFirstName(slugify(e.target.value.toLowerCase()))
-                        setFirstName(e.target.value)
+                        updateFormField("firstName", e.target.value)
                       }
                     />
                     <input
                       type="text"
                       placeholder="Lastname"
                       className="form-control mb-3"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      value={profileData.lastName}
+                      onChange={(e) =>
+                        updateFormField("lastName", e.target.value)
+                      }
                     />
                     <input
                       type="email"
                       className="form-control mb-3"
-                      value={email}
+                      value={profileData.email}
                       readOnly
                     />
                     <input
                       type="text"
                       placeholder="Address"
                       className="form-control mb-3"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      value={profileData.address}
+                      onChange={(e) =>
+                        updateFormField("address", e.target.value)
+                      }
                     />
                     <input
                       type="text"
                       placeholder="Phone number"
                       className="form-control mb-3"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      value={profileData.phone}
+                      onChange={(e) => updateFormField("phone", e.target.value)}
                     />
                     <textarea
                       placeholder="Write something interesting about yourself.."
                       className="form-control mb-3"
-                      value={aboutMe}
-                      onChange={(e) => setAboutMe(e.target.value)}
+                      value={profileData.aboutMe}
+                      onChange={(e) =>
+                        updateFormField("aboutMe", e.target.value)
+                      }
                       maxLength={5000}
                     />
                     {(userType === "Agent" || isAgent || sourceURL) && (
@@ -386,11 +433,6 @@ export default function ProfileForm({ sourceURL }) {
                         <button
                           className="btn btn-primary col-md-6 mt-3 mb-5"
                           disabled={loading}
-                          // onClick={() => {
-                          //   alert(
-                          //     "Your data will go through verification process.",
-                          //   );
-                          // }}
                         >
                           {loading ? "Processing" : "Next"}
                         </button>

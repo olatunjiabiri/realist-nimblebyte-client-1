@@ -41,6 +41,8 @@ const LogoutMessage = ({ children }) => {
         setToken(null);
         setAuth({ user: null, token: "" });
         localStorage.removeItem("auth");
+        localStorage.removeItem("profileFormData");
+        localStorage.removeItem("profile");
         navigate("/login", {
           state: `/`,
         });
