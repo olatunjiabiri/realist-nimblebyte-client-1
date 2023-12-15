@@ -63,6 +63,13 @@ const DocumentManager = () => {
   }
 
   const handleConfirmDocuments = async () => {
+    if (
+      !confirm(
+        "Please confirm your submission. Once the documents are submitted, you won't be able to modify them until a decision on approval is made. Are you sure you want to proceed?",
+      )
+    ) {
+      return;
+    }
     try {
       // Build the agentDocuments array based on uploaded files
       const agentDocuments = fileRows.map((row) => ({
@@ -122,6 +129,7 @@ const DocumentManager = () => {
         // console.log("data storage", localStorage.getItem("auth"));
 
         toast.success("Profile updated");
+        localStorage.removeItem("profileFormData");
 
         // reload page on redirect
         window.location.href = "/";
@@ -267,10 +275,11 @@ const DocumentManager = () => {
                 type="file"
                 className="form-control"
                 disabled={
-                  auth.user?.agentDocuments &&
-                  auth.user?.agentDocuments?.find(
-                    (doc) => doc.documentTypeId === 1,
-                  )?.approvalStatus
+                  (auth.user?.agentDocuments &&
+                    auth.user?.agentDocuments?.find(
+                      (doc) => doc.documentTypeId === 1,
+                    )?.approvalStatus) ||
+                  determineStatus(auth.user.agentDocuments, 1) === "Pending"
                 }
                 accept="image/*, application/pdf"
                 onChange={(e) =>
@@ -305,10 +314,11 @@ const DocumentManager = () => {
               <select
                 className="btn btn-light"
                 disabled={
-                  auth.user?.agentDocuments &&
-                  auth.user?.agentDocuments?.find(
-                    (doc) => doc.documentTypeId === 1,
-                  )?.approvalStatus
+                  (auth.user?.agentDocuments &&
+                    auth.user?.agentDocuments?.find(
+                      (doc) => doc.documentTypeId === 1,
+                    )?.approvalStatus) ||
+                  determineStatus(auth.user.agentDocuments, 1) === "Pending"
                 }
                 onChange={(e) => {
                   handleProofTypeChange(e);
@@ -336,10 +346,11 @@ const DocumentManager = () => {
               className="form-control"
               accept="image/*, application/pdf"
               disabled={
-                auth.user?.agentDocuments &&
-                auth.user?.agentDocuments?.find(
-                  (doc) => doc.documentTypeId === 1,
-                )?.approvalStatus
+                (auth.user?.agentDocuments &&
+                  auth.user?.agentDocuments?.find(
+                    (doc) => doc.documentTypeId === 1,
+                  )?.approvalStatus) ||
+                determineStatus(auth.user.agentDocuments, 1) === "Pending"
               }
               onChange={(e) =>
                 handleUpload(
@@ -374,10 +385,11 @@ const DocumentManager = () => {
               type="file"
               className="form-control"
               disabled={
-                auth.user?.agentDocuments &&
-                auth.user?.agentDocuments?.find(
-                  (doc) => doc.documentTypeId === 3,
-                )?.approvalStatus
+                (auth.user?.agentDocuments &&
+                  auth.user?.agentDocuments?.find(
+                    (doc) => doc.documentTypeId === 3,
+                  )?.approvalStatus) ||
+                determineStatus(auth.user.agentDocuments, 3) === "Pending"
               }
               accept="image/*"
               onChange={(e) =>
@@ -412,10 +424,11 @@ const DocumentManager = () => {
               type="file"
               className="form-control"
               disabled={
-                auth.user?.agentDocuments &&
-                auth.user?.agentDocuments?.find(
-                  (doc) => doc.documentTypeId === 2,
-                )?.approvalStatus
+                (auth.user?.agentDocuments &&
+                  auth.user?.agentDocuments?.find(
+                    (doc) => doc.documentTypeId === 2,
+                  )?.approvalStatus) ||
+                determineStatus(auth.user.agentDocuments, 2) === "Pending"
               }
               accept="image/*, application/pdf"
               onChange={(e) =>
@@ -452,10 +465,11 @@ const DocumentManager = () => {
               <select
                 className="btn btn-light"
                 disabled={
-                  auth.user?.agentDocuments &&
-                  auth.user?.agentDocuments?.find(
-                    (doc) => doc.documentTypeId === 1,
-                  )?.approvalStatus
+                  (auth.user?.agentDocuments &&
+                    auth.user?.agentDocuments?.find(
+                      (doc) => doc.documentTypeId === 1,
+                    )?.approvalStatus) ||
+                  determineStatus(auth.user.agentDocuments, 1) === "Pending"
                 }
                 onChange={(e) => {
                   handleProofTypeChange(e);
@@ -571,10 +585,11 @@ const DocumentManager = () => {
                 <select
                   className="btn btn-light"
                   disabled={
-                    auth.user?.agentDocuments &&
-                    auth.user?.agentDocuments?.find(
-                      (doc) => doc.documentTypeId === 1,
-                    )?.approvalStatus
+                    (auth.user?.agentDocuments &&
+                      auth.user?.agentDocuments?.find(
+                        (doc) => doc.documentTypeId === 1,
+                      )?.approvalStatus) ||
+                    determineStatus(auth.user.agentDocuments, 1) === "Pending"
                   }
                   onChange={(e) => {
                     handleProofTypeChange(e);
