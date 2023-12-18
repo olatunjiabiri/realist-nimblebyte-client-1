@@ -23,6 +23,9 @@ export default function Register() {
   // hooks
   const navigate = useNavigate();
 
+  const path = window.location.pathname.split("/");
+  const pathName = path[1];
+
   const toggle = () => {
     setVisible(!visible);
   };
@@ -97,11 +100,19 @@ export default function Register() {
                 inputProps={{ "aria-label": "controlled" }}
               />
               By clicking Register you agree to the{" "}
-              <Link className="text-primary" to="/terms-of-use">
+              <Link
+                className="text-primary"
+                to="/terms-of-use"
+                state={pathName}
+              >
                 Terms of use
               </Link>{" "}
               and{" "}
-              <Link className="text-primary" to="/privacy-policy">
+              <Link
+                className="text-primary"
+                to="/privacy-policy"
+                state={pathName}
+              >
                 Privacy Policy
               </Link>
             </div>
