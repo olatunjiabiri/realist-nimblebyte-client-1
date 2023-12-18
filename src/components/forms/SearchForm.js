@@ -95,7 +95,7 @@ export default function SearchForm({ navMenuProperty }) {
         <div
           className="d-flex justify-content-center align-items-center"
           style={{
-            backgroundImage: "url(/image-resize.jpg)",
+            backgroundImage: "url(/search-form-image.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center ",
             backgroundRepeat: "no-repeat",

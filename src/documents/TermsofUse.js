@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./index.css";
 
 const TermsofUse = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
@@ -11,7 +12,11 @@ const TermsofUse = () => {
   }, []);
 
   const handleBackButton = () => {
-    navigate("/register");
+    if (state === "register") {
+      navigate("/register");
+    } else {
+      navigate("/");
+    }
   };
   return (
     // <div >
