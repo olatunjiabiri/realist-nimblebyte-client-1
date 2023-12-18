@@ -51,7 +51,7 @@ const ContactAgents = () => {
         <div className="col-lg-6">
           <div className="pt-5 image">
             <img
-              src="./contact-agents.jpg"
+              src="./sell-menu-image.jpg"
               alt="Placeholder"
               className="img-fluid"
             />
