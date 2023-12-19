@@ -100,7 +100,7 @@ export default function ProfileForm({ sourceURL }) {
         ...prev,
         aboutMe:
           storedFormData?.aboutMe ||
-          storedForm?.aboutMe ||
+          storedForm?.description ||
           auth?.user?.description ||
           "",
       }));
