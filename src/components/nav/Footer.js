@@ -11,7 +11,7 @@ export default function Footer() {
             <h4 className="mt-4">NimbleCasa - Real Estate, The Right Way</h4>
             <ul className="social-links pt-2">
               <li>
-                <a href="https://www.instagram.com" target="_blank">
+                <a href="https://www.instagram.com/nimblecasa/" target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
@@ -25,7 +25,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com" target="_blank">
+                <a href="https://www.facebook.com/profile.php?id=61554805858914" target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
@@ -39,7 +39,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.X.com" target="_blank">
+                <a href="https://twitter.com/NimbleCasa" target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
