@@ -97,7 +97,7 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       email: auth?.user?.email || "",
       message: `Hi, I am interested in the property located at ${
         ad?.googleMap[0]?.city || ad?.googleMap[0]?.country || ""
-      }.  Thanks`,
+      }. Thanks`,
     },
     validationSchema: contactSellerFormSchema,
     onSubmit,
