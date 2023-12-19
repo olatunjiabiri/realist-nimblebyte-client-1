@@ -53,6 +53,14 @@ export default function Register() {
         setLoading(false);
       } else {
         toast.success("Confirmation link has been sent to your mail");
+        localStorage.setItem(
+          "confirmation",
+          JSON.stringify({
+            email,
+            emailId: config.emailId,
+            path: `${window.location.origin}/auth/account-activate`,
+          }),
+        );
         setLoading(false);
         navigate("/");
       }

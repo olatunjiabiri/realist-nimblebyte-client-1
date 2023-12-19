@@ -92,12 +92,13 @@ export default function AdView() {
         <div className="container">
           <div
             className="row"
-            key={ad.features[i] + "-" + ad.features[i + 1] + "-" + i}
+            key={ad?.features[i] + "-" + ad?.features[i + 1] + "-" + i}
           >
             <div className="col">
-              <li>{ad.features[i]}</li>
+              <li>{ad?.features[i]}</li>
             </div>
-            {(ad.features.length - 1 === i && ad.features.length) % 2 === 0 ? (
+            {(ad?.features.length - 1 === i && ad?.features.length) % 2 ===
+            0 ? (
               <div className="col">
                 <li>{ad.features[i + 1]}</li>
               </div>
@@ -134,7 +135,7 @@ export default function AdView() {
                         type="button"
                         className="btn btn-success btn-sm disabled"
                       >
-                        {ad.type} for {ad.action === "Sell" ? "SALE" : "RENT"}
+                        {ad?.type} for {ad?.action === "Sell" ? "SALE" : "RENT"}
                       </button>
                     </div>
                     <div className="flex-test">
@@ -214,7 +215,7 @@ export default function AdView() {
                       </p>
 
                       <div className="align-items-center mb-3 mt-0">
-                        <BsFillHousesFill /> {ad.houseType}
+                        <BsFillHousesFill /> {ad?.houseType}
                       </div>
 
                       {/* <div className="row align-items-center mb-3 mt-0">
@@ -361,10 +362,10 @@ export default function AdView() {
                     <h5>Overview</h5>
                     <hr />
                   </div>
-                  <span>{ad.description}</span>
+                  <span>{ad?.description}</span>
 
                   {/*features*/}
-                  {ad.features.length > 0 && (
+                  {ad?.features?.length > 0 && (
                     <>
                       <div className="text-center mt-3">
                         <h5>Features</h5>
@@ -378,17 +379,17 @@ export default function AdView() {
             </div>
 
             {/* related properties */}
-            {related.length > 0 && (
+            {related?.length > 0 && (
               <>
                 <br />
                 <div className="container related-margin">
                   <h4 className="text-center mb-3">
-                    Related {related.length > 1 ? "Properties" : "Property"}
+                    Related {related?.length > 1 ? "Properties" : "Property"}
                   </h4>
                   <hr />
                   <div className="row d-flex justify-content-center">
                     {related?.map((ad) => (
-                      <AdCard key={ad._id} ad={ad} />
+                      <AdCard key={ad?._id} ad={ad} />
                     ))}
                   </div>
                 </div>
