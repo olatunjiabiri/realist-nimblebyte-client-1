@@ -129,7 +129,7 @@ const DocumentManager = () => {
         // console.log("data storage", localStorage.getItem("auth"));
 
         toast.success("Profile updated");
-        localStorage.removeItem("profileFormData");
+        // localStorage.removeItem("profileFormData");
 
         // reload page on redirect
         window.location.href = "/";

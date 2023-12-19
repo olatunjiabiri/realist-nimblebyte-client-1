@@ -46,7 +46,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${config.AUTH_API}/user/facebook-signIn`
+        `${config.AUTH_API}/user/facebook-signIn`,
       );
       if (data?.success) {
         window.location.replace(data.responsePayload);
@@ -80,6 +80,9 @@ export default function Login() {
 
       if (!data?.success) {
         setLoading(false);
+        if (data?.statusCode === 417) {
+          navigate("/confirmation");
+        }
       } else {
         const { token, user } = data.responsePayload;
         const wishlistData = await fetchUserWishlists(user);
@@ -89,8 +92,9 @@ export default function Login() {
 
         localStorage.setItem(
           "auth",
-          JSON.stringify({ token, user, wishlist: userWishlist })
+          JSON.stringify({ token, user, wishlist: userWishlist }),
         );
+        localStorage.removeItem("confirmation");
         toast.success("Login successful");
         setLoading(false);
 
@@ -106,9 +110,18 @@ export default function Login() {
             navigate("/register");
             break;
           case 401:
-          case 417:
             toast.error("Invalid Credential."); // Incorrect password
-            //  toast.error(err.response.data.message); //wrong password
+            break;
+          case 417:
+            toast.error("Email not confirmed."); // Incorrect password
+            localStorage.setItem(
+              "confirmation",
+              JSON.stringify({
+                email,
+              }),
+            );
+            navigate("/confirmation");
+            // toast.error(err.response.data.message); //wrong password
             break;
           default:
           // code block

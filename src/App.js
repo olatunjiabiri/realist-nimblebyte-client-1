@@ -63,6 +63,7 @@ import ContactSeller from "./components/forms/ContactSeller";
 import PaystackVerifyPayment from "./pages/payment/paystack/paystack-verification/paystackVerifyPayment";
 import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import DocumentManager from "./pages/user/DocumentManager";
+import Confirmation from "./pages/Confirmation";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -110,6 +111,7 @@ function App() {
                     />
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/confirmation" element={<Confirmation />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/reset-password" element={<PasswordReset />} />
                     <Route
