@@ -3,13 +3,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
-import ProfileUpload from "../ProfileUpload";
 import config from "../../../NewConfig";
 import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import LogoutMessage from "../../misc/logoutMessage/LogoutMessage";
-import DocumentForm from "../../documentUploader";
-import Modall from "../../modal2/Modal";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileForm({ sourceURL }) {
@@ -21,7 +18,6 @@ export default function ProfileForm({ sourceURL }) {
 
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [uploading, setUploading] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
   const [roles, setRoles] = useState([]);
   const [profileData, setProfileData] = useState({
@@ -56,42 +52,68 @@ export default function ProfileForm({ sourceURL }) {
   // Initialize form state from localStorage
   useEffect(() => {
     const storedFormData = JSON.parse(localStorage.getItem("profileFormData"));
+    const storedForm = JSON.parse(localStorage.getItem("profile"));
     if (storedFormData || auth?.user) {
       setProfileData((prev) => ({
         ...prev,
-        firstName: storedFormData?.firstName || auth?.user?.firstName || "",
+        firstName:
+          storedFormData?.firstName ||
+          storedForm?.firstName ||
+          auth?.user?.firstName ||
+          "",
       }));
       setProfileData((prev) => ({
         ...prev,
-        lastName: storedFormData?.lastName || auth?.user?.lastName || "",
+        lastName:
+          storedFormData?.lastName ||
+          storedForm?.lastName ||
+          auth?.user?.lastName ||
+          "",
       }));
       setProfileData((prev) => ({
         ...prev,
-        email: storedFormData?.email || auth?.user?.email || "",
+        email:
+          storedFormData?.email || storedForm?.email || auth?.user?.email || "",
       }));
       setProfileData((prev) => ({
         ...prev,
-        company: storedFormData?.company || auth?.user?.company || "",
+        company:
+          storedFormData?.company ||
+          storedForm?.company ||
+          auth?.user?.company ||
+          "",
       }));
       setProfileData((prev) => ({
         ...prev,
-        address: storedFormData?.address || auth?.user?.address || "",
+        address:
+          storedFormData?.address ||
+          storedForm?.address ||
+          auth?.user?.address ||
+          "",
       }));
       setProfileData((prev) => ({
         ...prev,
-        phone: storedFormData?.phone || auth?.user?.phone || "",
+        phone:
+          storedFormData?.phone || storedForm?.phone || auth?.user?.phone || "",
       }));
       setProfileData((prev) => ({
         ...prev,
-        aboutMe: storedFormData?.aboutMe || auth?.user?.description || "",
+        aboutMe:
+          storedFormData?.aboutMe ||
+          storedForm?.description ||
+          auth?.user?.description ||
+          "",
       }));
       setProfileData((prev) => ({
         ...prev,
         reg_number:
-          storedFormData?.reg_number || auth?.user?.info?.regNumber || "",
+          storedFormData?.reg_number ||
+          storedForm?.reg_number ||
+          auth?.user?.info?.regNumber ||
+          "",
       }));
     }
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     if (auth?.user?.role && auth.user?.role?.includes("Agent")) {
