@@ -306,7 +306,8 @@ export default function AdView() {
                   <h3 className="mt-3 h2 adview-feature">
                     {" "}
                     <span>&#8358;</span>
-                    {millify(ad?.price)}
+                    {formatNumber(ad?.price)}
+                    {/* {millify(ad?.price)} */}
                   </h3>
                   <span>
                     {" "}
