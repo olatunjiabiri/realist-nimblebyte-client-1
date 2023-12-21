@@ -76,11 +76,6 @@ const PageNotFound = () => (
 const stripe = loadStripe("PUBLIC-KEY");
 
 function App() {
-  console.log("env >>>>>>", process.env.REACT_APP_NODE_BACKEND_API);
-  useEffect(() => {
-    console.log("env2 >>>>>>", process.env.REACT_APP_NODE_BACKEND_API);
-  }, []);
-
   return (
     <BrowserRouter>
       <Elements stripe={stripe}>
