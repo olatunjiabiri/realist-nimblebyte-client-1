@@ -110,7 +110,7 @@ export default function Footer() {
               </Link>
               <Link to="/rent">
                 <img
-                  src=".https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/rent.png"
+                  src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/rent.png"
                   className=" footer-nav-img"
                   alt="rent"
                   height={30}
