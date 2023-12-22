@@ -148,7 +148,7 @@ const Navbar = () => {
                     position: "absolute",
                     top: "-10px",
                   }}
-                  src="./nimblelogo2.png"
+                  src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/nimble-logo2.png"
                   alt="NimbleCasa"
                   height={80}
                   width={130}
