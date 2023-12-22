@@ -25,7 +25,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com/profile.php?id=61554805858914" target="_blank">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61554805858914"
+                  target="_blank"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
@@ -55,7 +58,14 @@ export default function Footer() {
             </ul>
             {/* <h4 className="mt-4">NimbleCasa - Buy, Sell or Rent Properties</h4> */}
             <p>
-              &copy; {new Date().getFullYear()}. A product of <a className="NimbleByteLink" href="https://nimble-byte.com/" target="_blank">Nimble-Byte</a> 
+              &copy; {new Date().getFullYear()}. A product of{" "}
+              <a
+                className="NimbleByteLink"
+                href="https://nimble-byte.com/"
+                target="_blank"
+              >
+                Nimble-Byte
+              </a>
             </p>
           </div>
 
@@ -82,7 +92,7 @@ export default function Footer() {
             >
               <Link to="/">
                 <img
-                  src="./home3.png"
+                  src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/home3.png"
                   className="footer-nav-img"
                   alt="Home"
                   height={30}
@@ -91,7 +101,7 @@ export default function Footer() {
               </Link>
               <Link to="/buy">
                 <img
-                  src="https://nimblecasauatstorage.blob.core.windows.net/buy-icon/Buy.png"
+                  src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/Buy.png"
                   className=" footer-nav-img"
                   alt="buy"
                   height={30}
@@ -100,7 +110,7 @@ export default function Footer() {
               </Link>
               <Link to="/rent">
                 <img
-                  src="./rent.png"
+                  src=".https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/rent.png"
                   className=" footer-nav-img"
                   alt="rent"
                   height={30}
@@ -109,7 +119,7 @@ export default function Footer() {
               </Link>
               <Link to="/contact-agents">
                 <img
-                  src="./ouragents.png"
+                  src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/ouragents.png"
                   className=" footer-nav-img"
                   alt="ouragents"
                   height={30}
