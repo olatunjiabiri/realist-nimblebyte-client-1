@@ -1,5 +1,5 @@
 const config = {
-  AdminEmail: "information@nimble-byte.com",
+  AdminEmail: "support@nimblecasa.com",
   APIS_PROTECT: "Fm2dT0GzyUa_Q_6KxMTzNwELPcEVcHOUqyjd0yn0LJqA",
   AUTH_API_KEY: "d6cf4f00-773e-40b6-aed1-1960691e954e",
   CLIENT_BASE_URL: "https://nimblecasa-prod-client-app.azurewebsites.net",
