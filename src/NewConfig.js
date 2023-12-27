@@ -1,6 +1,5 @@
 const config = {
-  AdminEmail: "support@nimblecasa.com", //REACT-APP-ADMIN-EMAIL
-  // AdminEmail: "#{REACT-APP-ADMIN-EMAIL}#", //REACT-APP-ADMIN-EMAIL
+  AdminEmail: "support@nimblecasa.com",
 
   APIS_PROTECT: "Fm2dT0GzyUa_Q_6KxMTzNwELPcEVcHOUqyjd0yn0LJqA", // NODE-PROTECT-API-KEY
   // APIS_PROTECT: "#{NODE-PROTECT-API-KEY}#", // NODE-PROTECT-API-KEY
