@@ -33,7 +33,7 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
         >
           <div className="card hoverable shadow">
             <img
-              src={ad?.photos?.[0].Location}
+              src={ad?.photos?.[0]?.Location}
               alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
               style={{ height: "250px", objectFit: "cover" }}
             />

@@ -32,7 +32,7 @@ const AgentAdsTable = ({ ads }) => {
           <div className="agent-image">
             <img
               className="cellImg"
-              src={params.row.photos[0].Location ?? "nimblelogo2.png"}
+              src={params?.row?.photos[0]?.Location ?? "nimblelogo2.png"}
               alt="avatar"
             />
           </div>
