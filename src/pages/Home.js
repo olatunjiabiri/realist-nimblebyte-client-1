@@ -25,11 +25,6 @@ export default function Home() {
   const [perPage, setPerPage] = useState(18);
   const [loading, setLoading] = useState(false);
 
-  console.log("env >>>>>>", process.env.REACT_APP_NODE_BACKEND_API);
-  useEffect(() => {
-    console.log("env2");
-    console.log("env2 >>>>>>", process.env.REACT_APP_NODE_BACKEND_API);
-  }, []);
   useEffect(() => {
     if (auth.user === null) {
       auth.token = "";

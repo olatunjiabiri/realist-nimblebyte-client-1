@@ -98,7 +98,7 @@ export default function AdEdit({ action, type }) {
             image: item.Location,
             blob: null,
           };
-        })
+        }),
       );
       setLoaded(true);
     } catch (err) {
@@ -574,11 +574,15 @@ export default function AdEdit({ action, type }) {
                         inputProps={{ "aria-label": "Without label" }}
                       >
                         {features.map((feat) => (
-                          <MenuItem key={feat.feature} value={feat.feature}>
+                          <MenuItem key={feat?.feature} value={feat?.feature}>
                             <Checkbox
-                              checked={ad.features.indexOf(feat.feature) > -1}
+                              checked={
+                                ad?.features
+                                  ? ad?.features?.indexOf(feat?.feature) > -1
+                                  : false
+                              }
                             />
-                            <ListItemText primary={feat.feature} />
+                            <ListItemText primary={feat?.feature} />
                           </MenuItem>
                         ))}
                       </Select>
