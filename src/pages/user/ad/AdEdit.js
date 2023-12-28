@@ -133,7 +133,7 @@ export default function AdEdit({ action, type }) {
     if (!data) {
       setLoading(false);
     } else {
-      setFeatures(data.features);
+      setFeatures(data.features ? data.features : []);
       setLoading(false);
     }
   };
