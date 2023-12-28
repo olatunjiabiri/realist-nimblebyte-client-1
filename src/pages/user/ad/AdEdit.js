@@ -133,7 +133,7 @@ export default function AdEdit({ action, type }) {
     if (!data) {
       setLoading(false);
     } else {
-      setFeatures(data.features ? data.features : []);
+      setFeatures(data?.features ? data?.features : []);
       setLoading(false);
     }
   };
@@ -560,7 +560,11 @@ export default function AdEdit({ action, type }) {
                         value={ad?.features}
                         onChange={handleInputChange}
                         renderValue={(selected) => {
-                          if (!!selected && selected.length === 0) {
+                          if (
+                            (!!selected && selected.length === 0) ||
+                            selected === null ||
+                            selected === undefined
+                          ) {
                             return (
                               <span form-control mb-3>
                                 Extra Features
