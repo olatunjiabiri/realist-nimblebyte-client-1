@@ -98,7 +98,7 @@ export default function AdEdit({ action, type }) {
             image: item.Location,
             blob: null,
           };
-        }),
+        })
       );
       setLoaded(true);
     } catch (err) {
@@ -557,10 +557,10 @@ export default function AdEdit({ action, type }) {
                         id="demo-multiple-checkbox"
                         displayEmpty
                         multiple
-                        value={ad.features}
+                        value={ad?.features}
                         onChange={handleInputChange}
                         renderValue={(selected) => {
-                          if (selected.length === 0) {
+                          if (!!selected && selected.length === 0) {
                             return (
                               <span form-control mb-3>
                                 Extra Features
