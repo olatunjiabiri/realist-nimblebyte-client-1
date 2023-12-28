@@ -131,7 +131,7 @@ export default function AdCard({ ad }) {
                       className="contact-owner-button"
                       onClick={() => setIsOpen(true)}
                     >
-                      Contact Property
+                      Contact Agent
                     </button>
                   </Link>
                 </p>
