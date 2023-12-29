@@ -46,7 +46,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${config.AUTH_API}/user/facebook-signIn`,
+        `${config.AUTH_API}/user/facebook-signIn`
       );
       if (data?.success) {
         window.location.replace(data.responsePayload);
@@ -92,7 +92,7 @@ export default function Login() {
 
         localStorage.setItem(
           "auth",
-          JSON.stringify({ token, user, wishlist: userWishlist }),
+          JSON.stringify({ token, user, wishlist: userWishlist })
         );
         localStorage.removeItem("confirmation");
         toast.success("Login successful");
@@ -118,7 +118,7 @@ export default function Login() {
               "confirmation",
               JSON.stringify({
                 email,
-              }),
+              })
             );
             navigate("/confirmation");
             // toast.error(err.response.data.message); //wrong password
@@ -179,13 +179,13 @@ export default function Login() {
             >
               {"Sign In with Facebook"}
             </button>
-            <button
+            {/* <button
               onClick={handleGoogleSubmit}
               disabled={loading}
               className="btn btn-outline-danger col-12 mb-4"
             >
               <span>{"Sign In with Google"}</span>
-            </button>
+            </button> */}
           </form>
 
           <div className="d-flex justify-content-between">
