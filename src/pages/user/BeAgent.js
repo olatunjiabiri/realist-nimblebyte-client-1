@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import config from "../../NewConfig";
 import { useAuth } from "../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import ProfileForm from "../../components/forms/profileForm/ProfileForm";

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 
 import { useAuth } from "../../context/auth";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import { updatePasswordSchema } from "../../../src/validations";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import LogoutMessage from "../../components/misc/logoutMessage/LogoutMessage";

@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import AgentsList from "../components/agentsList/AgentsList";
 import AgentsMobileList from "../components/agentsList/AgentsMobileList";
 
-import config from "../NewConfig";
+import config from "../config.js";
 import AgentSearchForm from "./../components/forms/AgentSearchForm";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
@@ -17,7 +17,7 @@ export default function Agents() {
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [currentLocation, setCurrentLocation] = useState(
-    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : "",
+    localStorage.getItem("cLocation") ? localStorage.getItem("cLocation") : ""
   );
 
   // state
@@ -48,7 +48,7 @@ export default function Agents() {
       //   `${config.AUTH_API}/api/Roles/GetUsersByRole?roleName=Agent`
       // );
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Agent/agents?page=${page}&size=${size}`,
+        `${config.AUTH_API}/api/Agent/agents?page=${page}&size=${size}`
       );
       // setAgents(data.responsePayload);
       setAgents(data);
@@ -61,7 +61,7 @@ export default function Agents() {
           agent.isApproved &&
           agent.applicationUser.address
             ?.toLowerCase()
-            .includes(currentLocation?.toLowerCase()),
+            .includes(currentLocation?.toLowerCase())
       );
       // console.log("afiltered", afiltered);
 

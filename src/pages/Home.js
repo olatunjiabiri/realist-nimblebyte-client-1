@@ -9,7 +9,7 @@ import { setKey, geocode, RequestType } from "react-geocode";
 
 import { useSearch } from "../context/search";
 
-import config from "../NewConfig";
+import config from "../config.js";
 
 export default function Home() {
   setKey(config.GOOGLE_MAPS_KEY);

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import config from "./../NewConfig";
+import config from "./../config.js";
 import ContentWrapper from "../components/contentWrapper/ContentWrapper";
 
 import "./Login.css";
@@ -22,7 +22,7 @@ export default function Confirmation() {
     try {
       setLoading(true);
       const { emailId, path } = JSON.parse(
-        localStorage.getItem("confirmation"),
+        localStorage.getItem("confirmation")
       );
       const { data } = await axios.post(`${config.AUTH_API}/user/resend`, {
         email,
@@ -34,7 +34,7 @@ export default function Confirmation() {
         setLoading(false);
       } else {
         toast.success(
-          "Confirmation link resent successfully, check your email!",
+          "Confirmation link resent successfully, check your email!"
         );
         setLoading(false);
       }

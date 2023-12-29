@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
-import config from "../../../NewConfig";
+import config from "../../../config.js";
 import { useAuth } from "../../../context/auth";
 import { AiFillWarning } from "react-icons/ai";
 import LogoutMessage from "../../misc/logoutMessage/LogoutMessage";
@@ -184,7 +184,7 @@ export default function ProfileForm({ sourceURL }) {
               registrationNumber: profileData.reg_number || "",
               roles: roles,
               photo,
-            }),
+            })
           );
 
           navigate("/user/document-manager");
@@ -205,7 +205,7 @@ export default function ProfileForm({ sourceURL }) {
             roles: roles,
             photo,
             agentDocuments: [],
-          },
+          }
         );
 
         if (!data.success) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearch } from "../../context/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import { Prices } from "../../helpers/priceList";
 import { action, type } from "../../helpers/actionTypeList";
 

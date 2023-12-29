@@ -4,8 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { config } from "../NewConfig";
-import config from "./../NewConfig";
+import config from "./../config.js";
 import ContentWrapper from "../components/contentWrapper/ContentWrapper";
 
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
