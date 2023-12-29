@@ -18,9 +18,7 @@ const AuthProvider = ({ children }) => {
 
   // configure axios
   // Set the authorization header for all requests
-  // axios.defaults.baseURL = config.API;
-  axios.defaults.baseURL = process.env.REACT_APP_NODE_API;
-
+  axios.defaults.baseURL = config.API;
   axios.defaults.headers.Authorization = `Bearer ${auth?.token}`;
   // axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
   axios.defaults.headers.common["clave-de-proteccion"] = config.APIS_PROTECT;
