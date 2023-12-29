@@ -90,7 +90,6 @@ export default function Home() {
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     //window.scrollTo(0, 0);
-    console.log(">>>>>", process.env.REACT_APP_GOOGLE_API_KEY);
   }, []);
 
   const fetchAds = async () => {
