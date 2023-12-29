@@ -60,7 +60,7 @@ export default function Home() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      },
+      }
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -90,6 +90,7 @@ export default function Home() {
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     //window.scrollTo(0, 0);
+    console.log(process.env.REACT_APP_GOOGLE_API_KEY);
   }, []);
 
   const fetchAds = async () => {
