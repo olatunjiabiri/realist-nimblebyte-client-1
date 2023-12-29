@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import { useAuth } from "../../context/auth";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-export default function GoogleAuthResponse(){
-
-     // hooks
+export default function GoogleAuthResponse() {
+  // hooks
   const [searchParams] = useSearchParams();
   const [auth, setAuth] = useAuth();
   // state
@@ -20,23 +19,25 @@ export default function GoogleAuthResponse(){
   const code = searchParams.get("code");
 
   useEffect(() => {
-    if(code) loginUserOnResponse();
- }, [code])
- 
- const fetchUserWishlists = async (user) => {
-   const { userId } = user;
-   try {
-     const { data } = await axios.get(`/wishlist/${userId}`);
-     return data;
-   } catch (err) {
-     console.log(err);
-   }
- };
+    if (code) loginUserOnResponse();
+  }, [code]);
 
- const loginUserOnResponse = async () => {
-    try{
-      const { data } = await axios.get(`${config.AUTH_API}/user/google-callback?code=${code}`);
-      if(data?.success){
+  const fetchUserWishlists = async (user) => {
+    const { userId } = user;
+    try {
+      const { data } = await axios.get(`/wishlist/${userId}`);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loginUserOnResponse = async () => {
+    try {
+      const { data } = await axios.get(
+        `${config.AUTH_API}/user/google-callback?code=${code}`
+      );
+      if (data?.success) {
         const { token, user } = data.responsePayload;
         const wishlistData = await fetchUserWishlists(user);
         const { wishlist } = wishlistData;
@@ -53,16 +54,15 @@ export default function GoogleAuthResponse(){
         if (auth.user?.firstName === "") navigate("/user/profile");
 
         location?.state !== null ? navigate(location.state) : navigate("/");
-      }else{
+      } else {
         toast.error("Something went wrong");
         navigate("/login");
       }
-    }
-    catch(err){
+    } catch (err) {
       toast.error("Something went wrong, please try again", err);
       navigate("/login");
     }
- }
+  };
 
   return (
     <div
@@ -72,5 +72,4 @@ export default function GoogleAuthResponse(){
       Please wait...
     </div>
   );
-
 }

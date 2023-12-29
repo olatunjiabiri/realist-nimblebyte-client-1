@@ -9,7 +9,7 @@ import { setKey, geocode, RequestType } from "react-geocode";
 
 import { useSearch } from "../context/search";
 
-import config from "../NewConfig";
+import config from "../config.js";
 
 export default function Home() {
   setKey(config.GOOGLE_MAPS_KEY);
@@ -60,7 +60,7 @@ export default function Home() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      },
+      }
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;

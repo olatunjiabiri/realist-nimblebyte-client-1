@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 export default function Login() {
@@ -21,7 +21,9 @@ export default function Login() {
       setLoading(true);
 
       const { data } = await axios.get(
-        `${config.AUTH_API}/user/SendResetPasswordCode?email=${email}&appId=${config.appId}`
+        `${
+          config.AUTH_API
+        }/user/SendResetPasswordCode?email=${email}&appId=${""}`
       );
 
       if (data?.error) {

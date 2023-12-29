@@ -1,5 +1,5 @@
-import  config from '../NewConfig'
+import config from "../config.js";
 
 export const mapOptions = {
-    googleMapApiKey: config.GOOGLE_MAPS_KEY
+  googleMapApiKey: config.GOOGLE_MAPS_KEY,
 };

@@ -3,7 +3,7 @@ import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth";
 
@@ -65,7 +65,7 @@ const DocumentManager = () => {
   const handleConfirmDocuments = async () => {
     if (
       !confirm(
-        "Please confirm your submission. Once the documents are submitted, you won't be able to modify them until a decision on approval is made. Are you sure you want to proceed?",
+        "Please confirm your submission. Once the documents are submitted, you won't be able to modify them until a decision on approval is made. Are you sure you want to proceed?"
       )
     ) {
       return;
@@ -101,7 +101,7 @@ const DocumentManager = () => {
         {
           ...profile,
           agentDocuments,
-        },
+        }
       );
 
       if (!data.success) {
@@ -195,7 +195,7 @@ const DocumentManager = () => {
             resolve(null);
           }
         },
-        "base64",
+        "base64"
       );
     });
   };
@@ -277,7 +277,7 @@ const DocumentManager = () => {
                 disabled={
                   (auth.user?.agentDocuments &&
                     auth.user?.agentDocuments?.find(
-                      (doc) => doc.documentTypeId === 1,
+                      (doc) => doc.documentTypeId === 1
                     )?.approvalStatus) ||
                   determineStatus(auth.user.agentDocuments, 1) === "Pending"
                 }
@@ -288,7 +288,7 @@ const DocumentManager = () => {
                     e.target.files[0],
                     `Proof of Identification - ${proofType}`,
                     1,
-                    proofType,
+                    proofType
                   )
                 }
               />
@@ -296,7 +296,7 @@ const DocumentManager = () => {
           };
         }
         return row;
-      }),
+      })
     );
   }, [proofType, isProofTypeSelected]);
 
@@ -316,7 +316,7 @@ const DocumentManager = () => {
                 disabled={
                   (auth.user?.agentDocuments &&
                     auth.user?.agentDocuments?.find(
-                      (doc) => doc.documentTypeId === 1,
+                      (doc) => doc.documentTypeId === 1
                     )?.approvalStatus) ||
                   determineStatus(auth.user.agentDocuments, 1) === "Pending"
                 }
@@ -348,7 +348,7 @@ const DocumentManager = () => {
               disabled={
                 (auth.user?.agentDocuments &&
                   auth.user?.agentDocuments?.find(
-                    (doc) => doc.documentTypeId === 1,
+                    (doc) => doc.documentTypeId === 1
                   )?.approvalStatus) ||
                 determineStatus(auth.user.agentDocuments, 1) === "Pending"
               }
@@ -357,7 +357,7 @@ const DocumentManager = () => {
                   e.target.files[0],
                   `Proof of Identification - ${proofType}`,
                   1,
-                  proofType,
+                  proofType
                 )
               }
             />
@@ -387,7 +387,7 @@ const DocumentManager = () => {
               disabled={
                 (auth.user?.agentDocuments &&
                   auth.user?.agentDocuments?.find(
-                    (doc) => doc.documentTypeId === 3,
+                    (doc) => doc.documentTypeId === 3
                   )?.approvalStatus) ||
                 determineStatus(auth.user.agentDocuments, 3) === "Pending"
               }
@@ -396,7 +396,7 @@ const DocumentManager = () => {
                 handleUpload(
                   e.target.files[0],
                   "Passport Photo Identification",
-                  2,
+                  2
                 )
               }
             />
@@ -426,7 +426,7 @@ const DocumentManager = () => {
               disabled={
                 (auth.user?.agentDocuments &&
                   auth.user?.agentDocuments?.find(
-                    (doc) => doc.documentTypeId === 2,
+                    (doc) => doc.documentTypeId === 2
                   )?.approvalStatus) ||
                 determineStatus(auth.user.agentDocuments, 2) === "Pending"
               }
@@ -467,7 +467,7 @@ const DocumentManager = () => {
                 disabled={
                   (auth.user?.agentDocuments &&
                     auth.user?.agentDocuments?.find(
-                      (doc) => doc.documentTypeId === 1,
+                      (doc) => doc.documentTypeId === 1
                     )?.approvalStatus) ||
                   determineStatus(auth.user.agentDocuments, 1) === "Pending"
                 }
@@ -501,7 +501,7 @@ const DocumentManager = () => {
                   e.target.files[0],
                   `Proof of Identification - ${proofType}`,
                   1,
-                  proofType,
+                  proofType
                 )
               }
             />
@@ -525,7 +525,7 @@ const DocumentManager = () => {
                 handleUpload(
                   e.target.files[0],
                   "Passport Photo Identification",
-                  2,
+                  2
                 )
               }
             />
@@ -571,7 +571,7 @@ const DocumentManager = () => {
               row.document, // Pass the existing document
               `Proof of Identification - ${selectedProofType}`,
               1,
-              selectedProofType,
+              selectedProofType
             );
           }
 
@@ -587,7 +587,7 @@ const DocumentManager = () => {
                   disabled={
                     (auth.user?.agentDocuments &&
                       auth.user?.agentDocuments?.find(
-                        (doc) => doc.documentTypeId === 1,
+                        (doc) => doc.documentTypeId === 1
                       )?.approvalStatus) ||
                     determineStatus(auth.user.agentDocuments, 1) === "Pending"
                   }
@@ -622,7 +622,7 @@ const DocumentManager = () => {
                     e.target.files[0],
                     `Proof of Identification - ${selectedProofType}`,
                     1,
-                    selectedProofType,
+                    selectedProofType
                   )
                 }
               />
@@ -638,7 +638,7 @@ const DocumentManager = () => {
           };
         }
         return row;
-      }),
+      })
     );
   }, [selectedProofType]);
 
@@ -660,16 +660,14 @@ const DocumentManager = () => {
         setLoading(true);
         setFileRows((prevRows) =>
           prevRows.map((row) =>
-            row.id === rowId ? { ...row, status: "Uploading" } : row,
-          ),
+            row.id === rowId ? { ...row, status: "Uploading" } : row
+          )
         );
         // console.log("I got called by culprit", rowId);
         //upload document
         const uploadedPhoto = await uploadImage(
           file,
-          rowId === 1
-            ? `Proof of Identification - ${selectedProofType}`
-            : label,
+          rowId === 1 ? `Proof of Identification - ${selectedProofType}` : label
         );
 
         setLoading(false);
@@ -684,8 +682,8 @@ const DocumentManager = () => {
                     document: uploadedPhoto,
                     status: uploadedPhoto.error,
                   }
-                : row,
-            ),
+                : row
+            )
           );
         }
 
@@ -703,8 +701,8 @@ const DocumentManager = () => {
                     comment: "",
                     proofType: selectedProofType,
                   }
-                : row,
-            ),
+                : row
+            )
           );
         }
       } catch (error) {
@@ -720,7 +718,7 @@ const DocumentManager = () => {
       setLoading,
       setError,
       uploadImage,
-    ],
+    ]
   );
 
   return (
