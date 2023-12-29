@@ -6,8 +6,8 @@ const config = {
 
   CLIENT_BASE_URL: process.env.REACT_APP_CLIENT_BASE_URL,
 
-  API: process.env.process.env.REACT_APP_NODE_API,
-  AUTH_API: useGridPipeProcessing.env.REACT_APP_AUTH_API,
+  API: process.env.REACT_APP_NODE_API,
+  AUTH_API: process.env.REACT_APP_AUTH_API,
   PAYMENT_API: process.env.REACT_APP_PAYMENT_API,
 
   GOOGLE_PLACES_KEY: process.env.REACT_APP_GOOGLE_API_KEY,
