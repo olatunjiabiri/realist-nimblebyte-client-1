@@ -1,14 +1,17 @@
 const config = {
-  AdminEmail: process.env.REACT_APP_AdminEmail,
+  AdminEmail: REACT_APP_AdminEmail,
 
-  APIS_PROTECT: process.env.REACT_APP_APIS_PROTECT,
-  AUTH_API_KEY: process.env.REACT_APP_AUTH_API,
-
-  CLIENT_BASE_URL: process.env.REACT_APP_CLIENT_BASE_URL,
-
+  APIS_PROTECT: "Fm2dT0GzyUa_Q_6KxMTzNwELPcEVcHOUqyjd0yn0LJqA",
+  AUTH_API_KEY: "d6cf4f00-773e-40b6-aed1-1960691e954e",
+  CLIENT_BASE_URL: "https://realistclientapp2.azurewebsites.net",
   API: process.env.REACT_APP_NODE_API,
-  AUTH_API: process.env.REACT_APP_AUTH_API,
-  PAYMENT_API: process.env.REACT_APP_PAYMENT_API,
+  AUTH_API:
+    // process.env.NODE_ENV === "production"
+    //"https://localhost:7298",
+    // "https://authbackendservice.azurewebsites.net",
+    "https://realist-auth-backend.azurewebsites.net",
+  PAYMENT_API: "https://realist-payment-service.azurewebsites.net",
+  //  "https://localhost:7067",
 
   GOOGLE_PLACES_KEY: process.env.REACT_APP_GOOGLE_API_KEY,
   GOOGLE_MAPS_KEY: process.env.REACT_APP_GOOGLE_API_KEY,
