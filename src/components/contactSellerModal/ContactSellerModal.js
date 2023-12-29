@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./ContactSellerModal.css";
 import { useAuth } from "../../context/auth";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import { contactSellerFormSchema } from "../../../src/validations";
 import BuyerTermsandConditions from "../../documents/BuyerTermsandConditions";
 import Modall from "../modal/Modal";

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import config from "../../NewConfig";
+import config from "../../config.js";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 export default function Login() {

@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 
 import { passwordResetSchema } from "../../validations";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
-import config from "../../NewConfig";
+import config from "../../config.js";
 
 export default function PasswordReset() {
   // state

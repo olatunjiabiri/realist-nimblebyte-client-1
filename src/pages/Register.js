@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ContentWrapper from "../components/contentWrapper/ContentWrapper";
 import Checkbox from "@mui/material/Checkbox";
 
-import config from "../NewConfig";
+import config from "../config.js";
 
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import "./Login.css";
@@ -59,7 +59,7 @@ export default function Register() {
             email,
             emailId: config.emailId,
             path: `${window.location.origin}/auth/account-activate`,
-          }),
+          })
         );
         setLoading(false);
         navigate("/");

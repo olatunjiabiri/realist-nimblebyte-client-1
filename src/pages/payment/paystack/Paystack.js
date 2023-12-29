@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import config from "../../../NewConfig";
+import config from "../../../config.js";
 import "./Paystack.css";
 import axios from "axios";
 
@@ -21,7 +21,7 @@ const Paystack = () => {
         {
           adId: param.adID,
           amount: amount * 100,
-        },
+        }
       );
       if (data.success) {
         window.location.replace(data.responsePayload.authorizationUrl);

@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import AgentDetails from "../components/agentDetails/AgentDetails";
 import ContactAgentForm from "../components/forms/contactAgentForm/ContactAgentForm";
-import config from "../NewConfig";
+import config from "../config.js";
 import AgentAdsTable from "../components/agentAdsTable/AgentAdsTable";
 import AgentAdsMobileTable from "../components/agentAdsTable/AgentAdsMobileTable";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
@@ -34,7 +34,7 @@ export default function Agent({ user }) {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        `/user-ads/${params.userId}/${page}/${perPage}`,
+        `/user-ads/${params.userId}/${page}/${perPage}`
       );
       setAds([...data.ads]);
       setTotal(data.total);
@@ -51,7 +51,7 @@ export default function Agent({ user }) {
       // );
 
       const { data } = await axios.get(
-        `${config.AUTH_API}/api/Agent/agent?userId=${params.userId}`,
+        `${config.AUTH_API}/api/Agent/agent?userId=${params.userId}`
       );
 
       setAgent(data);

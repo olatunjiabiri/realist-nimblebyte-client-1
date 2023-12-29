@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { Avatar } from "antd";
 import { houseType } from "../../../helpers/houseType";
 
-import config from "../../../NewConfig";
+import config from "../../../config.js";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import { useAuth } from "../../../context/auth";
 import "./index.css";
