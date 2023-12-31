@@ -8,7 +8,7 @@ import { useAuth } from "../../../context/auth";
 
 import "./ContactAgentForm.css";
 import { contactAgentSchema } from "./validations";
-import config from "../../../NewConfig";
+import config from "../../../config.js";
 
 
 const ContactAgentForm = ({ agent }) => {

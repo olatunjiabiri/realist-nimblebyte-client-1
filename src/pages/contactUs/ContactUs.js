@@ -10,7 +10,7 @@ import { useAuth } from "../../context/auth";
 // import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 import { contactUsSchema } from "./validations";
-import config from "../../NewConfig";
+import config from "../../config.js";
 
 const ContactUs = () => {
   const navigate = useNavigate();

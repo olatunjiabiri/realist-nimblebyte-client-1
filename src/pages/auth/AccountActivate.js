@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 import { useAuth } from "../../context/auth";
-import config from "../../NewConfig";
+import config from "../../config.js";
 
 export default function AccountActivate() {
   // hooks

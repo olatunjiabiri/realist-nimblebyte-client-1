@@ -6,7 +6,7 @@ import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
-import config from "../../NewConfig";
+import config from "../../config.js";
 
 import "./index.css";
 
