@@ -21,9 +21,7 @@ export default function Login() {
       setLoading(true);
 
       const { data } = await axios.get(
-        `${
-          config.AUTH_API
-        }/user/SendResetPasswordCode?email=${email}&appId=${""}`
+        `${config.AUTH_API}/user/SendResetPasswordCode?email=${email}&appId=${config.emailId}`
       );
 
       if (data?.error) {
