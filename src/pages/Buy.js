@@ -29,7 +29,7 @@ export default function Buy() {
     search.type = "";
 
     setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
-    console.log("search buy >>>>", search);
+    // console.log("search buy >>>>", search);
   }, []);
 
   useEffect(() => {
