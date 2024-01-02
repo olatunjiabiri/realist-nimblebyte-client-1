@@ -40,7 +40,6 @@ export default function UpdatePassword() {
         setLoading(false);
       } else {
         setAuth({ user: null, token: "" });
-        setDdata({ adData: null });
         localStorage.removeItem("auth");
         localStorage.removeItem("cLocation");
         localStorage.removeItem("adData");
@@ -48,7 +47,7 @@ export default function UpdatePassword() {
         localStorage.removeItem("profile");
         toast.success("Password Updated");
         setLoading(false);
-        // actions.resetForm();
+        actions.resetForm();
         navigate("/login");
       }
     } catch (err) {
