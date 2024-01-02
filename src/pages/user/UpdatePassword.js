@@ -39,6 +39,12 @@ export default function UpdatePassword() {
         toast.error(data.message);
         setLoading(false);
       } else {
+        setAuth({ user: null, token: "" });
+        localStorage.removeItem("auth");
+        localStorage.removeItem("cLocation");
+        localStorage.removeItem("adData");
+        localStorage.removeItem("profileFormData");
+        localStorage.removeItem("profile");
         toast.success("Password Updated");
         setLoading(false);
         actions.resetForm();
@@ -46,7 +52,7 @@ export default function UpdatePassword() {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong. Try again.");
+      toast.error("Something went wrong. Try Again.");
       setLoading(false);
     }
   };
