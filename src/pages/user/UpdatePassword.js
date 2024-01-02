@@ -40,7 +40,6 @@ export default function UpdatePassword() {
         setLoading(false);
       } else {
         setAuth({ user: null, token: "" });
-        setDdata({ adData: null });
         localStorage.removeItem("auth");
         localStorage.removeItem("cLocation");
         localStorage.removeItem("adData");
@@ -53,7 +52,7 @@ export default function UpdatePassword() {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong. Try again.");
+      toast.error("Something went wrong. Try Again.");
       setLoading(false);
     }
   };
