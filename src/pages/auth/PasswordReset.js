@@ -8,12 +8,15 @@ import { useFormik } from "formik";
 import { passwordResetSchema } from "../../validations";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import config from "../../config.js";
+import { useAuth } from "../../context/auth.js";
 
 export default function PasswordReset() {
   // state
 
   const [loading, setLoading] = useState(false);
   // hooks
+  const [auth, setAuth] = useAuth();
+
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
@@ -38,6 +41,13 @@ export default function PasswordReset() {
         toast.success("Your password has been reset, Login");
         setLoading(false);
         actions.resetForm();
+        setAuth({ user: null, token: "" });
+
+        localStorage.removeItem("auth");
+        localStorage.removeItem("cLocation");
+        localStorage.removeItem("adData");
+        localStorage.removeItem("profileFormData");
+        localStorage.removeItem("profile");
         navigate("/login");
       }
     } catch (err) {
