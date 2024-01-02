@@ -42,6 +42,14 @@ export default function UpdatePassword() {
         toast.success("Password Updated");
         setLoading(false);
         actions.resetForm();
+        setAuth({ user: null, token: "" });
+        setDdata({ adData: null });
+
+        localStorage.removeItem("auth");
+        localStorage.removeItem("cLocation");
+        localStorage.removeItem("adData");
+        localStorage.removeItem("profileFormData");
+        localStorage.removeItem("profile");
         navigate("/login");
       }
     } catch (err) {

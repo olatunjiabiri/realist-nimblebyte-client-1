@@ -6,6 +6,7 @@ import { useAuth } from "../context/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import config from "./../config.js";
 import ContentWrapper from "../components/contentWrapper/ContentWrapper";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage.js";
 
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
@@ -133,72 +134,77 @@ export default function Login() {
 
   return (
     <ContentWrapper>
-      <div className="row">
-        <div className="col-md-4 offset-md-4">
-          <form onSubmit={handleSubmit}>
-            {location?.state?.fromAction === "like" ? (
-              <div className="h3 mb-4 text-center">
-                {" "}
-                Login or Create an Account to like an Ad
-              </div>
-            ) : (
-              <div className="h3 mb-4 text-center"> Log In</div>
-            )}
-            <input
-              type="text"
-              placeholder="Enter your email"
-              className="form-control mb-4"
-              required
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <div className="relative">
+      <LogoutMessage>
+        <div className="row">
+          <div className="col-md-4 offset-md-4">
+            <form onSubmit={handleSubmit}>
+              {location?.state?.fromAction === "like" ? (
+                <div className="h3 mb-4 text-center">
+                  {" "}
+                  Login or Create an Account to like an Ad
+                </div>
+              ) : (
+                <div className="h3 mb-4 text-center"> Log In</div>
+              )}
               <input
-                type={visible ? "text" : "password"}
-                placeholder="Enter your password"
+                type="text"
+                placeholder="Enter your email"
                 className="form-control mb-4"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <span className="password-toggle" onClick={toggle}>
-                {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
-              </span>
-            </div>
+              <div className="relative">
+                <input
+                  type={visible ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="form-control mb-4"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <span className="password-toggle" onClick={toggle}>
+                  {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </span>
+              </div>
 
-            <button disabled={loading} className="btn btn-primary col-12 mb-4">
-              {loading ? "Waiting..." : "Login"}
-            </button>
+              <button
+                disabled={loading}
+                className="btn btn-primary col-12 mb-4"
+              >
+                {loading ? "Waiting..." : "Login"}
+              </button>
 
-            <button
-              onClick={handleFaceBookSubmit}
-              disabled={loading}
-              className="btn btn-outline-primary col-12 mb-4"
-            >
-              {"Sign In with Facebook"}
-            </button>
-            {/* <button
+              <button
+                onClick={handleFaceBookSubmit}
+                disabled={loading}
+                className="btn btn-outline-primary col-12 mb-4"
+              >
+                {"Sign In with Facebook"}
+              </button>
+              {/* <button
               onClick={handleGoogleSubmit}
               disabled={loading}
               className="btn btn-outline-danger col-12 mb-4"
             >
               <span>{"Sign In with Google"}</span>
             </button> */}
-          </form>
+            </form>
 
-          <div className="d-flex justify-content-between">
-            <Link className="text-primary" to="/register">
-              Register
-            </Link>
-            <Link className="text-danger" to="/auth/forgot-password">
-              Forgot password
-            </Link>
+            <div className="d-flex justify-content-between">
+              <Link className="text-primary" to="/register">
+                Register
+              </Link>
+              <Link className="text-danger" to="/auth/forgot-password">
+                Forgot password
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
+        {/* <pre>{JSON.stringify(auth, null, 4)} </pre> */}
+      </LogoutMessage>
     </ContentWrapper>
   );
 }
