@@ -8,12 +8,15 @@ import { useFormik } from "formik";
 import { passwordResetSchema } from "../../validations";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import config from "../../config.js";
+import { useAuth } from "../../context/auth.js";
 
 export default function PasswordReset() {
   // state
 
   const [loading, setLoading] = useState(false);
   // hooks
+  const [auth, setAuth] = useAuth();
+
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
