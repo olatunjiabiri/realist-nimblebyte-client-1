@@ -39,7 +39,6 @@ export default function PasswordReset() {
         setLoading(false);
         actions.resetForm();
         setAuth({ user: null, token: "" });
-        setDdata({ adData: null });
 
         localStorage.removeItem("auth");
         localStorage.removeItem("cLocation");
