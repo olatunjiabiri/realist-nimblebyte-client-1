@@ -48,12 +48,12 @@ export default function UpdatePassword() {
         localStorage.removeItem("profile");
         toast.success("Password Updated");
         setLoading(false);
-        actions.resetForm();
+        // actions.resetForm();
         navigate("/login");
       }
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong. Try again.");
+      toast.error("Something went wrong. Try Again.");
       setLoading(false);
     }
   };
