@@ -39,10 +39,6 @@ export default function UpdatePassword() {
         toast.error(data.message);
         setLoading(false);
       } else {
-        toast.success("Password Updated");
-        setLoading(false);
-        actions.resetForm();
-        navigate("/login");
         setAuth({ user: null, token: "" });
         setDdata({ adData: null });
         localStorage.removeItem("auth");
@@ -50,6 +46,10 @@ export default function UpdatePassword() {
         localStorage.removeItem("adData");
         localStorage.removeItem("profileFormData");
         localStorage.removeItem("profile");
+        toast.success("Password Updated");
+        setLoading(false);
+        actions.resetForm();
+        navigate("/login");
       }
     } catch (err) {
       console.log(err);
