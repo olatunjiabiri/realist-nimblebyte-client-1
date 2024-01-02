@@ -38,6 +38,14 @@ export default function PasswordReset() {
         toast.success("Your password has been reset, Login");
         setLoading(false);
         actions.resetForm();
+        setAuth({ user: null, token: "" });
+        setDdata({ adData: null });
+
+        localStorage.removeItem("auth");
+        localStorage.removeItem("cLocation");
+        localStorage.removeItem("adData");
+        localStorage.removeItem("profileFormData");
+        localStorage.removeItem("profile");
         navigate("/login");
       }
     } catch (err) {
