@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FiShare } from "react-icons/fi";
 import { HiPause } from "react-icons/hi2";
 import React, { useEffect, useState } from "react";
@@ -43,6 +43,7 @@ export default function AdView() {
 
   // hooks
   const params = useParams();
+  const navigate = useNavigate();
   const houseType = params.houseType;
 
   useEffect(() => {
@@ -106,10 +107,14 @@ export default function AdView() {
               <></>
             )}
           </div>
-        </div>
+        </div>,
       );
     }
     return tableRows;
+  };
+
+  const navigateToLogin = () => {
+    navigate("/login?fromAction=like", { replace: true });
   };
 
   return (
@@ -153,9 +158,9 @@ export default function AdView() {
 
                       <span className="ml-auto share-icon">
                         {auth?.user === null ? (
-                          <Link to="/login" state={{ fromAction: "like" }}>
+                          <span onClick={navigateToLogin}>
                             <LikeUnlike ad={ad} size={"h4"} />
-                          </Link>
+                          </span>
                         ) : (
                           <Link>
                             <LikeUnlike ad={ad} size={"h4"} />
@@ -405,7 +410,7 @@ export default function AdView() {
                   <h4 className="text-center mb-3">
                     Recently{" "}
                     {soldRented?.map((a) =>
-                      a.action === "Rent" ? "Rented" : "Sold"
+                      a.action === "Rent" ? "Rented" : "Sold",
                     )}{" "}
                     {soldRented.length > 1 ? "Properties" : "Property"}
                   </h4>

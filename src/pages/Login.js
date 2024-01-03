@@ -24,6 +24,8 @@ export default function Login() {
   // hooks
   const navigate = useNavigate();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const fromAction = queryParams.get("fromAction"); // 'like'
 
   const toggle = () => {
     setVisible(!visible);
@@ -46,7 +48,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${config.AUTH_API}/user/facebook-signIn`
+        `${config.AUTH_API}/user/facebook-signIn`,
       );
       if (data?.success) {
         window.location.replace(data.responsePayload);
@@ -92,7 +94,7 @@ export default function Login() {
 
         localStorage.setItem(
           "auth",
-          JSON.stringify({ token, user, wishlist: userWishlist })
+          JSON.stringify({ token, user, wishlist: userWishlist }),
         );
         localStorage.removeItem("confirmation");
         toast.success("Login successful");
@@ -118,13 +120,13 @@ export default function Login() {
               "confirmation",
               JSON.stringify({
                 email,
-              })
+              }),
             );
             navigate("/confirmation");
             // toast.error(err.response.data.message); //wrong password
             break;
           default:
-          // code block
+          // code block"
         }
         // toast.error(err.response.data.message);
       } else toast.error("Something went wrong", err);
@@ -138,14 +140,11 @@ export default function Login() {
         <div className="row">
           <div className="col-md-4 offset-md-4">
             <form onSubmit={handleSubmit}>
-              {location?.state?.fromAction === "like" ? (
-                <div className="h3 mb-4 text-center">
-                  {" "}
-                  Login or Create an Account to like an Ad
-                </div>
-              ) : (
-                <div className="h3 mb-4 text-center"> Log In</div>
-              )}
+              <div className="h3 mb-4 text-center">
+                {fromAction === "like"
+                  ? "Login or Create an Account to like an Ad"
+                  : "Log In"}
+              </div>
               <input
                 type="text"
                 placeholder="Enter your email"
