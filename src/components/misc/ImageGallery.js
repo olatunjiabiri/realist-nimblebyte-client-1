@@ -9,11 +9,11 @@ export const ImageGallery = ({
   showIndicators = true,
   height = null,
   width = null,
-  thumbWidth = 40,
+  thumbWidth = 50,
 }) => {
   if (height == null && width == null) {
     return (
-      <div className="thumbs">
+      <>
         <div className="box">
           <Carousel
             showArrows={true}
@@ -32,7 +32,7 @@ export const ImageGallery = ({
             ))}
           </Carousel>
         </div>
-      </div>
+      </>
     );
   } else {
     return (
