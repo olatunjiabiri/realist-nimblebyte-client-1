@@ -13,7 +13,7 @@ export const ImageGallery = ({
 }) => {
   if (height == null && width == null) {
     return (
-      <>
+      <div className="thumbs">
         <div className="box">
           <Carousel
             showArrows={true}
@@ -32,7 +32,7 @@ export const ImageGallery = ({
             ))}
           </Carousel>
         </div>
-      </>
+      </div>
     );
   } else {
     return (
