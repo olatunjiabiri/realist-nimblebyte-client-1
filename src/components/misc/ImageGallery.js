@@ -1,5 +1,6 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import "./index.css";
 
 export const ImageGallery = ({
   photos,
@@ -8,6 +9,7 @@ export const ImageGallery = ({
   showIndicators = true,
   height = null,
   width = null,
+  thumbWidth = 40,
 }) => {
   if (height == null && width == null) {
     return (
@@ -20,6 +22,7 @@ export const ImageGallery = ({
             infiniteLoop={true}
             autoPlay={true}
             showIndicators={showIndicators}
+            thumbWidth={thumbWidth}
           >
             {photos.map((x, index) => (
               <div key={index} className="slide">
@@ -41,6 +44,7 @@ export const ImageGallery = ({
             infiniteLoop={true}
             autoPlay={true}
             showIndicators={showIndicators}
+            thumbWidth={thumbWidth}
           >
             {photos.map((x, index) => (
               <div key={index} className="slide">
@@ -64,7 +68,7 @@ export const generatePhotosArray = (photos) => {
         src: p.Location,
         width: x,
         height: x,
-      }),
+      })
     );
     return arr;
   } else {
