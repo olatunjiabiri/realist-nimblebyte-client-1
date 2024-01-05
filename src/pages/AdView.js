@@ -91,7 +91,8 @@ export default function AdView() {
     for (let i = 0; i < ad?.features.length; i = i + 2) {
       tableRows.push(
         <div className="container">
-          <div
+          <ul
+            style={{ padding: "4px" }}
             className="row"
             key={ad?.features[i] + "-" + ad?.features[i + 1] + "-" + i}
           >
@@ -106,8 +107,8 @@ export default function AdView() {
             ) : (
               <></>
             )}
-          </div>
-        </div>,
+          </ul>
+        </div>
       );
     }
     return tableRows;
@@ -410,7 +411,7 @@ export default function AdView() {
                   <h4 className="text-center mb-3">
                     Recently{" "}
                     {soldRented?.map((a) =>
-                      a.action === "Rent" ? "Rented" : "Sold",
+                      a.action === "Rent" ? "Rented" : "Sold"
                     )}{" "}
                     {soldRented.length > 1 ? "Properties" : "Property"}
                   </h4>
