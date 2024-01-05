@@ -92,7 +92,7 @@ export default function AdView() {
       tableRows.push(
         <div className="container">
           <ul
-            style={{ padding: "4px" }}
+            style={{ padding: "1px" }}
             className="row"
             key={ad?.features[i] + "-" + ad?.features[i + 1] + "-" + i}
           >
