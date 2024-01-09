@@ -25,11 +25,9 @@ const BackToTopButton = () => {
 
   return (
     isVisible && (
-      <button className="back-to-top-button" 
-      onClick={scrollToTop}
-       >
+      <button className="back-to-top-button" onClick={scrollToTop}>
         {/* <backToTop /> */}
-        <FaAngleDoubleUp /> 
+        <FaAngleDoubleUp />
       </button>
     )
   );
