@@ -112,7 +112,7 @@ export default function Login() {
 
         if (auth.user?.firstName === "") navigate("/user/profile");
 
-        location?.state?.fromAction === "like"
+        state?.fromAction === "like"
           ? navigate("/")
           : location?.state !== null
           ? navigate(location.state)
