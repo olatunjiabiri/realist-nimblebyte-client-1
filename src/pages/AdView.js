@@ -114,9 +114,9 @@ export default function AdView() {
     return tableRows;
   };
 
-  const navigateToLogin = () => {
-    navigate("/login?fromAction=like", { replace: true });
-  };
+  // const navigateToLogin = () => {
+  //   navigate("/login?fromAction=like", { replace: true });
+  // };
 
   return (
     <LogoutMessage>
@@ -159,9 +159,12 @@ export default function AdView() {
 
                       <span className="ml-auto share-icon">
                         {auth?.user === null ? (
-                          <span onClick={navigateToLogin}>
+                          // <span onClick={navigateToLogin}>
+                          //   <LikeUnlike ad={ad} size={"h4"} />
+                          // </span>
+                          <Link to="/login" state={{ fromAction: "like" }}>
                             <LikeUnlike ad={ad} size={"h4"} />
-                          </span>
+                          </Link>
                         ) : (
                           <Link>
                             <LikeUnlike ad={ad} size={"h4"} />
