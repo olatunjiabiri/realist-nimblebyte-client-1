@@ -151,7 +151,7 @@ export default function Login() {
           <div className="col-md-4 offset-md-4">
             <form onSubmit={handleSubmit}>
               <div className="h3 mb-4 text-center">
-                {state.fromAction === "like"
+                {state?.fromAction === "like"
                   ? "Login or Create an Account to like an Ad"
                   : "Log In"}
               </div>
