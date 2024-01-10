@@ -112,11 +112,21 @@ export default function Login() {
 
         if (auth.user?.firstName === "") navigate("/user/profile");
 
-        state?.fromAction === "like"
-          ? navigate("/")
-          : location?.state !== null
-          ? navigate(location.state)
-          : navigate("/");
+        if (
+          state?.fromAction === "like" ||
+          location?.state === null ||
+          location?.state === undefined
+        ) {
+          navigate("/");
+        } else {
+          navigate(location?.state);
+        }
+
+        // state?.fromAction === "like"
+        //   ? navigate("/")
+        //   : location?.state !== null
+        //   ? navigate(location.state)
+        //   : navigate("/");
       }
     } catch (err) {
       if (err.response.data.success === false) {
