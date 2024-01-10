@@ -22,7 +22,9 @@ export default function Login() {
   const [visible, setVisible] = useState(false);
   // hooks
   const navigate = useNavigate();
-  const { location, state } = useLocation();
+  const { state } = useLocation();
+  const location = useLocation();
+
   // const queryParams = new URLSearchParams(location.search);
   // const fromAction = queryParams.get("fromAction"); // 'like'
 
@@ -112,11 +114,21 @@ export default function Login() {
 
         if (auth.user?.firstName === "") navigate("/user/profile");
 
-        state?.fromAction === "like"
-          ? navigate("/")
-          : location?.state !== null
-          ? navigate(location.state)
-          : navigate("/");
+        if (
+          state?.fromAction === "like" ||
+          location?.state === null ||
+          location?.state === undefined
+        ) {
+          navigate("/");
+        } else {
+          navigate(location?.state);
+        }
+
+        // state?.fromAction === "like"
+        //   ? navigate("/")
+        //   : location?.state !== null
+        //   ? navigate(location.state)
+        //   : navigate("/");
       }
     } catch (err) {
       if (err.response.data.success === false) {
