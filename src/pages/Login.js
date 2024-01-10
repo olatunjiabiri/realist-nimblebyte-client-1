@@ -22,7 +22,9 @@ export default function Login() {
   const [visible, setVisible] = useState(false);
   // hooks
   const navigate = useNavigate();
-  const { location, state } = useLocation();
+  const { state } = useLocation();
+  const location = useLocation();
+
   // const queryParams = new URLSearchParams(location.search);
   // const fromAction = queryParams.get("fromAction"); // 'like'
 
