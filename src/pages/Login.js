@@ -112,12 +112,14 @@ export default function Login() {
 
         if (auth.user?.firstName === "") navigate("/user/profile");
 
-        if (state?.fromAction === "like") {
+        if (
+          state?.fromAction === "like" ||
+          location?.state === null ||
+          location?.state === undefined
+        ) {
           navigate("/");
-        } else if (location?.state !== null || location?.state !== undefined) {
-          navigate(location?.state);
         } else {
-          navigate("/");
+          navigate(location?.state);
         }
 
         // state?.fromAction === "like"
