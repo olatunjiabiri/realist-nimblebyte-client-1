@@ -143,9 +143,10 @@ export default function AdForm({ action, type }) {
 
   const handleClick = async () => {
     // console.log("Ad....", ad);
+    console.log("form data....", formData);
 
     try {
-      if (!ad.photos?.length) {
+      if (formData[0].blob === null) {
         toast.error("Photo is required");
         return;
       } else if (!ad.address) {
@@ -164,9 +165,13 @@ export default function AdForm({ action, type }) {
         toast.error("Description is required");
         return;
       } else {
+        const uploadedPhotos = await uploadImages();
         //price validation
         setAd({ ...ad, loading: true });
-        const { data } = await axios.post("/ad", ad);
+        const { data } = await axios.post("/ad", {
+          ...ad,
+          photos: uploadedPhotos,
+        });
         if (data?.error) {
           toast.error(data.error);
           setAd({ ...ad, loading: false });
@@ -179,7 +184,7 @@ export default function AdForm({ action, type }) {
           // localStorage.setItem("auth", JSON.stringify(fromLS));
           // console.log("ads>>", data);
 
-          toast.success("Ad created successfully");
+          toast.success("Ah created successfully");
 
           setDdata({ adData: null });
           localStorage.removeItem("adData");
@@ -198,8 +203,97 @@ export default function AdForm({ action, type }) {
     }
   };
 
+  const canvasRef = useRef(null);
+
+  async function uploadImages() {
+    return new Promise(async (resolve, reject) => {
+      if (formData.length === 0) {
+        resolve();
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const files = formData;
+
+        if (files?.length) {
+          setAd((prev) => ({ ...prev, uploading: true }));
+
+          const uploadedPhotos = await Promise.all(
+            files.map(async (file) => {
+              if (file.blob === null) {
+                return {
+                  Key: file.text,
+                  Location: file.image,
+                };
+              }
+
+              return new Promise(async (innerResolve) => {
+                const image = new Image();
+                image.src = URL.createObjectURL(file.blob);
+
+                image.onload = async () => {
+                  const canvas = canvasRef.current;
+                  const context = canvas.getContext("2d");
+                  const newWidth = 1080;
+                  const newHeight = 720;
+
+                  // Resize the image using canvas
+                  canvas.width = newWidth;
+                  canvas.height = newHeight;
+                  context.drawImage(image, 0, 0, newWidth, newHeight);
+
+                  // Convert the canvas content back to base64
+                  const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
+
+                  try {
+                    const { data } = await axios.post("/upload-image", {
+                      file: resizedImage,
+                      label: file.text,
+                    });
+                    innerResolve(data);
+                  } catch (err) {
+                    console.log(err);
+                    innerResolve(null);
+                  }
+                };
+              });
+            }),
+          );
+
+          // Processing after upload
+          const filteredPhotos = uploadedPhotos.filter(Boolean);
+          const uniquePhotos = Array.from(
+            new Set([
+              ...ad.photos.map((photo) => photo.Location),
+              ...filteredPhotos.map((photo) => photo.Location),
+            ]),
+          ).map((location) =>
+            filteredPhotos.find((photo) => photo.Location === location),
+          );
+
+          setAd((prev) => ({
+            ...prev,
+            photos: uniquePhotos,
+            uploading: false,
+          }));
+
+          console.log("unique photos", uniquePhotos);
+          setLoading(false);
+          resolve(uniquePhotos);
+        }
+      } catch (err) {
+        console.log(err);
+        setAd((prev) => ({ ...prev, uploading: false }));
+        setLoading(false);
+        reject(err);
+      }
+    });
+  }
+
   return (
     <div>
+      <canvas ref={canvasRef} style={{ display: "none" }} />
       <LogoutMessage>
         <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
           <DynamicForm
@@ -207,6 +301,7 @@ export default function AdForm({ action, type }) {
             setFormData={setFormData}
             fileRefs={fileRefs}
             ad={ad}
+            // canvasRef={canvasRef}
             setAd={setAd}
             setIsOpen={setIsOpen}
           />
@@ -332,10 +427,10 @@ export default function AdForm({ action, type }) {
                   >
                     Upload Photos
                   </label>
-                  {ad.photos?.map((file, index) => (
+                  {formData?.map((file, index) => (
                     <Avatar
                       key={index}
-                      src={file?.Location}
+                      src={file?.image}
                       shape="square"
                       size="46"
                       className="ml-2 m-2"

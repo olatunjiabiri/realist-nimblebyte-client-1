@@ -192,7 +192,7 @@ const DynamicForm = ({
                 }
               };
             });
-          })
+          }),
         );
 
         // Remove null entries (failed uploads) and filter out duplicates
@@ -201,9 +201,9 @@ const DynamicForm = ({
           new Set([
             ...ad.photos.map((photo) => photo.Location),
             ...filteredPhotos.map((photo) => photo.Location),
-          ])
+          ]),
         ).map((location) =>
-          filteredPhotos.find((photo) => photo.Location === location)
+          filteredPhotos.find((photo) => photo.Location === location),
         );
 
         setAd((prev) => ({
@@ -247,7 +247,6 @@ const DynamicForm = ({
 
   return (
     <div className="dynamic-form">
-      <canvas ref={canvasRef} style={{ display: "none" }} />
       <p className="dynamic-form-title">Upload Photos</p>
       {formData.map((row, index) => (
         <div key={index} className="form-row">
@@ -323,23 +322,25 @@ const DynamicForm = ({
           Add new photo
         </button>
         {/* <div style={{ display: "flex" }}> */}
-        <button
-          type="button"
-          onClick={() => setIsOpen(false)}
-          className="btn btn-danger image-upload-modal-buttons cancel-button"
-        >
-          Cancel
-        </button>
+        {/* <button */}
+        {/*   type="button" */}
+        {/*   onClick={() => setIsOpen(false)} */}
+        {/*   className="btn btn-danger image-upload-modal-buttons cancel-button" */}
+        {/* > */}
+        {/*   Cancel */}
+        {/* </button> */}
         {/* <div style={{ width: "10px" }} /> */}
         <button
           type="button"
-          onClick={handleConfirm}
+          // onClick={handleConfirm}
+          onClick={() => setIsOpen(false)}
           className={`btn btn-primary ${
             formCompleted ? "" : "disabled"
           } image-upload-modal-buttons`}
           disabled={!formCompleted || loading}
         >
-          {loading ? "Uploading Images" : "Confirm images"}
+          {/* {loading ? "Uploading Images" : "Confirm images"} */}
+          Continue
         </button>
         {/* </div> */}
       </div>
