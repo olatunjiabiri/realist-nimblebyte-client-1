@@ -143,7 +143,6 @@ export default function AdForm({ action, type }) {
 
   const handleClick = async () => {
     // console.log("Ad....", ad);
-    console.log("form data....", formData);
 
     try {
       if (formData[0].blob === null) {
@@ -184,7 +183,7 @@ export default function AdForm({ action, type }) {
           // localStorage.setItem("auth", JSON.stringify(fromLS));
           // console.log("ads>>", data);
 
-          toast.success("Ah created successfully");
+          toast.success("Ad created successfully");
 
           setDdata({ adData: null });
           localStorage.removeItem("adData");
@@ -640,7 +639,7 @@ export default function AdForm({ action, type }) {
                       ad.loading ? "disabled" : ""
                     }`}
                   >
-                    {ad.loading ? "Saving..." : "Submit"}
+                    {loading ? "Uploading..." : ad.loading ? "Saving..." : "Submit"}
                   </button>
                 </div>
               </div>
