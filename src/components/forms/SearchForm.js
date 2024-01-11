@@ -127,7 +127,7 @@ export default function SearchForm({ navMenuProperty }) {
             </div>
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
-              <div className="row justify-content-evenly col-lg-8">
+              <div className="d-flex row justify-content-evenly mx-auto col-lg-8 search-controls-container">
                 {!navMenuProperty && (
                   <>
                     <select
