@@ -55,6 +55,30 @@ h-container {
   color: orange ;
 }
 
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mobile-links-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.mobile-links-container img {
+  margin: 5px;
+}
+
+.app-download-image {
+  width: 80px; 
+  height: auto;
+  margin-right: 10px;
+}
+
 
 @media (max-width: 768px) {
 
