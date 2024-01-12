@@ -115,7 +115,11 @@ export default function AdCard({ ad }) {
                   </Link>
                 )}
               </div>
-
+              <div className="ad-card-property-title">
+                {ad?.propertyTitle ||
+                  `${ad?.houseType} property` ||
+                  `${ad?.type} property`}
+              </div>
               {/* <div className="card-text address-height">{ad?.address}</div> */}
               <div className="card-text address-height">{adAddress}</div>
 
