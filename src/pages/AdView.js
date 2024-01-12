@@ -206,7 +206,7 @@ export default function AdView() {
                       <div className="py-2 property-title">
                         {" "}
                         {ad?.propertyTitle ||
-                          `${ad?.houseType} property` ||
+                          (ad?.houseType && `${ad?.houseType} property`) ||
                           `${ad?.type} property`}
                       </div>
                       <span>
@@ -328,7 +328,7 @@ export default function AdView() {
                   <div className="py-3 property-title">
                     {" "}
                     {ad?.propertyTitle ||
-                      `${ad?.houseType} property` ||
+                      (ad?.houseType && `${ad?.houseType} property`) ||
                       `${ad?.type} property`}
                   </div>
                   <span>

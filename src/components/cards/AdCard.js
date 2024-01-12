@@ -117,7 +117,7 @@ export default function AdCard({ ad }) {
               </div>
               <div className="ad-card-property-title">
                 {ad?.propertyTitle ||
-                  `${ad?.houseType} property` ||
+                  (ad?.houseType && `${ad?.houseType} property`) ||
                   `${ad?.type} property`}
               </div>
               {/* <div className="card-text address-height">{ad?.address}</div> */}
