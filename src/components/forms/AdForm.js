@@ -63,6 +63,7 @@ export default function AdForm({ action, type }) {
   const [ad, setAd] = useState({
     photos: ddata.photos || [],
     uploading: false,
+    propertyTitle: ddata.propertyTitle || "",
     price: ddata.price || "",
     address: ddata.address || "",
     landmark: ddata.landmark || "",
@@ -157,8 +158,11 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
+      } else if (!ad.propertyTitle) {
+        toast.error("Property Title is required");
+        return;
       } else if (ad.action === "Sell" && !ad.title) {
-        toast.error(" Property Title is required");
+        toast.error(" Property document Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -343,6 +347,18 @@ export default function AdForm({ action, type }) {
                   ))}
                 </div>
 
+                <div>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    placeholder="Property Title e.g Luxury 4 Bedroom Duplex"
+                    value={ad.propertyTitle}
+                    onChange={(e) =>
+                      setAd({ ...ad, propertyTitle: e.target.value })
+                    }
+                  />
+                </div>
+
                 <div className="mb-3 border-0 ">
                   <GooglePlacesAutocomplete
                     apiKey={config.GOOGLE_PLACES_KEY}
@@ -430,7 +446,7 @@ export default function AdForm({ action, type }) {
                       type="number"
                       min="0"
                       className="form-control mb-3"
-                      placeholder="Enter number of bathrooms"
+                      placeholder="Enter number of bathrooms/toilets "
                       value={ad.bathrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bathrooms: e.target.value })
@@ -454,7 +470,7 @@ export default function AdForm({ action, type }) {
                 <input
                   type="text"
                   className="form-control mb-3"
-                  placeholder="Size of land"
+                  placeholder="Size of property in sqm or sqft"
                   value={ad.landsize}
                   onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
@@ -462,7 +478,7 @@ export default function AdForm({ action, type }) {
                   <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder="Enter property title e.g. C of O, Survey Plan"
+                    placeholder="Enter property document title e.g. C of O, Survey Plan"
                     value={ad.title}
                     onChange={(e) => setAd({ ...ad, title: e.target.value })}
                   />
