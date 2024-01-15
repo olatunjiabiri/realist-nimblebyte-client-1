@@ -35,7 +35,7 @@ export default function AdCard({ ad }) {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 500);
   }, [pathname]);
 
   useEffect(() => {
@@ -47,8 +47,8 @@ export default function AdCard({ ad }) {
             }`
           : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
               r.city
-            }, ${r.country}`
-      )
+            }, ${r.country}`,
+      ),
     );
   }, []);
 

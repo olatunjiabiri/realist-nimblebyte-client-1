@@ -25,7 +25,7 @@ export default function Home() {
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
+  const [perPage, setPerPage] = useState(9);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function Home() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      }
+      },
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -92,7 +92,7 @@ export default function Home() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    //window.scrollTo(0, 0);
+    // window.scrollTo(0, 800);
   }, []);
 
   const fetchAds = async () => {
@@ -144,8 +144,31 @@ export default function Home() {
                 </button> */}
 
                 <Stack spacing={2}>
-                  <Typography>Page: {page}</Typography>
-                  <Pagination count={10} page={page} onChange={handleChange} />
+                  {/* <Typography */}
+                  {/*   color="primary" */}
+                  {/*   shape="rounded" */}
+                  {/*   variant="outlined" */}
+                  {/* > */}
+                  {/*   Page {page} */}
+                  {/* </Typography> */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Pagination
+                      color="primary"
+                      shape="rounded"
+                      showFirstButton
+                      showLastButton
+                      variant="outlined"
+                      count={Math.round(total / 9)}
+                      page={page}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </Stack>
               </div>
             </div>
