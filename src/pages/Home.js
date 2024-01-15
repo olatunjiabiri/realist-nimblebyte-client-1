@@ -63,7 +63,7 @@ export default function Home() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      },
+      }
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -92,8 +92,12 @@ export default function Home() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    // window.scrollTo(0, 800);
+    window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 500);
+  }, [page]);
 
   const fetchAds = async () => {
     try {
