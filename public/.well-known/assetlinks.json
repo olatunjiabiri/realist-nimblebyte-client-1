@@ -22,5 +22,17 @@
         "97:D2:4D:D4:1D:C9:5E:49:1E:05:B6:78:18:FC:0F:B9:79:53:25:FC:53:A9:EF:14:FB:1A:2D:99:FE:9C:3F:41"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.nimblecasa.app",
+      "sha256_cert_fingerprints": [
+        "53:62:A3:7A:5E:A4:5B:D3:BC:E5:B5:39:B4:35:52:64:43:4E:65:CA:57:62:A5:7A:49:08:04:F3:21:82:E7:9B"
+      ]
+    }
   }
 ]
