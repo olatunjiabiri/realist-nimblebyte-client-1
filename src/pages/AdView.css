@@ -2,6 +2,10 @@
     height: 41px
 }
 
+.property-title {
+    font-weight: 700;
+}
+
 .flex-test {
     margin-left: auto;
     align-self: center;
