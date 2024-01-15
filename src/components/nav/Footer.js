@@ -82,8 +82,22 @@ export default function Footer() {
                 <Link to="/privacy-policy">PRIVACY POLICY</Link>
               </li>
             </ul>
+            <div className="mobile-links-container">
+              <a href="https://play.google.com/store/apps/details?id=com.nimblecasa.app" target="_blank">
+                <img 
+                className="app-download-image"
+                src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/google-app-download-badge-284x84.png" 
+                alt="Get it on Google Play"/>
+              </a>
+              <a href="#" target="_blank">
+                <img 
+                className="app-download-image"
+                src="https://nimblecasauatstorage.blob.core.windows.net/nimblecasa-icons/apple-app-download-badge-284x84.png" 
+                alt="Download on the App Store"/>
+              </a>
+            </div>
           </div>
-
+              
           <div className="col col-lg-3 col-md-6 text-light footer-links">
             <h4 className="mt-4 q-link">Quick Links</h4>
             <div
