@@ -10,6 +10,9 @@ import { setKey, geocode, RequestType } from "react-geocode";
 import { useSearch } from "../context/search";
 
 import config from "../config.js";
+import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 export default function Home() {
   setKey(config.GOOGLE_MAPS_KEY);
@@ -22,7 +25,7 @@ export default function Home() {
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(18);
+  const [perPage, setPerPage] = useState(9);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (page === 1) return;
+    // if (page === 1) return;
     fetchAds();
   }, [page]);
 
@@ -89,19 +92,28 @@ export default function Home() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    //window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 500);
+  }, [page]);
 
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
       // console.log("data", data);
       //setAds((prevAds) => [...prevAds, ...data.ads]);
-      setAds([...ads, ...data.ads]);
+      // setAds([...ads, ...data.ads]);
+      setAds(data.ads);
+
       setTotal(data.total);
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleChange = (event, value) => {
+    setPage(value);
   };
 
   return (
@@ -121,7 +133,7 @@ export default function Home() {
           {ads?.length < total ? (
             <div className="row">
               <div className="col text-center mt-4 mb-4">
-                <button
+                {/* <button
                   disabled={loading}
                   className="btn btn-warning"
                   type="button"
@@ -133,7 +145,35 @@ export default function Home() {
                   {loading
                     ? "Loading..."
                     : `${ads?.length} / ${total} Load more`}
-                </button>
+                </button> */}
+
+                <Stack spacing={2}>
+                  {/* <Typography */}
+                  {/*   color="primary" */}
+                  {/*   shape="rounded" */}
+                  {/*   variant="outlined" */}
+                  {/* > */}
+                  {/*   Page {page} */}
+                  {/* </Typography> */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Pagination
+                      color="primary"
+                      shape="rounded"
+                      showFirstButton
+                      showLastButton
+                      variant="outlined"
+                      count={Math.round(total / 9)}
+                      page={page}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Stack>
               </div>
             </div>
           ) : (

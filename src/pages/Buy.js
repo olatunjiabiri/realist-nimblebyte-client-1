@@ -10,6 +10,9 @@ export default function Buy() {
   // context
   const [auth, setAuth] = useAuth();
   const [search, setSearch] = useSearch();
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(9);
 
   // state
   const [ads, setAds] = useState();
@@ -34,7 +37,7 @@ export default function Buy() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   const fetchAds = async () => {

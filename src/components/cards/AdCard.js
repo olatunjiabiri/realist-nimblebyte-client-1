@@ -35,7 +35,7 @@ export default function AdCard({ ad }) {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 500);
   }, [pathname]);
 
   useEffect(() => {

@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   const fetchAds = async () => {

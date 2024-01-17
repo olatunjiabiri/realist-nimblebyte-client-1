@@ -17,7 +17,7 @@ export default function Rent() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   // console.log("auth>>", auth);
