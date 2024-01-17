@@ -4,6 +4,7 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../config.js";
 import { Prices } from "../../helpers/priceList";
 import { action, type } from "../../helpers/actionTypeList";
+import CurrentLocation from "../CurrentLocation.js";
 
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
@@ -57,7 +58,7 @@ export default function SearchForm({ navMenuProperty }) {
   const handleSearch = async () => {
     setSearch((prev) => ({ ...prev, loading: false }));
 
-    // console.log("search options>>>>", search);
+    console.log("search options>>>>", search);
 
     try {
       const { results, page, price, ...rest } = search;
@@ -104,8 +105,9 @@ export default function SearchForm({ navMenuProperty }) {
           }}
         >
           <div className="container col-lg-8">
-            <div className="form-control my-4 text-center rounded-pill ">
-              <GooglePlacesAutocomplete
+            {/* <div className="form-control my-4 text-center rounded-pill "> */}
+            {/* <div className="form-control my-4 text-center rounded-pill "> */}
+            {/* <GooglePlacesAutocomplete
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
                 selectProps={{
@@ -123,8 +125,10 @@ export default function SearchForm({ navMenuProperty }) {
                     this.set(null);
                   },
                 }}
-              />
-            </div>
+              /> */}
+
+            <CurrentLocation />
+            {/* </div> */}
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
               <div className="d-flex row justify-content-evenly mx-auto col-lg-8 search-controls-container">
