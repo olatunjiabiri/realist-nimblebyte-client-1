@@ -6,13 +6,13 @@ const config = {
   CLIENT_BASE_URL: "https://realistclientapp2.azurewebsites.net",
   API:
     // process.env.NODE_ENV === "production"
-    // "http://localhost:8000/api",
-    "https://realist-node-backend.azurewebsites.net/api",
+    "http://localhost:8000/api",
+  // "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API:
     // process.env.NODE_ENV === "production"
-    //"https://localhost:7298",
-    // "https://authbackendservice.azurewebsites.net",
-    "https://realist-auth-backend.azurewebsites.net",
+    "https://localhost:7298",
+  // "https://authbackendservice.azurewebsites.net",
+  // "https://realist-auth-backend.azurewebsites.net",
   PAYMENT_API: "https://realist-payment-service.azurewebsites.net",
   //  "https://localhost:7067",
   GOOGLE_PLACES_KEY: "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs",

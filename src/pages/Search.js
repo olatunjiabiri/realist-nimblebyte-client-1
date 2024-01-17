@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import SearchForm from "../components/forms/SearchForm";
 import { useSearch } from "../context/search";
 import AdCard from "../components//cards/AdCard";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { ShimmerPostList } from "react-shimmer-effects";
 
 export default function Search() {
   const [search, setSearch] = useSearch();
@@ -10,6 +13,15 @@ export default function Search() {
     // Scroll to the top of the page when the component mounts
     // window.scrollTo(0, 0);
   }, []);
+
+  const handleChange = (event, value) => {
+    setSearch((prev) => ({
+      ...prev,
+      pageNo: value,
+      loading: true,
+      // action: "",
+    }));
+  };
 
   return (
     <div>
@@ -21,14 +33,69 @@ export default function Search() {
             <>
               <div className="col-md-12 text-center p-3">
                 <button className="btn btn-info disabled">
-                  <b>Found {search.results?.length} results</b>
+                  <b>Found {search.total} results</b>
                 </button>
               </div>
 
               <div className="row d-flex justify-content-center">
-                {search?.results?.map((item) => (
-                  <AdCard ad={item} key={item._id} />
-                ))}
+                {/* {search?.results?.map((item) => ( */}
+                {/*   <AdCard ad={item} key={item._id} /> */}
+                {/* ))} */}
+
+                {search.loading ? (
+                  <div style={{ padding: "40px 0" }}>
+                    <ShimmerPostList
+                      postStyle="STYLE_FOUR"
+                      col={3}
+                      row={2}
+                      gap={30}
+                    />
+                  </div>
+                ) : (
+                  search?.results?.map((ad) => <AdCard ad={ad} key={ad._id} />)
+                )}
+                {search?.results?.length < search.total ? (
+                  <div className="row">
+                    <div className="col text-center mt-4 mb-4">
+                      {/* <button
+                  disabled={loading}
+                  className="btn btn-warning"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(page + 1);
+                  }}
+                >
+                  {loading
+                    ? "Loading..."
+                    : `${ads?.length} / ${total} Load more`}
+                </button> */}
+
+                      <Stack spacing={2}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Pagination
+                            color="primary"
+                            shape="rounded"
+                            showFirstButton
+                            showLastButton
+                            variant="outlined"
+                            count={Math.ceil(search?.total / search.perPage)}
+                            page={search.pageNo}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </Stack>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </>
           ) : (
