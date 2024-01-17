@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import AdCard from "../components/cards/AdCard";
 import SearchForm from "../components/forms/SearchForm";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
+import { ShimmerPostList } from "react-shimmer-effects";
 
 import { setKey, geocode, RequestType } from "react-geocode";
 
@@ -15,6 +16,8 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 export default function Home() {
+  let count = 0;
+  count++;
   setKey(config.GOOGLE_MAPS_KEY);
 
   // context
@@ -27,6 +30,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(9);
   const [loading, setLoading] = useState(false);
+  const [first, setFirst] = useState(true);
 
   useEffect(() => {
     if (auth.user === null) {
@@ -90,10 +94,11 @@ export default function Home() {
     console.log("Unable to retrieve your location");
   };
 
-  useEffect(() => {
-    // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   // Scroll to the top of the page when the component mounts
+  //   window.scrollTo(0, 0);
+  // }, []);
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
     window.scrollTo(0, 500);
@@ -101,6 +106,7 @@ export default function Home() {
 
   const fetchAds = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
       // console.log("data", data);
       //setAds((prevAds) => [...prevAds, ...data.ads]);
@@ -108,13 +114,52 @@ export default function Home() {
       setAds(data.ads);
 
       setTotal(data.total);
+      setLoading(false);
+      // if (!isFirstLoad.current) {
+      //   window.scrollTo(0, 500);
+      // }
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  // useEffect(() => {
+  //   console.log("isFirstload", isFirstLoad.current);
+  //   if (isFirstLoad.current || ads.length === 0) {
+  //     isFirstLoad.current = false;
+  //     return;
+  //   }
+  // }, [ads]);
+  //
+  useEffect(() => {
+    console.log("isFirstload", isFirstLoad.current);
+    // if (isFirstLoad.current || ads.length === 0) {
+    //   isFirstLoad.current = false;
+    //   return;
+    // }
+    if (!loading) {
+      window.scrollTo(0, 500);
+    }
+  }, [page, loading]);
+
+  const [hasFetchedAds, setHasFetchedAds] = useState(false);
+
+  // useEffect(() => {
+  //   // If ads are fetched for the first time, update the state
+  //   if (!hasFetchedAds) {
+  //     setHasFetchedAds(true);
+  //     return;
+  //   }
+  //
+  //   // Perform the scroll only after the first successful fetch
+  //   if (hasFetchedAds) {
+  //     window.scrollTo(0, 500);
+  //   }
+  // }, [ads]); // Depend on ads
 
   return (
     <div>
@@ -125,9 +170,18 @@ export default function Home() {
 
         <div className="container pt-3">
           <div className="row d-flex justify-content-center">
-            {ads?.map((ad) => (
-              <AdCard ad={ad} key={ad._id} />
-            ))}
+            {loading ? (
+              <div style={{ padding: "40px 0" }}>
+                <ShimmerPostList
+                  postStyle="STYLE_FOUR"
+                  col={3}
+                  row={2}
+                  gap={30}
+                />
+              </div>
+            ) : (
+              ads?.map((ad) => <AdCard ad={ad} key={ad._id} />)
+            )}
           </div>
 
           {ads?.length < total ? (
@@ -148,13 +202,6 @@ export default function Home() {
                 </button> */}
 
                 <Stack spacing={2}>
-                  {/* <Typography */}
-                  {/*   color="primary" */}
-                  {/*   shape="rounded" */}
-                  {/*   variant="outlined" */}
-                  {/* > */}
-                  {/*   Page {page} */}
-                  {/* </Typography> */}
                   <div
                     style={{
                       display: "flex",
@@ -168,7 +215,7 @@ export default function Home() {
                       showFirstButton
                       showLastButton
                       variant="outlined"
-                      count={Math.round(total / 9)}
+                      count={Math.ceil(total / perPage)}
                       page={page}
                       onChange={handleChange}
                     />
