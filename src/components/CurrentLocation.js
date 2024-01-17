@@ -11,7 +11,6 @@ import { debounce } from "@mui/material/utils";
 // This key was created specifically for the demo in mui.com.
 // You need to create a new one for your application.
 import { useSearch } from "../context/search";
-import { red } from "@mui/material/colors";
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs";
 
@@ -89,9 +88,7 @@ export default function CurrentLocation() {
         setOptions(newOptions);
       }
     });
-    // if (value === "Current Location") {
-    //   setSearch({ ...search, address: "my address" });
-    // }
+
     console.log({ value, options, inputValue });
     // if (!!value) {
     //   setSearch({ ...search, address: value?.description });
@@ -152,7 +149,8 @@ export default function CurrentLocation() {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Enter an address, city or location"
+            // label="Enter an address, city or location"
+            placeholder="Enter an address, city or location"
             fullWidth
             variant="filled"
           />
