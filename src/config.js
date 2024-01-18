@@ -1,22 +1,13 @@
 const config = {
   AdminEmail: "#{REACT-APP-ADMIN-EMAIL}#",
 
-  // APIS_PROTECT: "#{NODE-PROTECT-API-KEY}#",
-  APIS_PROTECT: "Fm2dT0GzyUa_Q_6KxMTzNwELPcEVcHOUqyjd0yn0LJqA",
+  APIS_PROTECT: "#{NODE-PROTECT-API-KEY}#",
 
-  // AUTH_API_KEY: "#{AUTH-API-KEY}#",
-  AUTH_API_KEY: "d6cf4f00-773e-40b6-aed1-1960691e954e",
+  AUTH_API_KEY: "#{AUTH-API-KEY}#",
 
-  // CLIENT_BASE_URL: "#{REACT-CLIENT-BASE-URL}#",
-  CLIENT_BASE_URL: "https://realistclientapp2.azurewebsites.net",
-  // API: "#{REACT-NODE-API}#",
-  API:
-    // process.env.NODE_ENV === "production"
-    "http://localhost:8000/api",
-  // AUTH_API: "#{REACT-AUTH-API}#",
-  AUTH_API:
-    // process.env.NODE_ENV === "production"
-    "https://localhost:7298",
+  CLIENT_BASE_URL: "#{REACT-CLIENT-BASE-URL}#",
+  API: "#{REACT-NODE-API}#",
+  AUTH_API: "#{REACT-AUTH-API}#",
   PAYMENT_API: "#{REACT-PAYMENT-API}#",
 
   GOOGLE_PLACES_KEY: "#{REACT-APP-GOOGLE-MAPS-KEY}#",
