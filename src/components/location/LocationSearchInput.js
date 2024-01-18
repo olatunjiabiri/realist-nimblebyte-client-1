@@ -1,19 +1,20 @@
-import * as React from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+// import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import parse from "autosuggest-highlight/parse";
+// import parse from "autosuggest-highlight/parse";
 import { debounce } from "@mui/material/utils";
+import { setKey, geocode, RequestType } from "react-geocode";
 
 // This key was created specifically for the demo in mui.com.
 // You need to create a new one for your application.
 import { useSearch } from "../../context/search.js";
 import { currentLocation } from "../../helpers/currentLocation.js";
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs";
+import config from "../../config.js";
 
 function loadScript(src, position, id) {
   if (!position) {
@@ -30,27 +31,32 @@ function loadScript(src, position, id) {
 const autocompleteService = { current: null };
 
 export default function LocationSearchInput() {
-  const [value, setValue] = React.useState(null);
-  const [inputValue, setInputValue] = React.useState("");
-  const [options, setOptions] = React.useState([]);
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [options, setOptions] = useState([]);
+  const [userCurrentLocation, setUserCurrentLocation] = useState("");
 
   const [search, setSearch] = useSearch();
 
-  const loaded = React.useRef(false);
+  const loaded = useRef(false);
 
-  if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-maps")) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=AIzaSyD3IfqOASixLFAOqv7dDtwllrpHsa11iTs&libraries=places`,
-        document.querySelector("head"),
-        "google-maps"
-      );
+  setKey(config.GOOGLE_MAPS_KEY);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && !loaded.current) {
+      if (!document.querySelector("#google-maps")) {
+        loadScript(
+          `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_KEY}`,
+          document.querySelector("head"),
+          "google-maps"
+        );
+      }
+
+      loaded.current = true;
     }
+  }, []);
 
-    loaded.current = true;
-  }
-
-  const fetch = React.useMemo(
+  const fetch = useMemo(
     () =>
       debounce((request, callback) => {
         autocompleteService.current.getPlacePredictions(request, callback);
@@ -58,7 +64,7 @@ export default function LocationSearchInput() {
     []
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     let active = true;
 
     if (!autocompleteService.current && window.google) {
@@ -91,19 +97,64 @@ export default function LocationSearchInput() {
     });
 
     console.log({ value, options, inputValue });
-    // if (!!value) {
-    //   setSearch({ ...search, address: value?.description });
+    // if (value === newValue) {
+    //   setSearch({ ...search, address: value });
     //   console.log({ search });
     // }
 
     return () => {
       active = false;
     };
-  }, [value, options, inputValue, fetch]);
+  }, [value, options, inputValue, search, fetch]);
 
-  const defaultOption = [{ description: "Current Location" }];
+  const defaultOption = ["Current Location"];
 
   const searchOptions = [...options, ...defaultOption];
+
+  //current Location logic start here
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation not supported");
+    }
+  }, []);
+
+  const success = (position) => {
+    geocode(
+      RequestType.LATLNG,
+      `${position.coords.latitude},${position.coords.longitude}`,
+      {
+        location_type: "ROOFTOP", // Override location type filter for this request.
+        enable_address_descriptor: true, // Include address descriptor in response.
+      }
+    )
+      .then(({ results }) => {
+        const address = results[0].formatted_address;
+        const neighborhood = results[0].address_components[2].long_name;
+        console.log({ neighborhood });
+        const { city, state, country, sublocality } =
+          results[0].address_components.reduce((acc, component) => {
+            if (component.types.includes("locality"))
+              acc.city = component.long_name;
+            else if (component.types.includes("neighborhood"))
+              acc.state = component.long_name;
+            else if (component.types.includes("administrative_area_level_2"))
+              acc.state = component.long_name;
+            else if (component.types.includes("country"))
+              acc.country = component.long_name;
+            return acc;
+          }, {});
+
+        // localStorage.setItem("cLocation", neighborhood);
+        setUserCurrentLocation(neighborhood);
+      })
+      .catch(console.error);
+  };
+
+  const error = () => {
+    console.log("Unable to retrieve your location");
+  };
 
   return (
     <div className="d-flex justify-content-center my-4">
@@ -138,15 +189,13 @@ export default function LocationSearchInput() {
           //   : setSearch({ ...search, address: value?.description });
           console.log({ newValue });
           setValue(
-            //   newValue?.description === "Current Location"
-            //     ? localStorage.getItem("cLocation")
-            //     :
-            newValue
+            newValue === "Current Location" ? userCurrentLocation : newValue
           );
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
+        // onSelect={setSearch({ ...search, address: value })}
         renderInput={(params) => (
           <TextField
             {...params}

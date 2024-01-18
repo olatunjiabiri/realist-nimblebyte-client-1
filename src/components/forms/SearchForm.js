@@ -4,7 +4,6 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import config from "../../config.js";
 import { Prices } from "../../helpers/priceList";
 import { action, type } from "../../helpers/actionTypeList";
-import CurrentLocation from "../CurrentLocation.js";
 
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
@@ -148,7 +147,6 @@ export default function SearchForm({ navMenuProperty }) {
                 }}
               /> */}
 
-            {/* <CurrentLocation /> */}
             <LocationSearchInput />
             {/* </div> */}
 
@@ -220,7 +218,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ...search,
                         price: e.target.value,
                         priceRange: Prices.find(
-                          (item) => item.name === e.target.value,
+                          (item) => item.name === e.target.value
                         ).array,
                       });
                     }}
