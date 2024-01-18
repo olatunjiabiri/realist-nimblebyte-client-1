@@ -104,7 +104,6 @@ export default function SearchForm({ navMenuProperty }) {
   };
 
   useEffect(() => {
-    console.log("pat", path[1]);
     if (path[1] === "search") {
       handleSearch();
     }
