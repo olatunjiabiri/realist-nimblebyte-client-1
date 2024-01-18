@@ -1,50 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import AdCard from "../components/cards/AdCard";
 import SearchForm from "../components/forms/SearchForm";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
+import { ShimmerPostList } from "react-shimmer-effects";
 
 import { setKey, geocode, RequestType } from "react-geocode";
 
-import { useSearch } from "../context/search";
-
 import config from "../config.js";
-import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 export default function Home() {
+  let count = 0;
+  count++;
   setKey(config.GOOGLE_MAPS_KEY);
 
   // context
-  const [auth, setAuth] = useAuth();
-  const [search, setSearch] = useSearch();
+  const [auth] = useAuth();
 
   // state
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(9);
+  const [perPage] = useState(9);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (auth.user === null) {
       auth.token = "";
     }
-    // setSearch((prev) => ({
-    //   ...prev,
-    //   address: localStorage.getItem("cLocation")
-    //     ? localStorage.getItem("cLocation")
-    //     : search?.address,
-    //   loading: false,
-    // }));
-
     fetchAds();
   }, []);
 
   useEffect(() => {
-    // if (page === 1) return;
     fetchAds();
   }, [page]);
 
@@ -63,7 +53,7 @@ export default function Home() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      }
+      },
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -90,31 +80,26 @@ export default function Home() {
     console.log("Unable to retrieve your location");
   };
 
-  useEffect(() => {
-    // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 500);
-  }, [page]);
-
   const fetchAds = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-      // console.log("data", data);
-      //setAds((prevAds) => [...prevAds, ...data.ads]);
-      // setAds([...ads, ...data.ads]);
       setAds(data.ads);
 
       setTotal(data.total);
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [ads]);
 
   return (
     <div>
@@ -125,36 +110,24 @@ export default function Home() {
 
         <div className="container pt-3">
           <div className="row d-flex justify-content-center">
-            {ads?.map((ad) => (
-              <AdCard ad={ad} key={ad._id} />
-            ))}
+            {loading ? (
+              <div style={{ padding: "40px 0" }}>
+                <ShimmerPostList
+                  postStyle="STYLE_FOUR"
+                  col={3}
+                  row={2}
+                  gap={30}
+                />
+              </div>
+            ) : (
+              ads?.map((ad) => <AdCard ad={ad} key={ad._id} />)
+            )}
           </div>
 
           {ads?.length < total ? (
             <div className="row">
               <div className="col text-center mt-4 mb-4">
-                {/* <button
-                  disabled={loading}
-                  className="btn btn-warning"
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage(page + 1);
-                  }}
-                >
-                  {loading
-                    ? "Loading..."
-                    : `${ads?.length} / ${total} Load more`}
-                </button> */}
-
                 <Stack spacing={2}>
-                  {/* <Typography */}
-                  {/*   color="primary" */}
-                  {/*   shape="rounded" */}
-                  {/*   variant="outlined" */}
-                  {/* > */}
-                  {/*   Page {page} */}
-                  {/* </Typography> */}
                   <div
                     style={{
                       display: "flex",
@@ -168,7 +141,7 @@ export default function Home() {
                       showFirstButton
                       showLastButton
                       variant="outlined"
-                      count={Math.round(total / 9)}
+                      count={Math.ceil(total / perPage)}
                       page={page}
                       onChange={handleChange}
                     />
