@@ -23,6 +23,10 @@ export default function Search() {
     }));
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [search?.results]);
+
   return (
     <div>
       <SearchForm />
@@ -32,8 +36,21 @@ export default function Search() {
           {search.results?.length > 0 ? (
             <>
               <div className="col-md-12 text-center p-3">
+                {/* <button className="btn btn-info disabled"> */}
+                {/*   {/* <b>Showing {search?.results?.length} of {search.total} results in page {search?.pageNo}</b> */}
+                {/*   <b> */}
+                {/*     Displaying {search?.results?.length} out of {search.total}{" "} */}
+                {/*     results found, shown on page {search?.pageNo}. */}
+                {/*   </b> */}
+                {/*   {/* <b>Displaying {search?.results?.length * search?.pageNo} out of {search.total} results found, shown on page {search?.pageNo}.</b> */}
+                {/* </button> */}
                 <button className="btn btn-info disabled">
-                  <b>Found {search.total} results</b>
+                  <b>
+                    Displaying {9 * (search.pageNo - 1) + 1 || 1} to{" "}
+                    {9 * search.pageNo - (9 - search?.results?.length) + 0} out
+                    of {search.total} results found, shown on page{" "}
+                    {search?.pageNo}.
+                  </b>
                 </button>
               </div>
 
