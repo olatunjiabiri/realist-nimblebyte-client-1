@@ -10,6 +10,9 @@ const innitialState = {
   priceRange: [0, 1000000000000],
   results: [],
   page: "",
+  total: 0,
+  pageNo: 1,
+  perPage: 9,
   loading: false,
 };
 
