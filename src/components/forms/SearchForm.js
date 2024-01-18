@@ -27,6 +27,10 @@ export default function SearchForm({ navMenuProperty }) {
         address: "",
         action: "", //Buy
         type: "", //House
+        total: 0,
+        pageNo: 1,
+        perPage: 9,
+        loading: true,
         price: "All Prices", //All price
         priceRange: [0, 1000000000000],
       });
@@ -37,12 +41,20 @@ export default function SearchForm({ navMenuProperty }) {
       search.address = "";
       search.type = "Property Type";
       search.price = "All Prices"; //All price
+      search.total = 0;
+      search.pageNo = 1;
+      search.loading = true;
+      search.perPage = 9;
       search.priceRange = [0, 1000000000000];
       return;
     }
     if (path[1] === "rent") {
       search.action = "Rent";
       search.address = "";
+      search.loading = true;
+      search.total = 0;
+      search.pageNo = 1;
+      search.perPage = 9;
       search.type = "Property Type";
       search.price = "All Prices"; //All price
       search.priceRange = [0, 1000000000000];
@@ -57,21 +69,22 @@ export default function SearchForm({ navMenuProperty }) {
   }, []);
 
   const handleSearch = async () => {
-    setSearch((prev) => ({ ...prev, loading: false }));
+    setSearch((prev) => ({ ...prev, loading: true }));
 
     console.log("search options>>>>", search);
 
     try {
-      const { results, page, price, ...rest } = search;
+      const { results, page, price, pageNo, perPage, ...rest } = search;
 
       const query = queryString.stringify(rest);
 
-      const { data } = await axios.get(`/search?${query}`);
+      const { data } = await axios.get(`/search/${pageNo}/${perPage}?${query}`);
 
       if (search?.page !== "/search") {
         setSearch((prev) => ({
           ...prev,
-          results: data,
+          results: data.ads,
+          total: data.total,
           page: window.location.pathname,
           loading: false,
         }));
@@ -79,7 +92,8 @@ export default function SearchForm({ navMenuProperty }) {
       } else {
         setSearch((prev) => ({
           ...prev,
-          results: data,
+          results: data.ads,
+          total: data.total,
           page: window.location.pathname,
           loading: false,
           // action: "",
@@ -90,6 +104,12 @@ export default function SearchForm({ navMenuProperty }) {
       setSearch({ ...search, loading: false });
     }
   };
+
+  useEffect(() => {
+    if (path[1] === "search") {
+      handleSearch();
+    }
+  }, [search.pageNo]);
 
   return (
     <>
@@ -200,7 +220,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ...search,
                         price: e.target.value,
                         priceRange: Prices.find(
-                          (item) => item.name === e.target.value
+                          (item) => item.name === e.target.value,
                         ).array,
                       });
                     }}
