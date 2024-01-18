@@ -24,7 +24,7 @@ function CookiePolicy() {
           style={{ background: "#003366", alignContent: "center" }}
           buttonStyle={{ background: "#fff", color: "#000", fontSize: "13px" }}
           expires={365}
-          onAccept={handleButtonClick}
+          onAccept={handleButtonClick} 
         >
           <h6>
             We use cookies to understand how visitors use our app, analyze site
