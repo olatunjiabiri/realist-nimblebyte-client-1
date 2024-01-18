@@ -31,18 +31,13 @@ export default function Home() {
   const [perPage, setPerPage] = useState(9);
   const [loading, setLoading] = useState(false);
   const [first, setFirst] = useState(true);
+  const [paginationClick, setPaginationClick] = useState(false);
 
   useEffect(() => {
     if (auth.user === null) {
       auth.token = "";
     }
-    // setSearch((prev) => ({
-    //   ...prev,
-    //   address: localStorage.getItem("cLocation")
-    //     ? localStorage.getItem("cLocation")
-    //     : search?.address,
-    //   loading: false,
-    // }));
+    window.scrollTo(0, 0);
 
     fetchAds();
   }, []);
@@ -98,9 +93,9 @@ export default function Home() {
   //   // Scroll to the top of the page when the component mounts
   //   window.scrollTo(0, 0);
   // }, []);
-  const isFirstLoad = useRef(true);
 
   useEffect(() => {
+    // setPaginationClick(true);
     window.scrollTo(0, 500);
   }, [page]);
 
@@ -115,9 +110,6 @@ export default function Home() {
 
       setTotal(data.total);
       setLoading(false);
-      // if (!isFirstLoad.current) {
-      //   window.scrollTo(0, 500);
-      // }
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -127,67 +119,39 @@ export default function Home() {
     setPage(value);
   };
 
-  // useEffect(() => {
-  //   console.log("isFirstload", isFirstLoad.current);
-  //   if (isFirstLoad.current || ads.length === 0) {
-  //     isFirstLoad.current = false;
-  //     return;
-  //   }
-  // }, [ads]);
-  //
-  useEffect(() => {
-    console.log("isFirstload", isFirstLoad.current);
-    // if (isFirstLoad.current || ads.length === 0) {
-    //   isFirstLoad.current = false;
-    //   return;
-    // }
-    if (!loading) {
-      window.scrollTo(0, 500);
-    }
-  }, [page, loading]);
-
-  const [hasFetchedAds, setHasFetchedAds] = useState(false);
-
-  // useEffect(() => {
-  //   // If ads are fetched for the first time, update the state
-  //   if (!hasFetchedAds) {
-  //     setHasFetchedAds(true);
-  //     return;
-  //   }
-  //
-  //   // Perform the scroll only after the first successful fetch
-  //   if (hasFetchedAds) {
-  //     window.scrollTo(0, 500);
-  //   }
-  // }, [ads]); // Depend on ads
-
   return (
-    <div>
-      <LogoutMessage>
-        <div>
-          <SearchForm />
+    <>
+      {loading ? (
+        <div style={{ padding: "40px 0" }}>
+          <ShimmerPostList postStyle="STYLE_FOUR" col={3} row={2} gap={30} />
         </div>
+      ) : (
+        <div>
+          <LogoutMessage>
+            <div>
+              <SearchForm />
+            </div>
 
-        <div className="container pt-3">
-          <div className="row d-flex justify-content-center">
-            {loading ? (
-              <div style={{ padding: "40px 0" }}>
-                <ShimmerPostList
-                  postStyle="STYLE_FOUR"
-                  col={3}
-                  row={2}
-                  gap={30}
-                />
+            <div className="container pt-3">
+              <div className="row d-flex justify-content-center">
+                {paginationClick && loading ? (
+                  <div style={{ padding: "40px 0" }}>
+                    <ShimmerPostList
+                      postStyle="STYLE_FOUR"
+                      col={3}
+                      row={2}
+                      gap={30}
+                    />
+                  </div>
+                ) : (
+                  ads?.map((ad) => <AdCard ad={ad} key={ad._id} />)
+                )}
               </div>
-            ) : (
-              ads?.map((ad) => <AdCard ad={ad} key={ad._id} />)
-            )}
-          </div>
 
-          {ads?.length < total ? (
-            <div className="row">
-              <div className="col text-center mt-4 mb-4">
-                {/* <button
+              {ads?.length < total ? (
+                <div className="row">
+                  <div className="col text-center mt-4 mb-4">
+                    {/* <button
                   disabled={loading}
                   className="btn btn-warning"
                   type="button"
@@ -201,34 +165,36 @@ export default function Home() {
                     : `${ads?.length} / ${total} Load more`}
                 </button> */}
 
-                <Stack spacing={2}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Pagination
-                      color="primary"
-                      shape="rounded"
-                      showFirstButton
-                      showLastButton
-                      variant="outlined"
-                      count={Math.ceil(total / perPage)}
-                      page={page}
-                      onChange={handleChange}
-                    />
+                    <Stack spacing={2}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Pagination
+                          color="primary"
+                          shape="rounded"
+                          showFirstButton
+                          showLastButton
+                          variant="outlined"
+                          count={Math.ceil(total / perPage)}
+                          page={page}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </Stack>
                   </div>
-                </Stack>
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-          ) : (
-            ""
-          )}
+          </LogoutMessage>
+          {/* <pre>{JSON.stringify(cLocation, null, 4)} </pre> */}
         </div>
-      </LogoutMessage>
-      {/* <pre>{JSON.stringify(cLocation, null, 4)} </pre> */}
-    </div>
+      )}
+    </>
   );
 }
