@@ -10,6 +10,7 @@ import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
+import LocationSearchInput from "../location/LocationSearchInput.js";
 
 export default function SearchForm({ navMenuProperty }) {
   // context
@@ -127,7 +128,8 @@ export default function SearchForm({ navMenuProperty }) {
                 }}
               /> */}
 
-            <CurrentLocation />
+            {/* <CurrentLocation /> */}
+            <LocationSearchInput />
             {/* </div> */}
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
