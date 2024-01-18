@@ -8,10 +8,7 @@ import { ShimmerPostList } from "react-shimmer-effects";
 
 import { setKey, geocode, RequestType } from "react-geocode";
 
-import { useSearch } from "../context/search";
-
 import config from "../config.js";
-import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
@@ -21,34 +18,23 @@ export default function Home() {
   setKey(config.GOOGLE_MAPS_KEY);
 
   // context
-  const [auth, setAuth] = useAuth();
-  const [search, setSearch] = useSearch();
+  const [auth] = useAuth();
 
   // state
   const [ads, setAds] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(9);
+  const [perPage] = useState(9);
   const [loading, setLoading] = useState(false);
-  const [first, setFirst] = useState(true);
 
   useEffect(() => {
     if (auth.user === null) {
       auth.token = "";
     }
-    // setSearch((prev) => ({
-    //   ...prev,
-    //   address: localStorage.getItem("cLocation")
-    //     ? localStorage.getItem("cLocation")
-    //     : search?.address,
-    //   loading: false,
-    // }));
-
     fetchAds();
   }, []);
 
   useEffect(() => {
-    // if (page === 1) return;
     fetchAds();
   }, [page]);
 
@@ -94,22 +80,14 @@ export default function Home() {
     console.log("Unable to retrieve your location");
   };
 
-  const isFirstLoad = useRef(true);
-
   const fetchAds = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-      // console.log("data", data);
-      //setAds((prevAds) => [...prevAds, ...data.ads]);
-      // setAds([...ads, ...data.ads]);
       setAds(data.ads);
 
       setTotal(data.total);
       setLoading(false);
-      // if (!isFirstLoad.current) {
-      //   window.scrollTo(0, 500);
-      // }
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -119,32 +97,9 @@ export default function Home() {
     setPage(value);
   };
 
-  // useEffect(() => {
-  //   console.log("isFirstload", isFirstLoad.current);
-  //   if (isFirstLoad.current || ads.length === 0) {
-  //     isFirstLoad.current = false;
-  //     return;
-  //   }
-  // }, [ads]);
-  //
   useEffect(() => {
-      window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [ads]);
-
-  const [hasFetchedAds, setHasFetchedAds] = useState(false);
-
-  // useEffect(() => {
-  //   // If ads are fetched for the first time, update the state
-  //   if (!hasFetchedAds) {
-  //     setHasFetchedAds(true);
-  //     return;
-  //   }
-  //
-  //   // Perform the scroll only after the first successful fetch
-  //   if (hasFetchedAds) {
-  //     window.scrollTo(0, 500);
-  //   }
-  // }, [ads]); // Depend on ads
 
   return (
     <div>
@@ -172,20 +127,6 @@ export default function Home() {
           {ads?.length < total ? (
             <div className="row">
               <div className="col text-center mt-4 mb-4">
-                {/* <button
-                  disabled={loading}
-                  className="btn btn-warning"
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage(page + 1);
-                  }}
-                >
-                  {loading
-                    ? "Loading..."
-                    : `${ads?.length} / ${total} Load more`}
-                </button> */}
-
                 <Stack spacing={2}>
                   <div
                     style={{
