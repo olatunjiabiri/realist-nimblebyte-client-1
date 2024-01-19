@@ -51,6 +51,8 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   };
 
   const onSubmit = async (values, actions) => {
+    console.log("values>>", values);
+    console.log("agent", agent);
     const { name, email, message, phone } = values;
 
     setLoading(true);
