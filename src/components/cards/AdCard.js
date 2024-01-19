@@ -35,19 +35,26 @@ export default function AdCard({ ad }) {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 500);
   }, [pathname]);
 
   useEffect(() => {
     ad?.googleMap?.map((r) =>
       setAdAddress(
         (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
-          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.country
-            }`
+          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long},
+         ${
+           (r.extra?.neighborhood !== r.administrativeLevels?.level2long &&
+             r.administrativeLevels?.level1long) ||
+           ""
+         }
+          ${r.country || ""}`
           : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.city
-            }, ${r.country}`
+              (r.extra?.neighborhood !== r.administrativeLevels?.level2long &&
+                r.administrativeLevels?.level1long) ||
+              r.city ||
+              ""
+            } ${r.country || ""}`
       )
     );
   }, []);
