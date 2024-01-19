@@ -48,8 +48,7 @@ export default function Search() {
                   <b>
                     Displaying {9 * (search.pageNo - 1) + 1 || 1} to{" "}
                     {9 * search.pageNo - (9 - search?.results?.length) + 0} out
-                    of {search.total} results found, shown on page{" "}
-                    {search?.pageNo}.
+                    of {search.total} results found.
                   </b>
                 </button>
               </div>
