@@ -161,16 +161,30 @@ export default function LocationSearchInput() {
       <Autocomplete
         id="google-map-demo"
         autoHighlight
+        // sx={{
+        //   // "& .MuiTextField-root": {
+        //   borderWidth: 4,
+        //   borderStyle: "none",
+        //   padding: "2px",
+        //   margin: "16px",
+        //   width: "100%",
+        //   borderRadius: "50px",
+        //   backgroundColor: "#ffffff",
+        //   // },
+        // }}
         sx={{
-          // "& .MuiTextField-root": {
-          borderWidth: 4,
-          borderStyle: "none",
-          padding: "2px",
-          margin: "16px",
           width: "100%",
-          borderRadius: "50px",
-          backgroundColor: "#ffffff",
-          // },
+          maxWidth: 400, // Adjust the maximum width as needed
+          "& .MuiTextField-root": {
+            borderRadius: "50px",
+            backgroundColor: "#ffffff",
+          },
+          "& .MuiAutocomplete-inputRoot": {
+            padding: "10px", // Adjust the input padding as needed
+          },
+          "& .MuiAutocomplete-listbox": {
+            marginTop: "5px", // Adjust the listbox margin as needed
+          },
         }}
         getOptionLabel={(option) =>
           typeof option === "string" ? option : option.description

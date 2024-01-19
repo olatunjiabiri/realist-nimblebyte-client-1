@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
 import LocationSearchInput from "../location/LocationSearchInput.js";
+import Location2 from "../location/Location2.js";
 
 export default function SearchForm({ navMenuProperty }) {
   // context
@@ -114,7 +115,7 @@ export default function SearchForm({ navMenuProperty }) {
     <>
       <div className="searchForm-container">
         <div
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex mt-5 justify-content-center align-items-center"
           style={{
             backgroundImage: "url(/search-form-image.jpg)",
             backgroundSize: "cover",
@@ -148,6 +149,7 @@ export default function SearchForm({ navMenuProperty }) {
               /> */}
 
             <LocationSearchInput />
+            <Location2 />
             {/* </div> */}
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
