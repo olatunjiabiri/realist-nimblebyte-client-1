@@ -223,7 +223,7 @@ export default function AdView() {
                             {r.extra?.neighborhood ||
                               r.administrativeLevels?.level2long}
                             {", "}
-                            {r.city || r.administrativeLevels?.level1long || ""}
+                            {r.city || r.administrativeLevels?.level2long || ""}
                             {", "}
                             {r.country || ""}
                           </>
@@ -344,7 +344,7 @@ export default function AdView() {
                           {r.extra?.neighborhood ||
                             r.administrativeLevels?.level2long}
                           {", "}
-                          {r.city || r.administrativeLevels?.level1long || ""}
+                          {r.city || r.administrativeLevels?.level2long || ""}
                           {", "}
                           {r.country || ""}
                         </>
