@@ -223,9 +223,9 @@ export default function AdView() {
                             {r.extra?.neighborhood ||
                               r.administrativeLevels?.level2long}
                             {", "}
-                            {r.city}
+                            {r.city || ""}
                             {", "}
-                            {r.country}
+                            {r.country || ""}
                           </>
                         ))}
                       </p>
@@ -344,9 +344,9 @@ export default function AdView() {
                           {r.extra?.neighborhood ||
                             r.administrativeLevels?.level2long}
                           {", "}
-                          {r.city}
+                          {r.city || ""}
                           {", "}
-                          {r.country}
+                          {r.country || ""}
                         </>
                       ))}
                     </span>
