@@ -7,7 +7,8 @@ export const passwordResetSchema = yup.object().shape({
     .min(8)
     .required("Required")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Must Contain 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
     ),
   email: yup
@@ -26,17 +27,17 @@ export const updatePasswordSchema = yup.object().shape({
     .min(8)
     .required("Required")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      "Must Contain min of 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
     ),
-  currentPassword: yup
-    .string()
-    .min(8)
-    .required("Required")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
-    ),
+  // currentPassword: yup
+  //   .string()
+  //   .min(8)
+  //   .required("Required")
+  //   .matches(
+  //     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+  //     "Must Contain min of 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
+  //   ),
   confirmNewPassword: yup
     .string()
     .oneOf([yup.ref("newPassword"), ""], "Password must match")

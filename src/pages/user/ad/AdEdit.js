@@ -47,6 +47,7 @@ export default function AdEdit({ action, type }) {
     _id: "",
     photos: [],
     uploading: false,
+    propertyTitle: "",
     price: "",
     address: "",
     landmark: "",
@@ -154,6 +155,9 @@ export default function AdEdit({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
+      } else if (!ad.propertyTitle) {
+        toast.error("Property title is required e.g 4 Bedroom Duplex");
+        return;
       } else if (ad.type === "House" && (!ad.bedrooms || ad.bedrooms < 1)) {
         toast.error("No. of Bedrooms is required");
         return;
@@ -163,11 +167,11 @@ export default function AdEdit({ action, type }) {
       } else if (ad.type === "House" && !ad.carpark) {
         toast.error("No. of Carpark is required");
         return;
-      } else if (!ad.landsize) {
-        toast.error("landsize is required");
+      } else if (ad.action === "Sell" && !ad.landsize) {
+        toast.error("property landsize is required");
         return;
-      } else if (!ad.title) {
-        toast.error("Title is required");
+      } else if (ad.action === "Sell" && !ad.title) {
+        toast.error("document Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -340,6 +344,28 @@ export default function AdEdit({ action, type }) {
               <>
                 <div className="mb-3 row">
                   <label
+                    idr="propertyTitle"
+                    className="col-sm-3 col-form-label adedit-label"
+                  >
+                    Property Title
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control mb-3"
+                      id="propertyTitle"
+                      name="propertyTitle"
+                      placeholder="Property title like 4 Bedroom Duplex"
+                      value={ad.propertyTitle}
+                      onChange={(e) =>
+                        setAd({ ...ad, propertyTitle: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3 row">
+                  <label
                     id="price"
                     className="col-sm-3 col-form-label adedit-label"
                   >
@@ -398,7 +424,7 @@ export default function AdEdit({ action, type }) {
                       id="bedrooms"
                       name="bedrooms"
                       className="form-control mb-3"
-                      placeholder="Enter how many bedrooms"
+                      placeholder="Enter number of bedrooms"
                       value={ad.bedrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bedrooms: e.target.value })
@@ -421,7 +447,7 @@ export default function AdEdit({ action, type }) {
                       id="bathrooms"
                       name="bathrooms"
                       className="form-control mb-3"
-                      placeholder="Enter how many bathrooms"
+                      placeholder="Enter number of bathrooms/toilets"
                       value={ad.bathrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bathrooms: e.target.value })
@@ -444,7 +470,7 @@ export default function AdEdit({ action, type }) {
                       id="carpark"
                       name="carpark"
                       className="form-control mb-3"
-                      placeholder="Enter how many carpark"
+                      placeholder="Enter number of carpark"
                       value={ad.carpark}
                       onChange={(e) =>
                         setAd({ ...ad, carpark: e.target.value })
@@ -470,7 +496,7 @@ export default function AdEdit({ action, type }) {
                   className="form-control mb-3"
                   id="landSize"
                   name="landSize"
-                  placeholder="Size of land"
+                  placeholder="Size of the property in sqm or sqft"
                   value={ad.landsize}
                   onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
@@ -601,7 +627,7 @@ export default function AdEdit({ action, type }) {
                 idr="title"
                 className="col-sm-3 col-form-label adedit-label"
               >
-                Title
+                Document Title
               </label>
               <div className="col-sm-9">
                 <input
@@ -609,7 +635,7 @@ export default function AdEdit({ action, type }) {
                   className="form-control mb-3"
                   id="title"
                   name="title"
-                  placeholder="Enter title"
+                  placeholder="Property document title e.g C of O, Survey Plan"
                   value={ad.title}
                   onChange={(e) => setAd({ ...ad, title: e.target.value })}
                 />

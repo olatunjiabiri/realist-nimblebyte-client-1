@@ -144,6 +144,7 @@ export default function AdView() {
                         {ad?.type} for {ad?.action === "Sell" ? "SALE" : "RENT"}
                       </button>
                     </div>
+
                     <div className="flex-test">
                       <span className="ml-auto">
                         {" "}
@@ -202,6 +203,12 @@ export default function AdView() {
                         {formatNumber(ad?.price)}
                         {/* {millify(ad?.price)} */}
                       </h3>
+                      <div className="py-2 property-title">
+                        {" "}
+                        {ad?.propertyTitle ||
+                          (ad?.houseType && `${ad?.houseType} property`) ||
+                          `${ad?.type} property`}
+                      </div>
                       <span>
                         {" "}
                         <AdFeatures ad={ad} />
@@ -216,9 +223,9 @@ export default function AdView() {
                             {r.extra?.neighborhood ||
                               r.administrativeLevels?.level2long}
                             {", "}
-                            {r.city}
+                            {r.city || r.administrativeLevels?.level2long || ""}
                             {", "}
-                            {r.country}
+                            {r.country || ""}
                           </>
                         ))}
                       </p>
@@ -318,6 +325,12 @@ export default function AdView() {
                     {formatNumber(ad?.price)}
                     {/* {millify(ad?.price)} */}
                   </h3>
+                  <div className="py-3 property-title">
+                    {" "}
+                    {ad?.propertyTitle ||
+                      (ad?.houseType && `${ad?.houseType} property`) ||
+                      `${ad?.type} property`}
+                  </div>
                   <span>
                     {" "}
                     <AdFeatures ad={ad} />
@@ -331,9 +344,9 @@ export default function AdView() {
                           {r.extra?.neighborhood ||
                             r.administrativeLevels?.level2long}
                           {", "}
-                          {r.city}
+                          {r.city || r.administrativeLevels?.level2long || ""}
                           {", "}
-                          {r.country}
+                          {r.country || ""}
                         </>
                       ))}
                     </span>

@@ -4,16 +4,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import { passwordResetSchema } from "../../validations";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import config from "../../config.js";
 import { useAuth } from "../../context/auth.js";
 
+import "./PasswordReset.css";
+
 export default function PasswordReset() {
   // state
 
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+
   // hooks
   const [auth, setAuth] = useAuth();
 
@@ -76,6 +81,9 @@ export default function PasswordReset() {
     onSubmit,
   });
 
+  const toggle = () => {
+    setVisible(!visible);
+  };
   return (
     <ContentWrapper>
       <div className="row">
@@ -123,17 +131,23 @@ export default function PasswordReset() {
               </div>
             )}
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              className="form-control mb-1"
-              // required
-              // autoFocus
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <div className="relative">
+              <input
+                type={visible ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                className="form-control mb-1"
+                // required
+                // autoFocus
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <span className="password-toggle" onClick={toggle}>
+                {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </span>
+            </div>
+
             {errors.password && touched.password && (
               <div className="mt-0 text-danger">
                 <small>
@@ -143,16 +157,22 @@ export default function PasswordReset() {
               </div>
             )}
 
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Enter the password again"
-              className="form-control mb-1"
-              // required
-              value={values.confirmPassword}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <div className="relative">
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Enter the password again"
+                className="form-control mb-1"
+                // required
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <span className="password-toggle" onClick={toggle}>
+                {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </span>
+            </div>
+
             {errors.confirmPassword && touched.confirmPassword && (
               <div className="mt-0 text-danger">
                 <small>
