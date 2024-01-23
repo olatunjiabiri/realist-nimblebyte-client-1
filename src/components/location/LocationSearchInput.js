@@ -30,12 +30,16 @@ function loadScript(src, position, id) {
 
 const autocompleteService = { current: null };
 
-export default function LocationSearchInput() {
-  const [value, setValue] = useState(null);
-  const [inputValue, setInputValue] = useState("");
-  const [options, setOptions] = useState([]);
-  const [userCurrentLocation, setUserCurrentLocation] = useState("");
-
+export default function LocationSearchInput({
+  value,
+  setValue,
+  inputValue,
+  setInputValue,
+  options,
+  setOptions,
+  userCurrentLocation,
+  setUserCurrentLocation,
+}) {
   const [search, setSearch] = useSearch();
 
   const loaded = useRef(false);
@@ -48,7 +52,7 @@ export default function LocationSearchInput() {
         loadScript(
           `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_KEY}`,
           document.querySelector("head"),
-          "google-maps"
+          "google-maps",
         );
       }
 
@@ -61,7 +65,7 @@ export default function LocationSearchInput() {
       debounce((request, callback) => {
         autocompleteService.current.getPlacePredictions(request, callback);
       }, 400),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -96,7 +100,7 @@ export default function LocationSearchInput() {
       }
     });
 
-    console.log({ value, options, inputValue });
+    // console.log({ value, options, inputValue });
     // if (value === newValue) {
     //   setSearch({ ...search, address: value });
     //   console.log({ search });
@@ -105,7 +109,8 @@ export default function LocationSearchInput() {
     return () => {
       active = false;
     };
-  }, [value, options, inputValue, search, fetch]);
+    // }, [value, options, inputValue, search]);
+  }, [inputValue]);
 
   const defaultOption = ["Current Location"];
 
@@ -118,7 +123,7 @@ export default function LocationSearchInput() {
     } else {
       console.log("Geolocation not supported");
     }
-  }, []);
+  }, [navigator.geolocation]);
 
   const success = (position) => {
     geocode(
@@ -127,12 +132,11 @@ export default function LocationSearchInput() {
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      }
+      },
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
         const neighborhood = results[0].address_components[2].long_name;
-        console.log({ neighborhood });
         const { city, state, country, sublocality } =
           results[0].address_components.reduce((acc, component) => {
             if (component.types.includes("locality"))
@@ -147,7 +151,9 @@ export default function LocationSearchInput() {
           }, {});
 
         // localStorage.setItem("cLocation", neighborhood);
-        setUserCurrentLocation(neighborhood);
+        setUserCurrentLocation(address);
+
+        setSearch((prev) => ({ ...prev, address }));
       })
       .catch(console.error);
   };
@@ -157,7 +163,7 @@ export default function LocationSearchInput() {
   };
 
   return (
-    <div className="d-flex justify-content-center my-4">
+    <div className="d-flex w-full justify-content-center my-4">
       <Autocomplete
         id="google-map-demo"
         autoHighlight
@@ -174,7 +180,7 @@ export default function LocationSearchInput() {
         // }}
         sx={{
           width: "100%",
-          maxWidth: 400, // Adjust the maximum width as needed
+          maxWidth: 1200, // Adjust the maximum width as needed
           "& .MuiTextField-root": {
             borderRadius: "50px",
             backgroundColor: "#ffffff",
@@ -201,9 +207,13 @@ export default function LocationSearchInput() {
           // newValue === "Current Location"
           //   ? setSearch({ ...search, address: localStorage.getItem("cLocation") })
           //   : setSearch({ ...search, address: value?.description });
-          console.log({ newValue });
+          if (newValue !== "Current Location") {
+            console.log("new value", newValue);
+            setSearch((prev) => ({ ...prev, address: newValue?.description }));
+          }
+
           setValue(
-            newValue === "Current Location" ? userCurrentLocation : newValue
+            newValue === "Current Location" ? userCurrentLocation : newValue,
           );
         }}
         onInputChange={(event, newInputValue) => {

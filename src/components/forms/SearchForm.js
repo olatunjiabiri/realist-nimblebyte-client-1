@@ -13,6 +13,10 @@ import LocationSearchInput from "../location/LocationSearchInput.js";
 import Location2 from "../location/Location2.js";
 
 export default function SearchForm({ navMenuProperty }) {
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [options, setOptions] = useState([]);
+  const [userCurrentLocation, setUserCurrentLocation] = useState("");
   // context
   const [search, setSearch] = useSearch();
 
@@ -70,8 +74,6 @@ export default function SearchForm({ navMenuProperty }) {
 
   const handleSearch = async () => {
     setSearch((prev) => ({ ...prev, loading: true }));
-
-    console.log("search options>>>>", search);
 
     try {
       const { results, page, price, pageNo, perPage, ...rest } = search;
@@ -148,8 +150,17 @@ export default function SearchForm({ navMenuProperty }) {
                 }}
               /> */}
 
-            <LocationSearchInput />
-            <Location2 />
+            <LocationSearchInput
+              value={value}
+              setValue={setValue}
+              userCurrentLocation={userCurrentLocation}
+              setUserCurrentLocation={setUserCurrentLocation}
+              options={options}
+              setOptions={setOptions}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+            />
+            {/* <Location2 /> */}
             {/* </div> */}
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
@@ -220,7 +231,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ...search,
                         price: e.target.value,
                         priceRange: Prices.find(
-                          (item) => item.name === e.target.value
+                          (item) => item.name === e.target.value,
                         ).array,
                       });
                     }}
