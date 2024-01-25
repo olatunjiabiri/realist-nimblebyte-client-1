@@ -6,8 +6,8 @@ const config = {
   CLIENT_BASE_URL: "https://realistclientapp2.azurewebsites.net",
   API:
     // process.env.NODE_ENV === "production"
-    "http://localhost:8000/api",
-  // "https://realist-node-backend.azurewebsites.net/api",
+    // "http://localhost:8000/api",
+    "https://realist-node-backend.azurewebsites.net/api",
   AUTH_API:
     // process.env.NODE_ENV === "production"
     //"https://localhost:7298",
