@@ -42,12 +42,19 @@ export default function AdCard({ ad }) {
     ad?.googleMap?.map((r) =>
       setAdAddress(
         (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
-          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.country
-            }`
+          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long},
+         ${
+           (r.extra?.neighborhood !== r.administrativeLevels?.level2long &&
+             r.administrativeLevels?.level2long) ||
+           ""
+         }
+          ${r.country || ""}`
           : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.city
-            }, ${r.country}`
+              r.city ||
+              (r.extra?.neighborhood !== r.administrativeLevels?.level2long &&
+                r.administrativeLevels?.level2long) ||
+              ""
+            } ${r.country || ""}`
       )
     );
   }, []);
