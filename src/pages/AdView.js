@@ -197,23 +197,24 @@ export default function AdView() {
                 <div className="col-4 display-adview-lg">
                   <div>
                     <div className="right-side-screen">
-                      <h3 className="mt-3 h2 adview-feature adview-feature-price">
-                        {" "}
-                        <span>&#8358;</span>
-                        {formatNumber(ad?.price)}
-                        {/* {millify(ad?.price)} */}
-                      </h3>
-                      {ad?.type === "Land" && ad?.areaPerPrice && (
-                        <h6 className="pt-1">
+                      <div className="price-container">
+                        <h3 className="mt-3 h2 adview-feature adview-feature-price">
                           {" "}
-                          <span>
+                          <span>&#8358;</span>
+                          {formatNumber(ad?.price)}
+                          {/* {millify(ad?.price)} */}
+                        </h3>
+                        {ad?.type === "Land" && ad?.areaPerPrice && (
+                          <h6 className="unit-container">
                             {" "}
-                            <em>per</em>
-                          </span>
-                          &nbsp;
-                          {ad?.areaPerPrice || ""}
-                        </h6>
-                      )}
+                            <span>
+                              &nbsp; <em>per</em>
+                            </span>
+                            &nbsp;
+                            {ad?.areaPerPrice || ""}
+                          </h6>
+                        )}
+                      </div>
                       <div className="py-2 property-title">
                         {" "}
                         {ad?.propertyTitle ||
@@ -330,23 +331,26 @@ export default function AdView() {
               </div>
               <div>
                 <div>
-                  <h3 className="mt-3 h2 adview-feature">
-                    {" "}
-                    <span>&#8358;</span>
-                    {formatNumber(ad?.price)}
-                    {/* {millify(ad?.price)} */}
-                  </h3>
-                  {ad?.type === "Land" && ad?.areaPerPrice && (
-                    <h6 className="pt-1">
+                  <div className="price-container">
+                    <h3 className="mt-3 h2 adview-feature">
                       {" "}
-                      <span>
+                      <span>&#8358;</span>
+                      {formatNumber(ad?.price)}
+                      {/* {millify(ad?.price)} */}
+                    </h3>
+                    {ad?.type === "Land" && ad?.areaPerPrice && (
+                      <h6 className="unit-container">
                         {" "}
-                        <em>per</em>
-                      </span>
-                      &nbsp;
-                      {ad?.areaPerPrice || ""}
-                    </h6>
-                  )}
+                        <span>
+                          {" "}
+                          &nbsp;
+                          <em>per</em>
+                        </span>
+                        &nbsp;
+                        {ad?.areaPerPrice || ""}
+                      </h6>
+                    )}
+                  </div>
                   <div className="py-2 property-title">
                     {" "}
                     {ad?.propertyTitle ||
