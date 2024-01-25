@@ -9,8 +9,13 @@ import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
+import LocationSearchInput from "../location/LocationSearchInput.js";
 
 export default function SearchForm({ navMenuProperty }) {
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [options, setOptions] = useState([]);
+  const [userCurrentLocation, setUserCurrentLocation] = useState("");
   // context
   const [search, setSearch] = useSearch();
 
@@ -69,8 +74,6 @@ export default function SearchForm({ navMenuProperty }) {
   const handleSearch = async () => {
     setSearch((prev) => ({ ...prev, loading: true }));
 
-    // console.log("search options>>>>", search);
-
     try {
       const { results, page, price, pageNo, perPage, ...rest } = search;
 
@@ -113,7 +116,7 @@ export default function SearchForm({ navMenuProperty }) {
     <>
       <div className="searchForm-container">
         <div
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex mt-5 justify-content-center align-items-center"
           style={{
             backgroundImage: "url(/search-form-image.jpg)",
             backgroundSize: "cover",
@@ -124,8 +127,9 @@ export default function SearchForm({ navMenuProperty }) {
           }}
         >
           <div className="container col-lg-8">
-            <div className="form-control my-4 text-center rounded-pill ">
-              <GooglePlacesAutocomplete
+            {/* <div className="form-control my-4 text-center rounded-pill "> */}
+            {/* <div className="form-control my-4 text-center rounded-pill "> */}
+            {/* <GooglePlacesAutocomplete
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
                 selectProps={{
@@ -143,8 +147,18 @@ export default function SearchForm({ navMenuProperty }) {
                     this.set(null);
                   },
                 }}
-              />
-            </div>
+              /> */}
+
+            <LocationSearchInput
+              value={value}
+              setValue={setValue}
+              userCurrentLocation={userCurrentLocation}
+              setUserCurrentLocation={setUserCurrentLocation}
+              options={options}
+              setOptions={setOptions}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+            />
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
               <div className="d-flex row justify-content-evenly mx-auto col-lg-8 search-controls-container">
