@@ -70,7 +70,7 @@
   }
 
   .modal-content {
-    width: 90%;
+    /* width: 90%; */
     border-radius: 20px;
   }
 }
