@@ -135,12 +135,6 @@ export default function Home() {
                       alignItems: "center",
                     }}
                   >
-                    <RowPerPage
-                      total={total}
-                      rowPerPage={perPage}
-                      setRowPerPage={setPerPage}
-                    />
-
                     <Pagination
                       color="primary"
                       shape="rounded"
@@ -150,6 +144,11 @@ export default function Home() {
                       count={Math.ceil(total / perPage)}
                       page={page}
                       onChange={handleChange}
+                    />
+                    <RowPerPage
+                      total={total}
+                      rowPerPage={perPage}
+                      setRowPerPage={setPerPage}
                     />
                   </div>
                 </Stack>
