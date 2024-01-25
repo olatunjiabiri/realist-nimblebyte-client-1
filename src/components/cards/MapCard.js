@@ -10,7 +10,7 @@ export default function MapCard({ ad, related }) {
     googleMapsApiKey: mapOptions.googleMapApiKey,
   });
 
-  if (ad?.location?.coordinates?.length) {
+  if (ad?.landmarkLocation?.coordinates?.length) {
     return (
       <div style={{ width: "100%", height: "280px" }}>
         <Map ad={ad} isLoaded={isLoaded} related={related}></Map>
