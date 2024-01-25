@@ -37,6 +37,19 @@ export default function Login() {
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     // window.scrollTo(0, 0);
+
+    const handleBackButton = () => {
+      // Navigate back to the previous page
+      window.history.back();
+    };
+
+    // Add an event listener for the popstate event (triggered by the browser back button)
+    window.addEventListener("popstate", handleBackButton);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
   }, []);
 
   const toggle = () => {
@@ -60,7 +73,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${config.AUTH_API}/user/facebook-signIn`,
+        `${config.AUTH_API}/user/facebook-signIn`
       );
       if (data?.success) {
         window.location.replace(data.responsePayload);
@@ -106,7 +119,7 @@ export default function Login() {
 
         localStorage.setItem(
           "auth",
-          JSON.stringify({ token, user, wishlist: userWishlist }),
+          JSON.stringify({ token, user, wishlist: userWishlist })
         );
         localStorage.removeItem("confirmation");
         toast.success("Login successful");
@@ -146,7 +159,7 @@ export default function Login() {
               "confirmation",
               JSON.stringify({
                 email,
-              }),
+              })
             );
             navigate("/confirmation");
             // toast.error(err.response.data.message); //wrong password
