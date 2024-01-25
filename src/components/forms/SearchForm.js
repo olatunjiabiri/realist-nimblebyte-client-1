@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
 import LocationSearchInput from "../location/LocationSearchInput.js";
-import Location2 from "../location/Location2.js";
 
 export default function SearchForm({ navMenuProperty }) {
   const [value, setValue] = useState(null);
