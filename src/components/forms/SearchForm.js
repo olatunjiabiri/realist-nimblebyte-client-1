@@ -160,8 +160,6 @@ export default function SearchForm({ navMenuProperty }) {
               inputValue={inputValue}
               setInputValue={setInputValue}
             />
-            {/* <Location2 /> */}
-            {/* </div> */}
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
               <div className="d-flex row justify-content-evenly mx-auto col-lg-8 search-controls-container">

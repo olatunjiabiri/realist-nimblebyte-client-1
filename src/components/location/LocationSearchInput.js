@@ -167,17 +167,6 @@ export default function LocationSearchInput({
       <Autocomplete
         id="google-map-demo"
         autoHighlight
-        // sx={{
-        //   // "& .MuiTextField-root": {
-        //   borderWidth: 4,
-        //   borderStyle: "none",
-        //   padding: "2px",
-        //   margin: "16px",
-        //   width: "100%",
-        //   borderRadius: "50px",
-        //   backgroundColor: "#ffffff",
-        //   // },
-        // }}
         sx={{
           width: "100%",
           maxWidth: 1200, // Adjust the maximum width as needed
@@ -229,43 +218,6 @@ export default function LocationSearchInput({
             variant="filled"
           />
         )}
-        //   renderOption={(props, option) => {
-        //     const matches =
-        //       option?.structured_formatting?.main_text_matched_substrings || [];
-
-        //     const parts = parse(
-        //       option?.structured_formatting?.main_text,
-        //       matches.map((match) => [match.offset, match.offset + match.length])
-        //     );
-
-        //     return (
-        //       <li {...props}>
-        //         <Grid container alignItems="center">
-        //           <Grid item sx={{ display: "flex", width: 44 }}>
-        //             <LocationOnIcon sx={{ color: "text.secondary" }} />
-        //           </Grid>
-        //           <Grid
-        //             item
-        //             sx={{ width: "calc(100% - 44px)", wordWrap: "break-word" }}
-        //           >
-        //             {parts.map((part, index) => (
-        //               <Box
-        //                 key={index}
-        //                 component="span"
-        //                 sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
-        //               >
-        //                 {part.text || "Current Location 2"}
-        //               </Box>
-        //             ))}
-        //             <Typography variant="body2" color="text.secondary">
-        //               {option?.structured_formatting?.secondary_text}
-        //             </Typography>
-        //           </Grid>
-        //         </Grid>
-        //         {value}
-        //       </li>
-        //     );
-        //   }}
       />
     </div>
   );
