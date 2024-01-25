@@ -218,6 +218,10 @@ export default function AdEdit({ action, type }) {
     }
   };
 
+  const handleChange = (e) => {
+    setAd({ ...ad, areaPerPrice: e.target.value });
+  };
+
   return (
     <div className="background-color">
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
@@ -263,7 +267,7 @@ export default function AdEdit({ action, type }) {
                     Address
                   </label>
                   <div className="col-sm-9">
-                    <GooglePlacesAutocomplete
+                    {/* <GooglePlacesAutocomplete
                       apiKey={config.GOOGLE_PLACES_KEY}
                       apiOptions="ng"
                       selectProps={{
@@ -273,6 +277,17 @@ export default function AdEdit({ action, type }) {
                           setAd({ ...ad, address: value.description });
                         },
                       }}
+                    /> */}
+                    <input
+                      type="text"
+                      className="form-control mb-3"
+                      id="address"
+                      name="address"
+                      placeholder="Property address/location.."
+                      value={ad.address}
+                      onChange={(e) =>
+                        setAd({ ...ad, address: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -371,16 +386,70 @@ export default function AdEdit({ action, type }) {
                   >
                     Price
                   </label>
-                  <div className="col-sm-9">
-                    <CurrencyInput
-                      id="price"
-                      name="price"
-                      placeholder="Enter price"
-                      defaultValue={ad.price}
-                      className="form-control mb-3"
-                      onValueChange={(value) => setAd({ ...ad, price: value })}
-                    />
-                  </div>
+
+                  {ad.type === "Land" ? (
+                    <div className="d-flex flex-direction-row col-sm-9">
+                      <div className="col-sm-8">
+                        <CurrencyInput
+                          id="price"
+                          name="price"
+                          placeholder="Enter price"
+                          defaultValue={ad.price}
+                          className="form-control mb-3"
+                          onValueChange={(value) =>
+                            setAd({ ...ad, price: value })
+                          }
+                        />
+                      </div>
+                      {/* <div className="col-sm-1 text-center ">per</div>
+                      <div className="col-sm-4">
+                        <input
+                          type="text"
+                          className="form-control mmb-3"
+                          id="areaPerPrice"
+                          name="areaPerPrice"
+                          placeholder="sqm/sqft/plot"
+                          value={ad.areaPerPrice}
+                          onChange={(e) =>
+                            setAd({ ...ad, areaPerPrice: e.target.value })
+                          }
+                        />
+                      </div> */}
+                      <span className="col-sm-1 px-2 text-center">per</span>
+                      <div className="col-sm-3">
+                        <FormControl sx={{ width: "100%", mb: 2 }}>
+                          <Select
+                            value={ad.areaPerPrice}
+                            onChange={handleChange}
+                            displayEmpty
+                            inputProps={{ "aria-label": "Without label" }}
+                            SelectDisplayProps={{
+                              style: { paddingTop: 8, paddingBottom: 8 },
+                            }}
+                          >
+                            {["sqm", "sqft", "plot"].map((option, index) => (
+                              <MenuItem key={index} value={option}>
+                                {option}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="col-sm-9">
+                      <CurrencyInput
+                        id="price"
+                        name="price"
+                        placeholder="Enter price"
+                        defaultValue={ad.price}
+                        className="form-control mb-3"
+                        onValueChange={(value) =>
+                          setAd({ ...ad, price: value })
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="mb-3 row">
                   <label

@@ -65,6 +65,7 @@ export default function AdForm({ action, type }) {
     uploading: false,
     propertyTitle: ddata.propertyTitle || "",
     price: ddata.price || "",
+    areaPerPrice: ddata.areaPerPrice || "",
     address: ddata.address || "",
     landmark: ddata.landmark || "",
     bedrooms: ddata.bedrooms || "",
@@ -200,6 +201,10 @@ export default function AdForm({ action, type }) {
       console.log(err);
       setAd({ ...ad, loading: false });
     }
+  };
+
+  const handleChange = (e) => {
+    setAd({ ...ad, areaPerPrice: e.target.value });
   };
 
   return (
@@ -360,7 +365,7 @@ export default function AdForm({ action, type }) {
                 </div>
 
                 <div className="mb-3 border-0 ">
-                  <GooglePlacesAutocomplete
+                  {/* <GooglePlacesAutocomplete
                     apiKey={config.GOOGLE_PLACES_KEY}
                     apiOptions="ng"
                     selectProps={{
@@ -370,17 +375,71 @@ export default function AdForm({ action, type }) {
                         setAd({ ...ad, address: value.description });
                       },
                     }}
+                  /> */}
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    placeholder="Property address/location.."
+                    value={ad.address}
+                    onChange={(e) => setAd({ ...ad, address: e.target.value })}
                   />
                 </div>
 
-                <div>
-                  <CurrencyInput
-                    placeholder="Enter price in Naira"
-                    defaultValue={ad.price}
-                    className="form-control mb-3"
-                    onValueChange={(value) => setAd({ ...ad, price: value })}
-                  />
-                </div>
+                {ad.type === "Land" ? (
+                  <div className="d-flex flex-direction-row">
+                    <div className="col-sm-8">
+                      <CurrencyInput
+                        placeholder="Enter price in Naira"
+                        defaultValue={ad.price}
+                        className="form-control mb-3"
+                        onValueChange={(value) =>
+                          setAd({ ...ad, price: value })
+                        }
+                      />
+                    </div>
+                    <span className="col-sm-1 px-2 text-center">per</span>
+                    <div className="col-sm-3">
+                      <FormControl sx={{ width: "100%", mb: 2 }}>
+                        <Select
+                          value={ad.areaPerPrice}
+                          onChange={handleChange}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                          SelectDisplayProps={{
+                            style: { paddingTop: 8, paddingBottom: 8 },
+                          }}
+                        >
+                          {["sqm", "sqft", "plot"].map((option, index) => (
+                            <MenuItem key={index} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    {/* <div className="col-sm-1 text-center ">per</div>
+                    <div className="col-sm-4">
+                      <input
+                        type="text"
+                        className="form-control mb-3"
+                        placeholder="sqm/sqft/plot"
+                        value={ad.areaPerPrice}
+                        onChange={(e) =>
+                          setAd({ ...ad, areaPerPrice: e.target.value })
+                        }
+                      />
+                    </div> */}
+                  </div>
+                ) : (
+                  <div>
+                    <CurrencyInput
+                      placeholder="Enter price in Naira"
+                      defaultValue={ad.price}
+                      className="form-control mb-3"
+                      onValueChange={(value) => setAd({ ...ad, price: value })}
+                    />
+                  </div>
+                )}
 
                 <div className="mb-3 border-0 ">
                   <GooglePlacesAutocomplete
