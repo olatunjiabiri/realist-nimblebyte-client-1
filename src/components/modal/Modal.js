@@ -2,8 +2,9 @@
 import { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import ReactPortal from "../ReactPortal";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import Tooltip from "@mui/material/Tooltip";
+import { Link } from "react-router-dom";
 
 import "./Modal.css";
 
@@ -30,9 +31,9 @@ function Modall({ children, isOpen, handleClose }) {
           {/* Prevent click inside the modal from closing it */}
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <Tooltip title="Close">
-              <button onClick={handleClose} className="close-btn">
-                <AiOutlineClose />
-              </button>
+              <Link onClick={handleClose} className="close-btn">
+                <AiOutlineCloseCircle />
+              </Link>
             </Tooltip>
 
             {children}
