@@ -118,6 +118,20 @@ export default function AdView() {
   //   navigate("/login?fromAction=like", { replace: true });
   // };
 
+  const addressCombination = (r) => (
+    <>
+      {r.administrativeLevels?.level3long ||
+        r.administrativeLevels?.level2long ||
+        ""}
+      &nbsp;
+      {(r.administrativeLevels?.level3long &&
+        r.administrativeLevels?.level2long) ||
+        ""}
+      &nbsp;
+      {r.administrativeLevels?.level1long || r.city || ""} {r.country || ""}
+    </>
+  );
+
   return (
     <LogoutMessage>
       <div className="container-fluid d-flex flex-column h-100 mt-3">
@@ -230,7 +244,16 @@ export default function AdView() {
                         {/* <span className="adview-address">{ad.address}</span> */}
 
                         {/* <span className="adview-address">{adAddress}</span> */}
-                        {ad?.landmarkGoogleMap?.map((r) => (
+
+                        {Array.isArray(ad?.landmarkGoogleMap)
+                          ? ad?.landmarkGoogleMap?.map(
+                              (r, index) => index === 0 && addressCombination(r)
+                            )
+                          : ad?.landmarkGoogleMap?.map((r) =>
+                              addressCombination(r)
+                            )}
+
+                        {/* {ad?.landmarkGoogleMap?.map((r) => (
                           <>
                             {r.extra?.neighborhood ||
                               r.administrativeLevels?.level2long}
@@ -239,7 +262,7 @@ export default function AdView() {
                             {", "}
                             {r.country || ""}
                           </>
-                        ))}
+                        ))} */}
                       </p>
 
                       <div className="align-items-center mb-3 mt-0">
@@ -365,16 +388,13 @@ export default function AdView() {
                   <p className="adview-address mt-1 mb-0">
                     {/* <span className="adview-address">{ad.address}</span> */}
                     <span className="adview-address">
-                      {ad?.landmarkGoogleMap?.map((r) => (
-                        <>
-                          {r.extra?.neighborhood ||
-                            r.administrativeLevels?.level2long}
-                          {", "}
-                          {r.city || r.administrativeLevels?.level2long || ""}
-                          {", "}
-                          {r.country || ""}
-                        </>
-                      ))}
+                      {Array.isArray(ad?.landmarkGoogleMap)
+                        ? ad?.landmarkGoogleMap?.map(
+                            (r, index) => index === 0 && addressCombination(r)
+                          )
+                        : ad?.landmarkGoogleMap?.map((r) =>
+                            addressCombination(r)
+                          )}
                     </span>
                   </p>
 
