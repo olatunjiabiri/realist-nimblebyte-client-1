@@ -6,6 +6,15 @@
     font-weight: 700;
 }
 
+.price-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.unit-container {
+    margin-top: 1.5rem;
+}
+
 .flex-test {
     margin-left: auto;
     align-self: center;
@@ -134,4 +143,24 @@
     }
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+    .price-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .unit-container {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 768px){
+    .price-container {
+        display: flex;
+        flex-direction: row;
+    }
+    .unit-container {
+        margin-top: 1.25rem;
+    }
+}
 
