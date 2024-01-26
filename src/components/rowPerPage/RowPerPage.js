@@ -32,10 +32,10 @@ const RowPerPage = ({ total, rowPerPage, setRowPerPage }) => {
   return (
     <>
       {isMdScreen && (
-        <div className="mx-3 d-flex flex-direction-row">
+        <div className="mx-4 d-flex flex-direction-row">
           <span>Properties per page</span>
           <FormControl
-            sx={{ p: 0, marginLeft: 2, marginRight: 3, minWidth: 80 }}
+            sx={{ p: 0, marginLeft: 1, marginRight: 2, minWidth: 80 }}
           >
             <Select
               value={rowPerPage}
