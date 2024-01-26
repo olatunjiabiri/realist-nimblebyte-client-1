@@ -40,7 +40,7 @@
 
 .close-btn {
   position: absolute;
-  font-size: 20px;
+  font-size: 25px;
   top: 17px; /*25 */
   right: 18px; /*20 */
   z-index: 100000;
