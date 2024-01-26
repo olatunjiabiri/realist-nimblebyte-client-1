@@ -52,7 +52,7 @@ export default function LocationSearchInput({
         loadScript(
           `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_KEY}`,
           document.querySelector("head"),
-          "google-maps",
+          "google-maps"
         );
       }
 
@@ -65,7 +65,7 @@ export default function LocationSearchInput({
       debounce((request, callback) => {
         autocompleteService.current.getPlacePredictions(request, callback);
       }, 400),
-    [],
+    []
   );
 
   useEffect(() => {
@@ -132,7 +132,7 @@ export default function LocationSearchInput({
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      },
+      }
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -168,7 +168,7 @@ export default function LocationSearchInput({
         id="google-map-demo"
         autoHighlight
         sx={{
-          width: "100%",
+          width: "75%",
           maxWidth: 1200, // Adjust the maximum width as needed
           "& .MuiTextField-root": {
             borderRadius: "50px",
@@ -202,7 +202,7 @@ export default function LocationSearchInput({
           }
 
           setValue(
-            newValue === "Current Location" ? userCurrentLocation : newValue,
+            newValue === "Current Location" ? userCurrentLocation : newValue
           );
         }}
         onInputChange={(event, newInputValue) => {
