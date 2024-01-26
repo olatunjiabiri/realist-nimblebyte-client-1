@@ -27,7 +27,9 @@ function CookiePolicy() {
             alignContent: "center",
             width: "50%",
             position: "fixed",
-            // left: "50%",
+            position: "fixed",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
           buttonStyle={{
             background: "none",
