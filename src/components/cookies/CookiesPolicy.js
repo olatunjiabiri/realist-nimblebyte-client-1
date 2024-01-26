@@ -15,17 +15,21 @@ function CookiePolicy() {
   };
 
   return (
-    <div>
+    <div className="d-flex justify-content-center">
       {showCookieConsent && (
         <CookieConsent
           debug={true}
           location="bottom"
           buttonText={<AiOutlineCloseCircle />}
-          // buttonText=""
           cookieName="myCookie"
           style={{
             background: "#003366",
             alignContent: "center",
+            width: "50%",
+            position: "fixed",
+            position: "fixed",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
           buttonStyle={{
             background: "none",
