@@ -21,9 +21,20 @@ function CookiePolicy() {
           debug={true}
           location="bottom"
           buttonText={<AiOutlineCloseCircle />}
+          // buttonText=""
           cookieName="myCookie"
-          style={{ background: "#003366", alignContent: "center" }}
-          buttonStyle={{ background: "none", color: "white", fontSize: "30px" }}
+          style={{
+            background: "#003366",
+            alignContent: "center",
+          }}
+          buttonStyle={{
+            background: "none",
+            color: "white",
+            fontSize: "25px",
+            paddingRight: "10px",
+            padding: "0px 10px 0px",
+            margin: "0px 10px 0px",
+          }}
           expires={365}
           onAccept={handleButtonClick}
         >
