@@ -56,7 +56,7 @@ export default function AdView() {
   }, []);
 
   // useEffect(() => {
-  //   ad?.googleMap?.map((r) =>
+  //   ad?.landmarkGoogleMap?.map((r) =>
   //     setAdAddress(
   //       (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
   //         ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
@@ -197,12 +197,24 @@ export default function AdView() {
                 <div className="col-4 display-adview-lg">
                   <div>
                     <div className="right-side-screen">
-                      <h3 className="mt-3 h2 adview-feature adview-feature-price">
-                        {" "}
-                        <span>&#8358;</span>
-                        {formatNumber(ad?.price)}
-                        {/* {millify(ad?.price)} */}
-                      </h3>
+                      <div className="price-container">
+                        <h3 className="mt-3 h2 adview-feature adview-feature-price">
+                          {" "}
+                          <span>&#8358;</span>
+                          {formatNumber(ad?.price)}
+                          {/* {millify(ad?.price)} */}
+                        </h3>
+                        {ad?.type === "Land" && ad?.areaPerPrice && (
+                          <h6 className="unit-container">
+                            {" "}
+                            <span>
+                              &nbsp; <em>per</em>
+                            </span>
+                            &nbsp;
+                            {ad?.areaPerPrice || ""}
+                          </h6>
+                        )}
+                      </div>
                       <div className="py-2 property-title">
                         {" "}
                         {ad?.propertyTitle ||
@@ -218,7 +230,7 @@ export default function AdView() {
                         {/* <span className="adview-address">{ad.address}</span> */}
 
                         {/* <span className="adview-address">{adAddress}</span> */}
-                        {ad?.googleMap?.map((r) => (
+                        {ad?.landmarkGoogleMap?.map((r) => (
                           <>
                             {r.extra?.neighborhood ||
                               r.administrativeLevels?.level2long}
@@ -319,13 +331,27 @@ export default function AdView() {
               </div>
               <div>
                 <div>
-                  <h3 className="mt-3 h2 adview-feature">
-                    {" "}
-                    <span>&#8358;</span>
-                    {formatNumber(ad?.price)}
-                    {/* {millify(ad?.price)} */}
-                  </h3>
-                  <div className="py-3 property-title">
+                  <div className="price-container">
+                    <h3 className="mt-3 h2 adview-feature">
+                      {" "}
+                      <span>&#8358;</span>
+                      {formatNumber(ad?.price)}
+                      {/* {millify(ad?.price)} */}
+                    </h3>
+                    {ad?.type === "Land" && ad?.areaPerPrice && (
+                      <h6 className="unit-container">
+                        {" "}
+                        <span>
+                          {" "}
+                          &nbsp;
+                          <em>per</em>
+                        </span>
+                        &nbsp;
+                        {ad?.areaPerPrice || ""}
+                      </h6>
+                    )}
+                  </div>
+                  <div className="py-2 property-title">
                     {" "}
                     {ad?.propertyTitle ||
                       (ad?.houseType && `${ad?.houseType} property`) ||
@@ -339,7 +365,7 @@ export default function AdView() {
                   <p className="adview-address mt-1 mb-0">
                     {/* <span className="adview-address">{ad.address}</span> */}
                     <span className="adview-address">
-                      {ad?.googleMap?.map((r) => (
+                      {ad?.landmarkGoogleMap?.map((r) => (
                         <>
                           {r.extra?.neighborhood ||
                             r.administrativeLevels?.level2long}

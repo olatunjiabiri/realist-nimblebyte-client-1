@@ -37,9 +37,9 @@ export default function AdCard({ ad }) {
     // Scroll to the top of the page when the component mounts
     // window.scrollTo(0, 500);
   }, [pathname]);
-
+  // console.log({ ad });
   useEffect(() => {
-    ad?.googleMap?.map((r) =>
+    ad?.landmarkGoogleMap?.map((r) =>
       setAdAddress(
         (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
           ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long},
@@ -101,12 +101,26 @@ export default function AdCard({ ad }) {
             {/* </Link> */}
             <div className="card-body ad-card-body">
               <div className="d-flex justify-content-between">
-                <h3 className="pt-1">
-                  {" "}
-                  <span>&#8358;</span>
-                  {/* {formatNumber(ad?.price)} */}
-                  {millify(ad?.price)}
-                </h3>
+                <div className="d-flex flex-direction-row">
+                  <h3 className="pt-1">
+                    {" "}
+                    <span>&#8358;</span>
+                    {/* {formatNumber(ad?.price)} */}
+                    {millify(ad?.price)}
+                  </h3>
+                  {ad?.type === "Land" && ad?.areaPerPrice && (
+                    <h5 className="pt-2">
+                      {" "}
+                      &nbsp;
+                      <span>
+                        {" "}
+                        <em>per</em>
+                      </span>
+                      &nbsp;
+                      {ad?.areaPerPrice || ""}
+                    </h5>
+                  )}
+                </div>
 
                 {auth?.user === null ? (
                   <Link

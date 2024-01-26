@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CookieConsent from "react-cookie-consent";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function CookiePolicy() {
   const [showCookieConsent, setShowCookieConsent] = useState(
@@ -19,19 +20,28 @@ function CookiePolicy() {
         <CookieConsent
           debug={true}
           location="bottom"
-          buttonText="X"
+          buttonText={<AiOutlineCloseCircle />}
+          // buttonText=""
           cookieName="myCookie"
-          style={{ background: "#003366", alignContent: "center" }}
-          buttonStyle={{ background: "#fff", color: "#000", fontSize: "13px" }}
+          style={{
+            background: "#003366",
+            alignContent: "center",
+          }}
+          buttonStyle={{
+            background: "none",
+            color: "white",
+            fontSize: "25px",
+            paddingRight: "10px",
+            padding: "0px 10px 0px",
+            margin: "0px 10px 0px",
+          }}
           expires={365}
-          onAccept={handleButtonClick} 
+          onAccept={handleButtonClick}
         >
-          <h6>
-            We use cookies to understand how visitors use our app, analyze site
-            traffic, and personalize content to improve the user experience. To find
-            out more, see our{" "}
-            <Link to="/privacy-policy">Privacy Policy</Link>.
-          </h6>
+          We use cookies to understand how visitors use our app, analyze site
+          traffic, and personalize content to improve the user experience. To
+          find out more, see our{" "}
+          <Link to="/privacy-policy">Privacy Policy</Link>
         </CookieConsent>
       )}
     </div>
