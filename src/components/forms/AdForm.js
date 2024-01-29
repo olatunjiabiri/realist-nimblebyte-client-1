@@ -11,6 +11,8 @@ import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import Tooltip from "@mui/material/Tooltip";
+
 import { Avatar } from "antd";
 
 import { useAuth } from "../../context/auth";
@@ -364,27 +366,6 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-                <div className="mb-3 border-0 ">
-                  {/* <GooglePlacesAutocomplete
-                    apiKey={config.GOOGLE_PLACES_KEY}
-                    apiOptions="ng"
-                    selectProps={{
-                      defaultInputValue: ad?.address,
-                      placeholder: "Property address/location..",
-                      onChange: ({ value }) => {
-                        setAd({ ...ad, address: value.description });
-                      },
-                    }}
-                  /> */}
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Property address/location.."
-                    value={ad.address}
-                    onChange={(e) => setAd({ ...ad, address: e.target.value })}
-                  />
-                </div>
-
                 {ad.type === "Land" ? (
                   <div className="d-flex flex-direction-row">
                     <div className="col-sm-8">
@@ -442,18 +423,41 @@ export default function AdForm({ action, type }) {
                 )}
 
                 <div className="mb-3 border-0 ">
-                  <GooglePlacesAutocomplete
+                  {/* <GooglePlacesAutocomplete
                     apiKey={config.GOOGLE_PLACES_KEY}
                     apiOptions="ng"
                     selectProps={{
-                      defaultInputValue: ad?.landmark,
-                      placeholder: "Landmark address/location",
+                      defaultInputValue: ad?.address,
+                      placeholder: "Property address/location..",
                       onChange: ({ value }) => {
-                        setAd({ ...ad, landmark: value.description });
+                        setAd({ ...ad, address: value.description });
                       },
                     }}
+                  /> */}
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    placeholder="Property address/location.."
+                    value={ad.address}
+                    onChange={(e) => setAd({ ...ad, address: e.target.value })}
                   />
                 </div>
+
+                <Tooltip title="This is the Property Address/Location that is visible to the public">
+                  <div className="mb-3 border-0 ">
+                    <GooglePlacesAutocomplete
+                      apiKey={config.GOOGLE_PLACES_KEY}
+                      apiOptions="ng"
+                      selectProps={{
+                        defaultInputValue: ad?.landmark,
+                        placeholder: "Landmark address/location",
+                        onChange: ({ value }) => {
+                          setAd({ ...ad, landmark: value.description });
+                        },
+                      }}
+                    />
+                  </div>
+                </Tooltip>
 
                 {/* {(ad.type === "House" || ad.type === "Shortlet") && ( */}
                 {ad.type === "House" && (
