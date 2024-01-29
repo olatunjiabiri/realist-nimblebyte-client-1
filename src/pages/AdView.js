@@ -56,7 +56,7 @@ export default function AdView() {
   }, []);
 
   // useEffect(() => {
-  //   ad?.googleMap?.map((r) =>
+  //   ad?.landmarkGoogleMap?.map((r) =>
   //     setAdAddress(
   //       (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
   //         ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
@@ -117,6 +117,20 @@ export default function AdView() {
   // const navigateToLogin = () => {
   //   navigate("/login?fromAction=like", { replace: true });
   // };
+
+  const addressCombination = (r) => (
+    <>
+      {r.administrativeLevels?.level3long ||
+        r.administrativeLevels?.level2long ||
+        ""}
+      &nbsp;
+      {(r.administrativeLevels?.level3long &&
+        r.administrativeLevels?.level2long) ||
+        ""}
+      &nbsp;
+      {r.administrativeLevels?.level1long || r.city || ""} {r.country || ""}
+    </>
+  );
 
   return (
     <LogoutMessage>
@@ -197,12 +211,24 @@ export default function AdView() {
                 <div className="col-4 display-adview-lg">
                   <div>
                     <div className="right-side-screen">
-                      <h3 className="mt-3 h2 adview-feature adview-feature-price">
-                        {" "}
-                        <span>&#8358;</span>
-                        {formatNumber(ad?.price)}
-                        {/* {millify(ad?.price)} */}
-                      </h3>
+                      <div className="price-container">
+                        <h3 className="mt-3 h2 adview-feature adview-feature-price">
+                          {" "}
+                          <span>&#8358;</span>
+                          {formatNumber(ad?.price)}
+                          {/* {millify(ad?.price)} */}
+                        </h3>
+                        {ad?.type === "Land" && ad?.areaPerPrice && (
+                          <h6 className="unit-container">
+                            {" "}
+                            <span>
+                              &nbsp; <em>per</em>
+                            </span>
+                            &nbsp;
+                            {ad?.areaPerPrice || ""}
+                          </h6>
+                        )}
+                      </div>
                       <div className="py-2 property-title">
                         {" "}
                         {ad?.propertyTitle ||
@@ -217,8 +243,17 @@ export default function AdView() {
                       <p className="adview-address mt-1 mb-0">
                         {/* <span className="adview-address">{ad.address}</span> */}
 
-                        {/* <span className="adview-address">{adAddress}</span> */}
-                        {ad?.googleMap?.map((r) => (
+                        <span className="adview-address">{ad?.landmark}</span>
+
+                        {/* {Array.isArray(ad?.landmarkGoogleMap)
+                          ? ad?.landmarkGoogleMap?.map(
+                              (r, index) => index === 0 && addressCombination(r)
+                            )
+                          : ad?.landmarkGoogleMap?.map((r) =>
+                              addressCombination(r)
+                            )} */}
+
+                        {/* {ad?.landmarkGoogleMap?.map((r) => (
                           <>
                             {r.extra?.neighborhood ||
                               r.administrativeLevels?.level2long}
@@ -227,7 +262,7 @@ export default function AdView() {
                             {", "}
                             {r.country || ""}
                           </>
-                        ))}
+                        ))} */}
                       </p>
 
                       <div className="align-items-center mb-3 mt-0">
@@ -319,13 +354,27 @@ export default function AdView() {
               </div>
               <div>
                 <div>
-                  <h3 className="mt-3 h2 adview-feature">
-                    {" "}
-                    <span>&#8358;</span>
-                    {formatNumber(ad?.price)}
-                    {/* {millify(ad?.price)} */}
-                  </h3>
-                  <div className="py-3 property-title">
+                  <div className="price-container">
+                    <h3 className="mt-3 h2 adview-feature">
+                      {" "}
+                      <span>&#8358;</span>
+                      {formatNumber(ad?.price)}
+                      {/* {millify(ad?.price)} */}
+                    </h3>
+                    {ad?.type === "Land" && ad?.areaPerPrice && (
+                      <h6 className="unit-container">
+                        {" "}
+                        <span>
+                          {" "}
+                          &nbsp;
+                          <em>per</em>
+                        </span>
+                        &nbsp;
+                        {ad?.areaPerPrice || ""}
+                      </h6>
+                    )}
+                  </div>
+                  <div className="py-2 property-title">
                     {" "}
                     {ad?.propertyTitle ||
                       (ad?.houseType && `${ad?.houseType} property`) ||
@@ -337,19 +386,16 @@ export default function AdView() {
                   </span>
                   <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
                   <p className="adview-address mt-1 mb-0">
-                    {/* <span className="adview-address">{ad.address}</span> */}
-                    <span className="adview-address">
-                      {ad?.googleMap?.map((r) => (
-                        <>
-                          {r.extra?.neighborhood ||
-                            r.administrativeLevels?.level2long}
-                          {", "}
-                          {r.city || r.administrativeLevels?.level2long || ""}
-                          {", "}
-                          {r.country || ""}
-                        </>
-                      ))}
-                    </span>
+                    <span className="adview-address">{ad?.landmark}</span>
+                    {/* <span className="adview-address">
+                      {Array.isArray(ad?.landmarkGoogleMap)
+                        ? ad?.landmarkGoogleMap?.map(
+                            (r, index) => index === 0 && addressCombination(r)
+                          )
+                        : ad?.landmarkGoogleMap?.map((r) =>
+                            addressCombination(r)
+                          )}
+                    </span> */}
                   </p>
 
                   <div className="align-items-center mb-3 mt-0">

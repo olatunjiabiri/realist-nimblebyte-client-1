@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/auth";
 import axios from "axios";
-import AdCard from "../components/cards/AdCard";
-import SearchForm from "../components/forms/SearchForm";
-import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { ShimmerPostList } from "react-shimmer-effects";
+
+import { useAuth } from "../context/auth";
+import AdCard from "../components/cards/AdCard";
+import SearchForm from "../components/forms/SearchForm";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
+
+import RowPerPage from "../components/rowPerPage/RowPerPage.js";
 
 export default function Rent() {
   // context
@@ -20,12 +23,12 @@ export default function Rent() {
 
   useEffect(() => {
     fetchAds();
-  }, [page]);
+  }, [page, perPage]);
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    // window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0);
+  }, [ads]);
 
   // console.log("auth>>", auth);
 
@@ -106,6 +109,11 @@ export default function Rent() {
                         count={Math.ceil(total / perPage)}
                         page={page}
                         onChange={handleChange}
+                      />
+                      <RowPerPage
+                        total={total}
+                        rowPerPage={perPage}
+                        setRowPerPage={setPerPage}
                       />
                     </div>
                   </Stack>

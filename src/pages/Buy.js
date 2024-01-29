@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/auth";
-import { useSearch } from "../context/search";
 import axios from "axios";
-import AdCard from "../components/cards/AdCard";
-import SearchForm from "../components/forms/SearchForm";
-import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 import { ShimmerPostList } from "react-shimmer-effects";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+
+import { useAuth } from "../context/auth";
+import { useSearch } from "../context/search";
+import AdCard from "../components/cards/AdCard";
+import SearchForm from "../components/forms/SearchForm";
+import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
+import RowPerPage from "../components/rowPerPage/RowPerPage.js";
 
 export default function Buy() {
   // context
@@ -23,7 +25,7 @@ export default function Buy() {
 
   useEffect(() => {
     fetchAds();
-  }, [page]);
+  }, [page, perPage]);
 
   useEffect(() => {
     const path = window.location.pathname.split("/");
@@ -41,8 +43,8 @@ export default function Buy() {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    // window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0);
+  }, [ads]);
 
   const fetchAds = async () => {
     try {
@@ -113,6 +115,11 @@ export default function Buy() {
                         count={Math.ceil(total / perPage)}
                         page={page}
                         onChange={handleChange}
+                      />
+                      <RowPerPage
+                        total={total}
+                        rowPerPage={perPage}
+                        setRowPerPage={setPerPage}
                       />
                     </div>
                   </Stack>

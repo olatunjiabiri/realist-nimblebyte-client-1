@@ -40,12 +40,26 @@ export default function UserAdCard({ ad, setIsOpen, approved }) {
 
             <div className="card-body ad-card-body">
               <div className="d-flex justify-content-between">
-                <div className=" ">
+                <div className="d-flex flex-direction-row">
+                  {/* <div className=" "> */}
                   <h3>
                     <span>&#8358;</span>
                     {/* {formatNumber(ad?.price)} */}
                     {millify(ad?.price)}
                   </h3>
+                  {ad?.type === "Land" && ad?.areaPerPrice && (
+                    <h5 className="pt-1">
+                      {" "}
+                      &nbsp;
+                      <span>
+                        {" "}
+                        <em>per</em>
+                      </span>
+                      &nbsp;
+                      {ad?.areaPerPrice || ""}
+                    </h5>
+                  )}
+                  {/* </div> */}
                 </div>
               </div>
               <p className="card-text address-height">{ad?.address}</p>
