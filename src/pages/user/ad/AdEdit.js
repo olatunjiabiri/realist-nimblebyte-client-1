@@ -19,6 +19,7 @@ import "./index.css";
 import DynamicForm from "../../../components/uploader";
 import Modall from "../../../components/modal2/Modal";
 import LogoutMessage from "../../../components/misc/logoutMessage/LogoutMessage";
+import { Tooltip } from "@mui/material";
 
 export default function AdEdit({ action, type }) {
   // context
@@ -239,62 +240,98 @@ export default function AdEdit({ action, type }) {
           <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
             <h1 className="text-dark text-center p-3">Update Ad</h1>
             <hr />
-            <div className="mb-3 ">
-              <div className="">
-                {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+            <div className="mb-2">
+              {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+              <label
+                onClick={() => setIsOpen(true)}
+                className="btn btn-primary"
+              >
+                Upload Photos
+              </label>
+              {ad.photos?.map((file, index) => (
+                <Avatar
+                  key={index}
+                  src={file?.Location}
+                  shape="square"
+                  size="46"
+                  className="ml-2 m-2"
+                />
+              ))}
+            </div>
+            {loaded ? (
+              <div className="row">
                 <label
-                  onClick={() => setIsOpen(true)}
-                  className="btn btn-primary"
+                  id="price"
+                  className="col-sm-3 col-form-label adedit-label"
                 >
-                  Upload Photos
+                  Price
                 </label>
-                {ad.photos?.map((file, index) => (
-                  <Avatar
-                    key={index}
-                    src={file?.Location}
-                    shape="square"
-                    size="46"
-                    className="ml-2 m-2"
-                  />
-                ))}
-              </div>
-              {loaded ? (
-                <div className="mb-3 row">
-                  <label
-                    id="address"
-                    className="col-sm-3 col-form-label adedit-label"
-                  >
-                    Address
-                  </label>
+
+                {ad.type === "Land" ? (
+                  <div className="d-flex flex-direction-row col-sm-9">
+                    <div className="col-sm-8">
+                      <CurrencyInput
+                        id="price"
+                        name="price"
+                        placeholder="Enter price"
+                        defaultValue={ad.price}
+                        className="form-control mb-3"
+                        onValueChange={(value) =>
+                          setAd({ ...ad, price: value })
+                        }
+                      />
+                    </div>
+                    {/* <div className="col-sm-1 text-center ">per</div>
+                      <div className="col-sm-4">
+                        <input
+                          type="text"
+                          className="form-control mmb-3"
+                          id="areaPerPrice"
+                          name="areaPerPrice"
+                          placeholder="sqm/sqft/plot"
+                          value={ad.areaPerPrice}
+                          onChange={(e) =>
+                            setAd({ ...ad, areaPerPrice: e.target.value })
+                          }
+                        />
+                      </div> */}
+                    <span className="col-sm-1 px-2 text-center">per</span>
+                    <div className="col-sm-3">
+                      <FormControl sx={{ width: "100%", mb: 2 }}>
+                        <Select
+                          value={ad.areaPerPrice}
+                          onChange={handleChange}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                          SelectDisplayProps={{
+                            style: { paddingTop: 8, paddingBottom: 8 },
+                          }}
+                        >
+                          {["sqm", "sqft", "plot"].map((option, index) => (
+                            <MenuItem key={index} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+                ) : (
                   <div className="col-sm-9">
-                    {/* <GooglePlacesAutocomplete
-                      apiKey={config.GOOGLE_PLACES_KEY}
-                      apiOptions="ng"
-                      selectProps={{
-                        defaultInputValue: ad?.address,
-                        placeholder: "Property address/location..",
-                        onChange: ({ value }) => {
-                          setAd({ ...ad, address: value.description });
-                        },
-                      }}
-                    /> */}
-                    <input
-                      type="text"
+                    <CurrencyInput
+                      id="price"
+                      name="price"
+                      placeholder="Enter price"
+                      defaultValue={ad.price}
                       className="form-control mb-3"
-                      id="address"
-                      name="address"
-                      placeholder="Property address/location.."
-                      value={ad.address}
-                      onChange={(e) =>
-                        setAd({ ...ad, address: e.target.value })
-                      }
+                      onValueChange={(value) => setAd({ ...ad, price: value })}
                     />
                   </div>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className="row mb-3">
               <label
@@ -381,97 +418,60 @@ export default function AdEdit({ action, type }) {
 
                 <div className="mb-3 row">
                   <label
-                    id="price"
-                    className="col-sm-3 col-form-label adedit-label"
-                  >
-                    Price
-                  </label>
-
-                  {ad.type === "Land" ? (
-                    <div className="d-flex flex-direction-row col-sm-9">
-                      <div className="col-sm-8">
-                        <CurrencyInput
-                          id="price"
-                          name="price"
-                          placeholder="Enter price"
-                          defaultValue={ad.price}
-                          className="form-control mb-3"
-                          onValueChange={(value) =>
-                            setAd({ ...ad, price: value })
-                          }
-                        />
-                      </div>
-                      {/* <div className="col-sm-1 text-center ">per</div>
-                      <div className="col-sm-4">
-                        <input
-                          type="text"
-                          className="form-control mmb-3"
-                          id="areaPerPrice"
-                          name="areaPerPrice"
-                          placeholder="sqm/sqft/plot"
-                          value={ad.areaPerPrice}
-                          onChange={(e) =>
-                            setAd({ ...ad, areaPerPrice: e.target.value })
-                          }
-                        />
-                      </div> */}
-                      <span className="col-sm-1 px-2 text-center">per</span>
-                      <div className="col-sm-3">
-                        <FormControl sx={{ width: "100%", mb: 2 }}>
-                          <Select
-                            value={ad.areaPerPrice}
-                            onChange={handleChange}
-                            displayEmpty
-                            inputProps={{ "aria-label": "Without label" }}
-                            SelectDisplayProps={{
-                              style: { paddingTop: 8, paddingBottom: 8 },
-                            }}
-                          >
-                            {["sqm", "sqft", "plot"].map((option, index) => (
-                              <MenuItem key={index} value={option}>
-                                {option}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="col-sm-9">
-                      <CurrencyInput
-                        id="price"
-                        name="price"
-                        placeholder="Enter price"
-                        defaultValue={ad.price}
-                        className="form-control mb-3"
-                        onValueChange={(value) =>
-                          setAd({ ...ad, price: value })
-                        }
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="mb-3 row">
-                  <label
                     id="address"
                     className="col-sm-3 col-form-label adedit-label"
                   >
-                    Landmark Location
+                    Address
                   </label>
                   <div className="col-sm-9">
-                    <GooglePlacesAutocomplete
+                    {/* <GooglePlacesAutocomplete
                       apiKey={config.GOOGLE_PLACES_KEY}
                       apiOptions="ng"
                       selectProps={{
-                        defaultInputValue: ad?.landmark,
-                        placeholder: "Landmark address/location..",
+                        defaultInputValue: ad?.address,
+                        placeholder: "Property address/location..",
                         onChange: ({ value }) => {
-                          setAd({ ...ad, landmark: value.description });
+                          setAd({ ...ad, address: value.description });
                         },
                       }}
+                    /> */}
+                    <input
+                      type="text"
+                      className="form-control mb-3"
+                      id="address"
+                      name="address"
+                      placeholder="Property address/location.."
+                      value={ad.address}
+                      onChange={(e) =>
+                        setAd({ ...ad, address: e.target.value })
+                      }
                     />
                   </div>
                 </div>
+
+                <Tooltip title="This is the Property Address/Location that is visible to the public">
+                  <div className="mb-3 row">
+                    <label
+                      id="address"
+                      className="col-sm-3 col-form-label adedit-label"
+                    >
+                      Landmark Location
+                    </label>
+                    <div className="col-sm-9">
+                      <GooglePlacesAutocomplete
+                        apiKey={config.GOOGLE_PLACES_KEY}
+                        apiOptions="ng"
+                        selectProps={{
+                          defaultInputValue: ad?.landmark,
+                          placeholder: "Landmark address/location..",
+                          onChange: ({ value }) => {
+                            setAd({ ...ad, landmark: value.description });
+                          },
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
               </>
             ) : (
               ""
