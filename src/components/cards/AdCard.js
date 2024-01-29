@@ -140,8 +140,7 @@ export default function AdCard({ ad }) {
                   (ad?.houseType && `${ad?.houseType} property`) ||
                   `${ad?.type} property`}
               </div>
-              {/* <div className="card-text address-height">{ad?.address}</div> */}
-              <div className="card-text address-height">{adAddress}</div>
+              <div className="card-text address-height">{ad?.landmark}</div>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">

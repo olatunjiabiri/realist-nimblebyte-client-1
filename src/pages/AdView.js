@@ -243,15 +243,15 @@ export default function AdView() {
                       <p className="adview-address mt-1 mb-0">
                         {/* <span className="adview-address">{ad.address}</span> */}
 
-                        {/* <span className="adview-address">{adAddress}</span> */}
+                        <span className="adview-address">{ad?.landmark}</span>
 
-                        {Array.isArray(ad?.landmarkGoogleMap)
+                        {/* {Array.isArray(ad?.landmarkGoogleMap)
                           ? ad?.landmarkGoogleMap?.map(
                               (r, index) => index === 0 && addressCombination(r)
                             )
                           : ad?.landmarkGoogleMap?.map((r) =>
                               addressCombination(r)
-                            )}
+                            )} */}
 
                         {/* {ad?.landmarkGoogleMap?.map((r) => (
                           <>
@@ -386,8 +386,8 @@ export default function AdView() {
                   </span>
                   <span>Posted: {dayjs(ad?.createdAt).fromNow()}</span>
                   <p className="adview-address mt-1 mb-0">
-                    {/* <span className="adview-address">{ad.address}</span> */}
-                    <span className="adview-address">
+                    <span className="adview-address">{ad?.landmark}</span>
+                    {/* <span className="adview-address">
                       {Array.isArray(ad?.landmarkGoogleMap)
                         ? ad?.landmarkGoogleMap?.map(
                             (r, index) => index === 0 && addressCombination(r)
@@ -395,7 +395,7 @@ export default function AdView() {
                         : ad?.landmarkGoogleMap?.map((r) =>
                             addressCombination(r)
                           )}
-                    </span>
+                    </span> */}
                   </p>
 
                   <div className="align-items-center mb-3 mt-0">
