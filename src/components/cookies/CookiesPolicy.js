@@ -25,11 +25,10 @@ function CookiePolicy() {
           style={{
             background: "#003366",
             alignContent: "center",
-            width: "50%",
-            position: "fixed",
-            position: "fixed",
-            left: "50%",
-            transform: "translateX(-50%)",
+            width: "82%",
+            // position: "fixed",
+            // left: "50%",
+            // transform: "translateX(-50%)",
           }}
           buttonStyle={{
             background: "none",
