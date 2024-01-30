@@ -71,6 +71,7 @@ export default function AdEdit({ action, type }) {
   ]);
   const [isOpen, setIsOpen] = useState(false);
   const fileRefs = useRef([]);
+  const canvasRef = useRef(null);
 
   // hooks
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ export default function AdEdit({ action, type }) {
             image: item.Location,
             blob: null,
           };
-        })
+        }),
       );
       setLoaded(true);
     } catch (err) {
@@ -173,10 +174,14 @@ export default function AdEdit({ action, type }) {
         toast.error("Description is required");
         return;
       } else {
+        const uploadedPhotos = await uploadImages();
         // make API put request
         setAd({ ...ad, loading: true });
 
-        const { data } = await axios.put(`/ad/${ad._id}/${userId}`, ad);
+        const { data } = await axios.put(`/ad/${ad._id}/${userId}`, {
+          ...ad,
+          photos: uploadedPhotos,
+        });
         // console.log("ad create response => ", data);
         if (data?.error) {
           toast.error(data.error);
@@ -214,8 +219,150 @@ export default function AdEdit({ action, type }) {
     }
   };
 
+  async function uploadImages() {
+    return new Promise(async (resolve, reject) => {
+      if (formData.length === 0) {
+        resolve();
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const files = formData;
+
+        if (files?.length) {
+          setAd((prev) => ({ ...prev, uploading: true }));
+
+          const uploadedPhotos = await Promise.all(
+            files.map(async (file) => {
+              if (file.blob === null) {
+                return {
+                  Key: file.text,
+                  Location: file.image,
+                };
+              }
+
+              return new Promise(async (innerResolve) => {
+                const image = new Image();
+                image.src = URL.createObjectURL(file.blob);
+
+                image.onload = async () => {
+                  const canvas = canvasRef.current;
+                  const context = canvas.getContext("2d");
+                  const newWidth = 1080;
+                  const newHeight = 720;
+
+                  // Resize the image using canvas
+                  canvas.width = newWidth;
+                  canvas.height = newHeight;
+                  context.drawImage(image, 0, 0, newWidth, newHeight);
+
+                  // Convert the canvas content back to base64
+                  const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
+
+                  try {
+                    const { data } = await axios.post("/upload-image", {
+                      file: resizedImage,
+                      label: file.text,
+                    });
+                    innerResolve(data);
+                  } catch (err) {
+                    console.log(err);
+                    innerResolve(null);
+                  }
+                };
+              });
+            }),
+          );
+
+          // Processing after upload
+          const filteredPhotos = uploadedPhotos.filter(Boolean);
+          const uniquePhotos = Array.from(
+            new Set([
+              ...ad.photos.map((photo) => photo.Location),
+              ...filteredPhotos.map((photo) => photo.Location),
+            ]),
+          ).map((location) =>
+            filteredPhotos.find((photo) => photo.Location === location),
+          );
+
+          setAd((prev) => ({
+            ...prev,
+            photos: uniquePhotos,
+            uploading: false,
+          }));
+
+          console.log("unique photos", uniquePhotos);
+          setLoading(false);
+          resolve(uniquePhotos);
+        }
+      } catch (err) {
+        console.log(err);
+        setAd((prev) => ({ ...prev, uploading: false }));
+        setLoading(false);
+        reject(err);
+      }
+    });
+  }
+
+  async function removeImages(imageKeys) {
+    return new Promise(async (resolve, reject) => {
+      if (!imageKeys || imageKeys.length === 0) {
+        resolve();
+        return;
+      }
+
+      try {
+        setLoading(true); // Assume there's a state setter for loading status
+
+        const removalResults = await Promise.all(
+          imageKeys.map(async (key) => {
+            try {
+              const { data } = await axios.post("/remove-image", { key });
+              return {
+                key,
+                success: true,
+                message: data.message, // Assuming the endpoint returns a message
+              };
+            } catch (error) {
+              console.error("Removal error for key:", key, error);
+              return {
+                key,
+                success: false,
+                message: error.message || "Failed to remove image",
+              };
+            }
+          }),
+        );
+
+        // Filter out successfully removed images
+        const successfullyRemoved = removalResults.filter(
+          (result) => result.success,
+        );
+
+        // Optionally, update the ad state to remove the successfully removed images
+        setAd((prev) => ({
+          ...prev,
+          photos: prev.photos.filter(
+            (photo) =>
+              !successfullyRemoved.map((res) => res.key).includes(photo.Key),
+          ),
+        }));
+
+        console.log("Successfully removed images:", successfullyRemoved);
+        setLoading(false);
+        resolve(successfullyRemoved);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+        reject(err);
+      }
+    });
+  }
+
   return (
     <div className="background-color">
+      <canvas ref={canvasRef} style={{ display: "none" }} />
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <DynamicForm
           formData={formData}

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import "./DynamicForm.css";
+import { toast } from "react-toastify";
 
 const DynamicForm = ({
   formData,
@@ -32,8 +33,14 @@ const DynamicForm = ({
 
   const handleImageChange = (index, event) => {
     const newFormData = [...formData];
-    newFormData[index].blob = event.target.files[0];
-    newFormData[index].image = URL.createObjectURL(event.target.files[0]);
+    // newFormData[index].blob = event.target.files[0];
+    // newFormData[index].image = URL.createObjectURL(event.target.files[0]);
+    newFormData[index] = {
+      ...newFormData[index],
+      blob: event.target.files[0],
+      image: URL.createObjectURL(file),
+      key: newFormData[index].key || uuidv4(), // Assign a new key if it doesn't exist
+    };
     setFormData(newFormData);
   };
 
@@ -41,24 +48,56 @@ const DynamicForm = ({
     setFormData((prevFormData) => [...prevFormData, { text: "", image: null }]);
   };
 
-  const handleDelete = async (file) => {
-    // setLoading(true);
-    // setAd({ ...ad, uploading: true });
-    try {
-      const { data } = await axios.post("/remove-image", file);
-      if (data?.ok) {
-        setAd((prev) => ({
-          ...prev,
-          photos: prev.photos.filter((p) => p.Key !== file.Key),
-          uploading: false,
-        }));
+  // const handleDelete = async (file) => {
+  //   // setLoading(true);
+  //   // setAd({ ...ad, uploading: true });
+  //   try {
+  //     const { data } = await axios.post("/remove-image", file);
+  //     if (data?.ok) {
+  //       setAd((prev) => ({
+  //         ...prev,
+  //         photos: prev.photos.filter((p) => p.Key !== file.Key),
+  //         uploading: false,
+  //       }));
+  //       setLoading(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setAd({ ...ad, uploading: false });
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleDelete = async (index) => {
+    return new Promise(async (resolve, reject) => {
+      console.log("hello 1", index);
+      console.log("hello 111111", formData[index]);
+      const imageToDelete = formData[index];
+      // if (!imageToDelete || !imageToDelete.key) return;
+
+      console.log("hello", index);
+      // Confirm deletion with the user
+      if (!window.confirm("Delete image?")) return;
+
+      console.log("hello 222", index);
+
+      setLoading(true);
+      try {
+        await axios.post("/remove-image", {
+          key: imageToDelete.key || imageToDelete.image,
+        });
+        // Successfully deleted from the backend, now remove from formData
+        const newFormData = formData.filter((_, i) => i !== index);
+        setFormData(newFormData);
+      } catch (err) {
+        toast.error("Failed to delete image");
+        reject(err);
+        console.error("Failed to delete image:", err);
+      } finally {
         setLoading(false);
+        resolve();
       }
-    } catch (err) {
-      console.log(err);
-      setAd({ ...ad, uploading: false });
-      setLoading(false);
-    }
+    });
   };
 
   // const handleConfirm = async () => {
@@ -222,12 +261,19 @@ const DynamicForm = ({
     }
   };
 
-  const handleRemoveRow = (index) => {
-    if (formData[index].blob) {
-      const answer = window.confirm("Delete image?");
-      if (!answer) return;
-      handleDelete(ad.photos[index]);
+  const handleRemoveRow = async (index) => {
+    // if (formData[index].blob) {
+    //   const answer = window.confirm("Delete image?");
+    //   if (!answer) return;
+    // handleDelete(ad.photos[index].key);
+    try {
+      await handleDelete(index);
+    } catch {
+      console.log("error");
+      return;
     }
+    console.log("index", index);
+    console.log(" add index", ad.photos[index]);
 
     const newFormData = [...formData];
     newFormData.splice(index, 1);
@@ -333,11 +379,16 @@ const DynamicForm = ({
         <button
           type="button"
           // onClick={handleConfirm}
-          onClick={() => setIsOpen(false)}
-          className={`btn btn-primary ${
-            formCompleted ? "" : "disabled"
-          } image-upload-modal-buttons`}
-          disabled={!formCompleted || loading}
+          onClick={() => {
+            if (!formCompleted) {
+              alert("You have empty field(s). Please fill in all the fields.");
+              return;
+            }
+            setIsOpen(false);
+          }}
+          className={`btn btn-primary
+          image-upload-modal-buttons`}
+          disabled={loading}
         >
           {/* {loading ? "Uploading Images" : "Confirm images"} */}
           Continue
