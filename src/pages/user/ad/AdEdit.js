@@ -267,7 +267,7 @@ export default function AdEdit({ action, type }) {
                   Price
                 </label>
 
-                {ad.type === "Land" ? (
+                {ad?.type === "Land" || ad?.type === "Commercial" ? (
                   <div className="d-flex flex-direction-row col-sm-9">
                     <div className="col-sm-8">
                       <CurrencyInput
