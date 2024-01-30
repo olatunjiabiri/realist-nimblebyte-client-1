@@ -48,12 +48,8 @@ export default function AdView() {
 
   useEffect(() => {
     if (params?.id) fetchAd();
-  }, [params?.id]);
-
-  useEffect(() => {
-    // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
-  }, []);
+  }, [params?.id]);
 
   // useEffect(() => {
   //   ad?.landmarkGoogleMap?.map((r) =>
