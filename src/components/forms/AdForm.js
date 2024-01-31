@@ -11,6 +11,8 @@ import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import Tooltip from "@mui/material/Tooltip";
+
 import { Avatar } from "antd";
 
 import { useAuth } from "../../context/auth";
@@ -63,7 +65,9 @@ export default function AdForm({ action, type }) {
   const [ad, setAd] = useState({
     photos: ddata.photos || [],
     uploading: false,
+    propertyTitle: ddata.propertyTitle || "",
     price: ddata.price || "",
+    areaPerPrice: ddata.areaPerPrice || "",
     address: ddata.address || "",
     landmark: ddata.landmark || "",
     bedrooms: ddata.bedrooms || "",
@@ -157,8 +161,11 @@ export default function AdForm({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
+      } else if (!ad.propertyTitle) {
+        toast.error("Property Title is required");
+        return;
       } else if (ad.action === "Sell" && !ad.title) {
-        toast.error(" Property Title is required");
+        toast.error(" Property document Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -202,93 +209,9 @@ export default function AdForm({ action, type }) {
     }
   };
 
-  const canvasRef = useRef(null);
-
-  async function uploadImages() {
-    return new Promise(async (resolve, reject) => {
-      if (formData.length === 0) {
-        resolve();
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const files = formData;
-
-        if (files?.length) {
-          setAd((prev) => ({ ...prev, uploading: true }));
-
-          const uploadedPhotos = await Promise.all(
-            files.map(async (file) => {
-              if (file.blob === null) {
-                return {
-                  Key: file.text,
-                  Location: file.image,
-                };
-              }
-
-              return new Promise(async (innerResolve) => {
-                const image = new Image();
-                image.src = URL.createObjectURL(file.blob);
-
-                image.onload = async () => {
-                  const canvas = canvasRef.current;
-                  const context = canvas.getContext("2d");
-                  const newWidth = 1080;
-                  const newHeight = 720;
-
-                  // Resize the image using canvas
-                  canvas.width = newWidth;
-                  canvas.height = newHeight;
-                  context.drawImage(image, 0, 0, newWidth, newHeight);
-
-                  // Convert the canvas content back to base64
-                  const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
-
-                  try {
-                    const { data } = await axios.post("/upload-image", {
-                      file: resizedImage,
-                      label: file.text,
-                    });
-                    innerResolve(data);
-                  } catch (err) {
-                    console.log(err);
-                    innerResolve(null);
-                  }
-                };
-              });
-            }),
-          );
-
-          // Processing after upload
-          const filteredPhotos = uploadedPhotos.filter(Boolean);
-          const uniquePhotos = Array.from(
-            new Set([
-              ...ad.photos.map((photo) => photo.Location),
-              ...filteredPhotos.map((photo) => photo.Location),
-            ]),
-          ).map((location) =>
-            filteredPhotos.find((photo) => photo.Location === location),
-          );
-
-          setAd((prev) => ({
-            ...prev,
-            photos: uniquePhotos,
-            uploading: false,
-          }));
-
-          console.log("unique photos", uniquePhotos);
-          setLoading(false);
-          resolve(uniquePhotos);
-        }
-      } catch (err) {
-        console.log(err);
-        setAd((prev) => ({ ...prev, uploading: false }));
-        setLoading(false);
-        reject(err);
-      }
-    });
-  }
+  const handleChange = (e) => {
+    setAd({ ...ad, areaPerPrice: e.target.value });
+  };
 
   return (
     <div>
@@ -310,8 +233,7 @@ export default function AdForm({ action, type }) {
             <form>
               <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
                 <h1 class="text-dark text-center p-3">
-                  {" "}
-                  Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"}{" "}
+                  Create Ad for {action === "Sell" ? "Sale" : "Rent"}{" "}
                 </h1>
                 <hr />
 
@@ -437,8 +359,76 @@ export default function AdForm({ action, type }) {
                   ))}
                 </div>
 
+                <div>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    placeholder="Property Title e.g Luxury 4 Bedroom Duplex"
+                    value={ad.propertyTitle}
+                    onChange={(e) =>
+                      setAd({ ...ad, propertyTitle: e.target.value })
+                    }
+                  />
+                </div>
+
+                {ad.type === "Land" || ad?.type === "Commercial" ? (
+                  <div className="d-flex flex-direction-row">
+                    <div className="col-sm-8">
+                      <CurrencyInput
+                        placeholder="Enter price in Naira"
+                        defaultValue={ad.price}
+                        className="form-control mb-3"
+                        onValueChange={(value) =>
+                          setAd({ ...ad, price: value })
+                        }
+                      />
+                    </div>
+                    <span className="col-sm-1 px-2 text-center">per</span>
+                    <div className="col-sm-3">
+                      <FormControl sx={{ width: "100%", mb: 2 }}>
+                        <Select
+                          value={ad.areaPerPrice}
+                          onChange={handleChange}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                          SelectDisplayProps={{
+                            style: { paddingTop: 8, paddingBottom: 8 },
+                          }}
+                        >
+                          {["sqm", "sqft", "plot"].map((option, index) => (
+                            <MenuItem key={index} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    {/* <div className="col-sm-1 text-center ">per</div>
+                    <div className="col-sm-4">
+                      <input
+                        type="text"
+                        className="form-control mb-3"
+                        placeholder="sqm/sqft/plot"
+                        value={ad.areaPerPrice}
+                        onChange={(e) =>
+                          setAd({ ...ad, areaPerPrice: e.target.value })
+                        }
+                      />
+                    </div> */}
+                  </div>
+                ) : (
+                  <div>
+                    <CurrencyInput
+                      placeholder="Enter price in Naira"
+                      defaultValue={ad.price}
+                      className="form-control mb-3"
+                      onValueChange={(value) => setAd({ ...ad, price: value })}
+                    />
+                  </div>
+                )}
+
                 <div className="mb-3 border-0 ">
-                  <GooglePlacesAutocomplete
+                  {/* <GooglePlacesAutocomplete
                     apiKey={config.GOOGLE_PLACES_KEY}
                     apiOptions="ng"
                     selectProps={{
@@ -448,31 +438,31 @@ export default function AdForm({ action, type }) {
                         setAd({ ...ad, address: value.description });
                       },
                     }}
-                  />
-                </div>
-
-                <div>
-                  <CurrencyInput
-                    placeholder="Enter price in Naira"
-                    defaultValue={ad.price}
+                  /> */}
+                  <input
+                    type="text"
                     className="form-control mb-3"
-                    onValueChange={(value) => setAd({ ...ad, price: value })}
+                    placeholder="Property address/location.."
+                    value={ad.address}
+                    onChange={(e) => setAd({ ...ad, address: e.target.value })}
                   />
                 </div>
 
-                <div className="mb-3 border-0 ">
-                  <GooglePlacesAutocomplete
-                    apiKey={config.GOOGLE_PLACES_KEY}
-                    apiOptions="ng"
-                    selectProps={{
-                      defaultInputValue: ad?.landmark,
-                      placeholder: "Landmark address/location",
-                      onChange: ({ value }) => {
-                        setAd({ ...ad, landmark: value.description });
-                      },
-                    }}
-                  />
-                </div>
+                <Tooltip title="This is the Property Address/Location that is visible to the public">
+                  <div className="mb-3 border-0 ">
+                    <GooglePlacesAutocomplete
+                      apiKey={config.GOOGLE_PLACES_KEY}
+                      apiOptions="ng"
+                      selectProps={{
+                        defaultInputValue: ad?.landmark,
+                        placeholder: "Landmark address/location",
+                        onChange: ({ value }) => {
+                          setAd({ ...ad, landmark: value.description });
+                        },
+                      }}
+                    />
+                  </div>
+                </Tooltip>
 
                 {/* {(ad.type === "House" || ad.type === "Shortlet") && ( */}
                 {ad.type === "House" && (
@@ -524,7 +514,7 @@ export default function AdForm({ action, type }) {
                       type="number"
                       min="0"
                       className="form-control mb-3"
-                      placeholder="Enter number of bathrooms"
+                      placeholder="Enter number of bathrooms/toilets "
                       value={ad.bathrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bathrooms: e.target.value })
@@ -548,7 +538,7 @@ export default function AdForm({ action, type }) {
                 <input
                   type="text"
                   className="form-control mb-3"
-                  placeholder="Size of land"
+                  placeholder="Size of property in sqm or sqft"
                   value={ad.landsize}
                   onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
@@ -556,7 +546,7 @@ export default function AdForm({ action, type }) {
                   <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder="Enter property title e.g. C of O, Survey Plan"
+                    placeholder="Enter property document title e.g. C of O, Survey Plan"
                     value={ad.title}
                     onChange={(e) => setAd({ ...ad, title: e.target.value })}
                   />

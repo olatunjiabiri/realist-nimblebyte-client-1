@@ -19,6 +19,7 @@ import "./index.css";
 import DynamicForm from "../../../components/uploader";
 import Modall from "../../../components/modal2/Modal";
 import LogoutMessage from "../../../components/misc/logoutMessage/LogoutMessage";
+import { Tooltip } from "@mui/material";
 
 export default function AdEdit({ action, type }) {
   // context
@@ -47,6 +48,7 @@ export default function AdEdit({ action, type }) {
     _id: "",
     photos: [],
     uploading: false,
+    propertyTitle: "",
     price: "",
     address: "",
     landmark: "",
@@ -155,6 +157,9 @@ export default function AdEdit({ action, type }) {
       } else if (!ad.price) {
         toast.error("Price is required");
         return;
+      } else if (!ad.propertyTitle) {
+        toast.error("Property title is required e.g 4 Bedroom Duplex");
+        return;
       } else if (ad.type === "House" && (!ad.bedrooms || ad.bedrooms < 1)) {
         toast.error("No. of Bedrooms is required");
         return;
@@ -164,11 +169,11 @@ export default function AdEdit({ action, type }) {
       } else if (ad.type === "House" && !ad.carpark) {
         toast.error("No. of Carpark is required");
         return;
-      } else if (!ad.landsize) {
-        toast.error("landsize is required");
+      } else if (ad.action === "Sell" && !ad.landsize) {
+        toast.error("property landsize is required");
         return;
-      } else if (!ad.title) {
-        toast.error("Title is required");
+      } else if (ad.action === "Sell" && !ad.title) {
+        toast.error("document Title is required");
         return;
       } else if (!ad.description) {
         toast.error("Description is required");
@@ -219,146 +224,9 @@ export default function AdEdit({ action, type }) {
     }
   };
 
-  async function uploadImages() {
-    return new Promise(async (resolve, reject) => {
-      if (formData.length === 0) {
-        resolve();
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const files = formData;
-
-        if (files?.length) {
-          setAd((prev) => ({ ...prev, uploading: true }));
-
-          const uploadedPhotos = await Promise.all(
-            files.map(async (file) => {
-              if (file.blob === null) {
-                return {
-                  Key: file.text,
-                  Location: file.image,
-                };
-              }
-
-              return new Promise(async (innerResolve) => {
-                const image = new Image();
-                image.src = URL.createObjectURL(file.blob);
-
-                image.onload = async () => {
-                  const canvas = canvasRef.current;
-                  const context = canvas.getContext("2d");
-                  const newWidth = 1080;
-                  const newHeight = 720;
-
-                  // Resize the image using canvas
-                  canvas.width = newWidth;
-                  canvas.height = newHeight;
-                  context.drawImage(image, 0, 0, newWidth, newHeight);
-
-                  // Convert the canvas content back to base64
-                  const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
-
-                  try {
-                    const { data } = await axios.post("/upload-image", {
-                      file: resizedImage,
-                      label: file.text,
-                    });
-                    innerResolve(data);
-                  } catch (err) {
-                    console.log(err);
-                    innerResolve(null);
-                  }
-                };
-              });
-            }),
-          );
-
-          // Processing after upload
-          const filteredPhotos = uploadedPhotos.filter(Boolean);
-          const uniquePhotos = Array.from(
-            new Set([
-              ...ad.photos.map((photo) => photo.Location),
-              ...filteredPhotos.map((photo) => photo.Location),
-            ]),
-          ).map((location) =>
-            filteredPhotos.find((photo) => photo.Location === location),
-          );
-
-          setAd((prev) => ({
-            ...prev,
-            photos: uniquePhotos,
-            uploading: false,
-          }));
-
-          console.log("unique photos", uniquePhotos);
-          setLoading(false);
-          resolve(uniquePhotos);
-        }
-      } catch (err) {
-        console.log(err);
-        setAd((prev) => ({ ...prev, uploading: false }));
-        setLoading(false);
-        reject(err);
-      }
-    });
-  }
-
-  async function removeImages(imageKeys) {
-    return new Promise(async (resolve, reject) => {
-      if (!imageKeys || imageKeys.length === 0) {
-        resolve();
-        return;
-      }
-
-      try {
-        setLoading(true); // Assume there's a state setter for loading status
-
-        const removalResults = await Promise.all(
-          imageKeys.map(async (key) => {
-            try {
-              const { data } = await axios.post("/remove-image", { key });
-              return {
-                key,
-                success: true,
-                message: data.message, // Assuming the endpoint returns a message
-              };
-            } catch (error) {
-              console.error("Removal error for key:", key, error);
-              return {
-                key,
-                success: false,
-                message: error.message || "Failed to remove image",
-              };
-            }
-          }),
-        );
-
-        // Filter out successfully removed images
-        const successfullyRemoved = removalResults.filter(
-          (result) => result.success,
-        );
-
-        // Optionally, update the ad state to remove the successfully removed images
-        setAd((prev) => ({
-          ...prev,
-          photos: prev.photos.filter(
-            (photo) =>
-              !successfullyRemoved.map((res) => res.key).includes(photo.Key),
-          ),
-        }));
-
-        console.log("Successfully removed images:", successfullyRemoved);
-        setLoading(false);
-        resolve(successfullyRemoved);
-      } catch (err) {
-        console.error(err);
-        setLoading(false);
-        reject(err);
-      }
-    });
-  }
+  const handleChange = (e) => {
+    setAd({ ...ad, areaPerPrice: e.target.value });
+  };
 
   return (
     <div className="background-color">
@@ -378,51 +246,98 @@ export default function AdEdit({ action, type }) {
           <div className=" row border border-info col-lg-8 offset-lg-2  mt-2 adedit-wrapper">
             <h1 className="text-dark text-center p-3">Update Ad</h1>
             <hr />
-            <div className="mb-3 ">
-              <div className="">
-                {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+            <div className="mb-2">
+              {/* <ImageUpload ad={ad} setAd={setAd} /> */}
+              <label
+                onClick={() => setIsOpen(true)}
+                className="btn btn-primary"
+              >
+                Upload Photos
+              </label>
+              {ad.photos?.map((file, index) => (
+                <Avatar
+                  key={index}
+                  src={file?.Location}
+                  shape="square"
+                  size="46"
+                  className="ml-2 m-2"
+                />
+              ))}
+            </div>
+            {loaded ? (
+              <div className="row">
                 <label
-                  onClick={() => setIsOpen(true)}
-                  className="btn btn-primary"
+                  id="price"
+                  className="col-sm-3 col-form-label adedit-label"
                 >
-                  Upload Photos
+                  Price
                 </label>
-                {ad.photos?.map((file, index) => (
-                  <Avatar
-                    key={index}
-                    src={file?.Location}
-                    shape="square"
-                    size="46"
-                    className="ml-2 m-2"
-                  />
-                ))}
-              </div>
-              {loaded ? (
-                <div className="mb-3 row">
-                  <label
-                    id="address"
-                    className="col-sm-3 col-form-label adedit-label"
-                  >
-                    Address
-                  </label>
+
+                {ad?.type === "Land" || ad?.type === "Commercial" ? (
+                  <div className="d-flex flex-direction-row col-sm-9">
+                    <div className="col-sm-8">
+                      <CurrencyInput
+                        id="price"
+                        name="price"
+                        placeholder="Enter price"
+                        defaultValue={ad.price}
+                        className="form-control mb-3"
+                        onValueChange={(value) =>
+                          setAd({ ...ad, price: value })
+                        }
+                      />
+                    </div>
+                    {/* <div className="col-sm-1 text-center ">per</div>
+                      <div className="col-sm-4">
+                        <input
+                          type="text"
+                          className="form-control mmb-3"
+                          id="areaPerPrice"
+                          name="areaPerPrice"
+                          placeholder="sqm/sqft/plot"
+                          value={ad.areaPerPrice}
+                          onChange={(e) =>
+                            setAd({ ...ad, areaPerPrice: e.target.value })
+                          }
+                        />
+                      </div> */}
+                    <span className="col-sm-1 px-2 text-center">per</span>
+                    <div className="col-sm-3">
+                      <FormControl sx={{ width: "100%", mb: 2 }}>
+                        <Select
+                          value={ad.areaPerPrice}
+                          onChange={handleChange}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                          SelectDisplayProps={{
+                            style: { paddingTop: 8, paddingBottom: 8 },
+                          }}
+                        >
+                          {["sqm", "sqft", "plot"].map((option, index) => (
+                            <MenuItem key={index} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+                ) : (
                   <div className="col-sm-9">
-                    <GooglePlacesAutocomplete
-                      apiKey={config.GOOGLE_PLACES_KEY}
-                      apiOptions="ng"
-                      selectProps={{
-                        defaultInputValue: ad?.address,
-                        placeholder: "Property address/location..",
-                        onChange: ({ value }) => {
-                          setAd({ ...ad, address: value.description });
-                        },
-                      }}
+                    <CurrencyInput
+                      id="price"
+                      name="price"
+                      placeholder="Enter price"
+                      defaultValue={ad.price}
+                      className="form-control mb-3"
+                      onValueChange={(value) => setAd({ ...ad, price: value })}
                     />
                   </div>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className="row mb-3">
               <label
@@ -487,43 +402,82 @@ export default function AdEdit({ action, type }) {
               <>
                 <div className="mb-3 row">
                   <label
-                    id="price"
+                    idr="propertyTitle"
                     className="col-sm-3 col-form-label adedit-label"
                   >
-                    Price
+                    Property Title
                   </label>
                   <div className="col-sm-9">
-                    <CurrencyInput
-                      id="price"
-                      name="price"
-                      placeholder="Enter price"
-                      defaultValue={ad.price}
+                    <input
+                      type="text"
                       className="form-control mb-3"
-                      onValueChange={(value) => setAd({ ...ad, price: value })}
+                      id="propertyTitle"
+                      name="propertyTitle"
+                      placeholder="Property title like 4 Bedroom Duplex"
+                      value={ad.propertyTitle}
+                      onChange={(e) =>
+                        setAd({ ...ad, propertyTitle: e.target.value })
+                      }
                     />
                   </div>
                 </div>
+
                 <div className="mb-3 row">
                   <label
                     id="address"
                     className="col-sm-3 col-form-label adedit-label"
                   >
-                    Landmark Location
+                    Address
                   </label>
                   <div className="col-sm-9">
-                    <GooglePlacesAutocomplete
+                    {/* <GooglePlacesAutocomplete
                       apiKey={config.GOOGLE_PLACES_KEY}
                       apiOptions="ng"
                       selectProps={{
-                        defaultInputValue: ad?.landmark,
-                        placeholder: "Landmark address/location..",
+                        defaultInputValue: ad?.address,
+                        placeholder: "Property address/location..",
                         onChange: ({ value }) => {
-                          setAd({ ...ad, landmark: value.description });
+                          setAd({ ...ad, address: value.description });
                         },
                       }}
+                    /> */}
+                    <input
+                      type="text"
+                      className="form-control mb-3"
+                      id="address"
+                      name="address"
+                      placeholder="Property address/location.."
+                      value={ad.address}
+                      onChange={(e) =>
+                        setAd({ ...ad, address: e.target.value })
+                      }
                     />
                   </div>
                 </div>
+
+                <Tooltip title="This is the Property Address/Location that is visible to the public">
+                  <div className="mb-3 row">
+                    <label
+                      id="address"
+                      className="col-sm-3 col-form-label adedit-label"
+                    >
+                      Landmark Location
+                    </label>
+                    <div className="col-sm-9">
+                      <GooglePlacesAutocomplete
+                        apiKey={config.GOOGLE_PLACES_KEY}
+                        apiOptions="ng"
+                        selectProps={{
+                          defaultInputValue: ad?.landmark,
+                          placeholder: "Landmark address/location..",
+                          onChange: ({ value }) => {
+                            setAd({ ...ad, landmark: value.description });
+                          },
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Tooltip>
               </>
             ) : (
               ""
@@ -545,7 +499,7 @@ export default function AdEdit({ action, type }) {
                       id="bedrooms"
                       name="bedrooms"
                       className="form-control mb-3"
-                      placeholder="Enter how many bedrooms"
+                      placeholder="Enter number of bedrooms"
                       value={ad.bedrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bedrooms: e.target.value })
@@ -568,7 +522,7 @@ export default function AdEdit({ action, type }) {
                       id="bathrooms"
                       name="bathrooms"
                       className="form-control mb-3"
-                      placeholder="Enter how many bathrooms"
+                      placeholder="Enter number of bathrooms/toilets"
                       value={ad.bathrooms}
                       onChange={(e) =>
                         setAd({ ...ad, bathrooms: e.target.value })
@@ -591,7 +545,7 @@ export default function AdEdit({ action, type }) {
                       id="carpark"
                       name="carpark"
                       className="form-control mb-3"
-                      placeholder="Enter how many carpark"
+                      placeholder="Enter number of carpark"
                       value={ad.carpark}
                       onChange={(e) =>
                         setAd({ ...ad, carpark: e.target.value })
@@ -617,7 +571,7 @@ export default function AdEdit({ action, type }) {
                   className="form-control mb-3"
                   id="landSize"
                   name="landSize"
-                  placeholder="Size of land"
+                  placeholder="Size of the property in sqm or sqft"
                   value={ad.landsize}
                   onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
@@ -748,7 +702,7 @@ export default function AdEdit({ action, type }) {
                 idr="title"
                 className="col-sm-3 col-form-label adedit-label"
               >
-                Title
+                Document Title
               </label>
               <div className="col-sm-9">
                 <input
@@ -756,7 +710,7 @@ export default function AdEdit({ action, type }) {
                   className="form-control mb-3"
                   id="title"
                   name="title"
-                  placeholder="Enter title"
+                  placeholder="Property document title e.g C of O, Survey Plan"
                   value={ad.title}
                   onChange={(e) => setAd({ ...ad, title: e.target.value })}
                 />

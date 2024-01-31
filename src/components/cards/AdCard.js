@@ -35,19 +35,25 @@ export default function AdCard({ ad }) {
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 500);
   }, [pathname]);
-
+  // console.log({ ad });
   useEffect(() => {
-    ad?.googleMap?.map((r) =>
+    ad?.landmarkGoogleMap?.map((r) =>
       setAdAddress(
-        (r.extra?.neighborhood || r.administrativeLevels?.level2long) === r.city
-          ? `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.country
-            }`
-          : `${r.extra?.neighborhood || r.administrativeLevels?.level2long}, ${
-              r.city
-            }, ${r.country}`
+        `${
+          r.administrativeLevels?.level3long ||
+          r.administrativeLevels?.level2long ||
+          ""
+        }  
+          ${
+            (r.administrativeLevels?.level3long &&
+              r.administrativeLevels?.level2long) ||
+            ""
+          } 
+          ${r.administrativeLevels?.level1long || r.city || ""} ${
+          r.country || ""
+        }`
       )
     );
   }, []);
@@ -94,12 +100,26 @@ export default function AdCard({ ad }) {
             {/* </Link> */}
             <div className="card-body ad-card-body">
               <div className="d-flex justify-content-between">
-                <h3 className="pt-1">
-                  {" "}
-                  <span>&#8358;</span>
-                  {/* {formatNumber(ad?.price)} */}
-                  {millify(ad?.price)}
-                </h3>
+                <div className="d-flex flex-direction-row">
+                  <h3 className="pt-1">
+                    {" "}
+                    <span>&#8358;</span>
+                    {/* {formatNumber(ad?.price)} */}
+                    {millify(ad?.price)}
+                  </h3>
+                  {ad?.type === "Land" && ad?.areaPerPrice && (
+                    <h5 className="pt-2">
+                      {" "}
+                      &nbsp;
+                      <span>
+                        {" "}
+                        <em>per</em>
+                      </span>
+                      &nbsp;
+                      {ad?.areaPerPrice || ""}
+                    </h5>
+                  )}
+                </div>
 
                 {auth?.user === null ? (
                   <Link
@@ -115,9 +135,12 @@ export default function AdCard({ ad }) {
                   </Link>
                 )}
               </div>
-
-              {/* <div className="card-text address-height">{ad?.address}</div> */}
-              <div className="card-text address-height">{adAddress}</div>
+              <div className="ad-card-property-title">
+                {ad?.propertyTitle ||
+                  (ad?.houseType && `${ad?.houseType} property`) ||
+                  `${ad?.type} property`}
+              </div>
+              <div className="card-text address-height">{ad?.landmark}</div>
 
               <AdFeatures ad={ad} />
               <div className="d-flex justify-content-between">

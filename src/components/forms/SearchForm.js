@@ -9,8 +9,13 @@ import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
+import LocationSearchInput from "../location/LocationSearchInput.js";
 
 export default function SearchForm({ navMenuProperty }) {
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [options, setOptions] = useState([]);
+  const [userCurrentLocation, setUserCurrentLocation] = useState("");
   // context
   const [search, setSearch] = useSearch();
 
@@ -25,6 +30,10 @@ export default function SearchForm({ navMenuProperty }) {
         address: "",
         action: "", //Buy
         type: "", //House
+        total: 0,
+        pageNo: 1,
+        perPage: 9,
+        loading: true,
         price: "All Prices", //All price
         priceRange: [0, 1000000000000],
       });
@@ -35,12 +44,20 @@ export default function SearchForm({ navMenuProperty }) {
       search.address = "";
       search.type = "Property Type";
       search.price = "All Prices"; //All price
+      search.total = 0;
+      search.pageNo = 1;
+      search.loading = true;
+      search.perPage = 9;
       search.priceRange = [0, 1000000000000];
       return;
     }
     if (path[1] === "rent") {
       search.action = "Rent";
       search.address = "";
+      search.loading = true;
+      search.total = 0;
+      search.pageNo = 1;
+      search.perPage = 9;
       search.type = "Property Type";
       search.price = "All Prices"; //All price
       search.priceRange = [0, 1000000000000];
@@ -55,21 +72,20 @@ export default function SearchForm({ navMenuProperty }) {
   }, []);
 
   const handleSearch = async () => {
-    setSearch((prev) => ({ ...prev, loading: false }));
-
-    // console.log("search options>>>>", search);
+    setSearch((prev) => ({ ...prev, loading: true }));
 
     try {
-      const { results, page, price, ...rest } = search;
+      const { results, page, price, pageNo, perPage, ...rest } = search;
 
       const query = queryString.stringify(rest);
 
-      const { data } = await axios.get(`/search?${query}`);
+      const { data } = await axios.get(`/search/${pageNo}/${perPage}?${query}`);
 
       if (search?.page !== "/search") {
         setSearch((prev) => ({
           ...prev,
-          results: data,
+          results: data.ads,
+          total: data.total,
           page: window.location.pathname,
           loading: false,
         }));
@@ -77,7 +93,8 @@ export default function SearchForm({ navMenuProperty }) {
       } else {
         setSearch((prev) => ({
           ...prev,
-          results: data,
+          results: data.ads,
+          total: data.total,
           page: window.location.pathname,
           loading: false,
           // action: "",
@@ -89,11 +106,17 @@ export default function SearchForm({ navMenuProperty }) {
     }
   };
 
+  useEffect(() => {
+    if (path[1] === "search") {
+      handleSearch();
+    }
+  }, [search.pageNo]);
+
   return (
     <>
       <div className="searchForm-container">
         <div
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex mt-5 justify-content-center align-items-center"
           style={{
             backgroundImage: "url(/search-form-image.jpg)",
             backgroundSize: "cover",
@@ -104,8 +127,9 @@ export default function SearchForm({ navMenuProperty }) {
           }}
         >
           <div className="container col-lg-8">
-            <div className="form-control my-4 text-center rounded-pill ">
-              <GooglePlacesAutocomplete
+            {/* <div className="form-control my-4 text-center rounded-pill "> */}
+            {/* <div className="form-control my-4 text-center rounded-pill "> */}
+            {/* <GooglePlacesAutocomplete
                 apiKey={config.GOOGLE_PLACES_KEY}
                 apiOptions="ng"
                 selectProps={{
@@ -123,11 +147,21 @@ export default function SearchForm({ navMenuProperty }) {
                     this.set(null);
                   },
                 }}
-              />
-            </div>
+              /> */}
+
+            <LocationSearchInput
+              value={value}
+              setValue={setValue}
+              userCurrentLocation={userCurrentLocation}
+              setUserCurrentLocation={setUserCurrentLocation}
+              options={options}
+              setOptions={setOptions}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+            />
 
             <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
-              <div className="row justify-content-evenly col-lg-8">
+              <div className="d-flex row justify-content-evenly mx-auto col-lg-8 search-controls-container">
                 {!navMenuProperty && (
                   <>
                     <select
@@ -194,7 +228,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ...search,
                         price: e.target.value,
                         priceRange: Prices.find(
-                          (item) => item.name === e.target.value
+                          (item) => item.name === e.target.value,
                         ).array,
                       });
                     }}

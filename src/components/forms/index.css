@@ -4,6 +4,12 @@
   overflow: hidden;
 }
 
+
+.search-controls-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .property-type-controls {
  width: 100% 
 }
@@ -84,9 +90,13 @@
   }
 
   .property-type-controls {
-   
-    width: 90%;
+       width: 90%;
   }
+
+  .search-controls-container {
+    width: 60%;
+    flex-direction: column;
+    }
 }
 
 

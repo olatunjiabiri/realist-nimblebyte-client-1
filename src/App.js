@@ -14,6 +14,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Paystack from "./pages/payment/paystack/Paystack";
 
+import CookiePolicy from "./components/cookies/CookiesPolicy";
+
 import PrivacyPolicy from "./documents/PrivacyPolicy";
 import TermsofUse from "../src/documents/TermsofUse";
 import BuyerTermsandConditions from "../src/documents/BuyerTermsandConditions";
@@ -202,6 +204,7 @@ function App() {
         </AuthProvider>
       </Elements>
       <BackToTop />
+      <CookiePolicy/>
     </BrowserRouter>
   );
 }

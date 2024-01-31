@@ -51,6 +51,8 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
   };
 
   const onSubmit = async (values, actions) => {
+    console.log("values>>", values);
+    console.log("agent", agent);
     const { name, email, message, phone } = values;
 
     setLoading(true);
@@ -96,7 +98,9 @@ const ContactSellerModal = ({ ad, setIsOpen, onClose }) => {
       phone: auth?.user?.phone || "",
       email: auth?.user?.email || "",
       message: `Hi, I am interested in the property located at ${
-        ad?.googleMap[0]?.city || ad?.googleMap[0]?.country || ""
+        ad?.landmarkGoogleMap[0]?.city ||
+        ad?.landmarkGoogleMap[0]?.country ||
+        ""
       }. Thanks`,
     },
     validationSchema: contactSellerFormSchema,

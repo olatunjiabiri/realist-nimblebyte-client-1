@@ -4,18 +4,22 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import { useAuth } from "../../context/auth";
 import config from "../../config.js";
 import { updatePasswordSchema } from "../../../src/validations";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import LogoutMessage from "../../components/misc/logoutMessage/LogoutMessage";
+import "./UpdatePassword.css";
 
 export default function UpdatePassword() {
   // context
   const [auth, setAuth] = useAuth();
   // state
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+
   // hooks
   const navigate = useNavigate();
 
@@ -39,21 +43,20 @@ export default function UpdatePassword() {
         toast.error(data.message);
         setLoading(false);
       } else {
-        toast.success("Password Updated");
-        setLoading(false);
-        actions.resetForm();
-        navigate("/login");
         setAuth({ user: null, token: "" });
-        setDdata({ adData: null });
         localStorage.removeItem("auth");
         localStorage.removeItem("cLocation");
         localStorage.removeItem("adData");
         localStorage.removeItem("profileFormData");
         localStorage.removeItem("profile");
+        toast.success("Password Updated");
+        setLoading(false);
+        actions.resetForm();
+        navigate("/login");
       }
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong. Try again.");
+      toast.error("Something went wrong. Try Again.");
       setLoading(false);
     }
   };
@@ -76,43 +79,57 @@ export default function UpdatePassword() {
     onSubmit,
   });
 
+  const toggle = () => {
+    setVisible(!visible);
+  };
+
   return (
     <LogoutMessage>
       <ContentWrapper>
         <div className="row">
           <div className="col-md-4 offset-md-4">
             <form onSubmit={handleSubmit}>
-              <input
-                type="password"
-                id="validationCustom03"
-                name="currentPassword"
-                placeholder="Current password"
-                className="form-control mb-3"
-                // required
-                autoFocus
-                value={values.currentPassword}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              {errors.currentPassword && touched.currentPassword && (
+              <div className="relative">
+                <input
+                  // type="password"
+                  type={visible ? "text" : "password"}
+                  id="validationCustom03"
+                  name="currentPassword"
+                  placeholder="Current password"
+                  className="form-control mb-3"
+                  // required
+                  autoFocus
+                  value={values.currentPassword}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <span className="password-toggle" onClick={toggle}>
+                  {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </span>
+              </div>
+              {/* {errors.currentPassword && touched.currentPassword && (
                 <div className="mt-0 text-danger">
                   <small>
                     {" "}
                     <p> {errors.currentPassword}</p>
                   </small>
                 </div>
-              )}
+              )} */}
 
-              <input
-                type="password"
-                name="newPassword"
-                placeholder="New password"
-                className="form-control mb-3"
-                value={values.newPassword}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+              <div className="relative">
+                <input
+                  type={visible ? "text" : "password"}
+                  name="newPassword"
+                  placeholder="New password"
+                  className="form-control mb-3"
+                  value={values.newPassword}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <span className="password-toggle" onClick={toggle}>
+                  {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </span>
+              </div>
               {errors.newPassword && touched.newPassword && (
                 <div className="mt-0 text-danger">
                   <small>
@@ -122,15 +139,20 @@ export default function UpdatePassword() {
                 </div>
               )}
 
-              <input
-                type="password"
-                name="confirmNewPassword"
-                placeholder="Confirm the new password"
-                className="form-control mb-3"
-                value={values.confirmPassword}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+              <div className="relative">
+                <input
+                  type={visible ? "text" : "password"}
+                  name="confirmNewPassword"
+                  placeholder="Confirm the new password"
+                  className="form-control mb-3"
+                  value={values.confirmPassword}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <span className="password-toggle" onClick={toggle}>
+                  {visible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </span>
+              </div>
               {errors.confirmNewPassword && touched.confirmNewPassword && (
                 <div className="mt-0 text-danger">
                   <small>

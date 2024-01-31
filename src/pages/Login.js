@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/auth";
@@ -23,9 +22,35 @@ export default function Login() {
   const [visible, setVisible] = useState(false);
   // hooks
   const navigate = useNavigate();
+  const { state } = useLocation();
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const fromAction = queryParams.get("fromAction"); // 'like'
+
+  // const queryParams = new URLSearchParams(location.search);
+  // const fromAction = queryParams.get("fromAction"); // 'like'
+
+  const scrollWithOffset = (el) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yOffset = -200;
+    window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    // window.scrollTo(0, 0);
+
+    const handleBackButton = () => {
+      // Navigate back to the previous page
+      window.history.back();
+    };
+
+    // Add an event listener for the popstate event (triggered by the browser back button)
+    window.addEventListener("popstate", handleBackButton);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, []);
 
   const toggle = () => {
     setVisible(!visible);
@@ -48,7 +73,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${config.AUTH_API}/user/facebook-signIn`,
+        `${config.AUTH_API}/user/facebook-signIn`
       );
       if (data?.success) {
         window.location.replace(data.responsePayload);
@@ -94,7 +119,7 @@ export default function Login() {
 
         localStorage.setItem(
           "auth",
-          JSON.stringify({ token, user, wishlist: userWishlist }),
+          JSON.stringify({ token, user, wishlist: userWishlist })
         );
         localStorage.removeItem("confirmation");
         toast.success("Login successful");
@@ -102,7 +127,21 @@ export default function Login() {
 
         if (auth.user?.firstName === "") navigate("/user/profile");
 
-        location?.state !== null ? navigate(location.state) : navigate("/");
+        if (
+          state?.fromAction === "like" ||
+          location?.state === null ||
+          location?.state === undefined
+        ) {
+          navigate("/");
+        } else {
+          navigate(location?.state);
+        }
+
+        // state?.fromAction === "like"
+        //   ? navigate("/")
+        //   : location?.state !== null
+        //   ? navigate(location.state)
+        //   : navigate("/");
       }
     } catch (err) {
       if (err.response.data.success === false) {
@@ -120,7 +159,7 @@ export default function Login() {
               "confirmation",
               JSON.stringify({
                 email,
-              }),
+              })
             );
             navigate("/confirmation");
             // toast.error(err.response.data.message); //wrong password
@@ -141,7 +180,7 @@ export default function Login() {
           <div className="col-md-4 offset-md-4">
             <form onSubmit={handleSubmit}>
               <div className="h3 mb-4 text-center">
-                {fromAction === "like"
+                {state?.fromAction === "like"
                   ? "Login or Create an Account to like an Ad"
                   : "Log In"}
               </div>

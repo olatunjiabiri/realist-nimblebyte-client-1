@@ -40,7 +40,7 @@
 
 .close-btn {
   position: absolute;
-  font-size: 20px;
+  font-size: 25px;
   top: 17px; /*25 */
   right: 18px; /*20 */
   z-index: 100000;
@@ -57,8 +57,8 @@
   }
 
   .close-btn {
-    top: 4px;
-    right: 2px;
+    top: 14px ;/* 4px; */
+    right:  12px; /*2px */
   }
 }
 
@@ -70,7 +70,7 @@
   }
 
   .modal-content {
-    width: 90%;
+    /* width: 90%; */
     border-radius: 20px;
   }
 }
