@@ -227,8 +227,7 @@ export default function AdForm({ action, type }) {
             <form>
               <div className="col-lg-8 border border-info offset-lg-2 mt-2 adform-wrapper">
                 <h1 class="text-dark text-center p-3">
-                  {" "}
-                  Create Ad for {ad?.action === "Sell" ? "Sale" : "Rent"}{" "}
+                  Create Ad for {action === "Sell" ? "Sale" : "Rent"}{" "}
                 </h1>
                 <hr />
 
@@ -366,7 +365,7 @@ export default function AdForm({ action, type }) {
                   />
                 </div>
 
-                {ad.type === "Land" ? (
+                {ad.type === "Land" || ad?.type === "Commercial" ? (
                   <div className="d-flex flex-direction-row">
                     <div className="col-sm-8">
                       <CurrencyInput
