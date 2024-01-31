@@ -74,3 +74,26 @@
   color: #fff;
   background-color: #0056b3;
 }
+
+@media (min-width: 992px){
+.Featured-ad-card-width {
+    max-width: 400px;
+    width:100%
+  }
+}
+
+
+@media (min-width: 576px) {
+  .Featured-ad-card-width  {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .Featured-ad-card-width  {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}
+
