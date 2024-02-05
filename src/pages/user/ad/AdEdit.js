@@ -97,8 +97,8 @@ export default function AdEdit({ action, type }) {
       setFormData(
         data?.ad.photos.map((item) => {
           return {
-            text: item.Key,
-            image: item.Location,
+            text: item?.Key,
+            image: item?.Location,
             blob: null,
           };
         }),
@@ -145,7 +145,7 @@ export default function AdEdit({ action, type }) {
     // console.log("ad>>>>>", ad);
     try {
       // validation
-      if (!ad.photos?.length) {
+      if (formData[0].Key === null) {
         toast.error("Photo is required");
         return;
       } else if (!ad.address) {
@@ -228,6 +228,80 @@ export default function AdEdit({ action, type }) {
     setAd({ ...ad, areaPerPrice: e.target.value });
   };
 
+  async function uploadImages() {
+    return new Promise(async (resolve, reject) => {
+      if (formData.length === 0) {
+        resolve();
+        return;
+      }
+      try {
+        setLoading(true);
+        const files = formData;
+        if (files?.length) {
+          setAd((prev) => ({ ...prev, uploading: true }));
+          const uploadedPhotos = await Promise.all(
+            files.map(async (file) => {
+              if (file.blob === null) {
+                return {
+                  Key: file.text,
+                  Location: file.image,
+                };
+              }
+              return new Promise(async (innerResolve) => {
+                const image = new Image();
+                image.src = URL.createObjectURL(file.blob);
+                image.onload = async () => {
+                  const canvas = canvasRef.current;
+                  const context = canvas.getContext("2d");
+                  const newWidth = 1080;
+                  const newHeight = 720;
+                  // Resize the image using canvas
+                  canvas.width = newWidth;
+                  canvas.height = newHeight;
+                  context.drawImage(image, 0, 0, newWidth, newHeight);
+                  // Convert the canvas content back to base64
+                  const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
+                  try {
+                    const { data } = await axios.post("/upload-image", {
+                      file: resizedImage,
+                      label: file.text,
+                    });
+                    innerResolve(data);
+                  } catch (err) {
+                    console.log(err);
+                    innerResolve(null);
+                  }
+                };
+              });
+            }),
+          );
+          // Processing after upload
+          const filteredPhotos = uploadedPhotos.filter(Boolean);
+          const uniquePhotos = Array.from(
+            new Set([
+              ...ad.photos.map((photo) => photo?.Location),
+              ...filteredPhotos.map((photo) => photo?.Location),
+            ]),
+          ).map((location) =>
+            filteredPhotos.find((photo) => photo?.Location === location),
+          );
+          setAd((prev) => ({
+            ...prev,
+            photos: uniquePhotos,
+            uploading: false,
+          }));
+          console.log("unique photos", uniquePhotos);
+          setLoading(false);
+          resolve(uniquePhotos);
+        }
+      } catch (err) {
+        console.log(err);
+        setAd((prev) => ({ ...prev, uploading: false }));
+        setLoading(false);
+        reject(err);
+      }
+    });
+  }
   return (
     <div className="background-color">
       <canvas ref={canvasRef} style={{ display: "none" }} />
@@ -254,10 +328,19 @@ export default function AdEdit({ action, type }) {
               >
                 Upload Photos
               </label>
-              {ad.photos?.map((file, index) => (
+              {/* {ad.photos?.map((file, index) => ( */}
+              {/*   <Avatar */}
+              {/*     key={index} */}
+              {/*     src={file?.Location} */}
+              {/*     shape="square" */}
+              {/*     size="46" */}
+              {/*     className="ml-2 m-2" */}
+              {/*   /> */}
+              {/* ))} */}
+              {formData?.map((file, index) => (
                 <Avatar
                   key={index}
-                  src={file?.Location}
+                  src={file?.image}
                   shape="square"
                   size="46"
                   className="ml-2 m-2"

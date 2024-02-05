@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import "./DynamicForm.css";
+import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
 const DynamicForm = ({
@@ -38,7 +39,7 @@ const DynamicForm = ({
     newFormData[index] = {
       ...newFormData[index],
       blob: event.target.files[0],
-      image: URL.createObjectURL(file),
+      image: URL.createObjectURL(event.target.files[0]),
       key: newFormData[index].key || uuidv4(), // Assign a new key if it doesn't exist
     };
     setFormData(newFormData);
@@ -73,7 +74,12 @@ const DynamicForm = ({
       console.log("hello 1", index);
       console.log("hello 111111", formData[index]);
       const imageToDelete = formData[index];
-      // if (!imageToDelete || !imageToDelete.key) return;
+      if (!imageToDelete || !imageToDelete.key) {
+        const newFormData = formData.filter((_, i) => i !== index);
+        setFormData(newFormData);
+        resolve();
+        return;
+      }
 
       console.log("hello", index);
       // Confirm deletion with the user
