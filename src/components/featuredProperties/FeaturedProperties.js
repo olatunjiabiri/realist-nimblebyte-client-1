@@ -86,7 +86,9 @@ const FeaturedProperties = () => {
 
       setFeaturedProperty(
         data.ads.filter(
-          (d) => d.postedBy === "349a53b8-2112-456f-a786-7861124625b6"
+          (d) =>
+            d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
+            d.sold === "Available"
         )
       );
 
