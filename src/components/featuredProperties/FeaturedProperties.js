@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
+import { ShimmerPostList } from "react-shimmer-effects";
 
 import FeaturedAdCard from "../../components/cards/FeaturedAdCard";
 import "./FeaturedProperties.css";
@@ -99,16 +100,35 @@ const FeaturedProperties = () => {
     }
   };
   return (
-    <div>
-      <h3 className="mt-5">Featured Properties</h3>
+    <>
+      {featuredProperty?.length > 0 && (
+        <div>
+          {loading ? (
+            <>
+              <div style={{ padding: "40px 0" }}>
+                <ShimmerPostList
+                  postStyle="STYLE_FOUR"
+                  col={3}
+                  row={1}
+                  gap={30}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 className="mt-5">Featured Properties</h3>
+              <Slider {...settings}>
+                {featuredProperty?.map((ad) => (
+                  <FeaturedAdCard ad={ad} key={ad._id} />
+                ))}
+              </Slider>
+            </>
+          )}
 
-      <Slider {...settings}>
-        {featuredProperty?.map((ad) => (
-          <FeaturedAdCard ad={ad} key={ad._id} />
-        ))}
-      </Slider>
-      {/* <pre>{JSON.stringify(ads, null, 4)} </pre> */}
-    </div>
+          {/* <pre>{JSON.stringify(ads, null, 4)} </pre> */}
+        </div>
+      )}
+    </>
   );
 };
 
