@@ -5,39 +5,68 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 
 import FeaturedAdCard from "../../components/cards/FeaturedAdCard";
+import "./FeaturedProperties.css";
+
+const NextArrow = ({ className, style, onClick }) => {
+  // const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        // background: "#007bff",
+      }}
+      onClick={onClick}
+    />
+  );
+};
+
+const PrevArrow = ({ className, style, onClick }) => {
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block" }}
+      onClick={onClick}
+    />
+  );
+};
 
 const FeaturedProperties = () => {
-  const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(9);
+  const [featuredProperty, setFeaturedProperty] = useState([]);
 
   useEffect(() => {
     fetchAds();
   }, []);
 
-  let settings = {
+  const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+    slidesToScroll: 1,
+    pauseOnHover: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
+          slidesToShow: 2,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
       {
@@ -54,7 +83,12 @@ const FeaturedProperties = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-      setAds(data.ads);
+
+      setFeaturedProperty(
+        data.ads.filter(
+          (d) => d.postedBy === "349a53b8-2112-456f-a786-7861124625b6"
+        )
+      );
 
       setLoading(false);
     } catch (err) {
@@ -64,9 +98,10 @@ const FeaturedProperties = () => {
   };
   return (
     <div>
-      {/* <h2> Responsive </h2> */}
+      <h3 className="mt-5">Featured Properties</h3>
+
       <Slider {...settings}>
-        {ads?.map((ad) => (
+        {featuredProperty?.map((ad) => (
           <FeaturedAdCard ad={ad} key={ad._id} />
         ))}
       </Slider>

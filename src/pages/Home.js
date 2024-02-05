@@ -66,14 +66,14 @@ export default function Home() {
           <SearchForm />
         </div>
 
-        {/* <div> */}
-        <h3>Featured Properties</h3>
+        <div className="container mt-3 px-4">
+          <FeaturedProperties />
+        </div>
 
-        <FeaturedProperties />
-        {/* </div> */}
-
-        {/* <div className="container pt-3">
+        <div className="container pt-3">
           <div className="row d-flex justify-content-center">
+            <h3 className="mt-5">Properties For Sale and Rent</h3>
+
             {loading ? (
               <div style={{ padding: "40px 0" }}>
                 <ShimmerPostList
@@ -121,7 +121,7 @@ export default function Home() {
           ) : (
             ""
           )}
-        </div> */}
+        </div>
       </LogoutMessage>
       {/* <pre>{JSON.stringify(cLocation, null, 4)} </pre> */}
     </div>
