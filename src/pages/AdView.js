@@ -51,6 +51,10 @@ export default function AdView() {
     window.scrollTo(0, 0);
   }, [params?.id]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [params?.id]);
+
   // useEffect(() => {
   //   ad?.landmarkGoogleMap?.map((r) =>
   //     setAdAddress(
