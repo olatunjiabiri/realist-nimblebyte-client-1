@@ -70,8 +70,8 @@ export default function Home() {
           <FeaturedProperties />
         </div>
 
-        <div className="container pt-3">
-          <div className="row d-flex justify-content-center">
+        <div className="container pt-3 px-4">
+          <div className="row d-flex justify-content-evenly">
             <h3 className="mt-5">Properties For Sale and Rent</h3>
 
             {loading ? (

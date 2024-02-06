@@ -49,7 +49,7 @@ const FeaturedProperties = () => {
     slidesToShow: 3,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 5000,
     cssEase: "linear",
     slidesToScroll: 1,
     pauseOnHover: true,
@@ -88,7 +88,9 @@ const FeaturedProperties = () => {
       setFeaturedProperty(
         data.ads.filter(
           (d) =>
-            d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
+            (d.featuredPropertyStatus ||
+              d.postedBy === "349a53b8-2112-456f-a786-7861124625b6") &&
+            d.publishedStatus === "Published" &&
             d.sold === "Available"
         )
       );
