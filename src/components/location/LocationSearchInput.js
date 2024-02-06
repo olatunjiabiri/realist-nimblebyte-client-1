@@ -46,19 +46,19 @@ export default function LocationSearchInput({
 
   setKey(config.GOOGLE_MAPS_KEY);
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && !loaded.current) {
-      if (!document.querySelector("#google-maps")) {
-        loadScript(
-          `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_KEY}`,
-          document.querySelector("head"),
-          "google-maps"
-        );
-      }
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && !loaded.current) {
+  //     if (!document.querySelector("#google-maps")) {
+  //       loadScript(
+  //         `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_KEY}`,
+  //         document.querySelector("head"),
+  //         "google-maps"
+  //       );
+  //     }
 
-      loaded.current = true;
-    }
-  }, []);
+  //     loaded.current = true;
+  //   }
+  // }, []);
 
   const fetch = useMemo(
     () =>
@@ -100,16 +100,9 @@ export default function LocationSearchInput({
       }
     });
 
-    // console.log({ value, options, inputValue });
-    // if (value === newValue) {
-    //   setSearch({ ...search, address: value });
-    //   console.log({ search });
-    // }
-
     return () => {
       active = false;
     };
-    // }, [value, options, inputValue, search]);
   }, [inputValue]);
 
   const defaultOption = ["Current Location"];
@@ -117,13 +110,13 @@ export default function LocationSearchInput({
   const searchOptions = [...options, ...defaultOption];
 
   //current Location logic start here
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
-    } else {
-      console.log("Geolocation not supported");
-    }
-  }, [navigator.geolocation]);
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(success, error);
+  //   } else {
+  //     console.log("Geolocation not supported");
+  //   }
+  // }, [navigator.geolocation]);
 
   const success = (position) => {
     geocode(
@@ -153,7 +146,7 @@ export default function LocationSearchInput({
         // localStorage.setItem("cLocation", neighborhood);
         setUserCurrentLocation(address);
 
-        setSearch((prev) => ({ ...prev, address }));
+        // setSearch((prev) => ({ ...prev, address }));
       })
       .catch(console.error);
   };
@@ -185,17 +178,15 @@ export default function LocationSearchInput({
           typeof option === "string" ? option : option.description
         }
         filterOptions={(x) => x}
-        options={searchOptions}
+        options={options} //searchOptions
         autoComplete
         //   includeInputInList
         filterSelectedOptions
-        value={value}
-        // noOptionsText="No locations"
+        value={search.address || value} //value
+        noOptionsText="Input a location"
         onChange={(event, newValue) => {
           setOptions(newValue ? [newValue, ...options] : options);
-          // newValue === "Current Location"
-          //   ? setSearch({ ...search, address: localStorage.getItem("cLocation") })
-          //   : setSearch({ ...search, address: value?.description });
+
           if (newValue !== "Current Location") {
             console.log("new value", newValue);
             setSearch((prev) => ({ ...prev, address: newValue?.description }));
