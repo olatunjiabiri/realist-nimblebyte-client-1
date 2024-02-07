@@ -67,10 +67,7 @@ export default function SearchForm({ navMenuProperty }) {
       search.priceRange = [0, 1000000000000];
       return;
     }
-    // search.action = "";
-    // search.type = "";
-    // (search.price = "All price"), //All price
-    //   (search.priceRange = [0, 1000000000000]),
+
     setSearch((prev) => ({ ...prev, address: prev.address, loading: false }));
     // console.log("search2 >>>>", search);
   }, []);
@@ -232,7 +229,7 @@ export default function SearchForm({ navMenuProperty }) {
                         ...search,
                         price: e.target.value,
                         priceRange: Prices.find(
-                          (item) => item.name === e.target.value,
+                          (item) => item.name === e.target.value
                         ).array,
                       });
                     }}
