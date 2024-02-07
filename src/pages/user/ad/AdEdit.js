@@ -72,6 +72,7 @@ export default function AdEdit({ action, type }) {
     // { text: "Compound", image: null, blob: null },
   ]);
   const [isOpen, setIsOpen] = useState(false);
+  const [removedImages, setRemovedImages] = useState([]);
   const fileRefs = useRef([]);
   const canvasRef = useRef(null);
 
@@ -145,7 +146,7 @@ export default function AdEdit({ action, type }) {
     // console.log("ad>>>>>", ad);
     try {
       // validation
-      if (formData[0].Key === null) {
+      if (!formData[0]?.image) {
         toast.error("Photo is required");
         return;
       } else if (!ad.address) {
@@ -179,6 +180,7 @@ export default function AdEdit({ action, type }) {
         toast.error("Description is required");
         return;
       } else {
+        await processImageDeletions();
         const uploadedPhotos = await uploadImages();
         // make API put request
         setAd({ ...ad, loading: true });
@@ -206,6 +208,26 @@ export default function AdEdit({ action, type }) {
   const handleDelete = async () => {
     try {
       setDelLoading(true);
+      await processImageDeletions();
+      // const handleDelete = async (file) => {
+      //   // setLoading(true);
+      //   // setAd({ ...ad, uploading: true });
+      //   try {
+      //     const { data } = await axios.post("/remove-image", file);
+      //     if (data?.ok) {
+      //       setAd((prev) => ({
+      //         ...prev,
+      //         photos: prev.photos.filter((p) => p.Key !== file.Key),
+      //         uploading: false,
+      //       }));
+      //       setLoading(false);
+      //     }
+      //   } catch (err) {
+      //     console.log(err);
+      //     setAd({ ...ad, uploading: false });
+      //     setLoading(false);
+      //   }
+      // };
 
       const { data } = await axios.delete(`/ad/${ad._id}/${userId}`);
       // console.log("ad create response => ", data);
@@ -302,6 +324,68 @@ export default function AdEdit({ action, type }) {
       }
     });
   }
+
+  useEffect(() => {
+    console.log("removed images", removedImages);
+  }, [removedImages]);
+
+  async function processImageDeletions() {
+    if (removedImages.length === 0) {
+      console.log("No images to remove.");
+      return;
+    }
+
+    // Filter images that need to be deleted from the backend
+    const imagesToDeleteFromBackend = removedImages.filter(
+      (image) => !image.blob,
+    );
+
+    console.log("images to remove", removedImages);
+    console.log("images to remove from backend", imagesToDeleteFromBackend);
+
+    if (imagesToDeleteFromBackend.length === 0) {
+      console.log("No backend images to remove.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const deletionResults = await Promise.all(
+        imagesToDeleteFromBackend.map(async (image) => {
+          try {
+            const { data } = await axios.post("/remove-image", {
+              key: image.key || image.image, // Adjust based on your image object structure
+            });
+            return { success: true, key: image.key || image.image, data };
+          } catch (err) {
+            console.error(
+              "Deletion error for image:",
+              image.key || image.image,
+              err,
+            );
+            return {
+              success: false,
+              key: image.key || image.image,
+              error: err,
+            };
+          }
+        }),
+      );
+
+      // Optional: Process results, e.g., remove successfully deleted images from state
+      const successfullyDeletedKeys = deletionResults
+        .filter((result) => result.success)
+        .map((result) => result.key);
+      console.log("Successfully deleted images:", successfullyDeletedKeys);
+      // Update any state or UI here as necessary
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to process image deletions:", error);
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="background-color">
       <canvas ref={canvasRef} style={{ display: "none" }} />
@@ -310,6 +394,8 @@ export default function AdEdit({ action, type }) {
           formData={formData}
           setFormData={setFormData}
           fileRefs={fileRefs}
+          removedImages={removedImages}
+          setRemovedImages={setRemovedImages}
           ad={ad}
           setAd={setAd}
           setIsOpen={setIsOpen}

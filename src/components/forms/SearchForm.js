@@ -25,6 +25,10 @@ export default function SearchForm({ navMenuProperty }) {
   const path = window.location.pathname.split("/");
 
   useEffect(() => {
+    setValue(search?.address);
+  }, [search]);
+
+  useEffect(() => {
     if (!path[1]) {
       setSearch({
         address: "",

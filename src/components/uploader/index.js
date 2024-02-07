@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 const DynamicForm = ({
   formData,
   setFormData,
+  removedImages,
+  setRemovedImages,
   fileRefs,
   ad,
   setAd,
@@ -74,7 +76,7 @@ const DynamicForm = ({
       console.log("hello 1", index);
       console.log("hello 111111", formData[index]);
       const imageToDelete = formData[index];
-      if (!imageToDelete || !imageToDelete.key) {
+      if (!imageToDelete || imageToDelete.blob) {
         const newFormData = formData.filter((_, i) => i !== index);
         setFormData(newFormData);
         resolve();
@@ -87,22 +89,27 @@ const DynamicForm = ({
 
       console.log("hello 222", index);
 
-      setLoading(true);
-      try {
-        await axios.post("/remove-image", {
-          key: imageToDelete.key || imageToDelete.image,
-        });
-        // Successfully deleted from the backend, now remove from formData
-        const newFormData = formData.filter((_, i) => i !== index);
-        setFormData(newFormData);
-      } catch (err) {
-        toast.error("Failed to delete image");
-        reject(err);
-        console.error("Failed to delete image:", err);
-      } finally {
-        setLoading(false);
-        resolve();
-      }
+      setRemovedImages((prev) => [...prev, formData[index]]);
+      const newFormData = formData.filter((_, i) => i !== index);
+      setFormData(newFormData);
+      resolve();
+
+      // setLoading(true);
+      // try {
+      //   await axios.post("/remove-image", {
+      //     key: imageToDelete.key || imageToDelete.image,
+      //   });
+      //   // Successfully deleted from the backend, now remove from formData
+      //   const newFormData = formData.filter((_, i) => i !== index);
+      //   setFormData(newFormData);
+      // } catch (err) {
+      //   toast.error(err?.response?.data?.message);
+      //   reject(err);
+      //   console.error("Failed to delete image:", err.response.data);
+      // } finally {
+      //   setLoading(false);
+      //   resolve();
+      // }
     });
   };
 

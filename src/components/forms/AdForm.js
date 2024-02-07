@@ -33,6 +33,7 @@ export default function AdForm({ action, type }) {
   const [isOpen, setIsOpen] = useState(false);
   // state
   const [checked, setChecked] = React.useState(false);
+  const [removedImages, setRemovedImages] = useState([]);
 
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
@@ -171,6 +172,7 @@ export default function AdForm({ action, type }) {
         toast.error("Description is required");
         return;
       } else {
+        await processImageDeletions();
         const uploadedPhotos = await uploadImages();
         //price validation
         setAd({ ...ad, loading: true });
@@ -289,6 +291,62 @@ export default function AdForm({ action, type }) {
     });
   }
 
+  async function processImageDeletions() {
+    if (removedImages.length === 0) {
+      console.log("No images to remove.");
+      return;
+    }
+
+    // Filter images that need to be deleted from the backend
+    const imagesToDeleteFromBackend = removedImages.filter(
+      (image) => !image.blob,
+    );
+
+    console.log("images to remove", removedImages);
+    console.log("images to remove from backend", imagesToDeleteFromBackend);
+
+    if (imagesToDeleteFromBackend.length === 0) {
+      console.log("No backend images to remove.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const deletionResults = await Promise.all(
+        imagesToDeleteFromBackend.map(async (image) => {
+          try {
+            const { data } = await axios.post("/remove-image", {
+              key: image.key || image.image, // Adjust based on your image object structure
+            });
+            return { success: true, key: image.key || image.image, data };
+          } catch (err) {
+            console.error(
+              "Deletion error for image:",
+              image.key || image.image,
+              err,
+            );
+            return {
+              success: false,
+              key: image.key || image.image,
+              error: err,
+            };
+          }
+        }),
+      );
+
+      // Optional: Process results, e.g., remove successfully deleted images from state
+      const successfullyDeletedKeys = deletionResults
+        .filter((result) => result.success)
+        .map((result) => result.key);
+      console.log("Successfully deleted images:", successfullyDeletedKeys);
+      // Update any state or UI here as necessary
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to process image deletions:", error);
+      setLoading(false);
+    }
+  }
   return (
     <div>
       <canvas ref={canvasRef} style={{ display: "none" }} />
@@ -299,6 +357,8 @@ export default function AdForm({ action, type }) {
             setFormData={setFormData}
             fileRefs={fileRefs}
             ad={ad}
+            removedImages={removedImages}
+            setRemovedImages={setRemovedImages}
             // canvasRef={canvasRef}
             setAd={setAd}
             setIsOpen={setIsOpen}
