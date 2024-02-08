@@ -97,7 +97,7 @@ const FeaturedProperties = () => {
         data?.ads?.filter(
           (d) =>
             d.featuredPropertyStatus &&
-            d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
+            // d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
             d.publishedStatus === "Published" &&
             d.sold === "Available"
         )
