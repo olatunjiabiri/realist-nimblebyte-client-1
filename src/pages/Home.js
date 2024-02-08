@@ -42,7 +42,7 @@ export default function Home() {
     try {
       setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-      setAds(data.ads);
+      setAds(data.ads.filter((a) => !a.featuredPropertyStatus));
 
       setTotal(data.total);
       setLoading(false);
