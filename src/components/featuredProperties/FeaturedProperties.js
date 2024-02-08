@@ -4,12 +4,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { ShimmerPostList } from "react-shimmer-effects";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import FeaturedAdCard from "../../components/cards/FeaturedAdCard";
 import "./FeaturedProperties.css";
 
 const NextArrow = ({ className, style, onClick }) => {
-  // const { className, style, onClick } = props;
   return (
     <div
       className={className}
@@ -34,6 +34,8 @@ const PrevArrow = ({ className, style, onClick }) => {
 };
 
 const FeaturedProperties = () => {
+  const isSmScreen = useMediaQuery("(max-width:768px)");
+
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(9);
@@ -43,7 +45,7 @@ const FeaturedProperties = () => {
     fetchAds();
   }, []);
 
-  const shouldAutoPlay = featuredProperty?.length > 3;
+  const shouldAutoPlay = featuredProperty?.length > 3 || isSmScreen;
   const moreThanOne = featuredProperty?.length > 1;
 
   const slidesToShow =
@@ -122,7 +124,8 @@ const FeaturedProperties = () => {
             </div>
           ) : (
             <>
-              {featuredProperty?.length < 4 ? (
+              {(featuredProperty?.length < 4 && !isSmScreen) ||
+              featuredProperty?.length === 1 ? (
                 <>
                   <h3 className="mt-5 text-center">
                     {" "}
