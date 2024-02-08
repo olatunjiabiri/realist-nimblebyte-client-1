@@ -100,6 +100,7 @@ export default function AdEdit({ action, type }) {
           return {
             text: item?.Key,
             image: item?.Location,
+            key: item?.key,
             blob: null,
           };
         }),
@@ -267,6 +268,7 @@ export default function AdEdit({ action, type }) {
                 return {
                   Key: file.text,
                   Location: file.image,
+                  key: file.key,
                 };
               }
               return new Promise(async (innerResolve) => {
