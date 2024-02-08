@@ -43,11 +43,17 @@ const FeaturedProperties = () => {
     fetchAds();
   }, []);
 
+  const shouldAutoPlay = featuredProperty?.length > 3;
+  const moreThanOne = featuredProperty?.length > 1;
+
+  const slidesToShow =
+    featuredProperty?.length > 3 ? 3 : featuredProperty?.length;
+
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 3,
-    autoplay: true,
+    slidesToShow: slidesToShow,
+    autoplay: shouldAutoPlay,
     speed: 2000,
     autoplaySpeed: 5000,
     cssEase: "linear",
@@ -86,10 +92,10 @@ const FeaturedProperties = () => {
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
 
       setFeaturedProperty(
-        data.ads.filter(
+        data?.ads?.filter(
           (d) =>
-            (d.featuredPropertyStatus ||
-              d.postedBy === "349a53b8-2112-456f-a786-7861124625b6") &&
+            d.featuredPropertyStatus &&
+            d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
             d.publishedStatus === "Published" &&
             d.sold === "Available"
         )
@@ -106,28 +112,44 @@ const FeaturedProperties = () => {
       {featuredProperty?.length > 0 && (
         <div>
           {loading ? (
-            <>
-              <div style={{ padding: "40px 0" }}>
-                <ShimmerPostList
-                  postStyle="STYLE_FOUR"
-                  col={3}
-                  row={1}
-                  gap={30}
-                />
-              </div>
-            </>
+            <div style={{ padding: "40px 0" }}>
+              <ShimmerPostList
+                postStyle="STYLE_FOUR"
+                col={3}
+                row={1}
+                gap={30}
+              />
+            </div>
           ) : (
             <>
-              <h3 className="mt-5">Featured Properties</h3>
-              <Slider {...settings}>
-                {featuredProperty?.map((ad) => (
-                  <FeaturedAdCard ad={ad} key={ad._id} />
-                ))}
-              </Slider>
+              {featuredProperty?.length < 4 ? (
+                <>
+                  <h3 className="mt-5 text-center">
+                    {" "}
+                    Featured {moreThanOne ? "Properties" : "Property"}
+                  </h3>
+
+                  <div className="featured-property-container">
+                    {featuredProperty?.map((ad) => (
+                      <FeaturedAdCard ad={ad} key={ad._id} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="mt-5 text-center">
+                    Featured {moreThanOne ? "Properties" : "Property"}
+                  </h3>
+                  <Slider {...settings}>
+                    {featuredProperty?.map((ad) => (
+                      <FeaturedAdCard ad={ad} key={ad._id} />
+                    ))}
+                  </Slider>
+                </>
+              )}
             </>
           )}
-
-          {/* <pre>{JSON.stringify(ads, null, 4)} </pre> */}
+          {/* <pre>{JSON.stringify(featuredProperty.length, null, 4)} </pre> */}
         </div>
       )}
     </>

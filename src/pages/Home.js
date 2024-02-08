@@ -72,7 +72,7 @@ export default function Home() {
 
         <div className="container pt-3 px-4">
           <div className="row d-flex justify-content-evenly">
-            <h3 className="mt-5">Properties For Sale and Rent</h3>
+            <h3 className="mt-5 text-center">Properties For Sale and Rent</h3>
 
             {loading ? (
               <div style={{ padding: "40px 0" }}>

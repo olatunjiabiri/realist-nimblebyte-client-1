@@ -6,3 +6,10 @@ color: #007bff;
 .slick-prev:before {
     color: #007bff;
 }
+
+
+.featured-property-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
