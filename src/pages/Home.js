@@ -11,6 +11,7 @@ import SearchForm from "../components/forms/SearchForm";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
 
 import RowPerPage from "../components/rowPerPage/RowPerPage.js";
+import FeaturedProperties from "../components/featuredProperties/FeaturedProperties.js";
 
 export default function Home() {
   let count = 0;
@@ -41,7 +42,7 @@ export default function Home() {
     try {
       setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-      setAds(data.ads);
+      setAds(data.ads.filter((a) => !a.featuredPropertyStatus));
 
       setTotal(data.total);
       setLoading(false);
@@ -65,8 +66,14 @@ export default function Home() {
           <SearchForm />
         </div>
 
-        <div className="container pt-3">
-          <div className="row d-flex justify-content-center">
+        <div className="container mt-3 px-4">
+          <FeaturedProperties />
+        </div>
+
+        <div className="container pt-3 px-4">
+          <div className="row d-flex justify-content-evenly">
+            <h3 className="mt-5 text-center">Properties For Sale and Rent</h3>
+
             {loading ? (
               <div style={{ padding: "40px 0" }}>
                 <ShimmerPostList
