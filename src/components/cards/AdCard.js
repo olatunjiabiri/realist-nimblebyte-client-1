@@ -59,7 +59,7 @@ export default function AdCard({ ad }) {
   }, []);
 
   return (
-    <div className="d-flex col-lg-4 p-4 gx-4 gy-4 col-md-6 col-sm-6 card-width">
+    <div className="d-flex col-lg-4 px-4 gx-4 gy-4 col-md-6 col-sm-6 card-width">
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <ContactSellerModal ad={ad} setIsOpen={setIsOpen} />
       </Modall>
@@ -77,9 +77,11 @@ export default function AdCard({ ad }) {
             (ad.sold === "Under Contract" && "gold")
           }`}
         >
-          <div className="card hoverable p-2 shadow-lg">
-            {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
-            {/* <img
+          {ad.featuredPropertyStatus ? (
+            <Badge.Ribbon text="Featured" color="#e2770d" placement="start">
+              <div className="card hoverable p-2 shadow-lg">
+                {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
+                {/* <img
               src={ad?.photos?.[0].Location}
               alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
               style={{
@@ -89,78 +91,165 @@ export default function AdCard({ ad }) {
                 objectFit: "cover",
               }}
             />{" "} */}
-            <ImageGallery
-              photos={generatePhotosArray(ad?.photos)}
-              showThumbs={false}
-              showStatus={false}
-              showIndicators={false}
-              height={"300"}
-              width={"30"}
-            />
-            {/* </Link> */}
-            <div className="card-body ad-card-body">
-              <div className="d-flex justify-content-between">
-                <div className="d-flex flex-direction-row">
-                  <h3 className="pt-1">
-                    {" "}
-                    <span>&#8358;</span>
-                    {/* {formatNumber(ad?.price)} */}
-                    {millify(ad?.price)}
-                  </h3>
-                  {ad?.type === "Land" && ad?.areaPerPrice && (
-                    <h5 className="pt-2">
-                      {" "}
-                      &nbsp;
-                      <span>
+                <ImageGallery
+                  photos={generatePhotosArray(ad?.photos)}
+                  showThumbs={false}
+                  showStatus={false}
+                  showIndicators={false}
+                  height={"300"}
+                  width={"30"}
+                />
+                {/* </Link> */}
+                <div className="card-body ad-card-body">
+                  <div className="d-flex justify-content-between">
+                    <div className="d-flex flex-direction-row">
+                      <h3 className="pt-1">
                         {" "}
-                        <em>per</em>
-                      </span>
-                      &nbsp;
-                      {ad?.areaPerPrice || ""}
-                    </h5>
+                        <span>&#8358;</span>
+                        {/* {formatNumber(ad?.price)} */}
+                        {millify(ad?.price)}
+                      </h3>
+                      {ad?.type === "Land" && ad?.areaPerPrice && (
+                        <h5 className="pt-2">
+                          {" "}
+                          &nbsp;
+                          <span>
+                            {" "}
+                            <em>per</em>
+                          </span>
+                          &nbsp;
+                          {ad?.areaPerPrice || ""}
+                        </h5>
+                      )}
+                    </div>
+
+                    {auth?.user === null ? (
+                      <Link
+                        className="like-unlike-button"
+                        to="/login"
+                        state={{ fromAction: "like" }}
+                      >
+                        <LikeUnlike ad={ad} size={"h2 m-3"} />
+                      </Link>
+                    ) : (
+                      <Link className="like-unlike-button">
+                        <LikeUnlike ad={ad} size={"h2 m-3"} />
+                      </Link>
+                    )}
+                  </div>
+                  <div className="ad-card-property-title">
+                    {ad?.propertyTitle ||
+                      (ad?.houseType && `${ad?.houseType} property`) ||
+                      `${ad?.type} property`}
+                  </div>
+                  <div className="card-text address-height">{ad?.landmark}</div>
+
+                  <AdFeatures ad={ad} />
+                  <div className="d-flex justify-content-between">
+                    <p className="pt-3 card-text">
+                      Posted {dayjs(ad?.createdAt).fromNow()}
+                    </p>
+                    <p className="justify-content-end">
+                      <Link className="bg-white">
+                        <button
+                          type="button"
+                          className="contact-owner-button"
+                          onClick={() => setIsOpen(true)}
+                        >
+                          Contact Agent
+                        </button>
+                      </Link>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Badge.Ribbon>
+          ) : (
+            <div className="card hoverable p-2 shadow-lg">
+              {/* <Link className="link" to={`/ad/${ad.slug}`}> */}
+              {/* <img
+              src={ad?.photos?.[0].Location}
+              alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
+              style={{
+                height: "250px",
+                maxWidth: "350px",
+                alignSelf: "center",
+                objectFit: "cover",
+              }}
+            />{" "} */}
+              <ImageGallery
+                photos={generatePhotosArray(ad?.photos)}
+                showThumbs={false}
+                showStatus={false}
+                showIndicators={false}
+                height={"300"}
+                width={"30"}
+              />
+              {/* </Link> */}
+              <div className="card-body ad-card-body">
+                <div className="d-flex justify-content-between">
+                  <div className="d-flex flex-direction-row">
+                    <h3 className="pt-1">
+                      {" "}
+                      <span>&#8358;</span>
+                      {/* {formatNumber(ad?.price)} */}
+                      {millify(ad?.price)}
+                    </h3>
+                    {ad?.type === "Land" && ad?.areaPerPrice && (
+                      <h5 className="pt-2">
+                        {" "}
+                        &nbsp;
+                        <span>
+                          {" "}
+                          <em>per</em>
+                        </span>
+                        &nbsp;
+                        {ad?.areaPerPrice || ""}
+                      </h5>
+                    )}
+                  </div>
+
+                  {auth?.user === null ? (
+                    <Link
+                      className="like-unlike-button"
+                      to="/login"
+                      state={{ fromAction: "like" }}
+                    >
+                      <LikeUnlike ad={ad} size={"h2 m-3"} />
+                    </Link>
+                  ) : (
+                    <Link className="like-unlike-button">
+                      <LikeUnlike ad={ad} size={"h2 m-3"} />
+                    </Link>
                   )}
                 </div>
+                <div className="ad-card-property-title">
+                  {ad?.propertyTitle ||
+                    (ad?.houseType && `${ad?.houseType} property`) ||
+                    `${ad?.type} property`}
+                </div>
+                <div className="card-text address-height">{ad?.landmark}</div>
 
-                {auth?.user === null ? (
-                  <Link
-                    className="like-unlike-button"
-                    to="/login"
-                    state={{ fromAction: "like" }}
-                  >
-                    <LikeUnlike ad={ad} size={"h2 m-3"} />
-                  </Link>
-                ) : (
-                  <Link className="like-unlike-button">
-                    <LikeUnlike ad={ad} size={"h2 m-3"} />
-                  </Link>
-                )}
-              </div>
-              <div className="ad-card-property-title">
-                {ad?.propertyTitle ||
-                  (ad?.houseType && `${ad?.houseType} property`) ||
-                  `${ad?.type} property`}
-              </div>
-              <div className="card-text address-height">{ad?.landmark}</div>
-
-              <AdFeatures ad={ad} />
-              <div className="d-flex justify-content-between">
-                <p className="pt-3 card-text">
-                  Posted {dayjs(ad?.createdAt).fromNow()}
-                </p>
-                <p className="justify-content-end">
-                  <Link className="bg-white">
-                    <button
-                      type="button"
-                      className="contact-owner-button"
-                      onClick={() => setIsOpen(true)}
-                    >
-                      Contact Agent
-                    </button>
-                  </Link>
-                </p>
+                <AdFeatures ad={ad} />
+                <div className="d-flex justify-content-between">
+                  <p className="pt-3 card-text">
+                    Posted {dayjs(ad?.createdAt).fromNow()}
+                  </p>
+                  <p className="justify-content-end">
+                    <Link className="bg-white">
+                      <button
+                        type="button"
+                        className="contact-owner-button"
+                        onClick={() => setIsOpen(true)}
+                      >
+                        Contact Agent
+                      </button>
+                    </Link>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </Badge.Ribbon>
       </Link>
       {/* <pre>{JSON.stringify(ad, null, 4)} </pre> */}
