@@ -181,7 +181,7 @@ export default function AdEdit({ action, type }) {
         toast.error("Description is required");
         return;
       } else {
-        await processImageDeletions();
+        await processImageDeletions(removedImages);
         const uploadedPhotos = await uploadImages();
         // make API put request
         setAd({ ...ad, loading: true });
@@ -209,7 +209,11 @@ export default function AdEdit({ action, type }) {
   const handleDelete = async () => {
     try {
       setDelLoading(true);
-      await processImageDeletions();
+      const imagesPreDelete = formData?.map((file) => {
+        return { key: file?.key };
+      });
+      console.log("images to delete", imagesPreDelete);
+      await processImageDeletions(imagesPreDelete);
       // const handleDelete = async (file) => {
       //   // setLoading(true);
       //   // setAd({ ...ad, uploading: true });
@@ -264,6 +268,7 @@ export default function AdEdit({ action, type }) {
           setAd((prev) => ({ ...prev, uploading: true }));
           const uploadedPhotos = await Promise.all(
             files.map(async (file) => {
+              console.log("fileeee", file);
               if (file.blob === null) {
                 return {
                   Key: file.text,
@@ -301,6 +306,8 @@ export default function AdEdit({ action, type }) {
           );
           // Processing after upload
           const filteredPhotos = uploadedPhotos.filter(Boolean);
+          console.log("filtered photos", filteredPhotos);
+          console.log("adddd   photos", ad.photos);
           const uniquePhotos = Array.from(
             new Set([
               ...ad.photos.map((photo) => photo?.Location),
@@ -309,14 +316,19 @@ export default function AdEdit({ action, type }) {
           ).map((location) =>
             filteredPhotos.find((photo) => photo?.Location === location),
           );
+          //         photos: prev.photos.filter((p) => p.Key !== file.Key),
+          const cleansedUniquePhotos = uniquePhotos?.filter(
+            (photo) => photo !== undefined,
+          );
           setAd((prev) => ({
             ...prev,
-            photos: uniquePhotos,
+            photos: cleansedUniquePhotos,
             uploading: false,
           }));
           console.log("unique photos", uniquePhotos);
+          console.log("cleansed photos", cleansedUniquePhotos);
           setLoading(false);
-          resolve(uniquePhotos);
+          resolve(cleansedUniquePhotos);
         }
       } catch (err) {
         console.log(err);
@@ -331,14 +343,14 @@ export default function AdEdit({ action, type }) {
     console.log("removed images", removedImages);
   }, [removedImages]);
 
-  async function processImageDeletions() {
-    if (removedImages.length === 0) {
+  async function processImageDeletions(imagesToRemove) {
+    if (imagesToRemove.length === 0) {
       console.log("No images to remove.");
       return;
     }
 
     // Filter images that need to be deleted from the backend
-    const imagesToDeleteFromBackend = removedImages.filter(
+    const imagesToDeleteFromBackend = imagesToRemove.filter(
       (image) => !image.blob,
     );
 

@@ -35,6 +35,9 @@ const DynamicForm = ({
   };
 
   const handleImageChange = (index, event) => {
+    setRemovedImages((prev) => [...prev, formData[index]]);
+    const newerFormData = formData.filter((_, i) => i !== index);
+    setFormData(newerFormData);
     const newFormData = [...formData];
     // newFormData[index].blob = event.target.files[0];
     // newFormData[index].image = URL.createObjectURL(event.target.files[0]);
