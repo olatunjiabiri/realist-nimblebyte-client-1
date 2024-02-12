@@ -42,20 +42,32 @@ export default function DeleteAccount() {
 
   return (
     <div className="row">
-      <form onSubmit={handleSubmit} autoComplete="off">
+      <form
+        className="delete-account-modal"
+        onSubmit={handleSubmit}
+        autoComplete="off"
+      >
         <div className="h3 mb-4 text-center">Delete Account</div>
-        <input
-          type="text"
-          placeholder="Enter your email"
-          className="form-control mb-4"
-          required
-          autoFocus
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button disabled={loading} className="btn btn-primary col-12 mb-4">
-          {loading ? "Waiting..." : "Submit"}
-        </button>
+        <div className="mx-2 my-3 text-center">
+          {" "}
+          Deleting your account will remove all your infromation from our
+          database. Confirm your email to proceed
+        </div>
+
+        <div className="mx-3">
+          <input
+            type="text"
+            placeholder="Enter your email"
+            className="form-control mb-4"
+            required
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button disabled={loading} className="btn btn-primary col-12 mb-4">
+            {loading ? "Waiting..." : "Submit"}
+          </button>
+        </div>
       </form>
     </div>
   );
