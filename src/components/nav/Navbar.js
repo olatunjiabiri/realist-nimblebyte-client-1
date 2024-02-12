@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "../../context/auth";
 import { useData } from "../../context/adData";
-
-import { useNavigate } from "react-router-dom";
 import Modall from "../modal/Modal";
+import DeleteAccount from "../../pages/auth/deleteAccount/DeleteAccount";
+
 // import useSelection from "antd/es/table/hooks/useSelection";
 // import "./index.css";
 
@@ -17,6 +19,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setDeleteIsOpen] = useState(false);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navbarRef = useRef(null);
@@ -130,6 +133,15 @@ const Navbar = () => {
           <br />
           NimbleCasa Team
         </div>
+      </Modall>
+
+      <Modall
+        handleClose={() => setIsOpen(setDeleteIsOpen)}
+        isOpen={isDeleteOpen}
+        styling="modal-content"
+      >
+        {/* <p className="header-modal">Delete Account</p> */}
+        <DeleteAccount />
       </Modall>
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
@@ -287,6 +299,20 @@ const Navbar = () => {
                         Register
                       </NavLink>
                     </>
+                    <>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/user/delete-account"
+                        onClick={closeMobileMenu}
+                      >
+                        <Link
+                          className="bg-white"
+                          onClick={() => setDeleteIsOpen(true)}
+                        >
+                          Delete Account
+                        </Link>
+                      </NavLink>
+                    </>
                   </>
                 ) : (
                   ""
@@ -338,6 +364,23 @@ const Navbar = () => {
                             onClick={closeMobileMenu}
                           >
                             Change Password
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className="dropdown-item"
+                            to="/user/delete-account"
+                            onClick={closeMobileMenu}
+                          >
+                            <Link className="bg-white">
+                              <button
+                                type="button"
+                                className="contact-owner-button"
+                                onClick={() => setIsOpen(true)}
+                              >
+                                Delete Account
+                              </button>
+                            </Link>
                           </NavLink>
                         </li>
                         {!auth.user?.role?.includes("Agent") && (
