@@ -51,11 +51,11 @@ export default function DeleteAccount() {
         <div className="mx-2 my-3 text-center">
           {" "}
           Deleting your account will remove all your infromation from our
-          database. Confirm your email to proceed
+          database. Click Contnue to proceed
         </div>
 
         <div className="mx-3">
-          <input
+          {/* <input
             type="text"
             placeholder="Enter your email"
             className="form-control mb-4"
@@ -63,9 +63,9 @@ export default function DeleteAccount() {
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
+          /> */}
           <button disabled={loading} className="btn btn-primary col-12 mb-4">
-            {loading ? "Waiting..." : "Submit"}
+            {loading ? "Waiting..." : "Continue"}
           </button>
         </div>
       </form>

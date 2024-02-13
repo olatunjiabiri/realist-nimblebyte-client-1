@@ -22,6 +22,7 @@ const Navbar = () => {
   const [isDeleteOpen, setDeleteIsOpen] = useState(false);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // const [deleteIsOpen1, setDeleteIsOpen1] = useState(false);
   const navbarRef = useRef(null);
 
   const handleRentClick = (event) => {
@@ -299,20 +300,6 @@ const Navbar = () => {
                         Register
                       </NavLink>
                     </>
-                    <>
-                      <NavLink
-                        className="dropdown-item"
-                        to="/user/delete-account"
-                        onClick={closeMobileMenu}
-                      >
-                        <Link
-                          className="bg-white"
-                          onClick={() => setDeleteIsOpen(true)}
-                        >
-                          Delete Account
-                        </Link>
-                      </NavLink>
-                    </>
                   </>
                 ) : (
                   ""
@@ -369,20 +356,56 @@ const Navbar = () => {
                         <li>
                           <NavLink
                             className="dropdown-item"
-                            to="/user/delete-account"
-                            onClick={closeMobileMenu}
+                            to="#"
+                            onClick={() => {
+                              closeMobileMenu();
+                              setDeleteIsOpen(true);
+                            }}
                           >
-                            <Link className="bg-white">
-                              <button
-                                type="button"
-                                className="contact-owner-button"
-                                onClick={() => setIsOpen(true)}
-                              >
-                                Delete Account
-                              </button>
-                            </Link>
+                            Delete Account
                           </NavLink>
                         </li>
+                        <li>
+                          {/* <li className="nav-item dropdown"> */}
+                          <a
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            // onClick={closeMobileMenu}
+                          >
+                            Manage Account
+                          </a>
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <NavLink
+                              className="dropdown-item"
+                              to="/user/delete-account"
+                              onClick={() => {
+                                closeMobileMenu();
+                                setDeleteIsOpen(true);
+                              }}
+                            >
+                              Delete Account
+                            </NavLink>
+                            <NavLink
+                              className="dropdown-item"
+                              to="/user/deactivate-account"
+                              onClick={() => {
+                                closeMobileMenu();
+                                // handle deactivate account action
+                              }}
+                            >
+                              Deactivate Account
+                            </NavLink>
+                          </div>
+                        </li>
+
                         {!auth.user?.role?.includes("Agent") && (
                           <li>
                             <NavLink
