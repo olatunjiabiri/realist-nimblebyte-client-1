@@ -313,15 +313,7 @@ const Navbar = () => {
                             Update Profile
                           </NavLink>
                         </li>
-                        {/* <li> */}
-                        {/*   <NavLink */}
-                        {/*     className="dropdown-item" */}
-                        {/*     to="/user/update-password" */}
-                        {/*     onClick={closeMobileMenu} */}
-                        {/*   > */}
-                        {/*     Change Password */}
-                        {/*   </NavLink> */}
-                        {/* </li> */}
+
                         <li className="dropdown">
                           <a
                             className="nav-link dropdown-toggle"
@@ -360,7 +352,7 @@ const Navbar = () => {
                             </NavLink>
                             <NavLink
                               className="dropdown-item"
-                              to="/user/delete-account"
+                              to="/"
                               onClick={() => {
                                 closeMobileMenu();
                                 setIsDeleteOpen(true);
