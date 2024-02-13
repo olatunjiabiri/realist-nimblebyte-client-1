@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import axios from "axios";
-import config from "../../../config";
+import config from "../../../config.js";
 
 const AccountDelete = () => {
   // hooks
