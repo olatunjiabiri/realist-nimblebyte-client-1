@@ -19,7 +19,16 @@ const AccountDelete = () => {
   useEffect(() => {
     if (email) requestAccountDelete();
   }, [email]);
-  // console.log(email);
+
+  const logout = () => {
+    setAuth({ user: null, token: "" });
+    localStorage.removeItem("auth");
+    localStorage.removeItem("cLocation");
+    localStorage.removeItem("adData");
+    localStorage.removeItem("profileFormData");
+    localStorage.removeItem("profile");
+  };
+
   const requestAccountDelete = async () => {
     try {
       const response = await axios.post(
@@ -29,14 +38,15 @@ const AccountDelete = () => {
 
       if (!response?.data?.success) {
         toast.error(response?.data?.message);
+        logout();
         navigate("/");
       } else {
-        console.log(response);
+        // console.log(response);
         toast.success("Your Account has been suceessfully Deleted");
         navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error("Something went wrong. Try again.");
       navigate("/");
     }
