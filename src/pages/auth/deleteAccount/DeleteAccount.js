@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../../context/auth.js";
 import config from "../../../config.js";
+
 import "./DeleteAccount.css";
 
 export default function DeleteAccount({ setIsDeleteOpen, isDeleteOpen }) {
@@ -28,6 +29,7 @@ export default function DeleteAccount({ setIsDeleteOpen, isDeleteOpen }) {
         toast.success(
           "Please check your email to complete Account Deletion process"
         );
+        logout();
         setLoading(false);
         setIsDeleteOpen(false);
         navigate("/");
@@ -39,6 +41,18 @@ export default function DeleteAccount({ setIsDeleteOpen, isDeleteOpen }) {
       setLoading(false);
       setIsDeleteOpen(false);
     }
+  };
+
+  const logout = () => {
+    setAuth({ user: null, token: "" });
+
+    localStorage.removeItem("auth");
+    localStorage.removeItem("cLocation");
+    localStorage.removeItem("adData");
+    localStorage.removeItem("profileFormData");
+    localStorage.removeItem("profile");
+
+    // navigate("/login");
   };
 
   return (
