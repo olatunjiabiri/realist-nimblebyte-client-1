@@ -23,7 +23,7 @@ const AccountDelete = () => {
   const requestAccountDelete = async () => {
     try {
       const response = await axios.post(
-        `${config.AUTH_API}/user/DeleteAccount}`,
+        `${config.AUTH_API}/user/DeleteAccount`,
         { email: email }
       );
 
