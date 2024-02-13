@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [isDeleteOpen, setDeleteIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navbarRef = useRef(null);
@@ -85,6 +85,25 @@ const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
+  // const handlePostAdClick = () => {
+  //   if (loggedIn) {
+  //     navigate("/ad/create");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
+
+  // const handleCreateAdClick = () => {
+  //   if (selectedOption === "Sale") {
+  //     navigate("/ad/create-sale");
+  //   } else if (selectedOption === "Rent") {
+  //     navigate("/ad/create-rent");
+  //   } else if (loggedIn) {
+  //     navigate("/ad/create");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
   return (
     <>
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
@@ -103,11 +122,14 @@ const Navbar = () => {
       </Modall>
 
       <Modall
-        handleClose={() => setIsOpen(setDeleteIsOpen)}
+        handleClose={() => setIsOpen(setIsDeleteOpen)}
         isOpen={isDeleteOpen}
         styling="modal-content"
       >
-        <DeleteAccount />
+        <DeleteAccount
+          setIsDeleteOpen={setIsDeleteOpen}
+          isDeleteOpen={isDeleteOpen}
+        />
       </Modall>
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
@@ -341,7 +363,7 @@ const Navbar = () => {
                               to="/user/delete-account"
                               onClick={() => {
                                 closeMobileMenu();
-                                setDeleteIsOpen(true);
+                                setIsDeleteOpen(true);
                               }}
                             >
                               Delete Account
