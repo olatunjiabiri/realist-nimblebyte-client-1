@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import axios from "axios";
+import config from "../../../config.js";
 
 const AccountDelete = () => {
   // hooks
@@ -18,7 +19,7 @@ const AccountDelete = () => {
   useEffect(() => {
     if (email) requestAccountDelete();
   }, [email]);
-
+  // console.log(email);
   const requestAccountDelete = async () => {
     try {
       const response = await axios.post(
