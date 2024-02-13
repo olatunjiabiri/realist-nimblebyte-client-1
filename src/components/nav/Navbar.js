@@ -7,31 +7,22 @@ import { useData } from "../../context/adData";
 import Modall from "../modal/Modal";
 import DeleteAccount from "../../pages/auth/deleteAccount/DeleteAccount";
 
-// import useSelection from "antd/es/table/hooks/useSelection";
-// import "./index.css";
-
 const Navbar = () => {
-  // context
   const [auth, setAuth] = useAuth();
   const [ddata, setDdata] = useData();
 
-  // hooks
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteOpen, setDeleteIsOpen] = useState(false);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const [deleteIsOpen1, setDeleteIsOpen1] = useState(false);
   const navbarRef = useRef(null);
 
   const handleRentClick = (event) => {
-    // Prevent default link behavior
     event.preventDefault();
     const approved = auth?.user?.info?.isApproved;
     setMobileMenuOpen(false);
 
-    // Check if the modal should be opened
     if (approved) {
       navigate("/ad/create/rent/house");
     } else {
@@ -40,12 +31,10 @@ const Navbar = () => {
   };
 
   const handleSaleClick = (event) => {
-    // Prevent default link behavior
     event.preventDefault();
     const approved = auth?.user?.info?.isApproved;
     setMobileMenuOpen(false);
 
-    // Check if the modal should be opened
     if (approved) {
       navigate("/ad/create/sell/house");
     } else {
@@ -96,34 +85,11 @@ const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
-  // const handlePostAdClick = () => {
-  //   if (loggedIn) {
-  //     navigate("/ad/create");
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // };
-
-  // const handleCreateAdClick = () => {
-  //   if (selectedOption === "Sale") {
-  //     navigate("/ad/create-sale");
-  //   } else if (selectedOption === "Rent") {
-  //     navigate("/ad/create-rent");
-  //   } else if (loggedIn) {
-  //     navigate("/ad/create");
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // };
-
   return (
     <>
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <p className="header-modal">Request Pending Approval</p>
         <div className="info-modal">
-          {/* Dear{auth?.user?.lastName},
-          <br />
-          <br /> */}
           Your application to become an agent is under review. We typically
           process requests within 1-3 business days. You will receive an email
           once a decision is made.
@@ -141,7 +107,6 @@ const Navbar = () => {
         isOpen={isDeleteOpen}
         styling="modal-content"
       >
-        {/* <p className="header-modal">Delete Account</p> */}
         <DeleteAccount />
       </Modall>
       <nav
@@ -186,14 +151,6 @@ const Navbar = () => {
             id="collapsingNavbar3"
           >
             <ul className="navbar-nav w-100 justify-content-center justify-content-around">
-              {/* <NavLink
-                className="nav-item nav-link"
-                aria-current="page"
-                to="/search"
-              >
-                Search
-              </NavLink> */}
-
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
@@ -219,14 +176,6 @@ const Navbar = () => {
               >
                 Sell
               </NavLink>
-              {/* <NavLink
-                className="nav-item nav-link"
-                aria-current="page"
-                to="/agents"
-                onClick={closeMobileMenu}
-              >
-                Sell2
-              </NavLink> */}
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
@@ -266,13 +215,13 @@ const Navbar = () => {
                           </NavLink>
                         </li>
                         <li>
-                          <a
+                          <NavLink
                             className="dropdown-item"
                             to="/ad/create/rent/house"
                             onClick={handleRentClick}
                           >
                             Rent
-                          </a>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
@@ -290,16 +239,14 @@ const Navbar = () => {
                     >
                       Login
                     </NavLink>
-                    <>
-                      <NavLink
-                        className="nav-item nav-link"
-                        aria-current="page"
-                        to="/register"
-                        onClick={closeMobileMenu}
-                      >
-                        Register
-                      </NavLink>
-                    </>
+                    <NavLink
+                      className="nav-item nav-link"
+                      aria-current="page"
+                      to="/register"
+                      onClick={closeMobileMenu}
+                    >
+                      Register
+                    </NavLink>
                   </>
                 ) : (
                   ""
@@ -344,38 +291,31 @@ const Navbar = () => {
                             Update Profile
                           </NavLink>
                         </li>
-                        <li>
-                          <NavLink
-                            className="dropdown-item"
-                            to="/user/update-password"
-                            onClick={closeMobileMenu}
-                          >
-                            Change Password
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            className="dropdown-item"
-                            to="#"
-                            onClick={() => {
-                              closeMobileMenu();
-                              setDeleteIsOpen(true);
-                            }}
-                          >
-                            Delete Account
-                          </NavLink>
-                        </li>
-                        <li>
-                          {/* <li className="nav-item dropdown"> */}
+                        {/* <li> */}
+                        {/*   <NavLink */}
+                        {/*     className="dropdown-item" */}
+                        {/*     to="/user/update-password" */}
+                        {/*     onClick={closeMobileMenu} */}
+                        {/*   > */}
+                        {/*     Change Password */}
+                        {/*   </NavLink> */}
+                        {/* </li> */}
+                        <li className="dropdown">
                           <a
                             className="nav-link dropdown-toggle"
                             href="#"
+                            style={{
+                              fontSize: "16px",
+                              margin: "0 10px",
+                            }}
                             id="navbarDropdown"
                             role="button"
-                            data-toggle="dropdown"
+                            data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            // onClick={closeMobileMenu}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
                           >
                             Manage Account
                           </a>
@@ -383,6 +323,19 @@ const Navbar = () => {
                             className="dropdown-menu"
                             aria-labelledby="navbarDropdown"
                           >
+                            <NavLink
+                              className="dropdown-item"
+                              style={{
+                                margin: "0 10px 0 0",
+                              }}
+                              to="/user/update-password"
+                              onClick={() => {
+                                closeMobileMenu();
+                                // handle change password action
+                              }}
+                            >
+                              Change Password
+                            </NavLink>
                             <NavLink
                               className="dropdown-item"
                               to="/user/delete-account"
@@ -393,19 +346,8 @@ const Navbar = () => {
                             >
                               Delete Account
                             </NavLink>
-                            <NavLink
-                              className="dropdown-item"
-                              to="/user/deactivate-account"
-                              onClick={() => {
-                                closeMobileMenu();
-                                // handle deactivate account action
-                              }}
-                            >
-                              Deactivate Account
-                            </NavLink>
                           </div>
                         </li>
-
                         {!auth.user?.role?.includes("Agent") && (
                           <li>
                             <NavLink
@@ -425,7 +367,6 @@ const Navbar = () => {
                             onClick={() => {
                               closeMobileMenu();
                               logout();
-                              // You can also add other logic here if needed
                             }}
                             className="dropdown-item"
                           >
@@ -446,4 +387,5 @@ const Navbar = () => {
     </>
   );
 };
+
 export default Navbar;
