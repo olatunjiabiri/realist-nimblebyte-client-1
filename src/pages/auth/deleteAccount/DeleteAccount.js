@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../../context/auth.js";
 import config from "../../../config.js";
 import "./DeleteAccount.css";
 
 export default function DeleteAccount() {
   // state
-  const [email, setEmail] = useState("");
+  const [auth, setAuth] = useAuth();
   const [loading, setLoading] = useState(false);
   // hooks
   const navigate = useNavigate();
@@ -17,11 +18,9 @@ export default function DeleteAccount() {
     e.preventDefault();
     try {
       setLoading(true);
-
       const { data } = await axios.get(
-        `${config.AUTH_API}/user/SendResetPasswordCode?email=${email}&appId=${config.emailId}`
+        `${config.AUTH_API}/User/SendDeleteUserNotification?email=${auth?.user?.email}`
       );
-
       if (data?.error) {
         toast.error(data.error);
         setLoading(false);
@@ -55,15 +54,6 @@ export default function DeleteAccount() {
         </div>
 
         <div className="mx-3">
-          {/* <input
-            type="text"
-            placeholder="Enter your email"
-            className="form-control mb-4"
-            required
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          /> */}
           <button disabled={loading} className="btn btn-primary col-12 mb-4">
             {loading ? "Waiting..." : "Continue"}
           </button>
