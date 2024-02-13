@@ -7,7 +7,7 @@ import { useAuth } from "../../../context/auth.js";
 import config from "../../../config.js";
 import "./DeleteAccount.css";
 
-export default function DeleteAccount() {
+export default function DeleteAccount({ setIsDeleteOpen, isDeleteOpen }) {
   // state
   const [auth, setAuth] = useAuth();
   const [loading, setLoading] = useState(false);
@@ -29,6 +29,7 @@ export default function DeleteAccount() {
           "Please check your email to complete Account Deletion process"
         );
         setLoading(false);
+        setIsDeleteOpen(false);
         navigate("/");
       }
       console.log(data);
@@ -36,6 +37,7 @@ export default function DeleteAccount() {
       console.log(err);
       toast.error("Something went wrong. Try again.");
       setLoading(false);
+      setIsDeleteOpen(false);
     }
   };
 
@@ -50,7 +52,7 @@ export default function DeleteAccount() {
         <div className="mx-2 my-3 text-center">
           {" "}
           Deleting your account will remove all your infromation from our
-          database. Click Contnue to proceed
+          database. Click Continue to proceed
         </div>
 
         <div className="mx-3">

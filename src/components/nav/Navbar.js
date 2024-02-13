@@ -19,7 +19,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isDeleteOpen, setDeleteIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // const [deleteIsOpen1, setDeleteIsOpen1] = useState(false);
@@ -115,7 +115,6 @@ const Navbar = () => {
   //     navigate("/login");
   //   }
   // };
-
   return (
     <>
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
@@ -137,12 +136,14 @@ const Navbar = () => {
       </Modall>
 
       <Modall
-        handleClose={() => setIsOpen(setDeleteIsOpen)}
+        handleClose={() => setIsOpen(setIsDeleteOpen)}
         isOpen={isDeleteOpen}
         styling="modal-content"
       >
-        {/* <p className="header-modal">Delete Account</p> */}
-        <DeleteAccount />
+        <DeleteAccount
+          setIsDeleteOpen={setIsDeleteOpen}
+          isDeleteOpen={isDeleteOpen}
+        />
       </Modall>
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light justify-content-center fixed-top"
@@ -359,7 +360,7 @@ const Navbar = () => {
                             to="#"
                             onClick={() => {
                               closeMobileMenu();
-                              setDeleteIsOpen(true);
+                              setIsDeleteOpen(true);
                             }}
                           >
                             Delete Account
@@ -388,7 +389,7 @@ const Navbar = () => {
                               to="/user/delete-account"
                               onClick={() => {
                                 closeMobileMenu();
-                                setDeleteIsOpen(true);
+                                setIsDeleteOpen(true);
                               }}
                             >
                               Delete Account
