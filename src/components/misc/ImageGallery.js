@@ -65,7 +65,7 @@ export const generatePhotosArray = (photos) => {
 
     photos.map((p) =>
       arr.push({
-        src: p.Location,
+        src: p?.Location,
         width: x,
         height: x,
       })

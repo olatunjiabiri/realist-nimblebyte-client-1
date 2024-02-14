@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./Modal.css";
 
-function Modall({ children, isOpen, handleClose }) {
+function Modall({ children, isOpen, handleClose, styling = "modal-content" }) {
   const nodeRef = useRef(null);
   useEffect(() => {
     const closeOnEscapeKey = (e) => (e.key === "Escape" ? handleClose() : null);
@@ -29,7 +29,7 @@ function Modall({ children, isOpen, handleClose }) {
       >
         <div className="modal" ref={nodeRef} onClick={handleClose}>
           {/* Prevent click inside the modal from closing it */}
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className={styling} onClick={(e) => e.stopPropagation()}>
             <Tooltip title="Close">
               <Link onClick={handleClose} className="close-btn">
                 <AiOutlineCloseCircle />
