@@ -35,19 +35,19 @@ const AccountDelete = () => {
         `${config.AUTH_API}/user/DeleteAccount`,
         { email: email }
       );
-
-      if (!response?.data?.success) {
+      // console.log(response.data);
+      if (!response?.data?.message) {
         toast.error(response?.data?.message);
         logout();
         navigate("/");
       } else {
-        // console.log(response);
+        // console.log(response.data.message);
         toast.success("Your Account has been suceessfully Deleted");
         navigate("/");
       }
     } catch (err) {
       // console.log(err);
-      toast.error("Something went wrong. Try again.");
+      // toast.error("Something went wrong. Try again.");
       navigate("/");
     }
   };
