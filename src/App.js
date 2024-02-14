@@ -66,6 +66,7 @@ import PaystackVerifyPayment from "./pages/payment/paystack/paystack-verificatio
 import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import DocumentManager from "./pages/user/DocumentManager";
 import Confirmation from "./pages/Confirmation";
+import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -136,6 +137,7 @@ function App() {
                       path="/auth/access-account/:token"
                       element={<AccessAccount />}
                     />
+                    <Route path="/account/delete" element={<AccountDelete />} />
                     <Route path="user/payment" element={<Payment />} />
                     <Route path="user/completion" element={<Completion />} />
                     <Route path="user/checkout" element={<CheckoutForm />} />
@@ -204,7 +206,7 @@ function App() {
         </AuthProvider>
       </Elements>
       <BackToTop />
-      <CookiePolicy/>
+      <CookiePolicy />
     </BrowserRouter>
   );
 }
