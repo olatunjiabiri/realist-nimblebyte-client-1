@@ -26,7 +26,8 @@ function Modall({ children, isOpen, handleClose }) {
         classNames="modaal"
         nodeRef={nodeRef}
       >
-        <div className="modaal" ref={nodeRef} onClick={handleClose}>
+        <div className="modaal" ref={nodeRef}>
+          {/* <div className="modaal" ref={nodeRef} onClick={handleClose}> */}
           {/* Prevent click inside the modal from closing it */}
           <div className="modaal-content" onClick={(e) => e.stopPropagation()}>
             {/* <Tooltip title="Close"> */}
