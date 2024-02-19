@@ -103,7 +103,7 @@ export default function AdEdit({ action, type }) {
             key: item?.key,
             blob: null,
           };
-        }),
+        })
       );
       setLoaded(true);
     } catch (err) {
@@ -214,25 +214,6 @@ export default function AdEdit({ action, type }) {
       });
       console.log("images to delete", imagesPreDelete);
       await processImageDeletions(imagesPreDelete);
-      // const handleDelete = async (file) => {
-      //   // setLoading(true);
-      //   // setAd({ ...ad, uploading: true });
-      //   try {
-      //     const { data } = await axios.post("/remove-image", file);
-      //     if (data?.ok) {
-      //       setAd((prev) => ({
-      //         ...prev,
-      //         photos: prev.photos.filter((p) => p.Key !== file.Key),
-      //         uploading: false,
-      //       }));
-      //       setLoading(false);
-      //     }
-      //   } catch (err) {
-      //     console.log(err);
-      //     setAd({ ...ad, uploading: false });
-      //     setLoading(false);
-      //   }
-      // };
 
       const { data } = await axios.delete(`/ad/${ad._id}/${userId}`);
       // console.log("ad create response => ", data);
@@ -268,7 +249,7 @@ export default function AdEdit({ action, type }) {
           setAd((prev) => ({ ...prev, uploading: true }));
           const uploadedPhotos = await Promise.all(
             files.map(async (file) => {
-              console.log("fileeee", file);
+              // console.log("fileeee", file);
               if (file.blob === null) {
                 return {
                   Key: file.text,
@@ -297,41 +278,41 @@ export default function AdEdit({ action, type }) {
                     });
                     innerResolve(data);
                   } catch (err) {
-                    console.log(err);
+                    // console.log(err);
                     innerResolve(null);
                   }
                 };
               });
-            }),
+            })
           );
           // Processing after upload
           const filteredPhotos = uploadedPhotos.filter(Boolean);
-          console.log("filtered photos", filteredPhotos);
-          console.log("adddd   photos", ad.photos);
+          // console.log("filtered photos", filteredPhotos);
+          // console.log("adddd   photos", ad.photos);
           const uniquePhotos = Array.from(
             new Set([
               ...ad.photos.map((photo) => photo?.Location),
               ...filteredPhotos.map((photo) => photo?.Location),
-            ]),
+            ])
           ).map((location) =>
-            filteredPhotos.find((photo) => photo?.Location === location),
+            filteredPhotos.find((photo) => photo?.Location === location)
           );
           //         photos: prev.photos.filter((p) => p.Key !== file.Key),
           const cleansedUniquePhotos = uniquePhotos?.filter(
-            (photo) => photo !== undefined,
+            (photo) => photo !== undefined
           );
           setAd((prev) => ({
             ...prev,
             photos: cleansedUniquePhotos,
             uploading: false,
           }));
-          console.log("unique photos", uniquePhotos);
-          console.log("cleansed photos", cleansedUniquePhotos);
+          // console.log("unique photos", uniquePhotos);
+          // console.log("cleansed photos", cleansedUniquePhotos);
           setLoading(false);
           resolve(cleansedUniquePhotos);
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         setAd((prev) => ({ ...prev, uploading: false }));
         setLoading(false);
         reject(err);
@@ -340,25 +321,25 @@ export default function AdEdit({ action, type }) {
   }
 
   useEffect(() => {
-    console.log("removed images", removedImages);
+    // console.log("removed images", removedImages);
   }, [removedImages]);
 
   async function processImageDeletions(imagesToRemove) {
     if (imagesToRemove.length === 0) {
-      console.log("No images to remove.");
+      // console.log("No images to remove.");
       return;
     }
 
     // Filter images that need to be deleted from the backend
     const imagesToDeleteFromBackend = imagesToRemove.filter(
-      (image) => !image.blob,
+      (image) => !image.blob
     );
 
-    console.log("images to remove", removedImages);
-    console.log("images to remove from backend", imagesToDeleteFromBackend);
+    // console.log("images to remove", removedImages);
+    // console.log("images to remove from backend", imagesToDeleteFromBackend);
 
     if (imagesToDeleteFromBackend.length === 0) {
-      console.log("No backend images to remove.");
+      // console.log("No backend images to remove.");
       return;
     }
 
@@ -372,30 +353,30 @@ export default function AdEdit({ action, type }) {
             });
             return { success: true, key: image.key || image.image, data };
           } catch (err) {
-            console.error(
-              "Deletion error for image:",
-              image.key || image.image,
-              err,
-            );
+            // console.error(
+            //   "Deletion error for image:",
+            //   image.key || image.image,
+            //   err
+            // );
             return {
               success: false,
               key: image.key || image.image,
               error: err,
             };
           }
-        }),
+        })
       );
 
       // Optional: Process results, e.g., remove successfully deleted images from state
       const successfullyDeletedKeys = deletionResults
         .filter((result) => result.success)
         .map((result) => result.key);
-      console.log("Successfully deleted images:", successfullyDeletedKeys);
+      // console.log("Successfully deleted images:", successfullyDeletedKeys);
       // Update any state or UI here as necessary
 
       setLoading(false);
     } catch (error) {
-      console.error("Failed to process image deletions:", error);
+      // console.error("Failed to process image deletions:", error);
       setLoading(false);
     }
   }
@@ -470,20 +451,7 @@ export default function AdEdit({ action, type }) {
                         }
                       />
                     </div>
-                    {/* <div className="col-sm-1 text-center ">per</div>
-                      <div className="col-sm-4">
-                        <input
-                          type="text"
-                          className="form-control mmb-3"
-                          id="areaPerPrice"
-                          name="areaPerPrice"
-                          placeholder="sqm/sqft/plot"
-                          value={ad.areaPerPrice}
-                          onChange={(e) =>
-                            setAd({ ...ad, areaPerPrice: e.target.value })
-                          }
-                        />
-                      </div> */}
+
                     <span className="col-sm-1 px-2 text-center">per</span>
                     <div className="col-sm-3">
                       <FormControl sx={{ width: "100%", mb: 2 }}>

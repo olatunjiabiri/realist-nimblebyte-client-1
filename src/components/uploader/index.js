@@ -54,30 +54,10 @@ const DynamicForm = ({
     setFormData((prevFormData) => [...prevFormData, { text: "", image: null }]);
   };
 
-  // const handleDelete = async (file) => {
-  //   // setLoading(true);
-  //   // setAd({ ...ad, uploading: true });
-  //   try {
-  //     const { data } = await axios.post("/remove-image", file);
-  //     if (data?.ok) {
-  //       setAd((prev) => ({
-  //         ...prev,
-  //         photos: prev.photos.filter((p) => p.Key !== file.Key),
-  //         uploading: false,
-  //       }));
-  //       setLoading(false);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     setAd({ ...ad, uploading: false });
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleDelete = async (index) => {
     return new Promise(async (resolve, reject) => {
-      console.log("hello 1", index);
-      console.log("hello 111111", formData[index]);
+      // console.log("hello 1", index);
+      // console.log("hello 111111", formData[index]);
       const imageToDelete = formData[index];
       if (!imageToDelete || imageToDelete.blob) {
         const newFormData = formData.filter((_, i) => i !== index);
@@ -90,107 +70,14 @@ const DynamicForm = ({
       // Confirm deletion with the user
       if (!window.confirm("Delete image?")) return;
 
-      console.log("hello 222", index);
+      // console.log("hello 222", index);
 
       setRemovedImages((prev) => [...prev, formData[index]]);
       const newFormData = formData.filter((_, i) => i !== index);
       setFormData(newFormData);
       resolve();
-
-      // setLoading(true);
-      // try {
-      //   await axios.post("/remove-image", {
-      //     key: imageToDelete.key || imageToDelete.image,
-      //   });
-      //   // Successfully deleted from the backend, now remove from formData
-      //   const newFormData = formData.filter((_, i) => i !== index);
-      //   setFormData(newFormData);
-      // } catch (err) {
-      //   toast.error(err?.response?.data?.message);
-      //   reject(err);
-      //   console.error("Failed to delete image:", err.response.data);
-      // } finally {
-      //   setLoading(false);
-      //   resolve();
-      // }
     });
   };
-
-  // const handleConfirm = async () => {
-  //   if (formData.length === 0) {
-  //     setIsOpen(false);
-  //     return;
-  //   }
-  //
-  //   try {
-  //     setLoading(true);
-  //     const files = formData;
-  //     console.log("files", files);
-  //     if (files?.length) {
-  //       setAd((prev) => ({ ...prev, uploading: true }));
-  //
-  //       // Use Promise.all to wait for all image uploads to complete
-  //       const uploadedPhotos = await Promise.all(
-  //         files.map((file) => {
-  //           if (file.blob === null) {
-  //             return {
-  //               Key: file.text,
-  //               Location: file.image,
-  //             };
-  //           }
-  //
-  //           return new Promise(async (resolve) => {
-  //             Resizer.imageFileResizer(
-  //               file.blob,
-  //               1080,
-  //               720,
-  //               "JPEG",
-  //               100,
-  //               0,
-  //               async (uri) => {
-  //                 try {
-  //                   const { data } = await axios.post("/upload-image", {
-  //                     image: uri,
-  //                     label: file.text,
-  //                   });
-  //                   resolve(data);
-  //                 } catch (err) {
-  //                   console.log(err);
-  //                   resolve(null);
-  //                 }
-  //               },
-  //               "base64",
-  //             );
-  //           });
-  //         }),
-  //       );
-  //
-  //       // Remove null entries (failed uploads) and filter out duplicates
-  //       const filteredPhotos = uploadedPhotos.filter(Boolean);
-  //       const uniquePhotos = Array.from(
-  //         new Set([
-  //           ...ad.photos.map((photo) => photo.Location),
-  //           ...filteredPhotos.map((photo) => photo.Location),
-  //         ]),
-  //       ).map((location) =>
-  //         filteredPhotos.find((photo) => photo.Location === location),
-  //       );
-  //
-  //       setAd((prev) => ({
-  //         ...prev,
-  //         photos: uniquePhotos,
-  //         uploading: false,
-  //       }));
-  //
-  //       setLoading(false);
-  //       setIsOpen(false);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     setAd((prev) => ({ ...prev, uploading: false }));
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleConfirm = async () => {
     if (formData.length === 0) {
@@ -242,12 +129,12 @@ const DynamicForm = ({
                   resolve(data);
                   // console.log("data>>", data);
                 } catch (err) {
-                  console.log(err);
+                  // console.log(err);
                   resolve(null);
                 }
               };
             });
-          }),
+          })
         );
 
         // Remove null entries (failed uploads) and filter out duplicates
@@ -256,9 +143,9 @@ const DynamicForm = ({
           new Set([
             ...ad.photos.map((photo) => photo.Location),
             ...filteredPhotos.map((photo) => photo.Location),
-          ]),
+          ])
         ).map((location) =>
-          filteredPhotos.find((photo) => photo.Location === location),
+          filteredPhotos.find((photo) => photo.Location === location)
         );
 
         setAd((prev) => ({
@@ -271,7 +158,7 @@ const DynamicForm = ({
         setIsOpen(false);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setAd((prev) => ({ ...prev, uploading: false }));
       setLoading(false);
     }
@@ -285,11 +172,11 @@ const DynamicForm = ({
     try {
       await handleDelete(index);
     } catch {
-      console.log("error");
+      // console.log("error");
       return;
     }
-    console.log("index", index);
-    console.log(" add index", ad.photos[index]);
+    // console.log("index", index);
+    // console.log(" add index", ad.photos[index]);
 
     const newFormData = [...formData];
     newFormData.splice(index, 1);
@@ -397,7 +284,9 @@ const DynamicForm = ({
           // onClick={handleConfirm}
           onClick={() => {
             if (!formCompleted) {
-              alert("You have empty field(s). Please fill in all the fields.");
+              alert(
+                "You have empty field(s). Please fill in all the field(s)."
+              );
               return;
             }
             setIsOpen(false);

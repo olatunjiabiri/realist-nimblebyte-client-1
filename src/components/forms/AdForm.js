@@ -216,6 +216,7 @@ export default function AdForm({ action, type }) {
   };
 
   const canvasRef = useRef(null);
+
   async function uploadImages() {
     return new Promise(async (resolve, reject) => {
       if (formData.length === 0) {
@@ -261,7 +262,7 @@ export default function AdForm({ action, type }) {
                   }
                 };
               });
-            }),
+            })
           );
           // Processing after upload
           const filteredPhotos = uploadedPhotos.filter(Boolean);
@@ -269,16 +270,16 @@ export default function AdForm({ action, type }) {
             new Set([
               ...ad.photos.map((photo) => photo.Location),
               ...filteredPhotos.map((photo) => photo.Location),
-            ]),
+            ])
           ).map((location) =>
-            filteredPhotos.find((photo) => photo.Location === location),
+            filteredPhotos.find((photo) => photo.Location === location)
           );
           setAd((prev) => ({
             ...prev,
             photos: uniquePhotos,
             uploading: false,
           }));
-          console.log("unique photos", uniquePhotos);
+          // console.log("unique photos", uniquePhotos);
           setLoading(false);
           resolve(uniquePhotos);
         }
@@ -299,14 +300,14 @@ export default function AdForm({ action, type }) {
 
     // Filter images that need to be deleted from the backend
     const imagesToDeleteFromBackend = removedImages.filter(
-      (image) => !image.blob,
+      (image) => !image.blob
     );
 
-    console.log("images to remove", removedImages);
-    console.log("images to remove from backend", imagesToDeleteFromBackend);
+    // console.log("images to remove", removedImages);
+    // console.log("images to remove from backend", imagesToDeleteFromBackend);
 
     if (imagesToDeleteFromBackend.length === 0) {
-      console.log("No backend images to remove.");
+      // console.log("No backend images to remove.");
       return;
     }
 
@@ -320,30 +321,30 @@ export default function AdForm({ action, type }) {
             });
             return { success: true, key: image.key || image.image, data };
           } catch (err) {
-            console.error(
-              "Deletion error for image:",
-              image.key || image.image,
-              err,
-            );
+            // console.error(
+            //   "Deletion error for image:",
+            //   image.key || image.image,
+            //   err
+            // );
             return {
               success: false,
               key: image.key || image.image,
               error: err,
             };
           }
-        }),
+        })
       );
 
       // Optional: Process results, e.g., remove successfully deleted images from state
       const successfullyDeletedKeys = deletionResults
         .filter((result) => result.success)
         .map((result) => result.key);
-      console.log("Successfully deleted images:", successfullyDeletedKeys);
+      // console.log("Successfully deleted images:", successfullyDeletedKeys);
       // Update any state or UI here as necessary
 
       setLoading(false);
     } catch (error) {
-      console.error("Failed to process image deletions:", error);
+      // console.error("Failed to process image deletions:", error);
       setLoading(false);
     }
   }
@@ -539,18 +540,6 @@ export default function AdForm({ action, type }) {
                         </Select>
                       </FormControl>
                     </div>
-                    {/* <div className="col-sm-1 text-center ">per</div>
-                    <div className="col-sm-4">
-                      <input
-                        type="text"
-                        className="form-control mb-3"
-                        placeholder="sqm/sqft/plot"
-                        value={ad.areaPerPrice}
-                        onChange={(e) =>
-                          setAd({ ...ad, areaPerPrice: e.target.value })
-                        }
-                      />
-                    </div> */}
                   </div>
                 ) : (
                   <div>
@@ -768,8 +757,8 @@ export default function AdForm({ action, type }) {
                     {loading
                       ? "Uploading..."
                       : ad.loading
-                        ? "Saving..."
-                        : "Submit"}
+                      ? "Saving..."
+                      : "Submit"}
                   </button>
                 </div>
               </div>
