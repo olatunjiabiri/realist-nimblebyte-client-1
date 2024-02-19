@@ -65,7 +65,7 @@ export default function LocationSearchInput({
       debounce((request, callback) => {
         autocompleteService.current.getPlacePredictions(request, callback);
       }, 400),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -125,7 +125,7 @@ export default function LocationSearchInput({
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      }
+      },
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -193,7 +193,7 @@ export default function LocationSearchInput({
           }
 
           setValue(
-            newValue === "Current Location" ? userCurrentLocation : newValue
+            newValue === "Current Location" ? userCurrentLocation : newValue,
           );
         }}
         onInputChange={(event, newInputValue) => {

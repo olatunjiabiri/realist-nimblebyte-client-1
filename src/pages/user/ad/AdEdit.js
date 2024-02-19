@@ -72,7 +72,9 @@ export default function AdEdit({ action, type }) {
     // { text: "Compound", image: null, blob: null },
   ]);
   const [isOpen, setIsOpen] = useState(false);
+  const [removedImages, setRemovedImages] = useState([]);
   const fileRefs = useRef([]);
+  const canvasRef = useRef(null);
 
   // hooks
   const navigate = useNavigate();
@@ -96,8 +98,9 @@ export default function AdEdit({ action, type }) {
       setFormData(
         data?.ad.photos.map((item) => {
           return {
-            text: item.Key,
-            image: item.Location,
+            text: item?.Key,
+            image: item?.Location,
+            key: item?.key,
             blob: null,
           };
         })
@@ -144,7 +147,7 @@ export default function AdEdit({ action, type }) {
     // console.log("ad>>>>>", ad);
     try {
       // validation
-      if (!ad.photos?.length) {
+      if (!formData[0]?.image) {
         toast.error("Photo is required");
         return;
       } else if (!ad.address) {
@@ -178,10 +181,15 @@ export default function AdEdit({ action, type }) {
         toast.error("Description is required");
         return;
       } else {
+        await processImageDeletions(removedImages);
+        const uploadedPhotos = await uploadImages();
         // make API put request
         setAd({ ...ad, loading: true });
 
-        const { data } = await axios.put(`/ad/${ad._id}/${userId}`, ad);
+        const { data } = await axios.put(`/ad/${ad._id}/${userId}`, {
+          ...ad,
+          photos: uploadedPhotos,
+        });
         // console.log("ad create response => ", data);
         if (data?.error) {
           toast.error(data.error);
@@ -201,6 +209,11 @@ export default function AdEdit({ action, type }) {
   const handleDelete = async () => {
     try {
       setDelLoading(true);
+      const imagesPreDelete = formData?.map((file) => {
+        return { key: file?.key };
+      });
+      console.log("images to delete", imagesPreDelete);
+      await processImageDeletions(imagesPreDelete);
 
       const { data } = await axios.delete(`/ad/${ad._id}/${userId}`);
       // console.log("ad create response => ", data);
@@ -223,13 +236,161 @@ export default function AdEdit({ action, type }) {
     setAd({ ...ad, areaPerPrice: e.target.value });
   };
 
+  async function uploadImages() {
+    return new Promise(async (resolve, reject) => {
+      if (formData.length === 0) {
+        resolve();
+        return;
+      }
+      try {
+        setLoading(true);
+        const files = formData;
+        if (files?.length) {
+          setAd((prev) => ({ ...prev, uploading: true }));
+          const uploadedPhotos = await Promise.all(
+            files.map(async (file) => {
+              // console.log("fileeee", file);
+              if (file.blob === null) {
+                return {
+                  Key: file.text,
+                  Location: file.image,
+                  key: file.key,
+                };
+              }
+              return new Promise(async (innerResolve) => {
+                const image = new Image();
+                image.src = URL.createObjectURL(file.blob);
+                image.onload = async () => {
+                  const canvas = canvasRef.current;
+                  const context = canvas.getContext("2d");
+                  const newWidth = 1080;
+                  const newHeight = 720;
+                  // Resize the image using canvas
+                  canvas.width = newWidth;
+                  canvas.height = newHeight;
+                  context.drawImage(image, 0, 0, newWidth, newHeight);
+                  // Convert the canvas content back to base64
+                  const resizedImage = canvas.toDataURL("image/jpeg", 1.0);
+                  try {
+                    const { data } = await axios.post("/upload-image", {
+                      file: resizedImage,
+                      label: file.text,
+                    });
+                    innerResolve(data);
+                  } catch (err) {
+                    // console.log(err);
+                    innerResolve(null);
+                  }
+                };
+              });
+            })
+          );
+          // Processing after upload
+          const filteredPhotos = uploadedPhotos.filter(Boolean);
+          // console.log("filtered photos", filteredPhotos);
+          // console.log("adddd   photos", ad.photos);
+          const uniquePhotos = Array.from(
+            new Set([
+              ...ad.photos.map((photo) => photo?.Location),
+              ...filteredPhotos.map((photo) => photo?.Location),
+            ])
+          ).map((location) =>
+            filteredPhotos.find((photo) => photo?.Location === location)
+          );
+          //         photos: prev.photos.filter((p) => p.Key !== file.Key),
+          const cleansedUniquePhotos = uniquePhotos?.filter(
+            (photo) => photo !== undefined
+          );
+          setAd((prev) => ({
+            ...prev,
+            photos: cleansedUniquePhotos,
+            uploading: false,
+          }));
+          // console.log("unique photos", uniquePhotos);
+          // console.log("cleansed photos", cleansedUniquePhotos);
+          setLoading(false);
+          resolve(cleansedUniquePhotos);
+        }
+      } catch (err) {
+        // console.log(err);
+        setAd((prev) => ({ ...prev, uploading: false }));
+        setLoading(false);
+        reject(err);
+      }
+    });
+  }
+
+  useEffect(() => {
+    // console.log("removed images", removedImages);
+  }, [removedImages]);
+
+  async function processImageDeletions(imagesToRemove) {
+    if (imagesToRemove.length === 0) {
+      // console.log("No images to remove.");
+      return;
+    }
+
+    // Filter images that need to be deleted from the backend
+    const imagesToDeleteFromBackend = imagesToRemove.filter(
+      (image) => !image.blob
+    );
+
+    // console.log("images to remove", removedImages);
+    // console.log("images to remove from backend", imagesToDeleteFromBackend);
+
+    if (imagesToDeleteFromBackend.length === 0) {
+      // console.log("No backend images to remove.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const deletionResults = await Promise.all(
+        imagesToDeleteFromBackend.map(async (image) => {
+          try {
+            const { data } = await axios.post("/remove-image", {
+              key: image.key || image.image, // Adjust based on your image object structure
+            });
+            return { success: true, key: image.key || image.image, data };
+          } catch (err) {
+            // console.error(
+            //   "Deletion error for image:",
+            //   image.key || image.image,
+            //   err
+            // );
+            return {
+              success: false,
+              key: image.key || image.image,
+              error: err,
+            };
+          }
+        })
+      );
+
+      // Optional: Process results, e.g., remove successfully deleted images from state
+      const successfullyDeletedKeys = deletionResults
+        .filter((result) => result.success)
+        .map((result) => result.key);
+      // console.log("Successfully deleted images:", successfullyDeletedKeys);
+      // Update any state or UI here as necessary
+
+      setLoading(false);
+    } catch (error) {
+      // console.error("Failed to process image deletions:", error);
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="background-color">
+      <canvas ref={canvasRef} style={{ display: "none" }} />
       <Modall handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <DynamicForm
           formData={formData}
           setFormData={setFormData}
           fileRefs={fileRefs}
+          removedImages={removedImages}
+          setRemovedImages={setRemovedImages}
           ad={ad}
           setAd={setAd}
           setIsOpen={setIsOpen}
@@ -248,10 +409,19 @@ export default function AdEdit({ action, type }) {
               >
                 Upload Photos
               </label>
-              {ad.photos?.map((file, index) => (
+              {/* {ad.photos?.map((file, index) => ( */}
+              {/*   <Avatar */}
+              {/*     key={index} */}
+              {/*     src={file?.Location} */}
+              {/*     shape="square" */}
+              {/*     size="46" */}
+              {/*     className="ml-2 m-2" */}
+              {/*   /> */}
+              {/* ))} */}
+              {formData?.map((file, index) => (
                 <Avatar
                   key={index}
-                  src={file?.Location}
+                  src={file?.image}
                   shape="square"
                   size="46"
                   className="ml-2 m-2"
@@ -281,20 +451,7 @@ export default function AdEdit({ action, type }) {
                         }
                       />
                     </div>
-                    {/* <div className="col-sm-1 text-center ">per</div>
-                      <div className="col-sm-4">
-                        <input
-                          type="text"
-                          className="form-control mmb-3"
-                          id="areaPerPrice"
-                          name="areaPerPrice"
-                          placeholder="sqm/sqft/plot"
-                          value={ad.areaPerPrice}
-                          onChange={(e) =>
-                            setAd({ ...ad, areaPerPrice: e.target.value })
-                          }
-                        />
-                      </div> */}
+
                     <span className="col-sm-1 px-2 text-center">per</span>
                     <div className="col-sm-3">
                       <FormControl sx={{ width: "100%", mb: 2 }}>
