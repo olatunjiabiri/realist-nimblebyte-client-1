@@ -142,7 +142,11 @@ const Navbar = () => {
         <div className="container">
           <span className="navbar-brand d-flex w-25 me-auto">
             <nav className="nav lead">
-              <Link to={"/"} onClick={closeMobileMenu}>
+              <Link
+                to={"/"}
+                onClick={closeMobileMenu}
+                aria-label="Nimblecasa logo"
+              >
                 <img
                   style={{
                     position: "absolute",
@@ -178,6 +182,7 @@ const Navbar = () => {
                 aria-current="page"
                 to="/buy"
                 onClick={closeMobileMenu}
+                aria-label="Buy"
               >
                 Buy
               </NavLink>
@@ -185,6 +190,7 @@ const Navbar = () => {
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
+                aria-label="Rent"
                 to="/rent"
                 onClick={closeMobileMenu}
               >
@@ -193,6 +199,7 @@ const Navbar = () => {
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
+                aria-label="Sell"
                 to="/contact-agents"
                 onClick={closeMobileMenu}
               >
@@ -201,6 +208,7 @@ const Navbar = () => {
               <NavLink
                 className="nav-item nav-link"
                 aria-current="page"
+                aria-label="Contact Us"
                 to="/contact-us"
                 onClick={closeMobileMenu}
               >
@@ -220,6 +228,7 @@ const Navbar = () => {
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        aria-label="Open Create Ad"
                       >
                         Create Ad
                       </a>
@@ -232,6 +241,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/ad/create/sell/house"
                             onClick={handleSaleClick}
+                            aria-label="Sale"
                           >
                             Sale
                           </NavLink>
@@ -241,6 +251,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/ad/create/rent/house"
                             onClick={handleRentClick}
+                            aria-label="Rent"
                           >
                             Rent
                           </NavLink>
@@ -258,6 +269,7 @@ const Navbar = () => {
                       aria-current="page"
                       to="/login"
                       onClick={closeMobileMenu}
+                      aria-label="Login"
                     >
                       Login
                     </NavLink>
@@ -266,6 +278,7 @@ const Navbar = () => {
                       aria-current="page"
                       to="/register"
                       onClick={closeMobileMenu}
+                      aria-label="Register"
                     >
                       Register
                     </NavLink>
@@ -298,6 +311,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/dashboard"
                             onClick={closeMobileMenu}
+                            aria-label="Open Dashboard"
                           >
                             {auth?.user?.role?.includes("Agent")
                               ? "Dashboard"
@@ -309,6 +323,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             to="/user/profile"
                             onClick={closeMobileMenu}
+                            aria-label="Update Profile"
                           >
                             Update Profile
                           </NavLink>
@@ -327,6 +342,7 @@ const Navbar = () => {
                             data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
+                            aria-label="Open manage account"
                             onClick={(e) => {
                               e.stopPropagation();
                             }}
@@ -343,6 +359,7 @@ const Navbar = () => {
                                 margin: "0 10px 0 0",
                               }}
                               to="/user/update-password"
+                              aria-label="change password"
                               onClick={() => {
                                 closeMobileMenu();
                                 // handle change password action
@@ -357,6 +374,7 @@ const Navbar = () => {
                                 closeMobileMenu();
                                 setIsDeleteOpen(true);
                               }}
+                              aria-label="Delete Account"
                             >
                               Delete Account
                             </NavLink>
@@ -368,6 +386,7 @@ const Navbar = () => {
                               className="dropdown-item"
                               to="/user/be-agent"
                               onClick={closeMobileMenu}
+                              aria-label="Become an Agent"
                             >
                               Become an Agent
                             </NavLink>
@@ -383,6 +402,7 @@ const Navbar = () => {
                               logout();
                             }}
                             className="dropdown-item"
+                            aria-label="Logout"
                           >
                             Logout
                           </a>
