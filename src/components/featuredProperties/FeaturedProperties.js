@@ -33,7 +33,10 @@ const PrevArrow = ({ className, style, onClick }) => {
   );
 };
 
-const FeaturedProperties = () => {
+const FeaturedProperties = ({
+  featuredPropertyLoading,
+  setFeaturedPropertyLoading,
+}) => {
   const isSmScreen = useMediaQuery("(max-width:768px)");
 
   const [loading, setLoading] = useState(false);
@@ -102,13 +105,14 @@ const FeaturedProperties = () => {
             d.sold === "Available"
         )
       );
-
+      setFeaturedPropertyLoading(false);
       setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
   };
+
   return (
     <>
       {featuredProperty?.length > 0 && (
