@@ -9,13 +9,14 @@ import AdsForSale from "../components/adsForSale/AdsForSale.js";
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [featuredPropertyLoading, setFeaturedPropertyLoading] = useState(true);
+  const [showShimmer, setShowShimmer] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (featuredPropertyLoading) {
-      <div style={{ padding: "40px 0" }}>
-        <ShimmerPostList postStyle="STYLE_FOUR" col={3} row={5} gap={30} />
-      </div>;
+      setShowShimmer(true);
+    } else {
+      setShowShimmer(false);
     }
   }, [loading, featuredPropertyLoading]);
 
@@ -25,6 +26,11 @@ export default function Home() {
         <div>
           <SearchForm />
         </div>
+        {showShimmer && (
+          <div style={{ padding: "40px 0" }}>
+            <ShimmerPostList postStyle="STYLE_FOUR" col={3} row={3} gap={30} />
+          </div>
+        )}
 
         <div className="container mt-3 px-4">
           <FeaturedProperties
