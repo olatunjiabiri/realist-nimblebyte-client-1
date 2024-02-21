@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ShimmerPostList } from "react-shimmer-effects";
 
 import SearchForm from "../components/forms/SearchForm";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
@@ -11,7 +12,12 @@ export default function Home() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [loading]);
+    if (featuredPropertyLoading) {
+      <div style={{ padding: "40px 0" }}>
+        <ShimmerPostList postStyle="STYLE_FOUR" col={3} row={5} gap={30} />
+      </div>;
+    }
+  }, [loading, featuredPropertyLoading]);
 
   return (
     <div>
