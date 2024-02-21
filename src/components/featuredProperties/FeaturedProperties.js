@@ -117,7 +117,7 @@ const FeaturedProperties = ({
     <>
       {featuredProperty?.length > 0 && (
         <div>
-          {loading ? (
+          {/* {loading ? (
             <div style={{ padding: "40px 0" }}>
               <ShimmerPostList
                 postStyle="STYLE_FOUR"
@@ -126,36 +126,36 @@ const FeaturedProperties = ({
                 gap={30}
               />
             </div>
-          ) : (
-            <>
-              {(featuredProperty?.length < 4 && !isSmScreen) ||
-              featuredProperty?.length === 1 ? (
-                <>
-                  <h3 className="mt-5 text-center">
-                    {" "}
-                    Featured {moreThanOne ? "Properties" : "Property"}
-                  </h3>
+          ) : ( */}
+          <>
+            {(featuredProperty?.length < 4 && !isSmScreen) ||
+            featuredProperty?.length === 1 ? (
+              <>
+                <h3 className="mt-5 text-center">
+                  {" "}
+                  Featured {moreThanOne ? "Properties" : "Property"}
+                </h3>
 
-                  <div className="featured-property-container">
-                    {featuredProperty?.map((ad) => (
-                      <FeaturedAdCard ad={ad} key={ad._id} />
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h3 className="mt-5 text-center">
-                    Featured {moreThanOne ? "Properties" : "Property"}
-                  </h3>
-                  <Slider {...settings}>
-                    {featuredProperty?.map((ad) => (
-                      <FeaturedAdCard ad={ad} key={ad._id} />
-                    ))}
-                  </Slider>
-                </>
-              )}
-            </>
-          )}
+                <div className="featured-property-container">
+                  {featuredProperty?.map((ad) => (
+                    <FeaturedAdCard ad={ad} key={ad._id} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <h3 className="mt-5 text-center">
+                  Featured {moreThanOne ? "Properties" : "Property"}
+                </h3>
+                <Slider {...settings}>
+                  {featuredProperty?.map((ad) => (
+                    <FeaturedAdCard ad={ad} key={ad._id} />
+                  ))}
+                </Slider>
+              </>
+            )}
+          </>
+          {/* )} */}
           {/* <pre>{JSON.stringify(featuredProperty.length, null, 4)} </pre> */}
         </div>
       )}
