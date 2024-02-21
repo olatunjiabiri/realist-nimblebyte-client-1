@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import SearchForm from "../components/forms/SearchForm";
 import LogoutMessage from "../components/misc/logoutMessage/LogoutMessage";
-
 import FeaturedProperties from "../components/featuredProperties/FeaturedProperties.js";
 import AdsForSale from "../components/adsForSale/AdsForSale.js";
 
@@ -34,7 +33,6 @@ export default function Home() {
           )}
         </div>
       </LogoutMessage>
-      {/* <pre>{JSON.stringify(cLocation, null, 4)} </pre> */}
     </div>
   );
 }
