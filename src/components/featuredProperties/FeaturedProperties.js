@@ -41,7 +41,7 @@ const FeaturedProperties = ({
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(9);
+  const [perPage, setPerPage] = useState(1000);
   const [featuredProperty, setFeaturedProperty] = useState([]);
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const FeaturedProperties = ({
                 </h3>
 
                 <div className="featured-property-container">
-                  {featuredProperty?.map((ad) => (
+                  {featuredProperty?.slice(0, 100).map((ad) => (
                     <FeaturedAdCard ad={ad} key={ad._id} />
                   ))}
                 </div>
@@ -148,7 +148,7 @@ const FeaturedProperties = ({
                   Featured {moreThanOne ? "Properties" : "Property"}
                 </h3>
                 <Slider {...settings}>
-                  {featuredProperty?.map((ad) => (
+                  {featuredProperty?.slice(0, 100).map((ad) => (
                     <FeaturedAdCard ad={ad} key={ad._id} />
                   ))}
                 </Slider>
