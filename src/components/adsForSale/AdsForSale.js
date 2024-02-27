@@ -36,7 +36,8 @@ const AdsForSale = ({ loading, setLoading }) => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/ads/${page}/${perPage}`);
-      setAds(data.ads.filter((a) => !a.featuredPropertyStatus));
+      // setAds(data.ads.filter((a) => !a.featuredPropertyStatus));
+      setAds(data?.ads);
 
       setTotal(data.total);
       setLoading(false);
