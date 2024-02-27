@@ -41,7 +41,7 @@ const FeaturedProperties = ({
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(1000);
+  const [perPage, setPerPage] = useState(50);
   const [featuredProperty, setFeaturedProperty] = useState([]);
 
   useEffect(() => {
@@ -94,16 +94,17 @@ const FeaturedProperties = ({
   const fetchAds = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/ads/${page}/${perPage}`);
+      const { data } = await axios.get(`/featured-ads/${page}/${perPage}`);
 
       setFeaturedProperty(
-        data?.ads?.filter(
-          (d) =>
-            d.featuredPropertyStatus &&
-            // d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
-            d.publishedStatus === "Published" &&
-            d.sold === "Available"
-        )
+        data?.ads
+        // data?.ads?.filter(
+        //   (d) =>
+        //     d.featuredPropertyStatus &&
+        //     // d.postedBy === "349a53b8-2112-456f-a786-7861124625b6" &&
+        //     d.publishedStatus === "Published" &&
+        //     d.sold === "Available"
+        // )
       );
       setFeaturedPropertyLoading(false);
       setLoading(false);
