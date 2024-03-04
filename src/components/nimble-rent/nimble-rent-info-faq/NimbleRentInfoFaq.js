@@ -8,11 +8,6 @@ import Typography from "@mui/material/Typography";
 
 import "./NimbleRentInfoFaq.css";
 
-// const AccordionContainer = styled("div")({
-//   display: "grid",
-//   rowGap: "3rem", //  gaps between accordions
-// });
-
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme, expanded }) => ({
@@ -50,9 +45,7 @@ const AccordionSummary = styled((props) => (
 ))(({ theme, expanded }) => ({
   backgroundColor: "#FFFFFF",
   borderRadius: "18px",
-  // theme.palette.mode === "dark"
-  //   ? "rgba(255, 255, 255, .05)"
-  //   : "rgba(0, 0, 0, .03)",
+
   justifyContent: "space-between", // Aligns items at the end
   "& .MuiAccordionSummary-content": {
     margin: theme.spacing(5), // Adjust margin as needed
@@ -71,31 +64,33 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme, expanded }) => ({
 }));
 
 export default function NimbleRentInfoFaq() {
-  const [expanded, setExpanded] = React.useState("panel1");
+  const [expanded, setExpanded] = useState("panel1");
   const [parentHeight, setParentHeight] = useState("auto");
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
-    setParentHeight(newExpanded ? "auto" : "auto"); // Set parent height accordingly
+    setParentHeight(newExpanded ? "1000px" : "auto"); // Set parent height accordingly
   };
 
   return (
     <>
       <div
         className="nimble-rent-info-faq-container"
-        style={{ height: parentHeight }} // Apply dynamic height to parent container
-      ></div>
-      <div className="nimble-rent-info-faq-header-container">
-        <span className="nimble-rent-info-faq-header">
-          Frequently asked questions
-        </span>
-      </div>
+        // style={{ height: parentHeight }} // Apply dynamic height to parent container
+      >
+        <div className="nimble-rent-info-faq-header-container">
+          <span className="nimble-rent-info-faq-header">
+            Frequently asked questions
+          </span>
+        </div>
 
-      <div className="nimble-rent-info-faq-inner-c">
-        <div className="nimble-rent-info-faq-accordion-c  ">
-          {/* <AccordionContainer> */}
-          <div className="accordion-container ">
+        <div
+          className="nimble-rent-info-faq-inner-c"
+          // style={{ height: parentHeight }} // Apply dynamic height to parent container
+        >
+          <div className="nimble-rent-info-faq-accordion-c  ">
             <Accordion
+              defaultExpanded
               expanded={expanded === "panel1"}
               onChange={handleChange("panel1")}
             >
@@ -183,7 +178,6 @@ export default function NimbleRentInfoFaq() {
               </AccordionDetails>
             </Accordion>
           </div>
-          {/* </AccordionContainer> */}
         </div>
       </div>
     </>
