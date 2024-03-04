@@ -1,0 +1,55 @@
+.nimble-rent-info-eligibility-container {
+    padding: 2px;
+    border: 2px solid ;
+    border-width: 4px;
+    width: 1280px;
+    height: 1187px;
+    top: 438px;
+    left: 80px;
+    gap: 99px;
+}
+
+.nimble-rent-info-faq-container {
+    /* width: 1280px; */
+    width: 100%;
+    height: 1073px;
+    top: 1800px;
+    left: 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px){ 
+    .nimble-rent-info-eligibility-container {
+        width:388px;
+        height:2690px;
+        top: 241px;
+        gap: 31px;
+
+        padding: 2px;
+        border: 2px solid ;
+        border-width: 4px;
+        /* width: 1280px;
+        height: 1187px;
+        top: 438px;
+        left: 80px; */
+        /* gap: 99px; */
+    }
+    
+    .nimble-rent-info-faq-container {
+        width: 388px; /* 374 */
+         /* height: 691px;  */
+         height: auto;
+        gap: 18px;
+
+        /* width: 1280px;
+        height: 1073px;
+        top: 1800px;
+        left: 80px; */
+        display: flex;
+        flex-direction: column;
+    }  
+}
+
+
+
