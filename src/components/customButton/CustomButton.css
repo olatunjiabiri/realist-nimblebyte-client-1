@@ -1,0 +1,37 @@
+.custom-button-label {
+    font-family: Segoe UI;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.custom-button {
+    background-color: #EE7B0D;
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 10px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    /* padding: 8px, 16px, 8px, 16px */
+  }
+  
+  .custom-button:hover {
+    background-color: #8a4504; 
+  }
+  
+  .outlined-button {
+    background: white;
+    color: #EE7B0D;
+    border: 2px solid #EE7B0D;
+  }
+  
+  .outlined-button:hover {
+    background-color: #EE7B0D;
+    color: white;
+  }
+
+
+  
