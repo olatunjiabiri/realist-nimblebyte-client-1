@@ -67,7 +67,7 @@ import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import DocumentManager from "./pages/user/DocumentManager";
 import Confirmation from "./pages/Confirmation";
 import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
-
+import NimbleRentInfoFaq from "./components/nimble-rent/nimble-rent-info-faq/NimbleRentInfoFaq";
 const PageNotFound = () => (
   <ContentWrapper>
     <div className="text-center p-5">
@@ -196,6 +196,11 @@ function App() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/contact-agents" element={<ContactAgents />} />
+                    <Route
+                      path="/nimble-rent-information"
+                      element={<NimbleRentInfoFaq />}
+                    />
+
                     <Route path="*" element={<PageNotFound />} />
                   </Routes>
                   <Footer />
