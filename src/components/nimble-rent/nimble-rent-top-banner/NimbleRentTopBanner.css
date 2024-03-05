@@ -16,3 +16,8 @@
     gap: 24px;
     color: #ffffff;
 }
+
+.nimble-rent-top-banner-button {
+    display: flex;
+    align-items: center;
+}
