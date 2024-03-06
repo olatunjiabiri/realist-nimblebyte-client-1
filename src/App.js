@@ -89,7 +89,6 @@ function App() {
                 <DataProvider>
                   {/* <Main /> */}
                   <Navbar />
-                  <NimbleRentInfo />
                   <ToastContainer
                     position="top-center"
                     autoClose={5000}
