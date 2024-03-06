@@ -21,3 +21,39 @@
     display: flex;
     align-items: center;
 }
+
+@media (max-width: 768px){
+    .nimble-rent-top-banner-container {
+        height: 80px;
+        padding: 16px 0px; /* Adjust padding for smaller screens */
+        justify-content: center; /* Align items in the center */
+        gap: 10px
+        
+    }
+
+    .nimble-rent-top-banner-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        /* gap: 2px; Reduce gap between items */
+
+        font-family: Figtree;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+
+    .nimble-rent-top-banner-textx {
+        flex-direction: row; /* Stack items vertically on smaller screens */
+        align-items: center; /* Center items horizontally */
+        gap: 10px; /* Adjust gap between items */
+    }
+
+    .nimble-rent-top-banner-textc {
+        margin-top: -20px;
+    }
+}

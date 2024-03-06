@@ -8,14 +8,18 @@ const NimbleRentTopBanner = ({ showButton = true }) => {
   return (
     <div className="nimble-rent-top-banner-container">
       <div className="nimble-rent-top-banner-text">
-        <span className="nimble-rent-top-banner-texta">Hurray</span>&nbsp;
-        <span className="nimble-rent-top-banner-textb">Nimble rent</span>&nbsp;
-        <span className="">
-          <img src="./fire.png"></img>
-        </span>
-        &nbsp;
+        <div className="nimble-rent-top-banner-textx">
+          <span className="nimble-rent-top-banner-texta">Hurray</span>&nbsp;
+          <span className="nimble-rent-top-banner-textb">Nimble rent</span>
+          &nbsp;
+          <span className="">
+            <img src="./fire.png"></img>
+            is here!!
+          </span>
+          &nbsp;
+        </div>
         <span className="nimble-rent-top-banner-textc">
-          is here!! You can now rent a property and pay later
+          You can now rent a property and pay later
         </span>
       </div>
       {showButton && (
