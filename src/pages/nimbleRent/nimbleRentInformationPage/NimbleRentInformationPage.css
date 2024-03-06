@@ -22,7 +22,7 @@ justify-content: center; */
     flex-direction: column;
 }
 
-@media (max-width: 768px){ 
+@media (max-width: 767px){ 
     .nimble-rent-info-eligibility-container {
         width:388px;
         height:2690px;
