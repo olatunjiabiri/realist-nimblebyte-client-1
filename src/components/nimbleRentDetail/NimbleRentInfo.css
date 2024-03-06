@@ -1,6 +1,6 @@
 .rent-details-container {
-  width: Hug (1, 280px);
-  height: Hug (1, 187px);
+  width: 1, 280px;
+  height: 1, 187px;
   top: 438px;
   left: 80px;
   gap: 99px;
@@ -10,11 +10,18 @@
   margin-top: 40px;
 }
 
+.nimble-rent-info-container {
+  width: Hug (1, 280px);
+  height: Hug (1, 048px);
+  gap: 40px;
+}
 .main-title-container {
   width: 866px;
   height: 148px;
-  gap: 20px;
+  gap: 17px;
+  text-align: left;
 }
+
 .main-title {
   font-family: Figtree;
   font-size: 30px;
@@ -25,19 +32,18 @@
   width: 589px;
   height: 24px;
   margin-top: 3px;
+  gap: 17px;
 }
 
 .nimble-rent {
   /* width: 218px;
 height: 32px; */
-font-family: Figtree;
-font-size: 30px;
-font-weight: 700;
-line-height: 32px;
-letter-spacing: 0em;
-text-align: left;
-
-
+  font-family: Figtree;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 .title-subtexts {
   font-family: Figtree;
@@ -46,6 +52,9 @@ text-align: left;
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  margin-top: 20px;
+  width: 750px;
+  height: 96px;
 }
 
 .cards-container {
@@ -56,23 +65,25 @@ text-align: left;
   justify-content: space-between;
   flex-wrap: wrap;
   flex: auto;
+  margin-top: 20px;
 }
 
 .card-one-container {
-  /* width: 564px;
-  height: 860px; */
+  /* width: 500px; */
+  /* height: 660px; */
   padding: 49px, 45px, 108px, 70px;
   border-radius: 8px;
   border: 1px;
   border: 1px solid #e8e8e8;
   box-shadow: 0px 0px 8px 0px #00000033;
-  /* box-shadow: 0px 32px 64px 0px #0000003d; */
-  /* flex-basis: calc(50% - 20px);  */
-  /* background-color: #f9f9f9; */
+  box-shadow: 0px 32px 64px 0px #0000003d;
+  background-color: #f9f9f9;
   border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
+  /* padding: 20px; */
+  /* margin-bottom: 20px; */
   margin-right: 20px; /* Adds spacing between the cards */
+  /* margin-left: 20px; */
+  justify-content: center;
 }
 
 .card-one-title-container {
@@ -80,6 +91,11 @@ text-align: left;
   height: Hug (169px);
   gap: 26px;
   margin-bottom: 20px;
+  /* padding: 20px; */
+  /* margin-bottom: 20px; */
+  margin-right: 20px; /* Adds spacing between the cards */
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .card-one-title {
@@ -90,15 +106,23 @@ text-align: left;
   letter-spacing: 0em;
   text-align: left;
   margin-bottom: 10px;
+  padding: 20px;
+  /* margin-left: 5px; */
+  margin-right: 20px; /* Adds spacing between the cards */
 }
 
 .card-one-subtitle-box {
-  width: 428px;
+  width: 400px;
   height: 115px;
   padding: 30px, 66px, 29px, 26px;
   border-radius: 8px;
   border: 1px;
   border: 1px solid #ee7b0d;
+  /* margin-top: 20px; */
+  /* margin: 20px; */
+  /* padding: 20px; */
+  margin-left: 20px;
+  justify-content: center;
 }
 
 .subtitle-box-text {
@@ -111,13 +135,19 @@ text-align: left;
   width: 336px;
   height: 56px;
   margin-top: 30px;
-  margin-left: 26px;
+  margin-left: 20px;
 }
 
 .card-one-inner-text-container {
   width: Hug (449px);
-  height: Hug (501px);
+  /* height: Hug (501px); */
   gap: 25px;
+  margin-top: 20px;
+  margin-left: 20px;
+  justify-content: center;
+  /* margin-bottom: 20px;
+  margin-left: 20px; */
+  margin: 20px;
 }
 
 .subtitle-text {
@@ -131,24 +161,32 @@ text-align: left;
   text-align: left;
   color: #000000;
   margin-bottom: 20px;
+  /* margin-left: 20px; */
+  padding-left: 20px;
 }
 
-.listed-style {
+.listed-style-container {
   width: 410px;
-  height: 420px;
+  /* height: 420px; */
   font-family: Figtree;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
-  line-height: 28px;
+  line-height: 25px;
   letter-spacing: 0em;
   text-align: left;
   color: #000000;
-  margin-left: 20px;
+  margin-top: 25px;
+  padding-left: 25px;
+  
+}
+
+.listed-style-container ul li {
+  margin-bottom: 8px; 
 }
 
 .card-two-container {
   width: 600px;
-  height: 800px;
+  height: 660px;
   padding: 41px, 136px, 171px, 76px;
   border-radius: 8px;
   background: #f5f7f9;
@@ -164,12 +202,15 @@ text-align: left;
   left: 76px;
   gap: 40px;
   margin-bottom: 20px;
+  margin-left: 30px;
 }
 
 .stepper-title-container {
   width: 281px;
   height: 64px;
   gap: 8px;
+  margin-left: 30px;
+  padding-top: 15px;
 }
 
 .stepper-title {
@@ -177,15 +218,11 @@ text-align: left;
   font-size: 28px;
   font-weight: 700;
   line-height: 32px;
-  /* letter-spacing: 0em; */
   text-align: left;
-  /* margin-bottom: 10px; */
   color: #000000;
 }
 
 .stepper-subtext {
-  /* width: 281px;
-  height: 24px; */
   font-family: Figtree;
   font-size: 16px;
   font-weight: 400;
@@ -196,27 +233,19 @@ text-align: left;
 }
 
 .stepper-container {
-  /* width: 465px;
-  height: 540px;
-  gap: 80px; */
   margin-top: 20px;
+  margin: 20px;
+  padding: 20px;
 }
 
 .label-content {
-  /* width: 465px; */
-  /* height: 75px; */
-  /* gap: 23px; */
   font-family: Figtree;
-  /* font-size: 18px; */
   font-weight: 700;
-  /* line-height: 24px; */
-  /* letter-spacing: 0em; */
   text-align: left;
+  /* margin-bottom: 20px; */
 }
 
 .step-label {
-  /* width: 275px;
-  height: 24px;  */
   font-family: Figtree;
   font-size: 18px;
   font-weight: 700;
@@ -224,58 +253,8 @@ text-align: left;
   letter-spacing: 0em;
   text-align: left;
   font-weight: bold;
-  /* color: ffa500; */
 }
 
 .MuiStepConnector-vertical {
-  border-left: 1px solid orange;
-}
-
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
-  .rent-details-container {
-    max-width: 80%; /* Adjust maximum width for small screens */
-  }
-
-  .main-title {
-    font-size: 28px; /* Increase font size for small screens */
-  }
-
-  .title-subtexts {
-    font-size: 16px; /* Adjust font size for small screens */
-  }
-
-  .subtitle-text,
-  .listed-style {
-    font-size: 18px; /* Adjust font size for small screens */
-  }
-
-  .stepper-title {
-    font-size: 24px; /* Adjust font size for small screens */
-  }
-
-  .stepper-subtext {
-    font-size: 16px; /* Adjust font size for small screens */
-  }
-}
-
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-  .rent-details-container {
-    max-width: 600px; /* Adjust maximum width for medium screens */
-  }
-}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-  .rent-details-container {
-    max-width: 800px; /* Adjust maximum width for large screens */
-  }
-}
-
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-  .rent-details-container {
-    max-width: 1200px; /* Adjust maximum width for extra large screens */
-  }
+  border-left: 2px dotted orange;
 }
