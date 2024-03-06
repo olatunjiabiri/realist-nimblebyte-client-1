@@ -42,7 +42,6 @@ import Footer from "./components/nav/Footer";
 import UpdateProfile from "./pages/user/UpdateProfile";
 import BeAgent from "./pages/user/BeAgent";
 import ContactUs from "./pages/contactUs/ContactUs";
-
 import ContactAgents from "./pages/contactAgents/ContactAgents";
 
 // import Settings from "./pages/user/Settings";
@@ -67,6 +66,7 @@ import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import DocumentManager from "./pages/user/DocumentManager";
 import Confirmation from "./pages/Confirmation";
 import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
+import RentDetailsPage from "./pages/nimbleRentDetail/RentDetailsPage";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -195,8 +195,10 @@ function App() {
                     <Route path="/rent" element={<Rent />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/contact-us" element={<ContactUs />} />
+                    <Route path="/rent-details" element={<RentDetailsPage />} />
                     <Route path="/contact-agents" element={<ContactAgents />} />
                     <Route path="*" element={<PageNotFound />} />
+                    {/* <Route path="/rent-details" element={<RentDetailsPage />} /> */}
                   </Routes>
                   <Footer />
                 </DataProvider>

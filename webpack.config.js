@@ -9,6 +9,11 @@ module.exports = {
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules\/(?!react-stepper)/, // Exclude node_modules except react-stepper
+      },
     ],
   },
   resolve: {
