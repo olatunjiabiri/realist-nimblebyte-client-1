@@ -66,7 +66,7 @@ import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import DocumentManager from "./pages/user/DocumentManager";
 import Confirmation from "./pages/Confirmation";
 import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
-import NimbleRentInfo from "./components/nimbleRentDetail/NimbleRentInfo";
+
 
 const PageNotFound = () => (
   <ContentWrapper>
