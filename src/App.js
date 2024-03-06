@@ -66,6 +66,7 @@ import ContentWrapper from "./components/contentWrapper/ContentWrapper";
 import DocumentManager from "./pages/user/DocumentManager";
 import Confirmation from "./pages/Confirmation";
 import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
+import NimbleRentInfo from "./components/nimbleRentDetail/NimbleRentInfo";
 
 const PageNotFound = () => (
   <ContentWrapper>
@@ -88,6 +89,7 @@ function App() {
                 <DataProvider>
                   {/* <Main /> */}
                   <Navbar />
+                  <NimbleRentInfo />
                   <ToastContainer
                     position="top-center"
                     autoClose={5000}
@@ -196,7 +198,6 @@ function App() {
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/contact-agents" element={<ContactAgents />} />
                     <Route path="*" element={<PageNotFound />} />
-    
                   </Routes>
                   <Footer />
                 </DataProvider>

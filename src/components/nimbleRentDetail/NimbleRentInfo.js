@@ -19,8 +19,8 @@ function OrangeStepIcon(index) {
         style={{
           backgroundColor: active || completed ? "#EE7B0D" : undefined,
           color: "white",
-          width: 24,
-          height: 24,
+          width: 30,
+          height: 30,
           borderRadius: "50%",
           display: "flex",
           justifyContent: "center",
@@ -135,10 +135,13 @@ const NimbleRentInfo = () => {
                       <StepContent>
                         <Typography
                           sx={{
-                            borderLeft: "2px dotted orange",
-                            marginLeft: -2.6,
-                            paddingLeft: 2.75,
-                            marginBottom: 1.5,
+                            borderLeft:
+                              index < steps.length - 1
+                                ? "2px dotted orange"
+                                : "none",
+                            marginLeft: -2.5,
+                            paddingLeft: 4,
+                            paddingBottom: 2,
                           }}
                         >
                           {step.description}
