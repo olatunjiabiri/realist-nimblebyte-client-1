@@ -39,7 +39,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="container pt-3 px-4">
+        <div className="container pt-3 px-4 pb-3">
           {!featuredPropertyLoading && (
             <AdsForSale setLoading={setLoading} loading={loading} />
           )}
