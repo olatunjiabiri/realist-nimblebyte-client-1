@@ -1,6 +1,7 @@
 .rent-details-container {
-  width: 1, 280px;
-  height: 1, 187px;
+  /* width: 1, 280px; */
+  /* height: 1, 187px; */
+  height: auto;
   top: 438px;
   left: 80px;
   gap: 99px;
@@ -11,9 +12,9 @@
 }
 
 .nimble-rent-info-container {
-  width: Hug (1, 280px);
-  height: Hug (1, 048px);
-  gap: 40px;
+  /* width: 1, 280px;
+  height: 1, 048px;
+  gap: 40px; */
 }
 .main-title-container {
   width: 866px;
@@ -58,8 +59,9 @@ height: 32px; */
 }
 
 .cards-container {
-  width: Hug (1, 280px);
-  height: Hug (860px);
+  /* width: 1, 280px; */
+  width: auto;
+  height: 860px;
   gap: 39px;
   display: flex;
   justify-content: space-between;
@@ -69,8 +71,8 @@ height: 32px; */
 }
 
 .card-one-container {
-  /* width: 500px; */
-  /* height: 660px; */
+  width: 500px;
+  height: 700px;
   padding: 49px, 45px, 108px, 70px;
   border-radius: 8px;
   border: 1px;
@@ -81,19 +83,19 @@ height: 32px; */
   border-radius: 10px;
   /* padding: 20px; */
   /* margin-bottom: 20px; */
-  margin-right: 20px; /* Adds spacing between the cards */
+  margin-right: 20px;
   /* margin-left: 20px; */
   justify-content: center;
 }
 
 .card-one-title-container {
-  width: Hug (428px);
-  height: Hug (169px);
+  width: 428px;
+  height: 169px;
   gap: 26px;
   margin-bottom: 20px;
   /* padding: 20px; */
   /* margin-bottom: 20px; */
-  margin-right: 20px; /* Adds spacing between the cards */
+  margin-right: 20px;
   margin-left: 20px;
   margin-top: 20px;
 }
@@ -108,13 +110,13 @@ height: 32px; */
   margin-bottom: 10px;
   padding: 20px;
   /* margin-left: 5px; */
-  margin-right: 20px; /* Adds spacing between the cards */
+  margin-right: 20px;
 }
 
 .card-one-subtitle-box {
   width: 400px;
-  height: 115px;
-  padding: 30px, 66px, 29px, 26px;
+  height: 100px;
+  /* padding: 30px, 66px, 29px, 26px; */
   border-radius: 8px;
   border: 1px;
   border: 1px solid #ee7b0d;
@@ -134,13 +136,14 @@ height: 32px; */
   text-align: left;
   width: 336px;
   height: 56px;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-left: 20px;
+  justify-content: center;
 }
 
 .card-one-inner-text-container {
-  width: Hug (449px);
-  /* height: Hug (501px); */
+  width: 449px;
+  /* height: 501px; */
   gap: 25px;
   margin-top: 20px;
   margin-left: 20px;
@@ -177,16 +180,15 @@ height: 32px; */
   color: #000000;
   margin-top: 25px;
   padding-left: 25px;
-  
 }
 
 .listed-style-container ul li {
-  margin-bottom: 8px; 
+  margin-bottom: 20px;
 }
 
 .card-two-container {
   width: 600px;
-  height: 660px;
+  height: 700px;
   padding: 41px, 136px, 171px, 76px;
   border-radius: 8px;
   background: #f5f7f9;
@@ -258,4 +260,80 @@ height: 32px; */
 
 .MuiStepConnector-vertical {
   border-left: 2px dotted orange;
+}
+
+@media screen and (min-width: 300px) and (max-width: 624px) {
+  .nimble-rent-info-container {
+    flex-wrap: wrap;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: auto; 
+  }
+
+  .main-title {
+    width: 100%;
+    font-size: 22px; 
+  }
+
+  .rent-details-container {
+    width: auto;
+  }
+
+  .nimble-rent {
+    font-size: 26px; 
+    line-height: 20px; 
+  }
+
+  .title-subtexts {
+    width: 100%;
+  }
+
+  .card-one-container,
+  .card-two-container {
+    width: 50%; /* Each card takes 50% of the width */
+    padding: 0; /* Remove padding to maximize width */
+  }
+
+  .card-one-title-container {
+    width: 100%;
+    margin-bottom: 10px; /* Add margin bottom for spacing */
+  }
+
+  .cards-container {
+    display: flex;
+    flex-direction: row; /* Display cards side by side */
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px; /* Add margin top for spacing */
+  }
+
+  html,
+  body {
+    overflow-x: unset;
+    max-width: 100%; 
+  }
+
+  .main-title-container {
+    text-align: center; 
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .card-one-container,
+  .card-two-container {
+    width: calc(50% - 20px); /* Adjust card width for tablets */
+    margin-bottom: 20px; /* Add margin bottom for spacing */
+  }
+
+  .cards-container {
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
+    justify-content: space-between; /* Distribute items evenly with space between them */
+    flex-direction: row;
+  }
 }
