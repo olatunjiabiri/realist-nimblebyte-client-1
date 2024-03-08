@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import "./NimbleRentInfo.css";
+import CustomButton from "./../customButton/CustomButton";
 
 // Define the OrangeStepIcon function
 function OrangeStepIcon(index) {
@@ -156,6 +157,20 @@ const NimbleRentInfo = () => {
                 {/* </Box> */}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="d-flex justify-content-center">
+        <div className="nimble-rent-info-actions-buttons-container">
+          <div className="nimble-rent-info-actions-buttons">
+            <CustomButton label="See properties on nimble rent" style={{}} />
+          </div>
+
+          <div className="nimble-rent-info-actions-buttons">
+            <CustomButton
+              className="outlined-button"
+              label="Take me to home page"
+            />
           </div>
         </div>
       </div>

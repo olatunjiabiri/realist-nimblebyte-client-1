@@ -75,7 +75,7 @@ height: 32px; */
 
 
   justify-content: space-around;
-  padding: 100px;
+  padding: 100px 0px;
 
 }
 
@@ -196,9 +196,9 @@ height: 32px; */
 }
 
 .card-two-container {
-  width: 600px;
+  width: 500px;
   height: 700px;
-  padding: 41px, 136px, 171px, 76px;
+  /* padding: 41px, 136px, 171px, 76px; */
   border-radius: 8px;
   background: #f5f7f9;
   background-color: #f9f9f9;
@@ -273,6 +273,16 @@ height: 32px; */
 
 .css-8t49rw-MuiStepConnector-line {
      min-height: 0px;
+}
+
+
+.nimble-rent-info-actions-buttons-container {
+display:flex;
+justify-content: space-between;
+}
+
+.nimble-rent-info-actions-buttons {
+  margin: 10px 20px;
 }
 
 @media screen and (min-width: 300px) and (max-width: 624px) {
@@ -392,6 +402,12 @@ height: 32px; */
   font-size: 16px;
    
 }
+
+
+.nimble-rent-info-actions-buttons-container {
+  display:grid;
+  margin: 50px 10px;
+  }
 
   .cards-container {
     display: flex;
