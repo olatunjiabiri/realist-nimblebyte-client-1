@@ -68,7 +68,6 @@ import Confirmation from "./pages/Confirmation";
 import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
 import NimbleRentInformationPage from "./pages/nimbleRent/nimbleRentInformationPage/NimbleRentInformationPage";
 
-
 const PageNotFound = () => (
   <ContentWrapper>
     <div className="text-center p-5">
