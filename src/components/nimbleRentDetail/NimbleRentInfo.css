@@ -1,24 +1,28 @@
 .rent-details-container {
   /* width: 1, 280px; */
   /* height: 1, 187px; */
-  height: auto;
-  top: 438px;
-  left: 80px;
+  /* height: auto; */
+  /* top: 438px;
+  left: 80px; */
   gap: 99px;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
-  padding: 20px;
+  /* padding: 20px; */
   margin-top: 40px;
+
 }
 
 .nimble-rent-info-container {
   /* width: 1, 280px;
   height: 1, 048px;
   gap: 40px; */
+
+  margin: 50px;
+
 }
 .main-title-container {
-  width: 866px;
-  height: 148px;
+  /* width: 866px;
+  height: 148px; */
   gap: 17px;
   text-align: left;
 }
@@ -30,8 +34,9 @@
   line-height: 24px;
   letter-spacing: -0.05em;
   text-align: left;
-  width: 589px;
-  height: 24px;
+
+  /* width: 589px;
+  height: 24px; */
   margin-top: 3px;
   gap: 17px;
 }
@@ -54,36 +59,38 @@ height: 32px; */
   letter-spacing: 0em;
   text-align: left;
   margin-top: 20px;
-  width: 750px;
-  height: 96px;
+  /* width: 750px;
+  height: 96px; */
 }
 
 .cards-container {
-  /* width: 1, 280px; */
-  width: auto;
-  height: 860px;
+  /* border: 4px solid green; */
+  
   gap: 39px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
   flex: auto;
-  margin-top: 20px;
+  /* margin-top: 20px; */
+
+
+  justify-content: space-around;
+  padding: 100px;
+
 }
 
 .card-one-container {
   width: 500px;
   height: 700px;
-  padding: 49px, 45px, 108px, 70px;
+  /* padding: 49px, 45px, 108px, 70px; */
   border-radius: 8px;
-  border: 1px;
   border: 1px solid #e8e8e8;
-  box-shadow: 0px 0px 8px 0px #00000033;
-  box-shadow: 0px 32px 64px 0px #0000003d;
+  /* box-shadow: 0px 0px 8px 0px #00000033;
+  box-shadow: 0px 32px 64px 0px #0000003d; */
   background-color: #f9f9f9;
-  border-radius: 10px;
   /* padding: 20px; */
   /* margin-bottom: 20px; */
-  margin-right: 20px;
+  /* margin-right: 20px; */
   /* margin-left: 20px; */
   justify-content: center;
 }
@@ -114,16 +121,18 @@ height: 32px; */
 }
 
 .card-one-subtitle-box {
-  width: 400px;
+  /* width: 400px; */
   height: 100px;
   /* padding: 30px, 66px, 29px, 26px; */
   border-radius: 8px;
-  border: 1px;
+  /* border: 1px; */
   border: 1px solid #ee7b0d;
   /* margin-top: 20px; */
   /* margin: 20px; */
   /* padding: 20px; */
   margin-left: 20px;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -262,25 +271,35 @@ height: 32px; */
   border-left: 2px dotted orange;
 }
 
+.css-8t49rw-MuiStepConnector-line {
+     min-height: 0px;
+}
+
 @media screen and (min-width: 300px) and (max-width: 624px) {
   .nimble-rent-info-container {
     flex-wrap: wrap;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     text-align: center;
     height: auto; 
+
+
+
+
+    margin: 20px;
   }
 
   .main-title {
-    width: 100%;
-    font-size: 22px; 
-  }
+   
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+}
 
   .rent-details-container {
-    width: auto;
+    width: 90%;
   }
 
   .nimble-rent {
@@ -289,19 +308,90 @@ height: 32px; */
   }
 
   .title-subtexts {
-    width: 100%;
+    /* width: 100%; */
   }
 
-  .card-one-container,
+  .card-one-container {
+    width: 310px;
+    background: #ffffff;
+  }
   .card-two-container {
-    width: 50%; /* Each card takes 50% of the width */
-    padding: 0; /* Remove padding to maximize width */
+    /* width: 50%; Each card takes 50% of the width */
+    /* padding: 0; Remove padding to maximize width */
+    width: 310px;
   }
 
   .card-one-title-container {
-    width: 100%;
+    width: 87%;
     margin-bottom: 10px; /* Add margin bottom for spacing */
   }
+  .card-one-subtitle-box {
+  margin-left: 0px;
+  }
+
+  .card-one-title {
+    padding: 20px 0px;
+  }
+
+  .card-one-inner-text-container {
+    width: 87%;
+    height: auto;
+  }
+
+  .subtitle-box-text {
+    font-family: Figtree;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    justify-content: center;
+  }
+
+  .subtitle-text {
+    width: auto;
+    height: auto;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .listed-style-container {
+    width: auto;
+    height: auto;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .card-two-inner-container {
+    width: auto;
+    height: auto;
+    margin-left: 0px;
+  }
+
+  .stepper-title-container {
+    width: 281px;
+    height: auto;
+    gap: 8px;
+    margin-left: 0px; 
+    padding-top: 0px;
+}
+
+
+.stepper-container {
+  margin-top: 20px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.step-label {
+  font-family: Figtree;
+  font-size: 16px;
+   
+}
 
   .cards-container {
     display: flex;
@@ -309,13 +399,17 @@ height: 32px; */
     gap: 20px;
     width: 100%;
     margin-top: 20px; /* Add margin top for spacing */
+
+
+    padding: 20px;
+
   }
 
-  html,
+  /* html,
   body {
     overflow-x: unset;
     max-width: 100%; 
-  }
+  } */
 
   .main-title-container {
     text-align: center; 
