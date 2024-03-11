@@ -160,7 +160,7 @@ const NimbleRentInfo = () => {
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex">
         <div className="nimble-rent-info-actions-buttons-container">
           <div className="nimble-rent-info-actions-buttons">
             <CustomButton label="See properties on nimble rent" style={{}} />

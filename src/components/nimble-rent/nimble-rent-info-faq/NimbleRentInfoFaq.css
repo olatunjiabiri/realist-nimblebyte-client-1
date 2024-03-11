@@ -22,7 +22,7 @@
 
 .nimble-rent-info-faq-inner-c {  
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background: #F9FAFB;
     /* width: 1280px; */
