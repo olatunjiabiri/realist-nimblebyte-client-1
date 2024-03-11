@@ -73,7 +73,6 @@ height: 32px; */
   flex: auto;
   /* margin-top: 20px; */
 
-
   justify-content: space-around;
   padding: 100px 0px;
 
@@ -293,15 +292,10 @@ justify-content: space-between;
     justify-content: center;
     text-align: center;
     height: auto; 
-
-
-
-
     margin: 20px;
   }
 
   .main-title {
-   
     font-size: 28px;
     line-height: 32px;
     letter-spacing: 0em;
@@ -356,6 +350,7 @@ justify-content: space-between;
     letter-spacing: 0em;
     text-align: left;
     justify-content: center;
+    width: auto;
   }
 
   .subtitle-text {
@@ -390,7 +385,6 @@ justify-content: space-between;
     padding-top: 0px;
 }
 
-
 .stepper-container {
   margin-top: 20px;
   margin: 0px;
@@ -410,40 +404,72 @@ justify-content: space-between;
   }
 
   .cards-container {
-    display: flex;
-    flex-direction: row; /* Display cards side by side */
+    /* display: flex;
+    flex-direction: row; 
     gap: 20px;
     width: 100%;
-    margin-top: 20px; /* Add margin top for spacing */
-
-
-    padding: 20px;
+    margin-top: 20px; 
+    padding: 20px; */
 
   }
-
-  /* html,
-  body {
-    overflow-x: unset;
-    max-width: 100%; 
-  } */
 
   .main-title-container {
-    text-align: center; 
+    /* text-align: center;  */
   }
 }
-
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .card-one-container,
   .card-two-container {
     width: calc(50% - 20px); /* Adjust card width for tablets */
     margin-bottom: 20px; /* Add margin bottom for spacing */
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Allow items to wrap to the next line if necessary */
+    align-items: center;
+    height: fit-content;
   }
 
   .cards-container {
     display: flex; /* Use flexbox layout */
     flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
     justify-content: space-between; /* Distribute items evenly with space between them */
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: 80%;
+  }
+  .title-subtexts {
+    width: 50%;
+    justify-content: center;
+    display: flex; /* Use flexbox layout */
+}
+  .nimble-rent-info-actions-buttons-container {
+    justify-content: flex-start;
+}
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  .cards-container {
+    flex: 0 0 100%;
+    /* max-width: 50%; */
     flex-direction: row;
+    /* margin: auto; */
+    /* width: 80%; */
+  }
+
+  .title-subtexts {
+    /* display: flex; */
+    width: 70%;
+  display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
+    justify-content: space-between; /* Distribute items evenly with space between them */
+  }
+
+  .nimble-rent-info-actions-buttons-container {
+    justify-content: center;
+}
+
+.d-flex{
+  justify-content: center;
   }
 }
