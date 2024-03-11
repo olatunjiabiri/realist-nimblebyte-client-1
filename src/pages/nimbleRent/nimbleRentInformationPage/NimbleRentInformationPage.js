@@ -10,22 +10,27 @@ import NimbleRentInfo from "../../../components/nimbleRentDetail/NimbleRentInfo"
 
 const NimbleRentInformationPage = () => {
   return (
-    <div className="nimble-rent-info-container">
-      {/*  <ContentWrapper> */}
-      <LogoutMessage>
-        <section className="nimble-rent-info-top-banner-container">
+    <>
+      <section className="nimble-rent-info-top-banner-container">
+        <NimbleRentTopBanner showButton={false} />
+      </section>
+      <div className="nimble-rent-info-container">
+        {/*  <ContentWrapper> */}
+        <LogoutMessage>
+          {/* <section className="nimble-rent-info-top-banner-container">
           <NimbleRentTopBanner showButton={false} />
-        </section>
-        <section className="nimble-rent-info-eligibility-container">
-          <NimbleRentInfo />
-        </section>
+        </section> */}
+          <section className="nimble-rent-info-eligibility-container">
+            <NimbleRentInfo />
+          </section>
 
-        <section className="nimble-rent-info-faq-container">
-          <NimbleRentInfoFaq />
-        </section>
-      </LogoutMessage>
-      {/* </ContentWrapper> */}
-    </div>
+          <section className="nimble-rent-info-faq-container">
+            <NimbleRentInfoFaq />
+          </section>
+        </LogoutMessage>
+        {/* </ContentWrapper> */}
+      </div>
+    </>
   );
 };
 
