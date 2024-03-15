@@ -8,7 +8,8 @@ import { action, type } from "../../helpers/actionTypeList";
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./index.css";
+// import "./index.css";
+import "./SearchForm.css";
 import LocationSearchInput from "../location/LocationSearchInput.js";
 
 export default function SearchForm({ navMenuProperty }) {
@@ -18,6 +19,9 @@ export default function SearchForm({ navMenuProperty }) {
   const [userCurrentLocation, setUserCurrentLocation] = useState("");
   // context
   const [search, setSearch] = useSearch();
+  // State to store selected min and max prices
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000000000000);
 
   // hooks
   const navigate = useNavigate();
@@ -47,7 +51,7 @@ export default function SearchForm({ navMenuProperty }) {
       search.action = "Buy";
       search.address = "";
       search.type = "Property Type";
-      search.price = "All Prices"; //All price
+      search.price = "All Prices";
       search.total = 0;
       search.pageNo = 1;
       search.loading = true;
@@ -113,184 +117,163 @@ export default function SearchForm({ navMenuProperty }) {
     }
   }, [search.pageNo]);
 
+  // Function to handle change in minimum price
+  const handleMinPriceChange = (event) => {
+    const newMinPrice = parseInt(event.target.value);
+    setMinPrice(newMinPrice);
+    // Ensure the max price starts from the selected min price
+    if (newMinPrice > maxPrice) {
+      setMaxPrice(newMinPrice);
+    }
+  };
+
+  // Function to handle change in maximum price
+  const handleMaxPriceChange = (event) => {
+    setMaxPrice(parseInt(event.target.value));
+  };
+
+  // Generate options for min and max prices
+  const generateOptions = (start, end, step) => {
+    const options = [];
+    for (let i = start; i <= end; i += step) {
+      options.push(i);
+    }
+    return options;
+  };
+
   return (
     <>
-      <div className="searchForm-container">
-        <div
-          className="d-flex mt-5 justify-content-center align-items-center"
-          style={{
-            backgroundImage: "url(/search-form-image.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center ",
-            backgroundRepeat: "no-repeat",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <div className="container col-lg-8">
-            {/* <div className="form-control my-4 text-center rounded-pill "> */}
-            {/* <div className="form-control my-4 text-center rounded-pill "> */}
-            {/* <GooglePlacesAutocomplete
-                apiKey={config.GOOGLE_PLACES_KEY}
-                apiOptions="ng"
-                selectProps={{
-                  // defaultInputValue: localStorage.getItem("cLocation")
-                  //   ? localStorage.getItem("cLocation")
-                  //   : search?.address,
-                  // inputValue: search?.address,
-                  defaultInputValue: search?.address,
-                  placeholder: "Enter an address, city or location",
-                  onChange: ({ value }) => {
-                    setSearch({ ...search, address: value.description });
-                    // setFilter(false);
-                  },
-                  onclick: () => {
-                    this.set(null);
-                  },
-                }}
-              /> */}
-
-            <LocationSearchInput
-              value={value}
-              setValue={setValue}
-              userCurrentLocation={userCurrentLocation}
-              setUserCurrentLocation={setUserCurrentLocation}
-              options={options}
-              setOptions={setOptions}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-            />
-
-            <div className="d-flex flex-wrap btn-group justify-content-evenly filter-options">
-              <div className="d-flex row justify-content-evenly mx-auto col-lg-8 search-controls-container">
-                {!navMenuProperty && (
-                  <>
-                    <select
-                      className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                      aria-label="form-select select-options"
-                      value={search.action}
-                      onChange={(e) => {
-                        setSearch({
-                          ...search,
-                          action: e.target.value,
-                          price: "",
-                        });
-                      }}
-                    >
-                      {action.map((item) => (
-                        <option
-                          selected={item.selected}
-                          className="optgroup"
-                          key={item._id}
-                          value={item.value}
-                        >
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                )}
-
-                <>
-                  <select
-                    className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                    aria-label="form-select select-options"
-                    value={search.type}
-                    onChange={(e) => {
-                      setSearch({
-                        ...search,
-                        type: e.target.value,
-                        price: "",
-                      });
-                    }}
-                  >
-                    {/* <option selected disabled> */}
-                    {/*   Property Type */}
-                    {/* </option> */}
-                    {type.map((item) => (
-                      <option
-                        className="optgroup"
-                        selected={item.selected}
-                        key={item._id}
-                        value={item.value}
-                      >
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                  {/* {search.action === "Buy" ? (
-                  <> */}
-                  <select
-                    className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
-                    aria-label="form-select select-options"
-                    value={search.price}
-                    onChange={(e) => {
-                      setSearch({
-                        ...search,
-                        price: e.target.value,
-                        priceRange: Prices.find(
-                          (item) => item.name === e.target.value
-                        ).array,
-                      });
-                    }}
-                  >
-                    {/* <option selected disabled>
-                          Price
-                        </option> */}
-                    {Prices.map((item) => (
-                      <option
-                        className="optgroup"
-                        key={item._id}
-                        value={item.name}
-                      >
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                  {/* </> */}
-                  {/* ) : (
+      <div className="search-section">
+        <div className="searchForm-container">
+          <div
+            className=""
+            style={{
+              backgroundImage: "url(/search-form-image.jpg)",
+              backgroundSize: "cover",
+              backgroundPosition: "center ",
+              backgroundRepeat: "no-repeat",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <div className="top-buttons-container">
+              <button className="button1">All</button>
+              <button className="button2">Buy</button>
+              <button className="button3">Rent</button>
+            </div>
+            <div className="search-and-filter-container">
+              <div className="search-filter-container">
+                <div className="search-bar-container">
+                  <div className="search-bar">
+                    {/* <LocationSearchInput 
+                      value={value}
+                      setValue={setValue}
+                      userCurrentLocation={userCurrentLocation}
+                      setUserCurrentLocation={setUserCurrentLocation}
+                      options={options}
+                      setOptions={setOptions}
+                      inputValue={inputValue}
+                      setInputValue={setInputValue}
+                    />
+                     */}
+                    <input
+                      type="text"
+                      placeholder="Search any location here"
+                      className="search-input"
+                      style={{ border: "none" }}
+                    />
+                    <img
+                      src="/barLogo.png"
+                      width={15}
+                      height={15}
+                      alt="barLogo"
+                      style={{ marginLeft: "10px" }}
+                    />
+                  </div>
+                </div>
+                <div className="filters-container">
+                  {!navMenuProperty && (
                     <>
                       <select
-                        className="form-select mb-2 pl-1 col text-center rounded-pill mx-2"
+                        className="select1"
                         aria-label="form-select select-options"
-                        value={search.price}
+                        value={search.action}
                         onChange={(e) => {
                           setSearch({
                             ...search,
-                            price: e.target.value,
-                            priceRange: rentPrices.find(
-                              (item) => item.name === e.target.value
-                            ).array,
+                            action: e.target.value,
+                            price: "",
                           });
                         }}
                       >
-                        <option selected disabled>
-                          Price
-                        </option>
-                        {rentPrices.map((item) => (
+                        {action.map((item) => (
                           <option
                             className="optgroup"
+                            selected={item.selected}
                             key={item._id}
-                            value={item.name}
+                            value={item.value}
                           >
                             {item.name}
                           </option>
                         ))}
                       </select>
+                      <label htmlFor="maxPrice">Maximum Price:</label>
+                      <select
+                        className="select2"
+                        aria-label="form-select select-options"
+                        // >
+                        id="minPrice"
+                        value={minPrice}
+                        onChange={handleMinPriceChange}
+                      >
+                        {generateOptions(0, 1000000000000, 1000000).map(
+                          (option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          )
+                        )}
+
+                        {/* {" "}
+                        <option value="" disabled selected>
+                          Min. Price
+                        </option> */}
+                      </select>
+                      <select
+                        className="select3"
+                        aria-label="form-select select-options"
+                        // >
+                        id="maxPrice"
+                        value={maxPrice}
+                        onChange={handleMaxPriceChange}
+                      >
+                        {generateOptions(minPrice, 1000000000000, 1000000).map(
+                          (option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          )
+                        )}
+
+                        {/* {" "}
+                        <option value="" disabled selected>
+                          Max. Price
+                        </option> */}
+                      </select>
                     </>
-                  )} */}
-                </>
+                  )}
+
+                  <img
+                    className="image-class"
+                    src="/SearchLogo.png"
+                    width={36}
+                    height={35}
+                    alt="SearchLogo"
+                    style={{ marginLeft: "5px" }}
+                  />
+                </div>
               </div>
             </div>
-            <div className="d-grid col-5 mx-auto text-center mt-3">
-              <button
-                onClick={handleSearch}
-                className="btn btn-warning rounded-pill"
-              >
-                Search
-              </button>
-            </div>
-            {/* <pre>{JSON.stringify(search.address, null, 4)}</pre> */}
           </div>
         </div>
       </div>

@@ -67,11 +67,13 @@ import DocumentManager from "./pages/user/DocumentManager";
 import Confirmation from "./pages/Confirmation";
 import AccountDelete from "./pages/auth/deleteAccount/AccountDelete";
 import NimbleRentInformationPage from "./pages/nimbleRent/nimbleRentInformationPage/NimbleRentInformationPage";
+// import SearchBar from "./components/searchBar/SearchBar";
 
 const PageNotFound = () => (
   <ContentWrapper>
     <div className="text-center p-5">
       <h2>404 PAGE NOT FOUND!</h2>
+  
     </div>
   </ContentWrapper>
 );
@@ -89,6 +91,7 @@ function App() {
                 <DataProvider>
                   {/* <Main /> */}
                   <Navbar />
+                  {/* <SearchBar /> */}
                   <ToastContainer
                     position="top-center"
                     autoClose={5000}

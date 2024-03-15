@@ -40,7 +40,7 @@ const type = [
 const action = [
   {
     _id: 10,
-    name: "All Purpose",
+    name: "All Types",
     value: "",
     selected: true,
     disabled: true,
