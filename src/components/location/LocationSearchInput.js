@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import InputAdjournment from "@mui/material/InputAdornment";
 import Autocomplete from "@mui/material/Autocomplete";
 // import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Grid from "@mui/material/Grid";
@@ -39,8 +40,10 @@ export default function LocationSearchInput({
   setOptions,
   userCurrentLocation,
   setUserCurrentLocation,
+  handleSearch,
 }) {
   const [search, setSearch] = useSearch();
+  const [isInputFocused, setInputFocused] = useState(false); // State to track input focus
 
   const loaded = useRef(false);
 
@@ -65,7 +68,7 @@ export default function LocationSearchInput({
       debounce((request, callback) => {
         autocompleteService.current.getPlacePredictions(request, callback);
       }, 400),
-    [],
+    []
   );
 
   useEffect(() => {
@@ -125,7 +128,7 @@ export default function LocationSearchInput({
       {
         location_type: "ROOFTOP", // Override location type filter for this request.
         enable_address_descriptor: true, // Include address descriptor in response.
-      },
+      }
     )
       .then(({ results }) => {
         const address = results[0].formatted_address;
@@ -155,23 +158,46 @@ export default function LocationSearchInput({
     console.log("Unable to retrieve your location");
   };
 
+  const handleClick = () => {
+    // Focus on the input element when clicking the search icon
+    setInputFocused(true);
+  };
+
+  //d-flex w-full justify-content-center my-4
   return (
-    <div className="d-flex w-full justify-content-center my-4">
+    <div className="">
       <Autocomplete
+        forcePopupIcon={false}
         id="google-map-demo"
         autoHighlight
         sx={{
-          width: "75%",
-          maxWidth: 1200, // Adjust the maximum width as needed
+          width: "auto",
+          // height: "40px",
+          border: "1px solid #ee7b0d",
+          borderRadius: "8px",
+          alignItems: "center",
+          display: "flex",
+          maxWidth: 1200,
+          border: "1px",
           "& .MuiTextField-root": {
+            backgroundColor: "white",
             borderRadius: "50px",
-            backgroundColor: "#ffffff",
+            color: "white",
+            fontFamily: "Figtree",
+            fontSize: "16px",
+            alignItems: "start",
           },
           "& .MuiAutocomplete-inputRoot": {
             padding: "10px", // Adjust the input padding as needed
+            backgroundColor: "white",
+            border: "0.5px solid grey",
+            borderRadius: "8px",
+            marginRight: "20px",
+            height: "50px",
           },
           "& .MuiAutocomplete-listbox": {
-            marginTop: "5px", // Adjust the listbox margin as needed
+            marginTop: "5px", // Adjust the list box margin as needed
+            backgroundColor: "white",
           },
         }}
         getOptionLabel={(option) =>
@@ -193,7 +219,7 @@ export default function LocationSearchInput({
           }
 
           setValue(
-            newValue === "Current Location" ? userCurrentLocation : newValue,
+            newValue === "Current Location" ? userCurrentLocation : newValue
           );
         }}
         onInputChange={(event, newInputValue) => {
@@ -203,7 +229,25 @@ export default function LocationSearchInput({
         renderInput={(params) => (
           <TextField
             {...params}
+            InputProps={{
+              ...params.InputProps,
+              disableUnderline: true,
+              // style: { textAlign: "center" },
+              endAdornment: (
+                <InputAdjournment position="end">
+                  <img
+                    src="/barLogo.png"
+                    width={15}
+                    height={15}
+                    alt="Search Icon"
+                    onClick={handleClick}
+                    style={{ cursor: "pointer" }}
+                  />
+                </InputAdjournment>
+              ),
+            }}
             // label="Enter an address, city or location"
+            // InputProps={}
             placeholder="Enter an address, city or location"
             fullWidth
             variant="filled"

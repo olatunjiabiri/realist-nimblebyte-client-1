@@ -21,16 +21,34 @@ export default function SearchForm({ navMenuProperty }) {
   const [search, setSearch] = useSearch();
   // State to store selected min and max prices
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000000000000);
+  const [maxPrice, setMaxPrice] = useState(1000000);
+  const [selectedType, setSelectedType] = useState(""); // State to track selected type
+
+  // State to manage visibility of select boxes and search button
+  const [showFilters, setShowFilters] = useState(false);
+
+  const handleButtonClick = (buttonName) => {
+    if (buttonName === "All") {
+      setSearch((prevSearch) => ({
+        ...prevSearch,
+        action: buttonName,
+      }));
+      setSelectedType("All"); // Clear the selected type
+    } else {
+      setSearch((prevSearch) => ({
+        ...prevSearch,
+        action: buttonName,
+      }));
+      setSelectedType(buttonName.toLowerCase()); // Set the selected type
+    }
+    // Show filters and search button when a button is clicked
+    setShowFilters(true);
+  };
 
   // hooks
   const navigate = useNavigate();
 
   const path = window.location.pathname.split("/");
-
-  // useEffect(() => {
-  //   setValue(search?.address);
-  // }, [search]);
 
   useEffect(() => {
     if (!path[1]) {
@@ -117,29 +135,57 @@ export default function SearchForm({ navMenuProperty }) {
     }
   }, [search.pageNo]);
 
+  // Detect screen size and hide filters on small screens
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 767) {
+        setShowFilters(false);
+      } else {
+        setShowFilters(true);
+      }
+    };
+
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Function to handle change in minimum price
   const handleMinPriceChange = (event) => {
     const newMinPrice = parseInt(event.target.value);
-    setMinPrice(newMinPrice);
-    // Ensure the max price starts from the selected min price
-    if (newMinPrice > maxPrice) {
-      setMaxPrice(newMinPrice);
-    }
+    setSearch((prevSearch) => ({
+      ...prevSearch,
+      minPrice: newMinPrice,
+      maxPrice:
+        newMinPrice > prevSearch.maxPrice ? newMinPrice : prevSearch.maxPrice,
+    }));
   };
 
   // Function to handle change in maximum price
   const handleMaxPriceChange = (event) => {
-    setMaxPrice(parseInt(event.target.value));
+    const newMaxPrice = parseInt(event.target.value);
+    setSearch((prevSearch) => ({
+      ...prevSearch,
+      maxPrice: newMaxPrice,
+    }));
   };
 
   // Generate options for min and max prices
-  const generateOptions = (start, end, step) => {
+  const generatePriceOptions = (start, end, step) => {
     const options = [];
     for (let i = start; i <= end; i += step) {
-      options.push(i);
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
     }
     return options;
   };
+
+  const priceStep = 500000; // Adjust the step size as needed
 
   return (
     <>
@@ -156,124 +202,125 @@ export default function SearchForm({ navMenuProperty }) {
               width: "100%",
             }}
           >
+            {/* Render only buttons 1, 2, and 3 initially */}
             <div className="top-buttons-container">
-              <button className="button1">All</button>
-              <button className="button2">Buy</button>
-              <button className="button3">Rent</button>
+              <button
+                // className="button1"
+                className={
+                  selectedType === "all" ? "button1 active" : "button1"
+                }
+                onClick={() => handleButtonClick("All Types")}
+              >
+                All
+              </button>
+              <button
+                // className="button2"
+                className={
+                  selectedType === "buy" ? "button2 active" : "button2"
+                }
+                onClick={() => handleButtonClick("Buy")}
+              >
+                Buy
+              </button>
+              <button
+                // className="button3"
+                className={
+                  selectedType === "rent" ? "button3 active" : "button3"
+                }
+                onClick={() => handleButtonClick("Rent")}
+              >
+                Rent
+              </button>
             </div>
-            <div className="search-and-filter-container">
-              <div className="search-filter-container">
-                <div className="search-bar-container">
-                  <div className="search-bar">
-                    {/* <LocationSearchInput 
-                      value={value}
-                      setValue={setValue}
-                      userCurrentLocation={userCurrentLocation}
-                      setUserCurrentLocation={setUserCurrentLocation}
-                      options={options}
-                      setOptions={setOptions}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
-                    />
-                     */}
-                    <input
-                      type="text"
-                      placeholder="Search any location here"
-                      className="search-input"
-                      style={{ border: "none" }}
-                    />
-                    <img
-                      src="/barLogo.png"
-                      width={15}
-                      height={15}
-                      alt="barLogo"
-                      style={{ marginLeft: "10px" }}
-                    />
+            {/* {window.innerWidth > 575 && ( */}
+            {/* Render select boxes and search button when showFilters is true */}
+            {showFilters && (
+              <div className="search-and-filter-container">
+                <div className="search-filter-container">
+                  <div className="search-bar-container">
+                    <div className="search-bar">
+                      <LocationSearchInput
+                        value={value}
+                        setValue={setValue}
+                        userCurrentLocation={userCurrentLocation}
+                        setUserCurrentLocation={setUserCurrentLocation}
+                        options={options}
+                        setOptions={setOptions}
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                      />
+                    </div>
+                  </div>
+                  <div className="filters-container">
+                    {!navMenuProperty && (
+                      <>
+                        <select
+                          className="select1 form-select"
+                          aria-label="form-select select-options"
+                          value={search.type}
+                          onChange={(e) => {
+                            setSearch({
+                              ...search,
+                              type: e.target.value,
+                              price: "",
+                            });
+                          }}
+                        >
+                          {type.map((item) => (
+                            <option
+                              className="optgroup"
+                              selected={item.selected}
+                              key={item._id}
+                              value={item.value}
+                            >
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          className="select2 form-select"
+                          aria-label="form-select select-options"
+                          value={search.minPrice}
+                          onChange={handleMinPriceChange}
+                        >
+                          {" "}
+                          <option value="" disabled selected>
+                            Min. Price
+                          </option>
+                          {generatePriceOptions(0, 1000000000, priceStep)}
+                        </select>
+                        <select
+                          className="select3 form-select"
+                          aria-label="form-select select-options"
+                          value={search.maxPrice}
+                          onChange={handleMaxPriceChange}
+                        >
+                          {" "}
+                          <option value="" disabled selected>
+                            Max. Price
+                          </option>
+                          {generatePriceOptions(
+                            search.minPrice,
+                            1000000000,
+                            priceStep
+                          )}
+                        </select>
+                      </>
+                    )}
+                    <button className="search-button" onClick={handleSearch}>
+                      <img
+                        src="/SearchLogo.png"
+                        width={44}
+                        height={44}
+                        alt="SearchLogo"
+                        style={{ marginLeft: "5px" }}
+                      />
+                      <span className="search-text">Search</span>
+                    </button>
                   </div>
                 </div>
-                <div className="filters-container">
-                  {!navMenuProperty && (
-                    <>
-                      <select
-                        className="select1"
-                        aria-label="form-select select-options"
-                        value={search.action}
-                        onChange={(e) => {
-                          setSearch({
-                            ...search,
-                            action: e.target.value,
-                            price: "",
-                          });
-                        }}
-                      >
-                        {action.map((item) => (
-                          <option
-                            className="optgroup"
-                            selected={item.selected}
-                            key={item._id}
-                            value={item.value}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                      <label htmlFor="maxPrice">Maximum Price:</label>
-                      <select
-                        className="select2"
-                        aria-label="form-select select-options"
-                        // >
-                        id="minPrice"
-                        value={minPrice}
-                        onChange={handleMinPriceChange}
-                      >
-                        {generateOptions(0, 1000000000000, 1000000).map(
-                          (option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          )
-                        )}
-
-                        {/* {" "}
-                        <option value="" disabled selected>
-                          Min. Price
-                        </option> */}
-                      </select>
-                      <select
-                        className="select3"
-                        aria-label="form-select select-options"
-                        // >
-                        id="maxPrice"
-                        value={maxPrice}
-                        onChange={handleMaxPriceChange}
-                      >
-                        {generateOptions(minPrice, 1000000000000, 1000000).map(
-                          (option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          )
-                        )}
-
-                        {/* {" "}
-                        <option value="" disabled selected>
-                          Max. Price
-                        </option> */}
-                      </select>
-                    </>
-                  )}
-
-                  <img
-                    className="image-class"
-                    src="/SearchLogo.png"
-                    width={36}
-                    height={35}
-                    alt="SearchLogo"
-                    style={{ marginLeft: "5px" }}
-                  />
-                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
