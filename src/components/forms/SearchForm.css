@@ -49,8 +49,6 @@
   border-radius: 8px;
   border: 2px;
 }
-
-/* Active styles */
 .button1.active, .button2.active, .button3.active {
   background: #ee7b0d;
   color: white;
